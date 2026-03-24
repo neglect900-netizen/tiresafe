@@ -35,6 +35,7 @@
   --r:       12px;
   --r2:      18px;
 }
+/* 앱처럼 고정된 화면 */
 html,body{height:100%;overflow:hidden}
 body{font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-tap-highlight-color:transparent;-webkit-font-smoothing:antialiased;}
 
@@ -51,12 +52,11 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-tap-hi
 .login-btn{font-size:13px;font-weight:700;padding:8px 16px;border-radius:20px;background:var(--accent);color:#fff;border:none;cursor:pointer;font-family:var(--font);}
 
 /* ── PAGES ── */
-/* 홈/판매 탭: 일반 스크롤 */
 .page{display:none;flex:1;overflow-y:auto;padding-bottom:var(--nav);}
 .page.active{display:block;}
 
-/* 채팅 탭: flex-column, overflow hidden — 내부에서 레이아웃 제어 */
-#pg-chat{display:none;flex:1;flex-direction:column;overflow:hidden;padding-bottom:0;}
+/* 채팅 탭: 하단 네비게이션 공간(var(--nav))만큼 띄우고 화면에 꽉 차게 변경 */
+#pg-chat{display:none;position:absolute;top:var(--head);bottom:var(--nav);left:0;right:0;flex-direction:column;overflow:hidden;background:var(--bg);}
 #pg-chat.active{display:flex;}
 
 /* ── HOME ── */
@@ -73,7 +73,6 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-tap-hi
 .sbtn{background:var(--accent);color:#fff;border:none;border-radius:var(--r);padding:12px 16px;font-weight:700;font-size:13px;cursor:pointer;font-family:var(--font);white-space:nowrap;}
 .sbtn:active{opacity:.85;}
 
-/* 카테고리 탭 */
 .cat-tabs{display:flex;border-bottom:1px solid var(--border);background:var(--surface);}
 .cat-btn{flex:1;padding:12px 8px;font-size:13px;font-weight:700;font-family:var(--font);border:none;background:none;color:var(--t3);cursor:pointer;border-bottom:2px solid transparent;transition:color .2s;}
 .cat-btn.active{color:var(--accent);border-bottom-color:var(--accent);}
@@ -142,25 +141,16 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-tap-hi
 .need-login p{font-size:13px;color:var(--t3);margin-bottom:22px;line-height:1.6;}
 
 /* ══════════════════════════════════════
-   CHAT — 이 부분이 핵심
-   
-   #pg-chat           : flex-column (100% 높이, overflow hidden)
-   .chat-tabs         : flex-shrink:0 (고정 높이)
-   #dm-area, #bot-area: flex:1, display:flex, flex-direction:column, overflow:hidden
-   
-   DM 룸리스트와 채팅창은 **flex item**으로 전환
-   (absolute 포지셔닝 대신 flex로 처리해서 nav 높이 충돌 완전 제거)
+   CHAT — 완벽한 고정 레이아웃
 ══════════════════════════════════════ */
 .chat-tabs{flex-shrink:0;display:flex;border-bottom:1px solid var(--border);background:var(--surface);}
 .ctab{flex:1;padding:13px 8px;font-size:13px;font-weight:700;font-family:var(--font);border:none;background:none;color:var(--t3);cursor:pointer;border-bottom:2px solid transparent;transition:color .2s;}
 .ctab.active{color:var(--accent);border-bottom-color:var(--accent);}
 
-#dm-area{flex:1;display:flex;flex-direction:column;overflow:hidden;position:relative;}
-#bot-area{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+#dm-area, #bot-area{flex:1;display:flex;flex-direction:column;overflow:hidden;position:relative;}
 
-/* 룸 리스트: flex item, overflow-y scroll */
+/* 룸 리스트 */
 #room-list{flex:1;overflow-y:auto;background:var(--surface);}
-
 .room-item{display:flex;align-items:center;gap:12px;padding:13px 16px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .1s;}
 .room-item:hover{background:var(--surface2);}
 .r-av{width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;flex-shrink:0;overflow:hidden;}
@@ -172,43 +162,36 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-tap-hi
 .r-time{font-size:10px;color:var(--t3);}
 .r-dot{width:8px;height:8px;background:var(--accent);border-radius:50%;}
 
-/*
-  DM 채팅창:
-  - 평소: display:none
-  - 열리면: position:absolute; inset:0 → #dm-area 위에 완전히 덮음
-  - 내부는 flex-column: 헤더(고정) + chat-wrap(flex:1,overflow hidden)
-  - chat-wrap 내부: msgs(flex:1,scroll) + input-row(flex-shrink:0)
-  - input-row는 flex-shrink:0이라 절대 잘리지 않음
-*/
-.dm-win{display:none;position:absolute;inset:0;flex-direction:column;background:var(--surface);z-index:10;}
+/* DM 채팅창 (화면을 꽉 채움) */
+.dm-win{display:none;position:absolute;inset:0;flex-direction:column;background:var(--bg);z-index:20;}
 .dm-win.open{display:flex;}
 .dm-hdr{flex-shrink:0;display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--border);background:var(--surface);}
 .dm-back{width:34px;height:34px;border-radius:50%;background:var(--surface2);border:none;cursor:pointer;color:var(--t2);font-size:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .dm-hdr-name{font-size:15px;font-weight:800;color:var(--t1);}
 
-/* chat-wrap: flex-column, overflow hidden
-   msgs: flex:1, overflow-y:auto → 스크롤
-   input-row: flex-shrink:0 → 절대 안 잘림 */
-.chat-wrap{flex:1;display:flex;flex-direction:column;overflow:hidden;min-height:0;}
-.msgs{flex:1;overflow-y:auto;padding:14px 14px;display:flex;flex-direction:column;gap:10px;background:var(--bg);}
+/* 채팅 메시지 영역 (스크롤 생성) */
+.chat-wrap{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+.msgs{flex:1;overflow-y:auto;padding:14px 14px;display:flex;flex-direction:column;gap:10px;}
 .bw{display:flex;flex-direction:column;align-items:flex-start;max-width:78%;}
 .bw.me{align-items:flex-end;align-self:flex-end;}
 .bsender{font-size:11px;color:var(--t3);margin-bottom:3px;margin-left:2px;font-weight:600;}
 .bubble{padding:10px 14px;border-radius:18px 18px 18px 4px;font-size:14px;line-height:1.55;background:var(--surface);color:var(--t1);box-shadow:0 1px 3px rgba(0,0,0,0.07);word-break:break-word;white-space:pre-wrap;}
 .bw.me .bubble{background:var(--accent);color:#fff;border-radius:18px 18px 4px 18px;box-shadow:0 2px 8px rgba(232,72,10,0.2);}
-.bubble.bot{background:var(--accent-bg);border:1px solid var(--accent-bd);}
+.bubble.bot{background:var(--surface);border:1px solid var(--accent-bd);}
 .btime{font-size:10px;color:var(--t3);margin-top:3px;}
-.input-row{flex-shrink:0;display:flex;gap:8px;padding:10px 12px 12px;background:var(--surface);border-top:1px solid var(--border);}
+
+/* 채팅 입력창 영역 (고정) */
+.input-row{flex-shrink:0;display:flex;align-items:center;gap:8px;padding:10px 12px;background:var(--surface);border-top:1px solid var(--border);}
 .chat-in{flex:1;padding:11px 14px;background:var(--surface2);border:1.5px solid var(--border);border-radius:24px;font-size:14px;font-family:var(--font);outline:none;color:var(--t1);transition:border-color .2s;}
 .chat-in:focus{border-color:var(--accent);background:var(--surface);}
 .chat-in::placeholder{color:var(--t3);}
 .send-btn{width:42px;height:42px;flex-shrink:0;background:var(--accent);color:#fff;border:none;border-radius:50%;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(232,72,10,0.3);}
 .send-btn:active{opacity:.8;transform:scale(0.92);}
 
-/* Bot area */
+/* 봇 영역의 질문 버튼 (가로 스크롤 가능하게 flex-shrink:0 적용) */
 .quick-row{flex-shrink:0;display:flex;gap:6px;padding:10px 12px;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid var(--border);background:var(--surface);}
 .quick-row::-webkit-scrollbar{display:none;}
-.qbtn{flex-shrink:0;white-space:nowrap;padding:7px 13px;border-radius:20px;background:var(--surface2);border:1.5px solid var(--border);font-size:12px;font-weight:600;color:var(--t2);cursor:pointer;font-family:var(--font);transition:all .15s;}
+.qbtn{flex-shrink:0;white-space:nowrap;padding:7px 13px;border-radius:20px;background:var(--surface);border:1px solid var(--border2);font-size:13px;font-weight:600;color:var(--t2);cursor:pointer;font-family:var(--font);transition:all .15s;}
 .qbtn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-bg);}
 
 /* ── NAV ── */
@@ -271,13 +254,11 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-tap-hi
 <body>
 <div class="app">
 
-  <!-- HEADER -->
   <header class="hdr">
     <div class="logo">Tire<em>Safe</em><span class="logo-dot"></span></div>
     <div id="auth-area"><button class="login-btn" onclick="showLogin()">로그인</button></div>
   </header>
 
-  <!-- HOME PAGE -->
   <div class="page active" id="pg-home">
     <div class="hero">
       <div class="hero-tag">🛞 중고타이어·휠 직거래</div>
@@ -293,7 +274,6 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-tap-hi
       </div>
     </div>
 
-    <!-- 카테고리 탭 -->
     <div class="cat-tabs">
       <button class="cat-btn active" id="cat-all"   onclick="setCategory(this,'all')">전체</button>
       <button class="cat-btn"        id="cat-tire"  onclick="setCategory(this,'tire')">🛞 중고타이어</button>
@@ -309,7 +289,6 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-tap-hi
     </div>
   </div>
 
-  <!-- SELL PAGE -->
   <div class="page" id="pg-sell">
     <div class="sell-wrap">
       <div class="sell-title">판매하기</div>
@@ -318,16 +297,13 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-tap-hi
     </div>
   </div>
 
-  <!-- CHAT PAGE -->
   <div id="pg-chat">
     <div class="chat-tabs">
       <button class="ctab active" id="ctab-dm"  onclick="switchChatTab('dm')">💬 1:1 대화</button>
       <button class="ctab"        id="ctab-bot" onclick="switchChatTab('bot')">🤖 고객센터</button>
     </div>
 
-    <!-- DM 영역 -->
     <div id="dm-area">
-      <!-- 룸 리스트 -->
       <div id="room-list">
         <div class="empty" style="padding:50px 20px;">
           <div class="empty-icon">💬</div>
@@ -335,13 +311,11 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-tap-hi
         </div>
       </div>
 
-      <!-- DM 채팅창: absolute로 room-list 위에 덮음, 내부는 flex-column -->
       <div class="dm-win" id="dm-win">
         <div class="dm-hdr">
           <button class="dm-back" onclick="closeDm()">←</button>
           <div class="dm-hdr-name" id="dm-hdr-name">채팅</div>
         </div>
-        <!-- chat-wrap: flex:1, overflow:hidden → msgs 스크롤 + input 고정 -->
         <div class="chat-wrap">
           <div class="msgs" id="dm-msgs"></div>
           <div class="input-row">
@@ -353,7 +327,6 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-tap-hi
       </div>
     </div>
 
-    <!-- 봇 영역 -->
     <div id="bot-area" style="display:none">
       <div class="quick-row">
         <button class="qbtn" onclick="qa('사이즈 고르는 법')">🔍 사이즈</button>
@@ -374,7 +347,6 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-tap-hi
     </div>
   </div>
 
-  <!-- NAV -->
   <nav class="bnav">
     <button class="nbtn active" id="nav-home" onclick="switchPage('home')"><span class="n-icon">🏠</span><span class="n-label">홈</span></button>
     <button class="nbtn"        id="nav-sell" onclick="switchPage('sell')"><span class="n-icon">➕</span><span class="n-label">판매하기</span></button>
@@ -382,7 +354,6 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-tap-hi
   </nav>
 </div>
 
-<!-- 상품 모달 -->
 <div class="ov" id="prod-ov" onclick="if(event.target===this)closeModal()">
   <div class="sheet">
     <div class="sh-hdl"></div>
@@ -410,7 +381,6 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-tap-hi
   </div>
 </div>
 
-<!-- 수정 모달 -->
 <div class="ov" id="edit-ov" onclick="if(event.target===this)closeEdit()">
   <div class="sheet" style="height:auto;max-height:92vh;overflow-y:auto;">
     <div class="sh-hdl"></div>
@@ -440,7 +410,6 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-tap-hi
   </div>
 </div>
 
-<!-- 로그인 모달 -->
 <div class="ov" id="login-ov" onclick="if(event.target===this)hideLogin()">
   <div class="auth-sheet">
     <div class="sh-hdl" style="padding:11px 0 0;"></div>
@@ -530,9 +499,8 @@ function runPend(){if(pendChat&&CU){const{uid,name}=pendChat;pendChat=null;setTi
 
 /* ═══════════ PAGE SWITCH ═══════════ */
 function switchPage(n){
-  // 홈/판매
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.getElementById('pg-chat').classList.remove('active'); // chat은 별도
+  document.getElementById('pg-chat').classList.remove('active');
   document.querySelectorAll('.nbtn').forEach(b=>b.classList.remove('active'));
   document.getElementById('nav-'+n).classList.add('active');
 
@@ -572,9 +540,7 @@ async function loadItems(){
     const snap=await db.collection('tires').orderBy('createdAt','desc').get();
     const docs=snap.docs.filter(d=>{
       const t=d.data();
-      // 카테고리 필터
       if(curCat!=='all'){const c=t.category||'tire';if(c!==curCat)return false;}
-      // 검색어 필터
       if(!q)return true;
       return(t.title||'').toLowerCase().includes(q)||(t.size||'').toLowerCase().replace(/\s/g,'').includes(q);
     });
@@ -757,7 +723,6 @@ function initRooms(){
 function openDm(rid,title){
   dmRoom=rid;
   document.getElementById('dm-hdr-name').textContent=title;
-  // 룸리스트 숨기고 채팅창 오픈
   document.getElementById('room-list').style.display='none';
   document.getElementById('dm-win').classList.add('open');
   db.collection('dmRooms').doc(rid).get().then(d=>{if(d.exists&&d.data().lastSenderId!==CU.uid)d.ref.update({isRead:true});});
