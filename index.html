@@ -284,15 +284,9 @@ function googleLogin() {
     return;
   }
 
+  // PC/모바일 구분 없이 무조건 Redirect 사용 (팝업 차단 문제 방지)
   const provider = new firebase.auth.GoogleAuthProvider();
-  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-  if (isMobile) {
-    auth.signInWithRedirect(provider);
-  } else {
-    auth.signInWithPopup(provider).catch(() => {
-      auth.signInWithRedirect(provider);
-    });
-  }
+  auth.signInWithRedirect(provider);
 }
 
 function logout() {
