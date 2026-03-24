@@ -186,6 +186,7 @@
       <button class="chat-tab-btn active" id="ctab-dm" onclick="switchChatTab('dm')">💬 1:1 대화</button>
       <button class="chat-tab-btn" id="ctab-bot" onclick="switchChatTab('bot')">🤖 고객센터</button>
     </div>
+    
     <div id="chat-dm-area">
       <div id="dm-room-list" class="room-list"></div>
       <div class="dm-wrap" id="dm-chat-wrap">
@@ -199,6 +200,24 @@
             <input type="text" class="chat-input" id="dm-input" placeholder="메시지 입력..." onkeydown="if(event.key==='Enter')sendDmMsg()">
             <button class="chat-send" onclick="sendDmMsg()">↑</button>
           </div>
+        </div>
+      </div>
+    </div>
+    
+    <div id="chat-bot-area" style="display:none">
+      <div class="quick-btns">
+        <button class="quick-btn" onclick="quickAsk('타이어 사이즈 고르는 법')">🔍 사이즈 고르는 법</button>
+        <button class="quick-btn" onclick="quickAsk('배송은 얼마나 걸려요?')">🚚 배송 기간</button>
+        <button class="quick-btn" onclick="quickAsk('장착은 어디서 해요?')">🔧 장착 방법</button>
+        <button class="quick-btn" onclick="quickAsk('환불 가능한가요?')">💰 환불 정책</button>
+        <button class="quick-btn" onclick="quickAsk('세이프페이가 뭔가요?')">🔒 세이프페이</button>
+        <button class="quick-btn" onclick="quickAsk('사장님과 직접 상담')">👨‍💼 사장님 상담</button>
+      </div>
+      <div class="chat-wrap">
+        <div class="chat-messages" id="bot-messages"></div>
+        <div class="chat-input-wrap">
+          <input type="text" class="chat-input" id="bot-input" placeholder="궁금한 점을 물어보세요..." onkeydown="if(event.key==='Enter')sendBotMsg()">
+          <button class="chat-send" onclick="sendBotMsg()">↑</button>
         </div>
       </div>
     </div>
@@ -222,9 +241,7 @@
       <div id="modal-img-container" style="display:flex; flex-direction:column; gap:12px; margin-bottom:20px;">
         <img class="modal-img" id="modal-img" src="" alt="" style="display:none;">
       </div>
-      
       <div class="modal-badge" id="modal-badge" style="display:none;">✅ 전문가 검증 완료</div>
-      
       <div class="modal-title" id="modal-title"></div>
       <div class="modal-size" id="modal-size"></div>
       <div class="modal-info"><p id="modal-desc"></p></div>
@@ -238,10 +255,8 @@
     <div class="modal-btns">
       <button class="btn-secondary" id="modal-chat-btn" onclick="chatWithSeller()">💬 판매자 채팅</button>
       <button class="btn-primary" id="modal-pay-btn" style="margin:0" onclick="toast('결제 시스템 준비 중입니다.')">🔒 세이프페이</button>
-      
       <button class="btn-secondary" id="modal-edit-btn" style="display:none; border-color:var(--blue); color:var(--blue);" onclick="openEditModal()">✏️ 수정</button>
       <button class="btn-primary" id="modal-delete-btn" style="display:none; background:var(--red);" onclick="deleteTire()">🗑️ 삭제</button>
-      
       <button class="btn-primary" id="modal-verify-btn" style="display:none; grid-column: 1/-1; background:var(--green);" onclick="toggleVerify()">✅ 인증 마크 달기</button>
     </div>
   </div>
@@ -251,7 +266,6 @@
   <div class="modal" style="height: auto; max-height: 90vh; overflow-y: auto;">
     <button class="modal-close" onclick="closeEditModal()">✕</button>
     <h3 style="margin-bottom:16px;">✏️ 게시글 수정</h3>
-    
     <div class="photo-upload" onclick="document.getElementById('e-file-input').click()" style="margin-bottom:16px; height:130px;">
       <div id="e-preview-placeholder" style="text-align:center;">
         <div style="font-size:28px;margin-bottom:4px">📸</div>
@@ -261,7 +275,6 @@
       <div id="e-preview-container" style="position:absolute; inset:0; display:none; gap:8px; padding:16px; overflow-x:auto; background:var(--gray-50); align-items:center;"></div>
     </div>
     <input type="file" id="e-file-input" accept="image/*" multiple style="display:none" onchange="handleEditPhoto(this)">
-
     <div class="form-group"><label class="form-label">타이어 모델명</label><input type="text" id="e-title" class="form-input"></div>
     <div class="form-row">
       <div class="form-group"><label class="form-label">사이즈</label><input type="text" id="e-size" class="form-input"></div>
@@ -321,7 +334,6 @@ window.addEventListener('DOMContentLoaded', () => {
   addBotMsg('안녕하세요! 타이어세이프 고객센터입니다 😊\n무엇이든 질문해 주세요!');
 });
 
-// ── 로그인 & Auth ──
 function showLoginModal() { 
   document.getElementById('email-input').value = '';
   document.getElementById('pw-input').value = '';
@@ -402,12 +414,16 @@ function runPendingChat() {
   }
 }
 
-// ── 탭 ──
+// ── 탭 이동 로직 (어떤 탭을 누르든 채팅방 닫기 적용) ──
 function switchTab(name) {
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('tab-' + name).classList.add('active');
   document.getElementById('nav-' + name).classList.add('active');
+  
+  // 🌟 홈이나 판매 버튼 누를 때, 혹은 채팅 탭을 다시 누를 때 채팅방 닫아주기
+  closeDmRoom();
+  
   if (name === 'home') loadTires();
   if (name === 'chat') { switchChatTab('dm'); }
 }
@@ -418,7 +434,6 @@ function switchChatTab(tab) {
   document.getElementById('chat-bot-area').style.display = tab === 'bot' ? 'flex' : 'none';
 }
 
-// ── 채팅 ──
 function getRoomId(uid1, uid2) { return [uid1, uid2].sort().join('_'); }
 
 async function openOrCreateDmRoom(targetUid, targetName, targetPhoto) {
@@ -535,28 +550,56 @@ function addBotMsg(text, isUser = false) {
   div.innerHTML = `<div class="chat-bubble${isUser ? '' : ' bot'}">${text}</div>`;
   box.appendChild(div); box.scrollTop = box.scrollHeight;
 }
+
+// 🌟 챗봇 로직 (사장님 연결 기능 강화)
 function quickAsk(q) { document.getElementById('bot-input').value = q; sendBotMsg(); }
 async function sendBotMsg() {
   const input = document.getElementById('bot-input');
   const msg = input.value.trim(); if (!msg) return;
   input.value = ''; addBotMsg(msg, true);
+  
   setTimeout(async () => {
-    addBotMsg('사장님께 질문을 전달해드릴게요!');
-    if (currentUser) {
-      const roomId = getRoomId(currentUser.uid, ADMIN_UID);
-      await db.collection('dmRooms').doc(roomId).set({
-        users: [currentUser.uid, ADMIN_UID], userNames: { [currentUser.uid]: currentUser.displayName||'고객', [ADMIN_UID]: '타이어세이프 사장님' },
-        updatedAt: firebase.firestore.FieldValue.serverTimestamp(), lastSenderId: currentUser.uid, isRead: false
-      }, { merge: true });
-      await db.collection('dmRooms').doc(roomId).collection('messages').add({
-        text: `[챗봇 전달 질문]\n"${msg}"`, uid: 'system', name: '시스템', createdAt: firebase.firestore.FieldValue.serverTimestamp(), isSystem: true,
-      });
-      setTimeout(() => addBotMsg('사장님께 전달했어요! 1:1 대화 탭에서 답변을 확인하세요 📩'), 600);
+    const answer = getBotAnswer(msg);
+    
+    // "사장님 상담" 버튼을 눌렀을 때
+    if (answer === null) {
+      if (!currentUser) { addBotMsg('로그인 후 이용하실 수 있어요!'); return; }
+      if (currentUser.uid === ADMIN_UID) { addBotMsg('현재 사장님 본인 계정으로 접속 중입니다! 일반 고객 계정으로 1:1 대화를 테스트해주세요 😅'); return; }
+      
+      addBotMsg('사장님께 즉시 연결합니다! 1:1 대화방으로 이동할게요 🏃‍♂️');
+      setTimeout(async () => {
+        await openOrCreateDmRoom(ADMIN_UID, '타이어세이프 사장님', '');
+      }, 1000);
+    } 
+    // 챗봇이 대답을 모를 때 강제 연결
+    else if (answer === undefined) {
+      if (!currentUser) { addBotMsg('로그인 후 이용하실 수 있어요!'); return; }
+      if (currentUser.uid === ADMIN_UID) { addBotMsg('챗봇이 모르는 질문입니다. (현재 사장님 계정이라 연결은 생략됩니다)'); return; }
+      
+      addBotMsg('정확한 답변을 드리기 어렵네요 😅\n사장님과 직접 상담하실 수 있도록 1:1 대화방을 열어드릴게요!');
+      setTimeout(async () => {
+        const roomId = getRoomId(currentUser.uid, ADMIN_UID);
+        await db.collection('dmRooms').doc(roomId).set({
+          users: [currentUser.uid, ADMIN_UID], 
+          userNames: { [currentUser.uid]: currentUser.displayName||'고객', [ADMIN_UID]: '타이어세이프 사장님' },
+          updatedAt: firebase.firestore.FieldValue.serverTimestamp(), 
+          lastSenderId: currentUser.uid, isRead: false
+        }, { merge: true });
+        
+        await db.collection('dmRooms').doc(roomId).collection('messages').add({
+          text: `[챗봇에서 넘어온 질문]\n"${msg}"\n\n고객님이 위 질문을 하셨습니다. 답변 부탁드립니다!`, 
+          uid: 'system', name: '시스템', createdAt: firebase.firestore.FieldValue.serverTimestamp(), isSystem: true,
+        });
+        
+        switchTab('chat');
+        openDmRoom(roomId, '타이어세이프 사장님');
+      }, 1500);
+    } else { 
+      addBotMsg(answer); 
     }
-  }, 400);
+  }, 500);
 }
 
-// ── 매물, 사진 업로드 ──
 function compressImage(file) {
   return new Promise(resolve => {
     const reader = new FileReader();
@@ -587,7 +630,6 @@ async function loadTires() {
       const badgeHTML = t.isVerified ? `<div class="tire-card-badge">✅ 인증</div>` : '';
       const safe = JSON.stringify({ id:t.id, title:t.title, size:t.size, price:t.price, description:t.description, imageUrl:t.imageUrl, imageUrls:t.imageUrls, sellerName:t.sellerName, sellerId:t.sellerId, isVerified:t.isVerified||false }).replace(/'/g,'&#39;');
       
-      // 🌟 타이어 카드 사이즈 옆에 닉네임 표시 추가
       return `<div class="tire-card" onclick='openModal(${JSON.stringify(safe)})'>
         ${t.imageUrl ? `<img class="tire-card-img" src="${t.imageUrl}" loading="lazy">` : '<div class="tire-card-placeholder">🛞</div>'}
         <div class="tire-card-body">
@@ -638,7 +680,6 @@ function handlePhoto(input) {
   });
 }
 
-// ── 수정 창에서 사용하는 사진 핸들러 ──
 function handleEditPhoto(input) {
   const files = input.files; 
   if (!files || files.length === 0) return;
@@ -752,14 +793,12 @@ async function deleteTire() {
   } catch(e) { toast('❌ 삭제 실패: ' + e.message); }
 }
 
-// ── 게시글 수정 모달 열기/닫기/제출 (사진 포함) ──
 function openEditModal() {
   document.getElementById('e-title').value = currentModalTire.title || '';
   document.getElementById('e-size').value = currentModalTire.size || '';
   document.getElementById('e-price').value = currentModalTire.price || '';
   document.getElementById('e-desc').value = currentModalTire.description || '';
   
-  // 사진 입력란 초기화 (매번 열 때마다 새롭게)
   document.getElementById('e-file-input').value = '';
   document.getElementById('e-preview-container').innerHTML = '';
   document.getElementById('e-preview-container').style.display = 'none';
@@ -785,7 +824,6 @@ async function submitEdit() {
   try {
     let updateData = { title: title, size: size, price: parseInt(price), description: desc };
     
-    // 만약 새 사진을 선택했다면, 기존 사진을 덮어씌움
     if (files && files.length > 0) {
       let imageUrls = [];
       for (let i = 0; i < files.length; i++) {
