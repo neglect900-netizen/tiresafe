@@ -9,147 +9,141 @@
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --blue: #1a56db; --blue-dark: #1245b3;
-    --green: #0e9f6e; --red: #e02424;
-    --gray-50: #f9fafb; --gray-100: #f3f4f6; --gray-200: #e5e7eb;
-    --gray-400: #9ca3af; --gray-600: #4b5563; --gray-800: #1f2937;
-    --white: #ffffff; --shadow: 0 1px 3px rgba(0,0,0,0.1);
-    --kakao: #FEE500; --kakao-text: #3A1D1D;
-  }
-  body { font-family: 'Noto Sans KR', sans-serif; background: var(--gray-100); color: var(--gray-800); min-height: 100vh; padding-bottom: 80px; }
-  .app { max-width: 480px; margin: 0 auto; background: var(--white); min-height: 100vh; }
-
-  /* ── 카카오 인앱 브라우저 안내 배너 ── */
-  .kakao-banner {
-    display: none;
-    background: var(--kakao);
-    color: var(--kakao-text);
-    padding: 10px 16px;
-    font-size: 13px;
-    font-weight: 600;
-    text-align: center;
-    line-height: 1.5;
-  }
-  .kakao-banner.show { display: block; }
-  .kakao-banner strong { display: block; font-size: 14px; font-weight: 900; margin-bottom: 2px; }
-  .kakao-banner .open-ext-btn {
-    display: inline-block;
-    margin-top: 8px;
-    background: var(--kakao-text);
-    color: var(--kakao);
-    border: none;
-    border-radius: 20px;
-    padding: 6px 16px;
-    font-size: 13px;
-    font-weight: 700;
-    font-family: inherit;
-    cursor: pointer;
-  }
-
-  .header { position: sticky; top: 0; z-index: 50; background: var(--white); border-bottom: 1px solid var(--gray-200); padding: 0 16px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
-  .header-logo { font-size: 20px; font-weight: 900; color: var(--blue); }
-  .header-logo span { color: var(--gray-800); }
-  .user-avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--blue); color: white; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; cursor: pointer; overflow: hidden; }
-  .user-avatar img { width: 100%; height: 100%; object-fit: cover; }
-  .login-btn { font-size: 12px; font-weight: 700; padding: 6px 14px; border-radius: 20px; background: var(--blue); color: white; border: none; cursor: pointer; font-family: inherit; }
-  .tab { display: none; }
-  .tab.active { display: block; }
-  .hero { background: linear-gradient(135deg, #1a56db 0%, #1245b3 100%); padding: 24px 20px 28px; color: white; }
-  .hero-badge { display: inline-block; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3); border-radius: 20px; font-size: 11px; font-weight: 600; padding: 3px 10px; margin-bottom: 10px; }
-  .hero h2 { font-size: 22px; font-weight: 900; line-height: 1.3; margin-bottom: 6px; }
-  .hero p { font-size: 13px; opacity: 0.85; margin-bottom: 18px; }
-  .hero-search { display: flex; gap: 8px; }
-  .hero-search input { flex: 1; padding: 11px 14px; border: none; border-radius: 10px; font-size: 14px; font-family: inherit; outline: none; }
-  .hero-search button { background: #fbbf24; color: #1f2937; border: none; border-radius: 10px; padding: 11px 16px; font-weight: 700; font-size: 14px; cursor: pointer; font-family: inherit; }
-  .section-title { padding: 20px 16px 12px; font-size: 16px; font-weight: 700; display: flex; align-items: center; justify-content: space-between; }
-  .section-title span { font-size: 12px; color: var(--blue); font-weight: 600; cursor: pointer; }
-  .tire-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 0 16px 20px; }
-  .tire-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 14px; overflow: hidden; cursor: pointer; box-shadow: var(--shadow); transition: transform 0.15s; }
-  .tire-card:active { transform: scale(0.98); }
-  .tire-card-img { width: 100%; height: 130px; object-fit: cover; display: block; }
-  .tire-card-placeholder { width: 100%; height: 130px; background: linear-gradient(135deg, #e5e7eb, #d1d5db); display: flex; align-items: center; justify-content: center; font-size: 32px; }
-  .tire-card-body { padding: 10px 12px 12px; }
-  .tire-card-badge { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 4px; margin-bottom: 5px; background: #d1fae5; color: var(--green); }
-  .tire-card-title { font-size: 13px; font-weight: 700; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .tire-card-size { font-size: 11px; color: var(--gray-400); margin-bottom: 6px; }
-  .tire-card-price { font-size: 15px; font-weight: 900; color: var(--blue); }
-  .empty-state { grid-column: 1/-1; text-align: center; padding: 60px 20px; color: var(--gray-400); }
-  .empty-icon { font-size: 48px; margin-bottom: 12px; }
-  .sell-wrap { padding: 20px 16px; }
-  .sell-title { font-size: 18px; font-weight: 900; margin-bottom: 20px; }
-  .photo-upload { border: 2px dashed var(--gray-200); border-radius: 14px; height: 160px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; margin-bottom: 16px; background: var(--gray-50); overflow: hidden; position: relative; }
-  .photo-upload:hover { border-color: var(--blue); }
-  #preview-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: none; }
-  .form-group { margin-bottom: 14px; }
-  .form-label { display: block; font-size: 12px; font-weight: 700; color: var(--gray-600); margin-bottom: 6px; }
-  .form-input { width: 100%; padding: 13px 14px; border: 1.5px solid var(--gray-200); border-radius: 10px; font-size: 14px; font-family: inherit; outline: none; color: var(--gray-800); transition: border-color 0.2s; }
-  .form-input:focus { border-color: var(--blue); }
-  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  .form-textarea { width: 100%; padding: 13px 14px; border: 1.5px solid var(--gray-200); border-radius: 10px; font-size: 14px; font-family: inherit; outline: none; color: var(--gray-800); resize: none; height: 100px; }
-  .form-textarea:focus { border-color: var(--blue); }
-  .btn-primary { width: 100%; padding: 15px; background: var(--blue); color: white; border: none; border-radius: 12px; font-size: 15px; font-weight: 700; font-family: inherit; cursor: pointer; margin-top: 4px; }
-  .btn-primary:hover { background: var(--blue-dark); }
-  .btn-primary:disabled { background: var(--gray-400); cursor: not-allowed; }
-  .login-required { text-align: center; padding: 60px 20px; color: var(--gray-400); }
-  .login-required .icon { font-size: 48px; margin-bottom: 12px; }
-  .login-required p { font-size: 14px; margin-bottom: 20px; }
-  .btn-google { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 14px; background: white; border: 1.5px solid var(--gray-200); border-radius: 12px; font-size: 15px; font-weight: 700; font-family: inherit; cursor: pointer; color: var(--gray-800); }
-  .chat-wrap { display: flex; flex-direction: column; height: calc(100vh - 120px); }
-  .chat-messages { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 10px; background: var(--gray-50); }
-  .chat-bubble-wrap { display: flex; }
-  .chat-bubble-wrap.me { justify-content: flex-end; }
-  .chat-bubble { max-width: 75%; padding: 10px 14px; border-radius: 18px; font-size: 14px; line-height: 1.5; background: white; color: var(--gray-800); border-bottom-left-radius: 4px; box-shadow: var(--shadow); }
-  .chat-bubble-wrap.me .chat-bubble { background: var(--blue); color: white; border-bottom-left-radius: 18px; border-bottom-right-radius: 4px; }
-  .chat-time { font-size: 10px; color: var(--gray-400); margin-top: 4px; text-align: right; }
-  .chat-sender { font-size: 10px; color: var(--gray-400); margin-bottom: 3px; }
-  .chat-input-wrap { display: flex; gap: 8px; padding: 12px 16px; background: white; border-top: 1px solid var(--gray-200); }
-  .chat-input { flex: 1; padding: 11px 14px; border: 1.5px solid var(--gray-200); border-radius: 24px; font-size: 14px; font-family: inherit; outline: none; }
-  .chat-input:focus { border-color: var(--blue); }
-  .chat-send { width: 44px; height: 44px; background: var(--blue); color: white; border: none; border-radius: 50%; cursor: pointer; font-size: 18px; flex-shrink: 0; }
-  .bottom-nav { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; height: 64px; background: white; border-top: 1px solid var(--gray-200); display: flex; z-index: 50; }
-  .nav-btn { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; border: none; background: none; cursor: pointer; color: var(--gray-400); font-family: inherit; }
-  .nav-btn.active { color: var(--blue); }
-  .nav-btn .icon { font-size: 20px; }
-  .nav-btn .label { font-size: 10px; font-weight: 600; }
-  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 100; align-items: flex-end; justify-content: center; }
-  .modal-overlay.open { display: flex; }
-  .modal { background: white; border-radius: 20px 20px 0 0; width: 100%; max-width: 480px; max-height: 90vh; overflow-y: auto; padding: 24px 20px 32px; position: relative; }
-  .modal-close { position: absolute; top: 16px; right: 16px; background: var(--gray-100); border: none; width: 32px; height: 32px; border-radius: 50%; font-size: 16px; cursor: pointer; }
-  .modal-img { width: 100%; height: 220px; object-fit: cover; border-radius: 12px; margin-bottom: 16px; }
-  .modal-badge { font-size: 11px; font-weight: 700; color: var(--green); margin-bottom: 6px; }
-  .modal-title { font-size: 20px; font-weight: 900; margin-bottom: 4px; }
-  .modal-size { font-size: 13px; color: var(--gray-400); margin-bottom: 16px; }
-  .modal-info { background: var(--gray-50); border-radius: 12px; padding: 14px 16px; margin-bottom: 20px; }
-  .modal-info p { font-size: 13px; color: var(--gray-600); line-height: 1.8; }
-  .modal-price-row { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 16px; }
-  .modal-price { font-size: 26px; font-weight: 900; color: var(--blue); }
-  .modal-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  .btn-secondary { padding: 14px; border: 1.5px solid var(--gray-200); border-radius: 12px; background: white; font-size: 14px; font-weight: 700; cursor: pointer; font-family: inherit; }
-  .toast { position: fixed; bottom: 84px; left: 50%; transform: translateX(-50%) translateY(20px); background: var(--gray-800); color: white; padding: 12px 20px; border-radius: 10px; font-size: 13px; font-weight: 600; opacity: 0; transition: all 0.3s; z-index: 200; white-space: nowrap; }
-  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-  .loading { text-align: center; padding: 60px 20px; color: var(--gray-400); }
-  .spinner { width: 32px; height: 32px; border: 3px solid var(--gray-200); border-top-color: var(--blue); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 12px; }
-  @keyframes spin { to { transform: rotate(360deg); } }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--blue:#1a56db;--blue-dark:#1245b3;--green:#0e9f6e;--red:#e02424;--gray-50:#f9fafb;--gray-100:#f3f4f6;--gray-200:#e5e7eb;--gray-400:#9ca3af;--gray-600:#4b5563;--gray-800:#1f2937;--white:#ffffff;--shadow:0 1px 3px rgba(0,0,0,0.1);--kakao:#FEE500;--kakao-text:#3A1D1D}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--gray-100);color:var(--gray-800);min-height:100vh;padding-bottom:80px}
+.app{max-width:480px;margin:0 auto;background:var(--white);min-height:100vh}
+.kakao-banner{display:none;background:var(--kakao);color:var(--kakao-text);padding:10px 16px;font-size:13px;font-weight:600;text-align:center;line-height:1.5}
+.kakao-banner.show{display:block}
+.kakao-banner strong{display:block;font-size:14px;font-weight:900;margin-bottom:2px}
+.kakao-banner .open-ext-btn{display:inline-block;margin-top:8px;background:var(--kakao-text);color:var(--kakao);border:none;border-radius:20px;padding:6px 16px;font-size:13px;font-weight:700;font-family:inherit;cursor:pointer}
+.header{position:sticky;top:0;z-index:50;background:var(--white);border-bottom:1px solid var(--gray-200);padding:0 16px;height:56px;display:flex;align-items:center;justify-content:space-between}
+.header-logo{font-size:20px;font-weight:900;color:var(--blue)}
+.header-logo span{color:var(--gray-800)}
+.user-avatar{width:32px;height:32px;border-radius:50%;background:var(--blue);color:white;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;cursor:pointer;overflow:hidden;position:relative}
+.user-avatar img{width:100%;height:100%;object-fit:cover}
+.admin-badge{position:absolute;bottom:-2px;right:-2px;background:#f59e0b;border-radius:50%;width:12px;height:12px;border:1.5px solid white;font-size:7px;display:flex;align-items:center;justify-content:center}
+.login-btn{font-size:12px;font-weight:700;padding:6px 14px;border-radius:20px;background:var(--blue);color:white;border:none;cursor:pointer;font-family:inherit}
+.tab{display:none}
+.tab.active{display:block}
+.hero{background:linear-gradient(135deg,#1a56db 0%,#1245b3 100%);padding:24px 20px 28px;color:white}
+.hero-badge{display:inline-block;background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.3);border-radius:20px;font-size:11px;font-weight:600;padding:3px 10px;margin-bottom:10px}
+.hero h2{font-size:22px;font-weight:900;line-height:1.3;margin-bottom:6px}
+.hero p{font-size:13px;opacity:.85;margin-bottom:18px}
+.hero-search{display:flex;gap:8px}
+.hero-search input{flex:1;padding:11px 14px;border:none;border-radius:10px;font-size:14px;font-family:inherit;outline:none}
+.hero-search button{background:#fbbf24;color:#1f2937;border:none;border-radius:10px;padding:11px 16px;font-weight:700;font-size:14px;cursor:pointer;font-family:inherit}
+.section-title{padding:20px 16px 12px;font-size:16px;font-weight:700;display:flex;align-items:center;justify-content:space-between}
+.section-title span{font-size:12px;color:var(--blue);font-weight:600;cursor:pointer}
+.tire-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 16px 20px}
+.tire-card{background:var(--white);border:1px solid var(--gray-200);border-radius:14px;overflow:hidden;cursor:pointer;box-shadow:var(--shadow);transition:transform .15s}
+.tire-card:active{transform:scale(.98)}
+.tire-card-img{width:100%;height:130px;object-fit:cover;display:block}
+.tire-card-placeholder{width:100%;height:130px;background:linear-gradient(135deg,#e5e7eb,#d1d5db);display:flex;align-items:center;justify-content:center;font-size:32px}
+.tire-card-body{padding:10px 12px 12px}
+.tire-card-badge{display:inline-block;font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;margin-bottom:5px;background:#d1fae5;color:var(--green)}
+.tire-card-title{font-size:13px;font-weight:700;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tire-card-size{font-size:11px;color:var(--gray-400);margin-bottom:6px}
+.tire-card-price{font-size:15px;font-weight:900;color:var(--blue)}
+.empty-state{grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--gray-400)}
+.empty-icon{font-size:48px;margin-bottom:12px}
+.sell-wrap{padding:20px 16px}
+.sell-title{font-size:18px;font-weight:900;margin-bottom:20px}
+.photo-upload{border:2px dashed var(--gray-200);border-radius:14px;height:160px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;margin-bottom:16px;background:var(--gray-50);overflow:hidden;position:relative}
+.photo-upload:hover{border-color:var(--blue)}
+.form-group{margin-bottom:14px}
+.form-label{display:block;font-size:12px;font-weight:700;color:var(--gray-600);margin-bottom:6px}
+.form-input{width:100%;padding:13px 14px;border:1.5px solid var(--gray-200);border-radius:10px;font-size:14px;font-family:inherit;outline:none;color:var(--gray-800);transition:border-color .2s}
+.form-input:focus{border-color:var(--blue)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.form-textarea{width:100%;padding:13px 14px;border:1.5px solid var(--gray-200);border-radius:10px;font-size:14px;font-family:inherit;outline:none;color:var(--gray-800);resize:none;height:100px}
+.form-textarea:focus{border-color:var(--blue)}
+.btn-primary{width:100%;padding:15px;background:var(--blue);color:white;border:none;border-radius:12px;font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;margin-top:4px}
+.btn-primary:hover{background:var(--blue-dark)}
+.btn-primary:disabled{background:var(--gray-400);cursor:not-allowed}
+.login-required{text-align:center;padding:60px 20px;color:var(--gray-400)}
+.login-required .icon{font-size:48px;margin-bottom:12px}
+.login-required p{font-size:14px;margin-bottom:20px}
+.btn-google{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:14px;background:white;border:1.5px solid var(--gray-200);border-radius:12px;font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;color:var(--gray-800)}
+.chat-tab-wrap{display:flex;border-bottom:1px solid var(--gray-200)}
+.chat-tab-btn{flex:1;padding:12px;font-size:13px;font-weight:700;font-family:inherit;border:none;background:none;color:var(--gray-400);cursor:pointer;border-bottom:2px solid transparent}
+.chat-tab-btn.active{color:var(--blue);border-bottom-color:var(--blue)}
+.bot-wrap{display:flex;flex-direction:column;height:calc(100vh - 185px)}
+.bot-messages{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;background:var(--gray-50)}
+.bot-bubble-wrap{display:flex;gap:8px}
+.bot-bubble-wrap.me{justify-content:flex-end}
+.bot-avatar{width:32px;height:32px;border-radius:50%;background:var(--blue);color:white;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.bot-bubble{max-width:78%;padding:10px 14px;border-radius:18px;font-size:14px;line-height:1.6;background:white;color:var(--gray-800);border-bottom-left-radius:4px;box-shadow:var(--shadow)}
+.bot-bubble-wrap.me .bot-bubble{background:var(--blue);color:white;border-bottom-left-radius:18px;border-bottom-right-radius:4px}
+.bot-typing{display:flex;gap:4px;align-items:center;padding:12px 14px}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--gray-400);animation:bounce 1.2s infinite}
+.dot:nth-child(2){animation-delay:.2s}
+.dot:nth-child(3){animation-delay:.4s}
+@keyframes bounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}
+.escalate-btn{display:block;width:100%;margin-top:8px;padding:8px;background:#fef3c7;border:1px solid #fbbf24;border-radius:8px;font-size:12px;font-weight:700;color:#92400e;font-family:inherit;cursor:pointer}
+.rooms-wrap{overflow-y:auto;height:calc(100vh - 185px)}
+.room-item{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--gray-100);cursor:pointer}
+.room-item:hover{background:var(--gray-50)}
+.room-avatar{width:44px;height:44px;border-radius:50%;background:var(--blue);color:white;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;flex-shrink:0}
+.room-info{flex:1;min-width:0}
+.room-name{font-size:14px;font-weight:700;margin-bottom:2px}
+.room-preview{font-size:12px;color:var(--gray-400);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.room-meta{text-align:right;flex-shrink:0}
+.room-time{font-size:11px;color:var(--gray-400);margin-bottom:4px}
+.room-unread{background:var(--red);color:white;border-radius:10px;font-size:11px;font-weight:700;padding:2px 6px;display:inline-block}
+.dm-wrap{display:flex;flex-direction:column;height:calc(100vh - 120px)}
+.dm-header{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--gray-200);background:white}
+.dm-back{background:none;border:none;font-size:20px;cursor:pointer;padding:4px}
+.dm-title{font-size:15px;font-weight:700}
+.dm-messages{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;background:var(--gray-50)}
+.dm-bubble-wrap{display:flex}
+.dm-bubble-wrap.me{justify-content:flex-end}
+.dm-bubble{max-width:75%;padding:10px 14px;border-radius:18px;font-size:14px;line-height:1.5;background:white;color:var(--gray-800);border-bottom-left-radius:4px;box-shadow:var(--shadow)}
+.dm-bubble-wrap.me .dm-bubble{background:var(--blue);color:white;border-bottom-left-radius:18px;border-bottom-right-radius:4px}
+.dm-time{font-size:10px;color:var(--gray-400);margin-top:4px}
+.dm-sender{font-size:10px;color:var(--gray-400);margin-bottom:3px}
+.chat-input-wrap{display:flex;gap:8px;padding:12px 16px;background:white;border-top:1px solid var(--gray-200)}
+.chat-input{flex:1;padding:11px 14px;border:1.5px solid var(--gray-200);border-radius:24px;font-size:14px;font-family:inherit;outline:none}
+.chat-input:focus{border-color:var(--blue)}
+.chat-send{width:44px;height:44px;background:var(--blue);color:white;border:none;border-radius:50%;cursor:pointer;font-size:18px;flex-shrink:0}
+.empty-chat{text-align:center;padding:60px 20px;color:var(--gray-400)}
+.bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;height:64px;background:white;border-top:1px solid var(--gray-200);display:flex;z-index:50}
+.nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border:none;background:none;cursor:pointer;color:var(--gray-400);font-family:inherit;position:relative}
+.nav-btn.active{color:var(--blue)}
+.nav-btn .icon{font-size:20px}
+.nav-btn .label{font-size:10px;font-weight:600}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:100;align-items:flex-end;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal{background:white;border-radius:20px 20px 0 0;width:100%;max-width:480px;max-height:90vh;overflow-y:auto;padding:24px 20px 32px;position:relative}
+.modal-close{position:absolute;top:16px;right:16px;background:var(--gray-100);border:none;width:32px;height:32px;border-radius:50%;font-size:16px;cursor:pointer}
+.modal-img{width:100%;height:220px;object-fit:cover;border-radius:12px;margin-bottom:16px}
+.modal-badge{font-size:11px;font-weight:700;color:var(--green);margin-bottom:6px}
+.modal-title{font-size:20px;font-weight:900;margin-bottom:4px}
+.modal-size{font-size:13px;color:var(--gray-400);margin-bottom:16px}
+.modal-info{background:var(--gray-50);border-radius:12px;padding:14px 16px;margin-bottom:20px}
+.modal-info p{font-size:13px;color:var(--gray-600);line-height:1.8}
+.modal-price-row{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:16px}
+.modal-price{font-size:26px;font-weight:900;color:var(--blue)}
+.modal-btns{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn-secondary{padding:14px;border:1.5px solid var(--gray-200);border-radius:12px;background:white;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit}
+.toast{position:fixed;bottom:84px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--gray-800);color:white;padding:12px 20px;border-radius:10px;font-size:13px;font-weight:600;opacity:0;transition:all .3s;z-index:200;white-space:nowrap;max-width:90vw;text-align:center}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.loading{text-align:center;padding:60px 20px;color:var(--gray-400)}
+.spinner{width:32px;height:32px;border:3px solid var(--gray-200);border-top-color:var(--blue);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 12px}
+@keyframes spin{to{transform:rotate(360deg)}}
 </style>
 </head>
 <body>
 <div class="app">
-
-  <!-- 카카오톡 인앱 브라우저 안내 배너 -->
   <div class="kakao-banner" id="kakao-banner">
     <strong>⚠️ 카카오톡 브라우저에서는 구글 로그인이 제한됩니다</strong>
     우측 하단 ··· → <b>다른 브라우저로 열기</b>를 눌러주세요
-    <br>
-    <button class="open-ext-btn" onclick="openExternalBrowser()">🌐 외부 브라우저로 열기</button>
+    <br><button class="open-ext-btn" onclick="openExternalBrowser()">🌐 외부 브라우저로 열기</button>
   </div>
 
   <header class="header">
     <div class="header-logo">Tire<span>Safe</span></div>
-    <div id="auth-area">
-      <button class="login-btn" onclick="googleLogin()">구글 로그인</button>
-    </div>
+    <div id="auth-area"><button class="login-btn" onclick="googleLogin()">구글 로그인</button></div>
   </header>
 
   <div class="tab active" id="tab-home">
@@ -176,29 +170,51 @@
   </div>
 
   <div class="tab" id="tab-chat">
-    <div class="chat-wrap">
-      <div class="chat-messages" id="chat-messages">
-        <div class="chat-bubble-wrap">
-          <div><div class="chat-bubble">안녕하세요! 타이어세이프입니다. 무엇이든 문의해 주세요 😊</div></div>
+    <div class="chat-tab-wrap">
+      <button class="chat-tab-btn active" id="ctab-bot" onclick="switchChatTab('bot')">🤖 AI 상담</button>
+      <button class="chat-tab-btn" id="ctab-dm" onclick="switchChatTab('dm')">💬 1:1 채팅</button>
+    </div>
+    <div id="chat-bot-panel">
+      <div class="bot-wrap">
+        <div class="bot-messages" id="bot-messages">
+          <div class="bot-bubble-wrap">
+            <div class="bot-avatar">🤖</div>
+            <div>
+              <div class="bot-bubble">안녕하세요! 타이어세이프 AI 상담사입니다 😊<br>타이어 사이즈 추천, 가격 문의, 장착 방법 등 무엇이든 물어보세요!</div>
+              <button class="escalate-btn" onclick="escalateToAdmin()">👨‍💼 사장님께 직접 문의하기</button>
+            </div>
+          </div>
+        </div>
+        <div class="chat-input-wrap">
+          <input type="text" class="chat-input" id="bot-input" placeholder="궁금한 점을 물어보세요..." onkeydown="if(event.key==='Enter')sendBotMsg()">
+          <button class="chat-send" onclick="sendBotMsg()">↑</button>
         </div>
       </div>
-      <div class="chat-input-wrap">
-        <input type="text" class="chat-input" id="chat-input" placeholder="메시지 입력..." onkeydown="if(event.key==='Enter')sendMsg()">
-        <button class="chat-send" onclick="sendMsg()">↑</button>
+    </div>
+    <div id="chat-dm-panel" style="display:none">
+      <div id="dm-rooms-view">
+        <div class="rooms-wrap" id="dm-rooms-list"><div class="loading"><div class="spinner"></div></div></div>
+      </div>
+      <div id="dm-room-view" style="display:none">
+        <div class="dm-wrap">
+          <div class="dm-header">
+            <button class="dm-back" onclick="closeDmRoom()">←</button>
+            <div class="dm-title" id="dm-room-title">채팅</div>
+          </div>
+          <div class="dm-messages" id="dm-messages"></div>
+          <div class="chat-input-wrap">
+            <input type="text" class="chat-input" id="dm-input" placeholder="메시지 입력..." onkeydown="if(event.key==='Enter')sendDmMsg()">
+            <button class="chat-send" onclick="sendDmMsg()">↑</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
   <nav class="bottom-nav">
-    <button class="nav-btn active" id="nav-home" onclick="switchTab('home')">
-      <span class="icon">🏠</span><span class="label">홈</span>
-    </button>
-    <button class="nav-btn" id="nav-sell" onclick="switchTab('sell')">
-      <span class="icon">➕</span><span class="label">판매하기</span>
-    </button>
-    <button class="nav-btn" id="nav-chat" onclick="switchTab('chat')">
-      <span class="icon">💬</span><span class="label">채팅</span>
-    </button>
+    <button class="nav-btn active" id="nav-home" onclick="switchTab('home')"><span class="icon">🏠</span><span class="label">홈</span></button>
+    <button class="nav-btn" id="nav-sell" onclick="switchTab('sell')"><span class="icon">➕</span><span class="label">판매하기</span></button>
+    <button class="nav-btn" id="nav-chat" onclick="switchTab('chat')"><span class="icon">💬</span><span class="label">채팅</span></button>
   </nav>
 </div>
 
@@ -211,290 +227,375 @@
     <div class="modal-size" id="modal-size"></div>
     <div class="modal-info"><p id="modal-desc"></p></div>
     <div class="modal-price-row">
-      <div>
-        <div style="font-size:12px;color:var(--gray-400)">판매가</div>
-        <div class="modal-price" id="modal-price"></div>
-      </div>
+      <div><div style="font-size:12px;color:var(--gray-400)">판매가</div><div class="modal-price" id="modal-price"></div></div>
       <div style="font-size:12px;color:var(--gray-400)">장착 공임 별도</div>
     </div>
     <div class="modal-btns">
-      <button class="btn-secondary" onclick="closeModal();switchTab('chat')">💬 채팅문의</button>
+      <button class="btn-secondary" onclick="closeModal();startDmWithAdmin()">💬 사장님께 문의</button>
       <button class="btn-primary" style="margin:0" onclick="closeModal();toast('💳 결제 모듈 준비 중입니다')">🔒 세이프페이</button>
     </div>
   </div>
 </div>
-
 <div class="toast" id="toast"></div>
 
 <script>
+// ══════════════════════════════════════
+// ★ 여기만 수정하세요
+const ADMIN_UID = 'SMB8eJMGJ4VPpKbZqbEjlXw2eG32';
+const CLAUDE_API_KEY = 'YOUR_CLAUDE_API_KEY'; // ← API 키 발급 후 여기에 붙여넣기
+// ══════════════════════════════════════
+
 const firebaseConfig = {
-  apiKey: "AIzaSyDP414CWLGAJj06_bhBbGD9rkOcZHb2--I",
-  authDomain: "tire-f9ebb.firebaseapp.com",
-  projectId: "tire-f9ebb",
-  storageBucket: "tire-f9ebb.firebasestorage.app",
-  messagingSenderId: "394141245307",
-  appId: "1:394141245307:web:66b79b11761f120565e7de"
+  apiKey:"AIzaSyDP414CWLGAJj06_bhBbGD9rkOcZHb2--I",
+  authDomain:"tire-f9ebb.firebaseapp.com",
+  projectId:"tire-f9ebb",
+  storageBucket:"tire-f9ebb.firebasestorage.app",
+  messagingSenderId:"394141245307",
+  appId:"1:394141245307:web:66b79b11761f120565e7de"
 };
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
-let currentUser = null;
+let currentUser=null, currentDmRoomId=null, unsubDm=null;
 
-// ── 카카오톡 인앱 브라우저 감지 ──
-function isKakaoBrowser() {
-  return /KAKAOTALK/i.test(navigator.userAgent);
+function isKakaoBrowser(){return /KAKAOTALK/i.test(navigator.userAgent);}
+function openExternalBrowser(){
+  location.href='kakaotalk://web/openExternal?url='+encodeURIComponent(window.location.href);
+  setTimeout(()=>toast('우측 하단 ··· → 다른 브라우저로 열기를 눌러주세요'),1000);
 }
-
-// 카카오 외부 브라우저로 열기
-function openExternalBrowser() {
-  const url = encodeURIComponent(window.location.href);
-  // 카카오톡 공식 외부 브라우저 오픈 스킴 시도
-  location.href = 'kakaotalk://web/openExternal?url=' + url;
-  // 스킴이 실패하면 (iOS 등) 사용자 안내
-  setTimeout(() => {
-    toast('우측 하단 ··· → 다른 브라우저로 열기를 눌러주세요');
-  }, 1000);
-}
-
-// 페이지 로드 시 카카오 감지 → 배너 표시
-window.addEventListener('DOMContentLoaded', () => {
-  if (isKakaoBrowser()) {
-    document.getElementById('kakao-banner').classList.add('show');
-  }
+window.addEventListener('DOMContentLoaded',()=>{
+  if(isKakaoBrowser()) document.getElementById('kakao-banner').classList.add('show');
 });
 
-// 리디렉션 후 로그인 결과 처리
-auth.getRedirectResult().then(result => {
-  if (result && result.user) toast('✅ 로그인 성공!');
-}).catch(e => {
-  if (e.code !== 'auth/no-current-user') toast('로그인 오류: ' + e.message);
-});
+auth.getRedirectResult().then(r=>{if(r&&r.user)toast('✅ 로그인 성공!');})
+  .catch(e=>{if(e.code!=='auth/no-current-user')toast('로그인 오류: '+e.message);});
+auth.onAuthStateChanged(user=>{currentUser=user;updateAuthUI(user);loadTires();});
 
-auth.onAuthStateChanged(user => {
-  currentUser = user;
-  updateAuthUI(user);
-  loadTires();
-});
-
-function googleLogin() {
-  // 카카오 인앱 브라우저면 외부 브라우저 안내 후 중단
-  if (isKakaoBrowser()) {
-    toast('카카오톡 브라우저에서는 구글 로그인이 안 됩니다');
-    openExternalBrowser();
-    return;
-  }
-
-  // PC/모바일 구분 없이 무조건 Redirect 사용 (팝업 차단 문제 방지)
-  const provider = new firebase.auth.GoogleAuthProvider();
-  auth.signInWithRedirect(provider);
+function googleLogin(){
+  if(isKakaoBrowser()){toast('카카오톡에서는 구글 로그인이 안 됩니다');openExternalBrowser();return;}
+  auth.signInWithRedirect(new firebase.auth.GoogleAuthProvider());
 }
+function logout(){if(confirm('로그아웃 하시겠습니까?'))auth.signOut();}
+function isAdmin(){return currentUser&&currentUser.uid===ADMIN_UID;}
 
-function logout() {
-  if (confirm('로그아웃 하시겠습니까?')) auth.signOut();
-}
-
-function updateAuthUI(user) {
-  const area = document.getElementById('auth-area');
-  if (user) {
-    area.innerHTML = `<div class="user-avatar" onclick="logout()" title="로그아웃">
-      ${user.photoURL ? `<img src="${user.photoURL}">` : user.displayName[0]}
+function updateAuthUI(user){
+  const area=document.getElementById('auth-area');
+  if(user){
+    area.innerHTML=`<div class="user-avatar" onclick="logout()" title="로그아웃">
+      ${user.photoURL?`<img src="${user.photoURL}">`:user.displayName[0]}
+      ${isAdmin()?'<div class="admin-badge">★</div>':''}
     </div>`;
     renderSellForm();
   } else {
-    area.innerHTML = `<button class="login-btn" onclick="googleLogin()">구글 로그인</button>`;
-    document.getElementById('sell-content').innerHTML = `
-      <div class="login-required">
-        <div class="icon">🔒</div>
+    area.innerHTML=`<button class="login-btn" onclick="googleLogin()">구글 로그인</button>`;
+    document.getElementById('sell-content').innerHTML=`
+      <div class="login-required"><div class="icon">🔒</div>
         <p>판매하려면 로그인이 필요합니다</p>
         <button class="btn-google" onclick="googleLogin()">
           <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="20"> 구글로 로그인
-        </button>
-      </div>`;
+        </button></div>`;
   }
 }
 
-function renderSellForm() {
-  document.getElementById('sell-content').innerHTML = `
+function switchTab(name){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  document.getElementById('nav-'+name).classList.add('active');
+  if(name==='home')loadTires();
+  if(name==='chat')loadDmRooms();
+}
+function switchChatTab(name){
+  document.querySelectorAll('.chat-tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('ctab-'+name).classList.add('active');
+  document.getElementById('chat-bot-panel').style.display=name==='bot'?'block':'none';
+  document.getElementById('chat-dm-panel').style.display=name==='dm'?'block':'none';
+  if(name==='dm')loadDmRooms();
+}
+
+async function loadTires(){
+  const grid=document.getElementById('tire-grid');
+  grid.innerHTML='<div class="loading" style="grid-column:1/-1"><div class="spinner"></div><p>불러오는 중...</p></div>';
+  try{
+    const snap=await db.collection('tires').orderBy('createdAt','desc').get();
+    if(snap.empty){grid.innerHTML='<div class="empty-state"><div class="empty-icon">🛞</div><p>등록된 매물이 없습니다.<br>첫 번째 타이어를 올려보세요!</p></div>';return;}
+    grid.innerHTML=snap.docs.map(doc=>{
+      const t={id:doc.id,...doc.data()};
+      const safe=JSON.stringify({id:t.id,title:t.title,size:t.size,price:t.price,description:t.description,imageUrl:t.imageUrl,sellerName:t.sellerName,sellerId:t.sellerId}).replace(/'/g,"&#39;");
+      return `<div class="tire-card" onclick='openModal(${JSON.stringify(safe)})'>
+        ${t.imageUrl?`<img class="tire-card-img" src="${t.imageUrl}" loading="lazy">`:'<div class="tire-card-placeholder">🛞</div>'}
+        <div class="tire-card-body">
+          <div class="tire-card-badge">인증</div>
+          <div class="tire-card-title">${t.title}</div>
+          <div class="tire-card-size">${t.size||'-'}</div>
+          <div class="tire-card-price">${Number(t.price).toLocaleString()}원</div>
+        </div></div>`;
+    }).join('');
+  }catch(e){grid.innerHTML=`<div style="grid-column:1/-1;padding:20px;color:var(--red);font-size:13px">오류: ${e.message}</div>`;}
+}
+
+function renderSellForm(){
+  document.getElementById('sell-content').innerHTML=`
     <div class="photo-upload" onclick="document.getElementById('file-input').click()">
       <div style="font-size:36px;margin-bottom:8px">📸</div>
       <div style="font-size:13px;color:var(--gray-400);font-weight:600">사진 선택 (선택사항)</div>
       <img id="preview-img" src="" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none">
     </div>
     <input type="file" id="file-input" accept="image/*" style="display:none" onchange="handlePhoto(this)">
-    <div class="form-group">
-      <label class="form-label">타이어 모델명 *</label>
-      <input type="text" class="form-input" id="f-title" placeholder="예: 금호 마제스티9">
-    </div>
+    <div class="form-group"><label class="form-label">타이어 모델명 *</label>
+      <input type="text" class="form-input" id="f-title" placeholder="예: 금호 마제스티9"></div>
     <div class="form-row">
-      <div class="form-group">
-        <label class="form-label">사이즈</label>
-        <input type="text" class="form-input" id="f-size" placeholder="245/45/18">
-      </div>
-      <div class="form-group">
-        <label class="form-label">가격 (원) *</label>
-        <input type="number" class="form-input" id="f-price" placeholder="100000">
-      </div>
+      <div class="form-group"><label class="form-label">사이즈</label>
+        <input type="text" class="form-input" id="f-size" placeholder="245/45/18"></div>
+      <div class="form-group"><label class="form-label">가격 (원) *</label>
+        <input type="number" class="form-input" id="f-price" placeholder="100000"></div>
     </div>
-    <div class="form-group">
-      <label class="form-label">상태 설명</label>
-      <textarea class="form-textarea" id="f-desc" placeholder="트레드 잔량, DOT 제조일자, 특이사항 등"></textarea>
-    </div>
+    <div class="form-group"><label class="form-label">상태 설명</label>
+      <textarea class="form-textarea" id="f-desc" placeholder="트레드 잔량, DOT 제조일자, 특이사항 등"></textarea></div>
     <button class="btn-primary" id="submit-btn" onclick="submitTire()">매물 등록하기</button>`;
 }
-
-function switchTab(name) {
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('tab-' + name).classList.add('active');
-  document.getElementById('nav-' + name).classList.add('active');
-  if (name === 'home') loadTires();
-  if (name === 'chat') loadMsgs();
-}
-
-function compressImage(file) {
-  return new Promise(resolve => {
-    const reader = new FileReader();
-    reader.onload = e => {
-      const img = new Image();
-      img.onload = () => {
-        const canvas = document.createElement('canvas');
-        const MAX = 500;
-        let w = img.width, h = img.height;
-        if (w > h && w > MAX) { h = h * MAX / w; w = MAX; }
-        else if (h > MAX) { w = w * MAX / h; h = MAX; }
-        canvas.width = w; canvas.height = h;
-        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-        resolve(canvas.toDataURL('image/jpeg', 0.6));
-      };
-      img.src = e.target.result;
-    };
-    reader.readAsDataURL(file);
+function compressImage(file){
+  return new Promise(resolve=>{
+    const reader=new FileReader();
+    reader.onload=e=>{
+      const img=new Image();
+      img.onload=()=>{
+        const canvas=document.createElement('canvas');
+        const MAX=500;let w=img.width,h=img.height;
+        if(w>h&&w>MAX){h=h*MAX/w;w=MAX;}else if(h>MAX){w=w*MAX/h;h=MAX;}
+        canvas.width=w;canvas.height=h;
+        canvas.getContext('2d').drawImage(img,0,0,w,h);
+        resolve(canvas.toDataURL('image/jpeg',0.6));
+      };img.src=e.target.result;
+    };reader.readAsDataURL(file);
   });
 }
-
-async function loadTires() {
-  const grid = document.getElementById('tire-grid');
-  grid.innerHTML = '<div class="loading" style="grid-column:1/-1"><div class="spinner"></div><p>불러오는 중...</p></div>';
-  try {
-    const snap = await db.collection('tires').orderBy('createdAt', 'desc').get();
-    if (snap.empty) {
-      grid.innerHTML = '<div class="empty-state"><div class="empty-icon">🛞</div><p>등록된 매물이 없습니다.<br>첫 번째 타이어를 올려보세요!</p></div>';
-      return;
-    }
-    grid.innerHTML = snap.docs.map(doc => {
-      const t = { id: doc.id, ...doc.data() };
-      const safe = JSON.stringify({ id:t.id, title:t.title, size:t.size, price:t.price, description:t.description, imageUrl:t.imageUrl, sellerName:t.sellerName }).replace(/'/g, '&#39;');
-      return `
-        <div class="tire-card" onclick='openModal(${JSON.stringify(safe)})'>
-          ${t.imageUrl ? `<img class="tire-card-img" src="${t.imageUrl}" loading="lazy">` : '<div class="tire-card-placeholder">🛞</div>'}
-          <div class="tire-card-body">
-            <div class="tire-card-badge">인증</div>
-            <div class="tire-card-title">${t.title}</div>
-            <div class="tire-card-size">${t.size || '-'}</div>
-            <div class="tire-card-price">${Number(t.price).toLocaleString()}원</div>
-          </div>
-        </div>`;
-    }).join('');
-  } catch(e) {
-    grid.innerHTML = `<div style="grid-column:1/-1;padding:20px;color:var(--red);font-size:13px">오류: ${e.message}</div>`;
-  }
-}
-
-function handlePhoto(input) {
-  const file = input.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = e => {
-    const img = document.getElementById('preview-img');
-    img.src = e.target.result;
-    img.style.display = 'block';
-  };
+function handlePhoto(input){
+  const file=input.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=e=>{const img=document.getElementById('preview-img');img.src=e.target.result;img.style.display='block';};
   reader.readAsDataURL(file);
 }
-
-async function submitTire() {
-  if (!currentUser) { toast('로그인이 필요합니다'); return; }
-  const title = document.getElementById('f-title').value.trim();
-  const size  = document.getElementById('f-size').value.trim();
-  const price = document.getElementById('f-price').value.trim();
-  const desc  = document.getElementById('f-desc').value.trim();
-  const file  = document.getElementById('file-input').files[0];
-  if (!title) { toast('모델명을 입력해주세요'); return; }
-  if (!price) { toast('가격을 입력해주세요'); return; }
-  const btn = document.getElementById('submit-btn');
-  btn.disabled = true; btn.textContent = '등록 중...';
-  try {
-    let imageUrl = null;
-    if (file) imageUrl = await compressImage(file);
-    await db.collection('tires').add({
-      title, size, price: parseInt(price), description: desc,
-      imageUrl, sellerName: currentUser.displayName,
-      sellerId: currentUser.uid,
-      createdAt: firebase.firestore.FieldValue.serverTimestamp()
-    });
+async function submitTire(){
+  if(!currentUser){toast('로그인이 필요합니다');return;}
+  const title=document.getElementById('f-title').value.trim();
+  const size=document.getElementById('f-size').value.trim();
+  const price=document.getElementById('f-price').value.trim();
+  const desc=document.getElementById('f-desc').value.trim();
+  const file=document.getElementById('file-input').files[0];
+  if(!title){toast('모델명을 입력해주세요');return;}
+  if(!price){toast('가격을 입력해주세요');return;}
+  const btn=document.getElementById('submit-btn');
+  btn.disabled=true;btn.textContent='등록 중...';
+  try{
+    let imageUrl=null;
+    if(file)imageUrl=await compressImage(file);
+    await db.collection('tires').add({title,size,price:parseInt(price),description:desc,imageUrl,sellerName:currentUser.displayName,sellerId:currentUser.uid,createdAt:firebase.firestore.FieldValue.serverTimestamp()});
     toast('✅ 매물이 등록되었습니다!');
-    setTimeout(() => switchTab('home'), 1000);
-  } catch(e) {
-    toast('❌ ' + e.message);
-  } finally {
-    btn.disabled = false; btn.textContent = '매물 등록하기';
+    setTimeout(()=>switchTab('home'),1000);
+  }catch(e){toast('❌ '+e.message);}
+  finally{btn.disabled=false;btn.textContent='매물 등록하기';}
+}
+
+// AI 챗봇
+let botHistory=[];
+async function sendBotMsg(){
+  if(!currentUser){toast('로그인 후 이용 가능합니다');return;}
+  const input=document.getElementById('bot-input');
+  const msg=input.value.trim();if(!msg)return;
+  input.value='';
+  appendBotMsg(msg,'me');
+  botHistory.push({role:'user',content:msg});
+  showTyping();
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','x-api-key':CLAUDE_API_KEY,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:500,
+        system:'당신은 타이어세이프의 친절한 AI 상담사입니다. 중고타이어 구매/판매, 타이어 사이즈, 장착 방법, 가격 안내를 해주세요. 답변은 짧고 친절하게 해주세요. 직접 상담이 필요하거나 복잡한 문의라고 판단되면 답변 맨 끝에 반드시 [상담필요] 태그를 붙여주세요.',
+        messages:botHistory
+      })
+    });
+    const data=await res.json();
+    removeTyping();
+    const reply=data.content?.[0]?.text||'죄송합니다, 잠시 후 다시 시도해주세요.';
+    const needsEscalate=reply.includes('[상담필요]');
+    const cleanReply=reply.replace('[상담필요]','').trim();
+    botHistory.push({role:'assistant',content:cleanReply});
+    appendBotMsg(cleanReply,'bot',needsEscalate);
+    if(needsEscalate)notifyAdmin(msg,cleanReply);
+  }catch(e){
+    removeTyping();
+    appendBotMsg('일시적인 오류가 발생했습니다. 사장님께 직접 문의해 주세요!','bot',true);
   }
 }
+function appendBotMsg(text,who,showEscalate=false){
+  const box=document.getElementById('bot-messages');
+  const wrap=document.createElement('div');
+  wrap.className='bot-bubble-wrap'+(who==='me'?' me':'');
+  wrap.innerHTML=who==='me'
+    ?`<div class="bot-bubble">${text}</div>`
+    :`<div class="bot-avatar">🤖</div><div>
+        <div class="bot-bubble">${text.replace(/\n/g,'<br>')}</div>
+        ${showEscalate?`<button class="escalate-btn" onclick="escalateToAdmin()">👨‍💼 사장님께 직접 문의하기</button>`:''}
+       </div>`;
+  box.appendChild(wrap);box.scrollTop=box.scrollHeight;
+}
+function showTyping(){
+  const box=document.getElementById('bot-messages');
+  const el=document.createElement('div');
+  el.className='bot-bubble-wrap';el.id='bot-typing';
+  el.innerHTML=`<div class="bot-avatar">🤖</div><div class="bot-bubble"><div class="bot-typing"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div></div>`;
+  box.appendChild(el);box.scrollTop=box.scrollHeight;
+}
+function removeTyping(){const el=document.getElementById('bot-typing');if(el)el.remove();}
+function escalateToAdmin(){
+  if(!currentUser){toast('로그인 후 이용 가능합니다');return;}
+  startDmWithAdmin();
+  toast('사장님과의 채팅방으로 이동합니다!');
+}
+async function notifyAdmin(userMsg,botReply){
+  if(!currentUser)return;
+  try{
+    const roomId=getDmRoomId(currentUser.uid,ADMIN_UID);
+    const roomRef=db.collection('dmRooms').doc(roomId);
+    await roomRef.set({
+      members:[currentUser.uid,ADMIN_UID],
+      memberNames:{[currentUser.uid]:currentUser.displayName,[ADMIN_UID]:'사장님'},
+      lastMsg:`[AI알림] ${currentUser.displayName}님 상담 필요`,
+      lastAt:firebase.firestore.FieldValue.serverTimestamp(),
+      [`unread.${ADMIN_UID}`]:firebase.firestore.FieldValue.increment(1)
+    },{merge:true});
+    await roomRef.collection('msgs').add({
+      content:`🤖 AI 상담 알림\n\n고객: ${currentUser.displayName}\n질문: "${userMsg}"\nAI답변: "${botReply}"\n\n직접 답변이 필요합니다!`,
+      uid:'system',name:'AI 알림',
+      createdAt:firebase.firestore.FieldValue.serverTimestamp()
+    });
+  }catch(e){console.error('알림 실패',e);}
+}
 
-let unsubChat = null;
-function loadMsgs() {
-  if (unsubChat) unsubChat();
-  const box = document.getElementById('chat-messages');
-  unsubChat = db.collection('messages').orderBy('createdAt').onSnapshot(snap => {
-    const welcome = '<div class="chat-bubble-wrap"><div><div class="chat-bubble">안녕하세요! 타이어세이프입니다. 무엇이든 문의해 주세요 😊</div></div></div>';
-    if (snap.empty) { box.innerHTML = welcome; return; }
-    box.innerHTML = welcome + snap.docs.map(doc => {
-      const m = doc.data();
-      const isMe = currentUser && m.uid === currentUser.uid;
-      return `<div class="chat-bubble-wrap ${isMe?'me':''}">
-        <div>
-          ${!isMe ? `<div class="chat-sender">${m.name||'익명'}</div>` : ''}
-          <div class="chat-bubble">${m.content}</div>
-          <div class="chat-time">${m.createdAt ? new Date(m.createdAt.toDate()).toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit'}) : ''}</div>
+// 1:1 채팅
+function getDmRoomId(uid1,uid2){return[uid1,uid2].sort().join('_');}
+async function startDmWithAdmin(){
+  if(!currentUser){toast('로그인이 필요합니다');return;}
+  if(currentUser.uid===ADMIN_UID){toast('본인 계정입니다');return;}
+  const roomId=getDmRoomId(currentUser.uid,ADMIN_UID);
+  await db.collection('dmRooms').doc(roomId).set({
+    members:[currentUser.uid,ADMIN_UID],
+    memberNames:{[currentUser.uid]:currentUser.displayName,[ADMIN_UID]:'타이어세이프 사장님'},
+    lastMsg:'',lastAt:firebase.firestore.FieldValue.serverTimestamp(),unread:{}
+  },{merge:true});
+  switchTab('chat');switchChatTab('dm');
+  openDmRoom(roomId,'타이어세이프 사장님');
+}
+async function loadDmRooms(){
+  if(!currentUser){
+    document.getElementById('dm-rooms-list').innerHTML=`
+      <div class="empty-chat">
+        <div style="font-size:48px;margin-bottom:12px">🔒</div>
+        <p style="font-size:14px;margin-bottom:20px">로그인 후 채팅을 이용하세요</p>
+        <button class="btn-google" style="max-width:280px;margin:0 auto" onclick="googleLogin()">
+          <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="20"> 구글로 로그인
+        </button></div>`;return;
+  }
+  const list=document.getElementById('dm-rooms-list');
+  list.innerHTML='<div class="loading"><div class="spinner"></div></div>';
+  try{
+    const snap=await db.collection('dmRooms').where('members','array-contains',currentUser.uid).orderBy('lastAt','desc').get();
+    if(snap.empty){
+      list.innerHTML=`<div class="empty-chat"><div style="font-size:40px;margin-bottom:12px">💬</div>
+        <p style="font-size:14px;color:var(--gray-400);margin-bottom:20px">아직 채팅이 없습니다</p>
+        <button class="btn-primary" style="width:auto;padding:12px 24px;margin:0 auto;display:block" onclick="startDmWithAdmin()">사장님께 문의하기</button>
+      </div>`;return;
+    }
+    list.innerHTML=snap.docs.map(doc=>{
+      const r=doc.data();
+      const otherId=r.members.find(m=>m!==currentUser.uid);
+      const otherName=r.memberNames?.[otherId]||'상대방';
+      const unread=r.unread?.[currentUser.uid]||0;
+      return `<div class="room-item" onclick="openDmRoom('${doc.id}','${otherName}')">
+        <div class="room-avatar">${otherName[0]||'?'}</div>
+        <div class="room-info">
+          <div class="room-name">${otherName}</div>
+          <div class="room-preview">${r.lastMsg||'대화를 시작해보세요'}</div>
         </div>
-      </div>`;
+        <div class="room-meta">
+          <div class="room-time">${r.lastAt?formatTime(r.lastAt.toDate()):''}</div>
+          ${unread>0?`<span class="room-unread">${unread}</span>`:''}
+        </div></div>`;
     }).join('');
-    box.scrollTop = box.scrollHeight;
+  }catch(e){list.innerHTML=`<div style="padding:20px;color:var(--red);font-size:13px">오류: ${e.message}</div>`;}
+}
+function openDmRoom(roomId,otherName){
+  currentDmRoomId=roomId;
+  document.getElementById('dm-rooms-view').style.display='none';
+  document.getElementById('dm-room-view').style.display='block';
+  document.getElementById('dm-room-title').textContent=otherName;
+  document.getElementById('dm-messages').innerHTML='';
+  if(unsubDm)unsubDm();
+  if(currentUser)db.collection('dmRooms').doc(roomId).update({[`unread.${currentUser.uid}`]:0}).catch(()=>{});
+  unsubDm=db.collection('dmRooms').doc(roomId).collection('msgs').orderBy('createdAt').onSnapshot(snap=>{
+    const box=document.getElementById('dm-messages');
+    box.innerHTML=snap.docs.map(doc=>{
+      const m=doc.data();
+      const isMe=currentUser&&m.uid===currentUser.uid;
+      if(m.uid==='system')return`<div style="text-align:center;font-size:12px;color:var(--gray-400);background:#f0f9ff;border-radius:8px;padding:8px 12px;margin:4px 0;white-space:pre-line">${m.content}</div>`;
+      return`<div class="dm-bubble-wrap ${isMe?'me':''}"><div>
+        ${!isMe?`<div class="dm-sender">${m.name||'상대방'}</div>`:''}
+        <div class="dm-bubble">${m.content}</div>
+        <div class="dm-time" style="text-align:${isMe?'right':'left'}">${m.createdAt?formatTime(m.createdAt.toDate()):''}</div>
+      </div></div>`;
+    }).join('');
+    box.scrollTop=box.scrollHeight;
   });
 }
-
-async function sendMsg() {
-  const input = document.getElementById('chat-input');
-  const content = input.value.trim();
-  if (!content) return;
-  if (!currentUser) { toast('채팅은 로그인 후 가능합니다'); return; }
-  input.value = '';
-  await db.collection('messages').add({
-    content, uid: currentUser.uid, name: currentUser.displayName,
-    createdAt: firebase.firestore.FieldValue.serverTimestamp()
-  });
+function closeDmRoom(){
+  if(unsubDm){unsubDm();unsubDm=null;}
+  currentDmRoomId=null;
+  document.getElementById('dm-rooms-view').style.display='block';
+  document.getElementById('dm-room-view').style.display='none';
+  loadDmRooms();
+}
+async function sendDmMsg(){
+  if(!currentUser||!currentDmRoomId)return;
+  const input=document.getElementById('dm-input');
+  const content=input.value.trim();if(!content)return;
+  input.value='';
+  const roomRef=db.collection('dmRooms').doc(currentDmRoomId);
+  const roomSnap=await roomRef.get();
+  const otherId=roomSnap.data().members.find(m=>m!==currentUser.uid);
+  await Promise.all([
+    roomRef.collection('msgs').add({content,uid:currentUser.uid,name:currentUser.displayName,createdAt:firebase.firestore.FieldValue.serverTimestamp()}),
+    roomRef.update({lastMsg:content,lastAt:firebase.firestore.FieldValue.serverTimestamp(),[`unread.${otherId}`]:firebase.firestore.FieldValue.increment(1)})
+  ]);
 }
 
-function openModal(t) {
-  if (typeof t === 'string') t = JSON.parse(t);
-  const img = document.getElementById('modal-img');
-  img.src = t.imageUrl || '';
-  img.style.display = t.imageUrl ? 'block' : 'none';
-  document.getElementById('modal-title').textContent = t.title;
-  document.getElementById('modal-size').textContent = t.size || '';
-  document.getElementById('modal-desc').textContent = t.description || '전문가가 직접 검수한 상품입니다.';
-  document.getElementById('modal-price').textContent = Number(t.price).toLocaleString() + '원';
+function openModal(t){
+  if(typeof t==='string')t=JSON.parse(t);
+  const img=document.getElementById('modal-img');
+  img.src=t.imageUrl||'';img.style.display=t.imageUrl?'block':'none';
+  document.getElementById('modal-title').textContent=t.title;
+  document.getElementById('modal-size').textContent=t.size||'';
+  document.getElementById('modal-desc').textContent=t.description||'전문가가 직접 검수한 상품입니다.';
+  document.getElementById('modal-price').textContent=Number(t.price).toLocaleString()+'원';
   document.getElementById('modal-overlay').classList.add('open');
-  document.body.style.overflow = 'hidden';
+  document.body.style.overflow='hidden';
 }
-function closeModal() {
-  document.getElementById('modal-overlay').classList.remove('open');
-  document.body.style.overflow = '';
+function closeModal(){document.getElementById('modal-overlay').classList.remove('open');document.body.style.overflow='';}
+
+function formatTime(date){
+  const diff=new Date()-date;
+  if(diff<60000)return'방금';
+  if(diff<3600000)return Math.floor(diff/60000)+'분 전';
+  if(diff<86400000)return date.toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit'});
+  return date.toLocaleDateString('ko-KR',{month:'numeric',day:'numeric'});
 }
-function toast(msg) {
-  const el = document.getElementById('toast');
-  el.textContent = msg; el.classList.add('show');
-  setTimeout(() => el.classList.remove('show'), 2500);
+function toast(msg){
+  const el=document.getElementById('toast');
+  el.textContent=msg;el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'),2500);
 }
 </script>
 </body>
