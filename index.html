@@ -7,6 +7,7 @@
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -73,16 +74,18 @@
   .btn-primary { width: 100%; padding: 15px; background: var(--blue); color: white; border: none; border-radius: 12px; font-size: 15px; font-weight: 700; font-family: inherit; cursor: pointer; margin-top: 4px; }
   .btn-primary:hover { background: var(--blue-dark); }
   .btn-primary:disabled { background: var(--gray-400); cursor: not-allowed; }
-  .login-required { text-align: center; padding: 60px 20px; color: var(--gray-400); }
+  .login-required { text-align: center; padding: 40px 20px; color: var(--gray-400); }
   .login-required .icon { font-size: 48px; margin-bottom: 12px; }
-  .login-required p { font-size: 14px; margin-bottom: 20px; }
+  .login-required p { font-size: 14px; margin-bottom: 20px; color: var(--gray-600); }
+  .login-btns { display: flex; flex-direction: column; gap: 10px; }
   .btn-google { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 14px; background: white; border: 1.5px solid var(--gray-200); border-radius: 12px; font-size: 15px; font-weight: 700; font-family: inherit; cursor: pointer; color: var(--gray-800); }
+  .btn-kakao { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 14px; background: var(--kakao); border: none; border-radius: 12px; font-size: 15px; font-weight: 700; font-family: inherit; cursor: pointer; color: var(--kakao-text); }
 
   .chat-tab-wrap { display: flex; border-bottom: 1px solid var(--gray-200); background: white; position: sticky; top: 56px; z-index: 10; }
   .chat-tab-btn { flex: 1; padding: 13px; font-size: 13px; font-weight: 700; font-family: inherit; border: none; background: none; color: var(--gray-400); cursor: pointer; border-bottom: 2px solid transparent; }
   .chat-tab-btn.active { color: var(--blue); border-bottom-color: var(--blue); }
 
-  .chat-wrap { display: flex; flex-direction: column; height: calc(100vh - 175px); }
+  .chat-wrap { display: flex; flex-direction: column; }
   .chat-messages { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 10px; background: var(--gray-50); }
   .chat-bubble-wrap { display: flex; }
   .chat-bubble-wrap.me { justify-content: flex-end; }
@@ -97,7 +100,7 @@
   .chat-input:focus { border-color: var(--blue); }
   .chat-send { width: 44px; height: 44px; background: var(--blue); color: white; border: none; border-radius: 50%; cursor: pointer; font-size: 18px; flex-shrink: 0; }
 
-  .room-list { overflow-y: auto; height: calc(100vh - 175px); }
+  .room-list { overflow-y: auto; }
   .room-item { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-bottom: 1px solid var(--gray-100); cursor: pointer; transition: background 0.1s; }
   .room-item:hover { background: var(--gray-50); }
   .room-avatar { width: 46px; height: 46px; border-radius: 50%; background: var(--blue); color: white; display: flex; align-items: center; justify-content: center; font-size: 17px; font-weight: 700; flex-shrink: 0; overflow: hidden; }
@@ -107,18 +110,19 @@
   .room-last { font-size: 12px; color: var(--gray-400); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .room-time { font-size: 10px; color: var(--gray-400); flex-shrink: 0; }
 
-  .dm-wrap { display: none; flex-direction: column; height: calc(100vh - 120px); }
+  .dm-wrap { display: none; flex-direction: column; }
   .dm-wrap.open { display: flex; }
   .dm-header { display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-bottom: 1px solid var(--gray-200); background: white; }
   .dm-back { background: none; border: none; font-size: 22px; cursor: pointer; line-height: 1; color: var(--gray-600); }
   .dm-title { font-size: 15px; font-weight: 700; }
 
   .bottom-nav { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; height: 64px; background: white; border-top: 1px solid var(--gray-200); display: flex; z-index: 50; }
-  .nav-btn { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; border: none; background: none; cursor: pointer; color: var(--gray-400); font-family: inherit; position: relative; }
+  .nav-btn { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; border: none; background: none; cursor: pointer; color: var(--gray-400); font-family: inherit; }
   .nav-btn.active { color: var(--blue); }
   .nav-btn .icon { font-size: 20px; }
   .nav-btn .label { font-size: 10px; font-weight: 600; }
 
+  /* 모달 */
   .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 100; align-items: flex-end; justify-content: center; }
   .modal-overlay.open { display: flex; }
   .modal { background: white; border-radius: 20px 20px 0 0; width: 100%; max-width: 480px; max-height: 90vh; overflow-y: auto; padding: 24px 20px 32px; position: relative; }
@@ -129,12 +133,21 @@
   .modal-size { font-size: 13px; color: var(--gray-400); margin-bottom: 16px; }
   .modal-info { background: var(--gray-50); border-radius: 12px; padding: 14px 16px; margin-bottom: 20px; }
   .modal-info p { font-size: 13px; color: var(--gray-600); line-height: 1.8; }
-  .modal-price-row { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 16px; }
+  .modal-price-row { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 8px; }
   .modal-price { font-size: 26px; font-weight: 900; color: var(--blue); }
+  .modal-seller-row { font-size: 12px; color: var(--gray-400); margin-bottom: 16px; }
   .modal-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
   .btn-secondary { padding: 14px; border: 1.5px solid var(--gray-200); border-radius: 12px; background: white; font-size: 14px; font-weight: 700; cursor: pointer; font-family: inherit; }
 
-  .toast { position: fixed; bottom: 84px; left: 50%; transform: translateX(-50%) translateY(20px); background: var(--gray-800); color: white; padding: 12px 20px; border-radius: 10px; font-size: 13px; font-weight: 600; opacity: 0; transition: all 0.3s; z-index: 200; white-space: nowrap; }
+  /* 로그인 모달 */
+  .login-modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 200; align-items: flex-end; justify-content: center; }
+  .login-modal-overlay.open { display: flex; }
+  .login-modal { background: white; border-radius: 20px 20px 0 0; width: 100%; max-width: 480px; padding: 32px 24px 40px; position: relative; }
+  .login-modal h3 { font-size: 18px; font-weight: 900; margin-bottom: 6px; }
+  .login-modal p { font-size: 13px; color: var(--gray-400); margin-bottom: 24px; }
+  .login-modal-close { position: absolute; top: 16px; right: 16px; background: var(--gray-100); border: none; width: 32px; height: 32px; border-radius: 50%; font-size: 16px; cursor: pointer; }
+
+  .toast { position: fixed; bottom: 84px; left: 50%; transform: translateX(-50%) translateY(20px); background: var(--gray-800); color: white; padding: 12px 20px; border-radius: 10px; font-size: 13px; font-weight: 600; opacity: 0; transition: all 0.3s; z-index: 300; white-space: nowrap; }
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
   .loading { text-align: center; padding: 60px 20px; color: var(--gray-400); }
   .spinner { width: 32px; height: 32px; border: 3px solid var(--gray-200); border-top-color: var(--blue); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 12px; }
@@ -151,7 +164,7 @@
 <div class="app">
 
   <div class="kakao-banner" id="kakao-banner">
-    <strong>⚠️ 카카오톡 브라우저에서는 구글 로그인이 제한됩니다</strong>
+    <strong>⚠️ 카카오톡 인앱 브라우저 감지됨</strong>
     우측 하단 ··· → <b>다른 브라우저로 열기</b>를 눌러주세요
     <br><button class="open-ext-btn" onclick="openExternalBrowser()">🌐 외부 브라우저로 열기</button>
   </div>
@@ -159,7 +172,7 @@
   <header class="header">
     <div class="header-logo">Tire<span>Safe</span></div>
     <div id="auth-area">
-      <button class="login-btn" onclick="googleLogin()">구글 로그인</button>
+      <button class="login-btn" onclick="showLoginModal()">로그인</button>
     </div>
   </header>
 
@@ -195,18 +208,20 @@
       <button class="chat-tab-btn" id="ctab-bot" onclick="switchChatTab('bot')">🤖 고객센터</button>
     </div>
 
-    <!-- 1:1 대화 (기본으로 먼저 표시) -->
+    <!-- 1:1 대화 -->
     <div id="chat-dm-area">
-      <div id="dm-room-list" class="room-list"></div>
-      <div class="dm-wrap" id="dm-chat-wrap">
+      <div id="dm-room-list" class="room-list" style="height:calc(100vh - 175px);overflow-y:auto"></div>
+      <div class="dm-wrap" id="dm-chat-wrap" style="height:calc(100vh - 120px)">
         <div class="dm-header">
           <button class="dm-back" onclick="closeDmRoom()">←</button>
           <div class="dm-title" id="dm-chat-title">채팅</div>
         </div>
-        <div class="chat-messages" id="dm-messages" style="height:calc(100vh - 230px)"></div>
-        <div class="chat-input-wrap">
-          <input type="text" class="chat-input" id="dm-input" placeholder="메시지 입력..." onkeydown="if(event.key==='Enter')sendDmMsg()">
-          <button class="chat-send" onclick="sendDmMsg()">↑</button>
+        <div class="chat-wrap" style="height:calc(100vh - 175px)">
+          <div class="chat-messages" id="dm-messages"></div>
+          <div class="chat-input-wrap">
+            <input type="text" class="chat-input" id="dm-input" placeholder="메시지 입력..." onkeydown="if(event.key==='Enter')sendDmMsg()">
+            <button class="chat-send" onclick="sendDmMsg()">↑</button>
+          </div>
         </div>
       </div>
     </div>
@@ -260,10 +275,28 @@
       </div>
       <div style="font-size:12px;color:var(--gray-400)">장착 공임 별도</div>
     </div>
-    <div style="font-size:12px;color:var(--gray-400);margin-bottom:14px" id="modal-seller"></div>
+    <div class="modal-seller-row" id="modal-seller"></div>
     <div class="modal-btns">
       <button class="btn-secondary" id="modal-chat-btn" onclick="chatWithSeller()">💬 판매자 채팅</button>
       <button class="btn-primary" style="margin:0" onclick="closeModal();toast('💳 결제 모듈 준비 중입니다')">🔒 세이프페이</button>
+    </div>
+  </div>
+</div>
+
+<!-- 로그인 모달 -->
+<div class="login-modal-overlay" id="login-modal-overlay" onclick="if(event.target===this)hideLoginModal()">
+  <div class="login-modal">
+    <button class="login-modal-close" onclick="hideLoginModal()">✕</button>
+    <h3>로그인</h3>
+    <p>타이어세이프를 이용하려면 로그인해 주세요</p>
+    <div class="login-btns">
+      <button class="btn-kakao" onclick="kakaoLogin()">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2C5.582 2 2 4.895 2 8.5c0 2.278 1.392 4.276 3.5 5.456L4.6 17l3.8-2.5c.52.07 1.055.1 1.6.1 4.418 0 8-2.895 8-6.5S14.418 2 10 2z" fill="#3A1D1D"/></svg>
+        카카오로 로그인
+      </button>
+      <button class="btn-google" onclick="googleLogin()">
+        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="20"> 구글로 로그인
+      </button>
     </div>
   </div>
 </div>
@@ -272,6 +305,7 @@
 
 <script>
 const ADMIN_UID = 'SMB8eJMGJ4VPpKbZqbEjlXw2eG32';
+const KAKAO_KEY = '42c5aec26c5843501f01fc15c6af3ad0';
 
 const firebaseConfig = {
   apiKey: "AIzaSyDP414CWLGAJj06_bhBbGD9rkOcZHb2--I",
@@ -288,6 +322,10 @@ let currentUser = null;
 let currentDmRoomId = null;
 let unsubDm = null;
 let currentModalTire = null;
+let pendingChatAfterLogin = null; // 로그인 후 실행할 채팅 작업
+
+// ── 카카오 SDK 초기화 ──
+Kakao.init(KAKAO_KEY);
 
 // ── 카카오 / 모바일 감지 ──
 function isKakaoBrowser() { return /KAKAOTALK/i.test(navigator.userAgent); }
@@ -301,11 +339,25 @@ function openExternalBrowser() {
 window.addEventListener('DOMContentLoaded', () => {
   if (isKakaoBrowser()) document.getElementById('kakao-banner').classList.add('show');
   addBotMsg('안녕하세요! 타이어세이프 고객센터입니다 😊\n무엇이든 질문해 주세요!');
+  // 카카오 로그인 후 복귀 처리
+  handleKakaoRedirect();
 });
 
-// ── 인증 ──
+// ── 로그인 모달 ──
+function showLoginModal() {
+  document.getElementById('login-modal-overlay').classList.add('open');
+}
+function hideLoginModal() {
+  document.getElementById('login-modal-overlay').classList.remove('open');
+}
+
+// ── 구글 로그인 ──
 auth.getRedirectResult().then(result => {
-  if (result && result.user) toast('✅ 로그인 성공!');
+  if (result && result.user) {
+    toast('✅ 로그인 성공!');
+    hideLoginModal();
+    runPendingChat();
+  }
 }).catch(e => { if (e.code !== 'auth/no-current-user') toast('로그인 오류: ' + e.message); });
 
 auth.onAuthStateChanged(user => {
@@ -317,17 +369,19 @@ auth.onAuthStateChanged(user => {
 
 function googleLogin() {
   if (isKakaoBrowser()) {
+    hideLoginModal();
     toast('카카오톡 브라우저에서는 구글 로그인이 안 됩니다');
     openExternalBrowser();
     return;
   }
   const provider = new firebase.auth.GoogleAuthProvider();
   if (isMobileBrowser()) {
-    // 모바일: Redirect 방식
     auth.signInWithRedirect(provider);
   } else {
-    // PC: Popup 방식 (실패 시 Redirect로 대체)
-    auth.signInWithPopup(provider).catch(err => {
+    auth.signInWithPopup(provider).then(() => {
+      hideLoginModal();
+      runPendingChat();
+    }).catch(err => {
       if (err.code === 'auth/popup-blocked' || err.code === 'auth/popup-closed-by-user') {
         auth.signInWithRedirect(provider);
       } else {
@@ -337,22 +391,105 @@ function googleLogin() {
   }
 }
 
-function logout() { if (confirm('로그아웃 하시겠습니까?')) auth.signOut(); }
+// ── 카카오 로그인 ──
+function kakaoLogin() {
+  hideLoginModal();
+  // 카카오 인앱 브라우저면 안내
+  if (isKakaoBrowser()) {
+    // 카카오 인앱에서는 카카오 로그인 가능하도록 처리
+  }
+  Kakao.Auth.authorize({
+    redirectUri: window.location.origin + window.location.pathname,
+    scope: 'profile_nickname,profile_image',
+  });
+}
+
+async function handleKakaoRedirect() {
+  const params = new URLSearchParams(window.location.search);
+  const code = params.get('code');
+  if (!code) return;
+  // URL에서 code 파라미터 제거
+  window.history.replaceState({}, '', window.location.pathname);
+  try {
+    // 카카오 토큰 요청
+    const tokenRes = await fetch('https://kauth.kakao.com/oauth/token', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({
+        grant_type: 'authorization_code',
+        client_id: KAKAO_KEY,
+        redirect_uri: window.location.origin + window.location.pathname,
+        code,
+      }),
+    });
+    const tokenData = await tokenRes.json();
+    if (!tokenData.access_token) { toast('카카오 로그인 실패'); return; }
+    Kakao.Auth.setAccessToken(tokenData.access_token);
+
+    // 카카오 사용자 정보 가져오기
+    const userInfo = await new Promise((res, rej) =>
+      Kakao.API.request({ url: '/v2/user/me', success: res, fail: rej })
+    );
+    const kakaoId = String(userInfo.id);
+    const nickname = userInfo.kakao_account?.profile?.nickname || '카카오유저';
+    const photoURL = userInfo.kakao_account?.profile?.profile_image_url || '';
+
+    // Firebase Custom Token 없이 — Firestore에 직접 유저 저장 후 익명 로그인 활용
+    await auth.signInAnonymously();
+    const user = auth.currentUser;
+    // Firestore에 카카오 정보 저장
+    await db.collection('users').doc(user.uid).set({
+      kakaoId, displayName: nickname, photoURL, provider: 'kakao',
+      updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+    }, { merge: true });
+    // displayName 업데이트
+    await user.updateProfile({ displayName: nickname, photoURL });
+    toast('✅ 카카오 로그인 성공!');
+    runPendingChat();
+  } catch(e) {
+    toast('카카오 로그인 오류: ' + e.message);
+  }
+}
+
+function logout() {
+  if (!confirm('로그아웃 하시겠습니까?')) return;
+  if (Kakao.Auth.getAccessToken()) Kakao.Auth.logout();
+  auth.signOut();
+}
 
 function updateAuthUI(user) {
   const area = document.getElementById('auth-area');
   if (user) {
+    const name = user.displayName || '유저';
     area.innerHTML = `<div class="user-avatar" onclick="logout()" title="로그아웃">
-      ${user.photoURL ? `<img src="${user.photoURL}">` : user.displayName[0]}
+      ${user.photoURL ? `<img src="${user.photoURL}">` : name[0]}
     </div>`;
     renderSellForm();
   } else {
-    area.innerHTML = `<button class="login-btn" onclick="googleLogin()">구글 로그인</button>`;
+    area.innerHTML = `<button class="login-btn" onclick="showLoginModal()">로그인</button>`;
     document.getElementById('sell-content').innerHTML = `
-      <div class="login-required"><div class="icon">🔒</div><p>판매하려면 로그인이 필요합니다</p>
-        <button class="btn-google" onclick="googleLogin()">
-          <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="20"> 구글로 로그인
-        </button></div>`;
+      <div class="login-required">
+        <div class="icon">🔒</div>
+        <p>판매하려면 로그인이 필요합니다</p>
+        <div class="login-btns">
+          <button class="btn-kakao" onclick="kakaoLogin()">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2C5.582 2 2 4.895 2 8.5c0 2.278 1.392 4.276 3.5 5.456L4.6 17l3.8-2.5c.52.07 1.055.1 1.6.1 4.418 0 8-2.895 8-6.5S14.418 2 10 2z" fill="#3A1D1D"/></svg>
+            카카오로 로그인
+          </button>
+          <button class="btn-google" onclick="googleLogin()">
+            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="20"> 구글로 로그인
+          </button>
+        </div>
+      </div>`;
+  }
+}
+
+// ── 로그인 후 대기 중인 채팅 실행 ──
+function runPendingChat() {
+  if (pendingChatAfterLogin) {
+    const { sellerId, sellerName } = pendingChatAfterLogin;
+    pendingChatAfterLogin = null;
+    setTimeout(() => openOrCreateDmRoom(sellerId, sellerName, ''), 500);
   }
 }
 
@@ -378,12 +515,17 @@ function switchChatTab(tab) {
 function getRoomId(uid1, uid2) { return [uid1, uid2].sort().join('_'); }
 
 async function openOrCreateDmRoom(targetUid, targetName, targetPhoto) {
-  if (!currentUser) { toast('로그인이 필요합니다'); return; }
+  if (!currentUser) {
+    // 로그인 후 실행 예약
+    pendingChatAfterLogin = { sellerId: targetUid, sellerName: targetName };
+    showLoginModal();
+    return;
+  }
   if (currentUser.uid === targetUid) { toast('본인에게는 채팅을 보낼 수 없어요'); return; }
   const roomId = getRoomId(currentUser.uid, targetUid);
   await db.collection('dmRooms').doc(roomId).set({
     users: [currentUser.uid, targetUid],
-    userNames: { [currentUser.uid]: currentUser.displayName, [targetUid]: targetName },
+    userNames: { [currentUser.uid]: currentUser.displayName || '나', [targetUid]: targetName },
     userPhotos: { [currentUser.uid]: currentUser.photoURL || '', [targetUid]: targetPhoto || '' },
     updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
   }, { merge: true });
@@ -394,7 +536,6 @@ async function openOrCreateDmRoom(targetUid, targetName, targetPhoto) {
 
 async function chatWithSeller() {
   if (!currentModalTire) return;
-  if (!currentUser) { toast('로그인이 필요합니다'); googleLogin(); return; }
   const { sellerId, sellerName } = currentModalTire;
   if (!sellerId) { toast('판매자 정보가 없습니다'); return; }
   await openOrCreateDmRoom(sellerId, sellerName || '판매자', '');
@@ -403,10 +544,17 @@ async function chatWithSeller() {
 function loadDmRooms() {
   const list = document.getElementById('dm-room-list');
   if (!currentUser) {
-    list.innerHTML = `<div class="login-required"><div class="icon">🔒</div><p>1:1 채팅은 로그인이 필요합니다</p>
-      <button class="btn-google" onclick="googleLogin()">
-        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="20"> 구글로 로그인
-      </button></div>`;
+    list.innerHTML = `<div class="login-required">
+      <div class="icon">🔒</div><p>1:1 채팅은 로그인이 필요합니다</p>
+      <div class="login-btns">
+        <button class="btn-kakao" onclick="kakaoLogin()">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2C5.582 2 2 4.895 2 8.5c0 2.278 1.392 4.276 3.5 5.456L4.6 17l3.8-2.5c.52.07 1.055.1 1.6.1 4.418 0 8-2.895 8-6.5S14.418 2 10 2z" fill="#3A1D1D"/></svg>
+          카카오로 로그인
+        </button>
+        <button class="btn-google" onclick="googleLogin()">
+          <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="20"> 구글로 로그인
+        </button>
+      </div></div>`;
     return;
   }
   db.collection('dmRooms')
@@ -478,7 +626,7 @@ async function sendDmMsg() {
   input.value = '';
   const batch = db.batch();
   const msgRef = db.collection('dmRooms').doc(currentDmRoomId).collection('messages').doc();
-  batch.set(msgRef, { text, uid: currentUser.uid, name: currentUser.displayName, createdAt: firebase.firestore.FieldValue.serverTimestamp() });
+  batch.set(msgRef, { text, uid: currentUser.uid, name: currentUser.displayName || '나', createdAt: firebase.firestore.FieldValue.serverTimestamp() });
   batch.update(db.collection('dmRooms').doc(currentDmRoomId), { lastMsg: text, updatedAt: firebase.firestore.FieldValue.serverTimestamp() });
   await batch.commit();
 }
@@ -486,15 +634,14 @@ async function sendDmMsg() {
 // ── 챗봇 ──
 const BOT_ANSWERS = [
   { keys: ['사이즈','규격','고르는','선택'], answer: '타이어 사이즈는 운전석 문 안쪽 스티커나 현재 타이어 측면에서 확인할 수 있어요!\n예: 205/55R16 → 폭205mm / 편평비55% / 림16인치\n사이즈가 다르면 안전에 문제가 될 수 있으니 꼭 동일 사이즈를 사용해 주세요 🙏' },
-  { keys: ['배송','언제','도착','얼마나'], answer: '주문 후 보통 1~3일 이내 배송됩니다 🚚\n도서 산간 지역은 추가 1~2일 소요돼요.\n배송 추적은 주문 확인 문자로 안내드립니다!' },
+  { keys: ['배송','언제','도착','얼마나'], answer: '주문 후 보통 1~3일 이내 배송됩니다 🚚\n도서 산간 지역은 추가 1~2일 소요돼요!' },
   { keys: ['장착','설치','공임','어디서'], answer: '타이어 구매 후 가까운 타이어 전문점이나 카센터에서 장착하시면 됩니다 🔧\n장착 공임은 보통 1개당 5,000~15,000원 수준이에요!' },
-  { keys: ['환불','반품','교환','취소'], answer: '수령 후 7일 이내 환불/교환 가능합니다 💰\n단, 장착 후에는 환불이 어려울 수 있어요.\n이상이 있으면 사진과 함께 문의 주시면 빠르게 처리해드릴게요!' },
-  { keys: ['세이프페이','안전결제','보호','사기'], answer: '세이프페이는 타이어세이프의 안전 결제 시스템이에요 🔒\n구매대금을 저희가 보관하다가 장착 완료 확인 후 판매자에게 지급돼요.\n문제가 생기면 전액 환불 보장합니다!' },
-  { keys: ['가격','얼마','비용','최저'], answer: '중고타이어 가격은 브랜드, 사이즈, 상태에 따라 다양해요.\n일반적으로 새 타이어의 30~60% 수준이에요 💡\n홈 탭에서 현재 매물을 확인해보세요!' },
+  { keys: ['환불','반품','교환','취소'], answer: '수령 후 7일 이내 환불/교환 가능합니다 💰\n장착 후에는 환불이 어려울 수 있어요. 이상이 있으면 사진과 함께 문의해 주세요!' },
+  { keys: ['세이프페이','안전결제','보호','사기'], answer: '세이프페이는 타이어세이프의 안전 결제 시스템이에요 🔒\n구매대금을 저희가 보관하다가 장착 완료 확인 후 판매자에게 지급돼요!' },
+  { keys: ['가격','얼마','비용'], answer: '중고타이어는 일반적으로 새 타이어의 30~60% 수준이에요 💡\n홈 탭에서 현재 매물을 확인해보세요!' },
   { keys: ['전문가','검증','인증','믿을'], answer: '모든 매물은 카센터 10년 경력 전문가가 직접 검수해요 ✅\n트레드 잔량, 사이드월, DOT 제조일자까지 꼼꼼하게 확인합니다!' },
   { keys: ['사장님','직접','상담','연결','전화','통화'], answer: null },
 ];
-
 function getBotAnswer(msg) {
   const m = msg.toLowerCase();
   for (const item of BOT_ANSWERS) {
@@ -502,7 +649,6 @@ function getBotAnswer(msg) {
   }
   return undefined;
 }
-
 function addBotMsg(text, isUser = false) {
   const box = document.getElementById('bot-messages');
   const div = document.createElement('div');
@@ -511,9 +657,7 @@ function addBotMsg(text, isUser = false) {
   box.appendChild(div);
   box.scrollTop = box.scrollHeight;
 }
-
 function quickAsk(q) { document.getElementById('bot-input').value = q; sendBotMsg(); }
-
 async function sendBotMsg() {
   const input = document.getElementById('bot-input');
   const msg = input.value.trim();
@@ -525,7 +669,7 @@ async function sendBotMsg() {
     if (answer === null) {
       addBotMsg('사장님께 직접 연결해드릴게요! 잠시만요 👨‍💼');
       setTimeout(async () => {
-        if (!currentUser) { addBotMsg('1:1 상담은 로그인 후 이용하실 수 있어요!'); return; }
+        if (!currentUser) { addBotMsg('로그인 후 이용하실 수 있어요!'); return; }
         await openOrCreateDmRoom(ADMIN_UID, '타이어세이프 사장님', '');
         addBotMsg('사장님과의 채팅방을 열었어요! 1:1 대화 탭을 확인해주세요 💬');
       }, 600);
@@ -535,7 +679,7 @@ async function sendBotMsg() {
         const roomId = getRoomId(currentUser.uid, ADMIN_UID);
         await db.collection('dmRooms').doc(roomId).set({
           users: [currentUser.uid, ADMIN_UID],
-          userNames: { [currentUser.uid]: currentUser.displayName, [ADMIN_UID]: '타이어세이프 사장님' },
+          userNames: { [currentUser.uid]: currentUser.displayName || '고객', [ADMIN_UID]: '타이어세이프 사장님' },
           userPhotos: { [currentUser.uid]: currentUser.photoURL || '' },
           lastMsg: `[챗봇 미답변] ${msg}`,
           updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
@@ -635,7 +779,7 @@ async function submitTire() {
   try {
     let imageUrl = null;
     if (file) imageUrl = await compressImage(file);
-    await db.collection('tires').add({ title, size, price: parseInt(price), description: desc, imageUrl, sellerName: currentUser.displayName, sellerId: currentUser.uid, createdAt: firebase.firestore.FieldValue.serverTimestamp() });
+    await db.collection('tires').add({ title, size, price: parseInt(price), description: desc, imageUrl, sellerName: currentUser.displayName || '판매자', sellerId: currentUser.uid, createdAt: firebase.firestore.FieldValue.serverTimestamp() });
     toast('✅ 매물이 등록되었습니다!');
     setTimeout(() => switchTab('home'), 1000);
   } catch(e) { toast('❌ ' + e.message); }
