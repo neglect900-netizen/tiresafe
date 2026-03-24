@@ -102,9 +102,9 @@
   .chat-wrap { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
   .chat-messages { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 12px; background: var(--gray-50); }
   
-  .chat-bubble-wrap { display: flex; flex-direction: column; align-items: flex-start; max-width: 100%; }
+  .chat-bubble-wrap { display: flex; flex-direction: column; align-items: flex-start; width: 100%; }
   .chat-bubble-wrap.me { align-items: flex-end; }
-  .chat-bubble { max-width: 75%; padding: 10px 14px; border-radius: 18px; font-size: 14px; line-height: 1.5; background: white; color: var(--gray-800); border-bottom-left-radius: 4px; box-shadow: var(--shadow); word-break: break-word; white-space: pre-wrap; display: inline-block; }
+  .chat-bubble { max-width: 75%; width: fit-content; padding: 10px 14px; border-radius: 18px; font-size: 14px; line-height: 1.5; background: white; color: var(--gray-800); border-bottom-left-radius: 4px; box-shadow: var(--shadow); word-break: break-word; overflow-wrap: anywhere; white-space: pre-wrap; }
   .chat-bubble-wrap.me .chat-bubble { background: var(--blue); color: white; border-bottom-left-radius: 18px; border-bottom-right-radius: 4px; }
   .chat-bubble.bot { background: #eff6ff; border: 1px solid #bfdbfe; }
   .chat-time { font-size: 10px; color: var(--gray-400); margin-top: 4px; }
@@ -144,8 +144,10 @@
   .login-modal { background: white; border-radius: 20px 20px 0 0; width: 100%; max-width: 480px; padding: 32px 24px 40px; position: relative; }
   .login-modal-close { position: absolute; top: 16px; right: 16px; background: var(--gray-100); border: none; width: 32px; height: 32px; border-radius: 50%; font-size: 16px; cursor: pointer; }
   
-  .toast { position: fixed; top: 60px; left: 50%; transform: translateX(-50%) translateY(-20px); background: var(--gray-800); color: white; padding: 14px 20px; border-radius: 12px; font-size: 14px; font-weight: 600; opacity: 0; transition: all 0.3s; z-index: 300; white-space: nowrap; box-shadow: 0 4px 12px rgba(0,0,0,0.15); pointer-events: none; }
+  /* 알림창(토스트) 겹침 방지 및 디자인 교정 */
+  .toast { position: fixed; top: 60px; left: 50%; transform: translateX(-50%) translateY(-20px); background: var(--gray-800); color: white; padding: 14px 20px; border-radius: 12px; font-size: 14px; font-weight: 600; opacity: 0; transition: all 0.3s; z-index: 9999; white-space: nowrap; box-shadow: 0 4px 12px rgba(0,0,0,0.15); pointer-events: none; }
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  
   .loading { text-align: center; padding: 60px 20px; color: var(--gray-400); }
   .spinner { width: 32px; height: 32px; border: 3px solid var(--gray-200); border-top-color: var(--blue); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 12px; }
   @keyframes spin { to { transform: rotate(360deg); } }
@@ -295,8 +297,10 @@
     <div id="login-view">
       <h3 style="margin-bottom:16px;">🔐 로그인</h3>
       <div style="background: var(--gray-50); padding: 16px; border-radius: 12px; margin-bottom: 20px;">
-        <input type="email" id="l-email" class="form-input" placeholder="이메일 주소" style="margin-bottom:8px">
-        <input type="password" id="l-pw" class="form-input" placeholder="비밀번호" style="margin-bottom:12px">
+        <input type="email" id="l-email" class="form-input" placeholder="이메일 주소" style="margin-bottom:8px" onkeydown="if(event.key==='Enter')emailLogin()">
+        
+        <input type="password" id="l-pw" class="form-input" placeholder="비밀번호" style="margin-bottom:12px" onkeydown="if(event.key==='Enter')emailLogin()">
+        
         <button class="btn-primary" style="width: 100%; padding: 12px; font-size: 14px; margin: 0;" onclick="emailLogin()">이메일로 로그인</button>
       </div>
       <div style="text-align:center; font-size:13px; color:var(--gray-600); margin-bottom: 20px;">
@@ -307,9 +311,11 @@
     <div id="signup-view" style="display:none;">
       <h3 style="margin-bottom:16px;">📝 1초 회원가입</h3>
       <div style="background: var(--gray-50); padding: 16px; border-radius: 12px; margin-bottom: 20px;">
-        <input type="email" id="s-email" class="form-input" placeholder="이메일 주소 (아이디로 사용)" style="margin-bottom:8px">
-        <input type="password" id="s-pw" class="form-input" placeholder="비밀번호 (6자리 이상)" style="margin-bottom:8px">
-        <input type="text" id="s-name" class="form-input" placeholder="사용할 닉네임" style="margin-bottom:12px">
+        <input type="email" id="s-email" class="form-input" placeholder="이메일 주소 (아이디로 사용)" style="margin-bottom:8px" onkeydown="if(event.key==='Enter')emailSignUp()">
+        <input type="password" id="s-pw" class="form-input" placeholder="비밀번호 (6자리 이상)" style="margin-bottom:8px" onkeydown="if(event.key==='Enter')emailSignUp()">
+        
+        <input type="text" id="s-name" class="form-input" placeholder="사용할 닉네임" style="margin-bottom:12px" onkeydown="if(event.key==='Enter')emailSignUp()">
+        
         <button class="btn-secondary" style="width: 100%; padding: 12px; font-size: 14px; margin: 0;" onclick="emailSignUp()">가입 완료하기</button>
       </div>
       <div style="text-align:center; font-size:13px; color:var(--gray-600); margin-bottom: 20px;">
@@ -353,15 +359,24 @@ window.addEventListener('DOMContentLoaded', () => {
   addBotMsg('안녕하세요! 타이어세이프 고객센터입니다 😊\n궁금한 점을 아래 버튼을 눌러 확인하시거나 직접 입력해주세요!');
 });
 
-// ── 블랙리스트(차단) 확인 로직 ──
+// ── 알림창(토스트) 겹침 방지 코드 ──
+let toastTimeout;
+function toast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg; 
+  el.classList.add('show');
+  
+  if (toastTimeout) clearTimeout(toastTimeout);
+  toastTimeout = setTimeout(() => el.classList.remove('show'), 2500);
+}
+
 async function checkBanStatus(uid) {
   try {
     const banDoc = await db.collection('bannedUsers').doc(uid).get();
-    return banDoc.exists; // 존재하면 true (차단됨)
+    return banDoc.exists; 
   } catch(e) { return false; }
 }
 
-// ── 로그인 & 회원가입 창 전환 ──
 function toggleAuthView(view) {
   document.getElementById('login-view').style.display = view === 'login' ? 'block' : 'none';
   document.getElementById('signup-view').style.display = view === 'signup' ? 'block' : 'none';
@@ -382,30 +397,43 @@ async function emailSignUp() {
   const email = document.getElementById('s-email').value.trim();
   const pw = document.getElementById('s-pw').value.trim();
   const name = document.getElementById('s-name').value.trim();
-  if (!email || !pw) return toast('이메일과 비밀번호를 입력해주세요.');
-  if (pw.length < 6) return toast('비밀번호는 6자리 이상이어야 합니다.');
-  if (!name) return toast('닉네임을 입력해주세요.');
+  if (!email || !pw) return toast('⚠️ 이메일과 비밀번호를 입력해주세요.');
+  if (pw.length < 6) return toast('⚠️ 비밀번호는 6자리 이상이어야 합니다.');
+  if (!name) return toast('⚠️ 닉네임을 입력해주세요.');
+  
   try {
-    toast('가입 중입니다...');
+    toast('⏳ 가입 처리 중입니다...');
     const userCredential = await auth.createUserWithEmailAndPassword(email, pw);
     await userCredential.user.updateProfile({ displayName: name });
     toast('🎉 회원가입 완료! 환영합니다.');
     hideLoginModal(); runPendingChat();
-  } catch (error) { toast('❌ 가입 오류: ' + error.message); }
+  } catch (error) { 
+    if (error.code === 'auth/email-already-in-use') {
+      toast('❌ 이미 가입된 이메일입니다. 로그인해주세요.');
+    } else {
+      toast('❌ 가입 오류: ' + error.message); 
+    }
+  }
 }
 
 async function emailLogin() {
   const email = document.getElementById('l-email').value.trim();
   const pw = document.getElementById('l-pw').value.trim();
-  if (!email || !pw) return toast('이메일과 비밀번호를 입력해주세요.');
+  if (!email || !pw) return toast('⚠️ 이메일과 비밀번호를 입력해주세요.');
+  
   try {
-    toast('로그인 중입니다...');
+    toast('⏳ 로그인 중입니다...');
     await auth.signInWithEmailAndPassword(email, pw);
     toast('✅ 로그인 성공!');
     hideLoginModal(); runPendingChat();
   } catch (error) { 
-    console.error(error);
-    toast('❌ 가입되지 않은 이메일이거나 비밀번호가 틀립니다.'); 
+    if (error.code === 'auth/invalid-credential' || error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
+      toast('❌ 이메일 또는 비밀번호가 틀립니다. 다시 확인해주세요!'); 
+    } else if (error.code === 'auth/too-many-requests') {
+      toast('❌ 로그인 시도를 너무 많이 했습니다. 잠시 후 다시 시도해주세요.');
+    } else {
+      toast('❌ 로그인 오류: ' + error.message);
+    }
   }
 }
 
@@ -435,9 +463,13 @@ function updateAuthUI(user) {
   if (user) {
     const name = user.displayName || '유저';
     area.innerHTML = `<div class="user-avatar" onclick="logout()" title="로그아웃">${user.photoURL ? `<img src="${user.photoURL}">` : name[0]}</div>`;
+    
+    // 로그인 했을 때만 폼 렌더링
     renderSellForm();
   } else {
     area.innerHTML = `<button class="login-btn" onclick="showLoginModal()">로그인</button>`;
+    
+    // 로그아웃 했을 땐 판매하기 막기
     document.getElementById('sell-content').innerHTML = `
       <div class="login-required"><div class="icon">🔒</div><p>판매하려면 로그인이 필요합니다</p>
         <button class="btn-primary" onclick="showLoginModal()">로그인 / 회원가입</button>
@@ -597,7 +629,6 @@ function addBotMsg(text, isUser = false) {
   box.appendChild(div); box.scrollTop = box.scrollHeight;
 }
 
-// 🌟 챗봇 답변 및 배송 문구 수정
 const BOT_ANSWERS = [
   { keys: ['사이즈','규격','고르는','선택'], answer: '타이어 사이즈는 운전석 문 안쪽 스티커나 현재 타이어 측면에서 확인할 수 있어요!\n예: 205/55R16 → 폭205mm / 편평비55% / 림16인치\n사이즈가 다르면 안전에 문제가 될 수 있으니 꼭 동일 사이즈를 사용해 주세요 🙏' },
   { keys: ['배송','언제','도착','얼마나','택배'], answer: '배송은 판매자와 1:1 채팅으로 합의하여 착불 또는 선불을 잘 결정해 주시기 바랍니다! 🚚\n(택배사 및 발송 일정도 판매자에게 직접 문의해주세요)' },
@@ -632,18 +663,13 @@ async function sendBotMsg() {
       if (isBanned) return addBotMsg('🚫 차단된 계정은 1:1 상담을 이용할 수 없습니다.');
 
       addBotMsg('1:1 고객상담 센터로 연결해 드릴게요! 잠시만요 👨‍💼');
-      setTimeout(async () => {
-        await openOrCreateDmRoom(ADMIN_UID, '고객상담센터', '');
-      }, 1000);
+      setTimeout(async () => { await openOrCreateDmRoom(ADMIN_UID, '고객상담센터', ''); }, 1000);
     } 
-    // 🌟 모르는 질문 무시하지 않고 다시 묻기
     else if (answer === undefined) {
       addBotMsg('정확한 답변을 찾지 못했어요 😅\n도움이 필요하시면 아래 [1:1 고객상담] 버튼을 눌러주세요!');
       addBotMsg('<button class="quick-btn" style="border-color:var(--blue); color:var(--blue); margin-top:4px;" onclick="quickAsk(\'1:1 고객상담\')">👨‍💼 1:1 고객상담 연결하기</button>');
     } 
-    else { 
-      addBotMsg(answer); 
-    }
+    else { addBotMsg(answer); }
   }, 500);
 }
 
@@ -748,7 +774,6 @@ function handleEditPhoto(input) {
 async function submitTire() {
   if (!currentUser) { toast('로그인이 필요합니다'); return; }
   
-  // 🌟 블랙리스트 작성 차단
   const isBanned = await checkBanStatus(currentUser.uid);
   if (isBanned) { toast('🚫 관리자에 의해 이용이 정지된 계정입니다.'); return; }
   
@@ -819,8 +844,6 @@ function openModal(t) {
     verifyBtn.style.display = ''; 
     verifyBtn.textContent = t.isVerified ? '❌ 인증 마크 빼기' : '✅ 인증 마크 달기';
     verifyBtn.style.background = t.isVerified ? 'var(--gray-400)' : 'var(--green)';
-    
-    // 🌟 관리자일 경우 작성자 차단 버튼 활성화 (본인 글이 아닐 때만)
     if (!isOwner) { blockBtn.style.display = ''; } else { blockBtn.style.display = 'none'; }
   } else { 
     verifyBtn.style.display = 'none'; 
@@ -900,7 +923,6 @@ async function toggleVerify() {
   } catch(e) { toast('❌ 오류: ' + e.message); }
 }
 
-// 🌟 관리자 전용 - 작성자 영구 차단 기능
 async function blockUser() {
   if (!currentModalTire || !currentModalTire.sellerId) return;
   if (!confirm("이 작성자의 글 작성 및 채팅을 영구 차단하시겠습니까? (이 작업은 되돌릴 수 없습니다)")) return;
@@ -913,12 +935,6 @@ async function blockUser() {
     toast('🚫 해당 유저가 영구 차단되었습니다.');
     closeModal(); 
   } catch(e) { toast('❌ 차단 실패: ' + e.message); }
-}
-
-function toast(msg) {
-  const el = document.getElementById('toast');
-  el.textContent = msg; el.classList.add('show');
-  setTimeout(() => el.classList.remove('show'), 2500);
 }
 </script>
 </body>
