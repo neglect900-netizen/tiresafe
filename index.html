@@ -17,19 +17,10 @@
     --gray-400: #9ca3af; --gray-600: #4b5563; --gray-800: #1f2937;
     --white: #ffffff; --shadow: 0 1px 3px rgba(0,0,0,0.1);
   }
-  /* 전체 화면 스크롤 방지 & 앱처럼 고정 */
   html, body { height: 100%; overflow: hidden; }
   body { font-family: 'Noto Sans KR', sans-serif; background: var(--gray-100); color: var(--gray-800); }
   
-  .app { 
-    max-width: 480px; 
-    margin: 0 auto; 
-    background: var(--white); 
-    height: 100%; 
-    display: flex; 
-    flex-direction: column; 
-    position: relative; 
-  }
+  .app { max-width: 480px; margin: 0 auto; background: var(--white); height: 100%; display: flex; flex-direction: column; position: relative; }
 
   .header { flex-shrink: 0; position: sticky; top: 0; z-index: 50; background: var(--white); border-bottom: 1px solid var(--gray-200); padding: 0 16px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
   .header-logo { font-size: 20px; font-weight: 900; color: var(--blue); }
@@ -38,11 +29,8 @@
   .user-avatar img { width: 100%; height: 100%; object-fit: cover; }
   .login-btn { font-size: 12px; font-weight: 700; padding: 6px 14px; border-radius: 20px; background: var(--blue); color: white; border: none; cursor: pointer; font-family: inherit; }
 
-  /* 각 탭 화면 영역 (스크롤 가능하게 처리) */
   .tab { display: none; flex: 1; overflow-y: auto; padding-bottom: 64px; }
   .tab.active { display: block; }
-  
-  /* 채팅 탭은 내부에서 레이아웃을 다시 잡기 위해 flex 사용 */
   #tab-chat.active { display: flex; flex-direction: column; overflow: hidden; padding-bottom: 0; }
 
   .hero { background: linear-gradient(135deg, #1a56db 0%, #1245b3 100%); padding: 24px 20px 28px; color: white; }
@@ -87,12 +75,10 @@
   .login-required p { font-size: 14px; margin-bottom: 20px; color: var(--gray-600); }
   .btn-google { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 14px; background: white; border: 1.5px solid var(--gray-200); border-radius: 12px; font-size: 15px; font-weight: 700; font-family: inherit; cursor: pointer; color: var(--gray-800); }
 
-  /* 채팅 탭 헤더 */
   .chat-tab-wrap { flex-shrink: 0; display: flex; border-bottom: 1px solid var(--gray-200); background: white; z-index: 10; }
   .chat-tab-btn { flex: 1; padding: 13px; font-size: 13px; font-weight: 700; font-family: inherit; border: none; background: none; color: var(--gray-400); cursor: pointer; border-bottom: 2px solid transparent; }
   .chat-tab-btn.active { color: var(--blue); border-bottom-color: var(--blue); }
 
-  /* 채팅 영역 레이아웃 설정 */
   #chat-dm-area, #chat-bot-area { flex: 1; display: flex; flex-direction: column; overflow: hidden; position: relative; padding-bottom: 64px; }
   
   .room-list { flex: 1; overflow-y: auto; background: white; }
@@ -106,7 +92,6 @@
   .room-last { font-size: 12px; color: var(--gray-400); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .room-time { font-size: 10px; color: var(--gray-400); flex-shrink: 0; }
 
-  /* 1:1 대화방 상세 화면 */
   .dm-wrap { display: none; flex-direction: column; position: absolute; inset: 0; background: white; z-index: 20; padding-bottom: 64px; }
   .dm-wrap.open { display: flex; }
   .dm-header { flex-shrink: 0; display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-bottom: 1px solid var(--gray-200); background: white; }
@@ -116,26 +101,10 @@
   .chat-wrap { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
   .chat-messages { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 12px; background: var(--gray-50); }
   
-  /* 말풍선 자연스럽게 길어지게 하는 핵심 CSS 수정 */
   .chat-bubble-wrap { display: flex; flex-direction: column; align-items: flex-start; max-width: 100%; }
   .chat-bubble-wrap.me { align-items: flex-end; }
   
-  /* 말풍선 안의 글씨가 옆으로 자연스럽게 써지도록 수정 */
-  .chat-bubble { 
-    max-width: 75%; 
-    padding: 10px 14px; 
-    border-radius: 18px; 
-    font-size: 14px; 
-    line-height: 1.5; 
-    background: white; 
-    color: var(--gray-800); 
-    border-bottom-left-radius: 4px; 
-    box-shadow: var(--shadow); 
-    word-break: break-word; /* 긴 단어나 영어 줄바꿈 처리 */
-    white-space: pre-wrap;  /* 엔터 친거 줄바꿈 반영되면서 옆으로 길어지게 */
-    display: inline-block; 
-  }
-  
+  .chat-bubble { max-width: 75%; padding: 10px 14px; border-radius: 18px; font-size: 14px; line-height: 1.5; background: white; color: var(--gray-800); border-bottom-left-radius: 4px; box-shadow: var(--shadow); word-break: break-word; white-space: pre-wrap; display: inline-block; }
   .chat-bubble-wrap.me .chat-bubble { background: var(--blue); color: white; border-bottom-left-radius: 18px; border-bottom-right-radius: 4px; }
   .chat-bubble.bot { background: #eff6ff; border: 1px solid #bfdbfe; }
   .chat-time { font-size: 10px; color: var(--gray-400); margin-top: 4px; }
@@ -158,9 +127,7 @@
   .modal-overlay.open { display: flex; }
   .modal { background: white; border-radius: 20px 20px 0 0; width: 100%; max-width: 480px; max-height: 90vh; overflow-y: hidden; padding: 24px 20px 32px; position: relative; display: flex; flex-direction: column; }
   .modal-close { position: absolute; top: 16px; right: 16px; background: var(--gray-100); border: none; width: 32px; height: 32px; border-radius: 50%; font-size: 16px; cursor: pointer; z-index: 10; }
-  
   .modal-scroll-area { overflow-y: auto; padding-right: 4px; margin-bottom: 16px; flex: 1; }
-  
   .modal-badge { font-size: 11px; font-weight: 700; color: var(--green); margin-bottom: 6px; }
   .modal-title { font-size: 20px; font-weight: 900; margin-bottom: 4px; }
   .modal-size { font-size: 13px; color: var(--gray-400); margin-bottom: 16px; }
@@ -183,14 +150,12 @@
   .pay-divider { height: 1px; background: var(--gray-100); margin: 16px 0; }
   .pay-desc { font-size: 13px; color: var(--gray-600); line-height: 1.6; text-align: center; background: #e0e7ff; padding: 12px; border-radius: 8px; font-weight: 600; color: var(--blue-dark); }
 
-  /* 로그인 모달 */
+  /* 로그인 모달 (수정됨) */
   .login-modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 200; align-items: flex-end; justify-content: center; }
   .login-modal-overlay.open { display: flex; }
   .login-modal { background: white; border-radius: 20px 20px 0 0; width: 100%; max-width: 480px; padding: 32px 24px 40px; position: relative; }
-  .login-modal h3 { font-size: 18px; font-weight: 900; margin-bottom: 6px; }
-  .login-modal p { font-size: 13px; color: var(--gray-400); margin-bottom: 24px; }
+  .login-modal h3 { font-size: 18px; font-weight: 900; margin-bottom: 16px; }
   .login-modal-close { position: absolute; top: 16px; right: 16px; background: var(--gray-100); border: none; width: 32px; height: 32px; border-radius: 50%; font-size: 16px; cursor: pointer; }
-  .login-info-box { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 10px; padding: 12px 14px; font-size: 12px; color: var(--blue); margin-top: 14px; line-height: 1.6; }
 
   .toast { position: fixed; top: 60px; left: 50%; transform: translateX(-50%) translateY(-20px); background: var(--gray-800); color: white; padding: 14px 20px; border-radius: 12px; font-size: 14px; font-weight: 600; opacity: 0; transition: all 0.3s; z-index: 300; white-space: nowrap; box-shadow: 0 4px 12px rgba(0,0,0,0.15); pointer-events: none; }
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
@@ -299,7 +264,6 @@
       <div id="modal-img-container" style="display:flex; flex-direction:column; gap:12px; margin-bottom:20px;">
         <img class="modal-img" id="modal-img" src="" alt="" style="display:none;">
       </div>
-      
       <div class="modal-badge">✅ 전문가 검증 완료</div>
       <div class="modal-title" id="modal-title"></div>
       <div class="modal-size" id="modal-size"></div>
@@ -351,16 +315,23 @@
 <div class="login-modal-overlay" id="login-modal-overlay" onclick="if(event.target===this)hideLoginModal()">
   <div class="login-modal">
     <button class="login-modal-close" onclick="hideLoginModal()">✕</button>
-    <h3>🔐 구글 로그인</h3>
-    <p>타이어세이프를 이용하려면 로그인해 주세요</p>
-    <button class="btn-google" onclick="googleLogin()">
-      <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="20"> 구글로 로그인
-    </button>
-    <div class="login-info-box">
-      📱 모바일에서 로그인이 안 될 경우:<br>
-      크롬 브라우저 앱을 직접 열어서 접속해보세요.<br>
-      주소: <b>neglect900-netizen.github.io/tiresafe</b>
+    <h3>🔐 로그인 / 회원가입</h3>
+    
+    <div style="background: var(--gray-50); padding: 16px; border-radius: 12px; margin-bottom: 20px;">
+      <input type="email" id="email-input" class="form-input" placeholder="이메일 주소" style="margin-bottom:8px">
+      <input type="password" id="pw-input" class="form-input" placeholder="비밀번호 (6자리 이상)" style="margin-bottom:8px">
+      <input type="text" id="name-input" class="form-input" placeholder="닉네임 (가입시에만 입력)" style="margin-bottom:12px">
+      <div style="display: flex; gap: 8px;">
+        <button class="btn-primary" style="flex: 1; padding: 12px; font-size: 14px; margin: 0;" onclick="emailLogin()">로그인</button>
+        <button class="btn-secondary" style="flex: 1; padding: 12px; font-size: 14px; margin: 0;" onclick="emailSignUp()">이메일로 가입</button>
+      </div>
     </div>
+    
+    <div style="text-align: center; color: var(--gray-400); font-size: 12px; margin-bottom: 12px;">또는 간편 로그인</div>
+    
+    <button class="btn-google" onclick="googleLogin()">
+      <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="20"> 구글로 시작하기
+    </button>
   </div>
 </div>
 
@@ -392,13 +363,69 @@ window.addEventListener('DOMContentLoaded', () => {
   addBotMsg('안녕하세요! 타이어세이프 고객센터입니다 😊\n무엇이든 질문해 주세요!');
 });
 
-// ── 로그인 & Auth ──
-function showLoginModal() { document.getElementById('login-modal-overlay').classList.add('open'); }
+// ── 로그인 & Auth 모달 제어 ──
+function showLoginModal() { 
+  document.getElementById('email-input').value = '';
+  document.getElementById('pw-input').value = '';
+  document.getElementById('name-input').value = '';
+  document.getElementById('login-modal-overlay').classList.add('open'); 
+}
 function hideLoginModal() { document.getElementById('login-modal-overlay').classList.remove('open'); }
 
+// ── 이메일 회원가입 기능 ──
+async function emailSignUp() {
+  const email = document.getElementById('email-input').value.trim();
+  const pw = document.getElementById('pw-input').value.trim();
+  const name = document.getElementById('name-input').value.trim();
+  
+  if (!email || !pw) return toast('이메일과 비밀번호를 입력해주세요.');
+  if (pw.length < 6) return toast('비밀번호는 6자리 이상이어야 합니다.');
+  if (!name) return toast('닉네임을 입력해주세요.');
+  
+  try {
+    toast('가입 중입니다...');
+    const userCredential = await auth.createUserWithEmailAndPassword(email, pw);
+    // 닉네임 업데이트
+    await userCredential.user.updateProfile({ displayName: name });
+    
+    toast('🎉 회원가입 완료! 환영합니다.');
+    hideLoginModal();
+    runPendingChat();
+  } catch (error) {
+    if (error.code === 'auth/email-already-in-use') {
+      toast('❌ 이미 가입된 이메일입니다.');
+    } else {
+      toast('❌ 가입 오류: ' + error.message);
+    }
+  }
+}
+
+// ── 이메일 로그인 기능 ──
+async function emailLogin() {
+  const email = document.getElementById('email-input').value.trim();
+  const pw = document.getElementById('pw-input').value.trim();
+  
+  if (!email || !pw) return toast('이메일과 비밀번호를 입력해주세요.');
+  
+  try {
+    toast('로그인 중입니다...');
+    await auth.signInWithEmailAndPassword(email, pw);
+    toast('✅ 로그인 성공!');
+    hideLoginModal();
+    runPendingChat();
+  } catch (error) {
+    if (error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found' || error.code === 'auth/invalid-credential') {
+      toast('❌ 이메일이나 비밀번호가 틀렸습니다.');
+    } else {
+      toast('❌ 로그인 오류: ' + error.message);
+    }
+  }
+}
+
+// ── 기존 구글 로그인 ──
 auth.getRedirectResult().then(result => {
   if (result && result.user) {
-    toast('✅ 로그인 성공!');
+    toast('✅ 구글 로그인 성공!');
     hideLoginModal();
     runPendingChat();
   }
@@ -428,10 +455,7 @@ function googleLogin() {
   auth.signInWithPopup(provider)
     .then(() => { hideLoginModal(); runPendingChat(); })
     .catch(err => {
-      if (err.code === 'auth/popup-blocked' ||
-          err.code === 'auth/popup-closed-by-user' ||
-          err.code === 'auth/cancelled-popup-request' ||
-          err.code === 'auth/operation-not-supported-in-this-environment') {
+      if (err.code === 'auth/popup-blocked' || err.code === 'auth/popup-closed-by-user' || err.code === 'auth/cancelled-popup-request' || err.code === 'auth/operation-not-supported-in-this-environment') {
         auth.signInWithRedirect(provider);
       } else {
         toast('로그인 오류: ' + err.message);
@@ -455,9 +479,8 @@ function updateAuthUI(user) {
     area.innerHTML = `<button class="login-btn" onclick="showLoginModal()">로그인</button>`;
     document.getElementById('sell-content').innerHTML = `
       <div class="login-required"><div class="icon">🔒</div><p>판매하려면 로그인이 필요합니다</p>
-        <button class="btn-google" onclick="googleLogin()">
-          <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="20"> 구글로 로그인
-        </button></div>`;
+        <button class="btn-primary" onclick="showLoginModal()">로그인 / 회원가입</button>
+      </div>`;
   }
 }
 
@@ -598,7 +621,6 @@ function openDmRoom(roomId, title) {
       if (m.isSystem) return `<div class="system-msg">${m.text.replace(/\n/g,'<br>')}</div>`;
       const isMe = currentUser && m.uid === currentUser.uid;
       
-      // 말풍선 레이아웃 수정 적용
       return `<div class="chat-bubble-wrap ${isMe?'me':''}">
         ${!isMe ? `<div class="chat-sender">${m.name||'상대방'}</div>` : ''}
         <div class="chat-bubble">${m.text}</div>
