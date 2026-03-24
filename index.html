@@ -70,6 +70,7 @@
   .btn-primary { width: 100%; padding: 15px; background: var(--blue); color: white; border: none; border-radius: 12px; font-size: 15px; font-weight: 700; font-family: inherit; cursor: pointer; margin-top: 4px; }
   .btn-primary:hover { background: var(--blue-dark); }
   .btn-primary:disabled { background: var(--gray-400); cursor: not-allowed; }
+  .btn-secondary { padding: 14px; border: 1.5px solid var(--gray-200); border-radius: 12px; background: white; font-size: 14px; font-weight: 700; cursor: pointer; font-family: inherit; }
   .login-required { text-align: center; padding: 40px 20px; color: var(--gray-400); }
   .login-required .icon { font-size: 48px; margin-bottom: 12px; }
   .login-required p { font-size: 14px; margin-bottom: 20px; color: var(--gray-600); }
@@ -135,20 +136,34 @@
   .modal-price { font-size: 26px; font-weight: 900; color: var(--blue); }
   .modal-seller-row { font-size: 12px; color: var(--gray-400); margin-bottom: 16px; }
   .modal-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; flex-shrink: 0; }
-  .btn-secondary { padding: 14px; border: 1.5px solid var(--gray-200); border-radius: 12px; background: white; font-size: 14px; font-weight: 700; cursor: pointer; font-family: inherit; }
 
-  /* 로그인 모달 */
+  /* 가상 결제창 */
+  .pay-modal { background: #f9fafb; border-radius: 20px 20px 0 0; width: 100%; max-width: 480px; padding: 0; position: relative; overflow: hidden; }
+  .pay-header { background: white; padding: 20px; border-bottom: 1px solid var(--gray-200); text-align: center; font-weight: 900; font-size: 18px; position: relative; }
+  .pay-close { position: absolute; left: 16px; top: 18px; font-size: 20px; background: none; border: none; cursor: pointer; color: var(--gray-600); }
+  .pay-content { padding: 24px 20px; }
+  .pay-box { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 20px; }
+  .pay-label { font-size: 12px; color: var(--gray-400); font-weight: 600; margin-bottom: 4px; }
+  .pay-amount { font-size: 28px; font-weight: 900; color: var(--blue); margin-bottom: 16px; }
+  .pay-divider { height: 1px; background: var(--gray-100); margin: 16px 0; }
+  .pay-desc { font-size: 13px; color: var(--gray-600); line-height: 1.6; text-align: center; background: #e0e7ff; padding: 12px; border-radius: 8px; font-weight: 600; color: var(--blue-dark); }
+
+  /* 분리된 로그인 / 회원가입 창 */
   .login-modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 200; align-items: flex-end; justify-content: center; }
   .login-modal-overlay.open { display: flex; }
   .login-modal { background: white; border-radius: 20px 20px 0 0; width: 100%; max-width: 480px; padding: 32px 24px 40px; position: relative; }
-  .login-modal h3 { font-size: 18px; font-weight: 900; margin-bottom: 16px; }
   .login-modal-close { position: absolute; top: 16px; right: 16px; background: var(--gray-100); border: none; width: 32px; height: 32px; border-radius: 50%; font-size: 16px; cursor: pointer; }
-
+  
   .toast { position: fixed; top: 60px; left: 50%; transform: translateX(-50%) translateY(-20px); background: var(--gray-800); color: white; padding: 14px 20px; border-radius: 12px; font-size: 14px; font-weight: 600; opacity: 0; transition: all 0.3s; z-index: 300; white-space: nowrap; box-shadow: 0 4px 12px rgba(0,0,0,0.15); pointer-events: none; }
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
   .loading { text-align: center; padding: 60px 20px; color: var(--gray-400); }
   .spinner { width: 32px; height: 32px; border: 3px solid var(--gray-200); border-top-color: var(--blue); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 12px; }
   @keyframes spin { to { transform: rotate(360deg); } }
+  
+  .quick-btns { display: flex; gap: 8px; padding: 10px 16px; overflow-x: auto; background: white; border-bottom: 1px solid var(--gray-100); scrollbar-width: none; flex-shrink: 0; }
+  .quick-btns::-webkit-scrollbar { display: none; }
+  .quick-btn { white-space: nowrap; padding: 6px 12px; border: 1.5px solid var(--blue); border-radius: 20px; font-size: 12px; font-weight: 600; color: var(--blue); background: white; cursor: pointer; font-family: inherit; flex-shrink: 0; }
+  .quick-btn:hover { background: #eff6ff; }
 </style>
 </head>
 <body>
@@ -209,9 +224,7 @@
         <button class="quick-btn" onclick="quickAsk('타이어 사이즈 고르는 법')">🔍 사이즈 고르는 법</button>
         <button class="quick-btn" onclick="quickAsk('배송은 얼마나 걸려요?')">🚚 배송 기간</button>
         <button class="quick-btn" onclick="quickAsk('장착은 어디서 해요?')">🔧 장착 방법</button>
-        <button class="quick-btn" onclick="quickAsk('환불 가능한가요?')">💰 환불 정책</button>
-        <button class="quick-btn" onclick="quickAsk('세이프페이가 뭔가요?')">🔒 세이프페이</button>
-        <button class="quick-btn" onclick="quickAsk('사장님과 직접 상담')">👨‍💼 사장님 상담</button>
+        <button class="quick-btn" onclick="quickAsk('1:1 고객상담')">👨‍💼 1:1 고객상담</button>
       </div>
       <div class="chat-wrap">
         <div class="chat-messages" id="bot-messages"></div>
@@ -236,7 +249,6 @@
 <div class="modal-overlay" id="modal-overlay" onclick="if(event.target===this)closeModal()">
   <div class="modal">
     <button class="modal-close" onclick="closeModal()">✕</button>
-    
     <div class="modal-scroll-area">
       <div id="modal-img-container" style="display:flex; flex-direction:column; gap:12px; margin-bottom:20px;">
         <img class="modal-img" id="modal-img" src="" alt="" style="display:none;">
@@ -251,7 +263,6 @@
       </div>
       <div class="modal-seller-row" id="modal-seller"></div>
     </div>
-    
     <div class="modal-btns">
       <button class="btn-secondary" id="modal-chat-btn" onclick="chatWithSeller()">💬 판매자 채팅</button>
       <button class="btn-primary" id="modal-pay-btn" style="margin:0" onclick="toast('결제 시스템 준비 중입니다.')">🔒 세이프페이</button>
@@ -288,16 +299,32 @@
 <div class="login-modal-overlay" id="login-modal-overlay" onclick="if(event.target===this)hideLoginModal()">
   <div class="login-modal">
     <button class="login-modal-close" onclick="hideLoginModal()">✕</button>
-    <h3>🔐 로그인 / 회원가입</h3>
-    <div style="background: var(--gray-50); padding: 16px; border-radius: 12px; margin-bottom: 20px;">
-      <input type="email" id="email-input" class="form-input" placeholder="이메일 주소" style="margin-bottom:8px">
-      <input type="password" id="pw-input" class="form-input" placeholder="비밀번호 (6자리 이상)" style="margin-bottom:8px">
-      <input type="text" id="name-input" class="form-input" placeholder="닉네임 (가입시에만 입력)" style="margin-bottom:12px">
-      <div style="display: flex; gap: 8px;">
-        <button class="btn-primary" style="flex: 1; padding: 12px; font-size: 14px; margin: 0;" onclick="emailLogin()">로그인</button>
-        <button class="btn-secondary" style="flex: 1; padding: 12px; font-size: 14px; margin: 0;" onclick="emailSignUp()">이메일로 가입</button>
+
+    <div id="login-view">
+      <h3 style="margin-bottom:16px;">🔐 로그인</h3>
+      <div style="background: var(--gray-50); padding: 16px; border-radius: 12px; margin-bottom: 20px;">
+        <input type="email" id="l-email" class="form-input" placeholder="이메일 주소" style="margin-bottom:8px">
+        <input type="password" id="l-pw" class="form-input" placeholder="비밀번호" style="margin-bottom:12px">
+        <button class="btn-primary" style="width: 100%; padding: 12px; font-size: 14px; margin: 0;" onclick="emailLogin()">이메일로 로그인</button>
+      </div>
+      <div style="text-align:center; font-size:13px; color:var(--gray-600); margin-bottom: 20px;">
+        계정이 없으신가요? <span style="color:var(--blue); font-weight:700; cursor:pointer;" onclick="toggleAuthView('signup')">회원가입하기</span>
       </div>
     </div>
+
+    <div id="signup-view" style="display:none;">
+      <h3 style="margin-bottom:16px;">📝 1초 회원가입</h3>
+      <div style="background: var(--gray-50); padding: 16px; border-radius: 12px; margin-bottom: 20px;">
+        <input type="email" id="s-email" class="form-input" placeholder="이메일 주소 (아이디로 사용됩니다)" style="margin-bottom:8px">
+        <input type="password" id="s-pw" class="form-input" placeholder="비밀번호 (6자리 이상)" style="margin-bottom:8px">
+        <input type="text" id="s-name" class="form-input" placeholder="사용할 닉네임" style="margin-bottom:12px">
+        <button class="btn-secondary" style="width: 100%; padding: 12px; font-size: 14px; margin: 0;" onclick="emailSignUp()">가입 완료하기</button>
+      </div>
+      <div style="text-align:center; font-size:13px; color:var(--gray-600); margin-bottom: 20px;">
+        이미 계정이 있으신가요? <span style="color:var(--blue); font-weight:700; cursor:pointer;" onclick="toggleAuthView('login')">로그인하기</span>
+      </div>
+    </div>
+
     <div style="text-align: center; color: var(--gray-400); font-size: 12px; margin-bottom: 12px;">또는 간편 로그인</div>
     <button class="btn-google" onclick="googleLogin()">
       <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="20"> 구글로 시작하기
@@ -331,21 +358,30 @@ let pendingChatAfterLogin = null;
 let isFirstChatLoad = true;
 
 window.addEventListener('DOMContentLoaded', () => {
-  addBotMsg('안녕하세요! 타이어세이프 고객센터입니다 😊\n무엇이든 질문해 주세요!');
+  addBotMsg('안녕하세요! 타이어세이프 고객센터입니다 😊\n궁금한 점을 아래 버튼을 눌러 확인하시거나 직접 입력해주세요!');
 });
 
+// ── 로그인 & 회원가입 창 전환 ──
+function toggleAuthView(view) {
+  document.getElementById('login-view').style.display = view === 'login' ? 'block' : 'none';
+  document.getElementById('signup-view').style.display = view === 'signup' ? 'block' : 'none';
+}
+
 function showLoginModal() { 
-  document.getElementById('email-input').value = '';
-  document.getElementById('pw-input').value = '';
-  document.getElementById('name-input').value = '';
+  document.getElementById('l-email').value = '';
+  document.getElementById('l-pw').value = '';
+  document.getElementById('s-email').value = '';
+  document.getElementById('s-pw').value = '';
+  document.getElementById('s-name').value = '';
+  toggleAuthView('login'); // 기본은 로그인 창 먼저 띄우기
   document.getElementById('login-modal-overlay').classList.add('open'); 
 }
 function hideLoginModal() { document.getElementById('login-modal-overlay').classList.remove('open'); }
 
 async function emailSignUp() {
-  const email = document.getElementById('email-input').value.trim();
-  const pw = document.getElementById('pw-input').value.trim();
-  const name = document.getElementById('name-input').value.trim();
+  const email = document.getElementById('s-email').value.trim();
+  const pw = document.getElementById('s-pw').value.trim();
+  const name = document.getElementById('s-name').value.trim();
   if (!email || !pw) return toast('이메일과 비밀번호를 입력해주세요.');
   if (pw.length < 6) return toast('비밀번호는 6자리 이상이어야 합니다.');
   if (!name) return toast('닉네임을 입력해주세요.');
@@ -359,8 +395,8 @@ async function emailSignUp() {
 }
 
 async function emailLogin() {
-  const email = document.getElementById('email-input').value.trim();
-  const pw = document.getElementById('pw-input').value.trim();
+  const email = document.getElementById('l-email').value.trim();
+  const pw = document.getElementById('l-pw').value.trim();
   if (!email || !pw) return toast('이메일과 비밀번호를 입력해주세요.');
   try {
     toast('로그인 중입니다...');
@@ -414,20 +450,24 @@ function runPendingChat() {
   }
 }
 
-// ── 탭 이동 로직 (어떤 탭을 누르든 채팅방 닫기 적용) ──
+// ── 탭 이동 및 1:1 대화방 리셋 로직 ──
 function switchTab(name) {
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('tab-' + name).classList.add('active');
   document.getElementById('nav-' + name).classList.add('active');
   
-  // 🌟 홈이나 판매 버튼 누를 때, 혹은 채팅 탭을 다시 누를 때 채팅방 닫아주기
+  // 🌟 다른 탭으로 넘어갈 때 열려있던 대화방 닫고 채팅 리스트로 복구
   closeDmRoom();
   
   if (name === 'home') loadTires();
   if (name === 'chat') { switchChatTab('dm'); }
 }
+
 function switchChatTab(tab) {
+  // 🌟 고객센터(챗봇)와 1:1 대화를 전환할 때도 대화방 닫기
+  closeDmRoom();
+  
   document.getElementById('ctab-dm').classList.toggle('active', tab === 'dm');
   document.getElementById('ctab-bot').classList.toggle('active', tab === 'bot');
   document.getElementById('chat-dm-area').style.display = tab === 'dm' ? 'flex' : 'none';
@@ -446,7 +486,10 @@ async function openOrCreateDmRoom(targetUid, targetName, targetPhoto) {
     userPhotos: { [currentUser.uid]: currentUser.photoURL || '', [targetUid]: targetPhoto || '' },
     updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
   }, { merge: true });
-  closeModal(); switchTab('chat');
+  closeModal(); 
+  
+  // 채팅 탭 활성화 및 대화방 오픈
+  switchTab('chat');
   setTimeout(() => openDmRoom(roomId, targetName), 200);
 }
 
@@ -551,7 +594,24 @@ function addBotMsg(text, isUser = false) {
   box.appendChild(div); box.scrollTop = box.scrollHeight;
 }
 
-// 🌟 챗봇 로직 (사장님 연결 기능 강화)
+// 🌟 챗봇 핵심 수리 및 1:1 고객상담 연결
+const BOT_ANSWERS = [
+  { keys: ['사이즈','규격','고르는','선택'], answer: '타이어 사이즈는 운전석 문 안쪽 스티커나 현재 타이어 측면에서 확인할 수 있어요!\n예: 205/55R16 → 폭205mm / 편평비55% / 림16인치\n사이즈가 다르면 안전에 문제가 될 수 있으니 꼭 동일 사이즈를 사용해 주세요 🙏' },
+  { keys: ['배송','언제','도착','얼마나'], answer: '주문 후 보통 1~3일 이내 배송됩니다 🚚\n도서 산간 지역은 추가 1~2일 소요돼요!' },
+  { keys: ['장착','설치','공임','어디서'], answer: '타이어 구매 후 가까운 타이어 전문점이나 카센터에서 장착하시면 됩니다 🔧\n장착 공임은 보통 1개당 5,000~15,000원 수준이에요!' },
+  { keys: ['환불','반품','교환','취소'], answer: '수령 후 7일 이내 환불/교환 가능합니다 💰\n장착 후에는 환불이 어려울 수 있어요!' },
+  { keys: ['세이프페이','안전결제','보호','사기'], answer: '세이프페이는 타이어세이프의 안전 결제 시스템이에요 🔒\n장착 완료 확인 후 판매자에게 지급돼요!' },
+  { keys: ['가격','얼마','비용'], answer: '중고타이어는 새 타이어의 30~60% 수준이에요 💡\n홈 탭에서 현재 매물을 확인해보세요!' },
+  { keys: ['전문가','검증','인증','믿을'], answer: '모든 매물은 카센터 10년 경력 전문가가 직접 검수해요 ✅' },
+  { keys: ['상담','고객상담','1:1','직접','연결'], answer: null } // 1:1 고객상담 매칭 키워드
+];
+
+function getBotAnswer(msg) {
+  const m = msg.toLowerCase();
+  for (const item of BOT_ANSWERS) { if (item.keys.some(k => m.includes(k))) return item.answer; }
+  return undefined;
+}
+
 function quickAsk(q) { document.getElementById('bot-input').value = q; sendBotMsg(); }
 async function sendBotMsg() {
   const input = document.getElementById('bot-input');
@@ -561,45 +621,29 @@ async function sendBotMsg() {
   setTimeout(async () => {
     const answer = getBotAnswer(msg);
     
-    // "사장님 상담" 버튼을 눌렀을 때
+    // 1:1 고객상담 버튼을 눌렀을 때
     if (answer === null) {
       if (!currentUser) { addBotMsg('로그인 후 이용하실 수 있어요!'); return; }
-      if (currentUser.uid === ADMIN_UID) { addBotMsg('현재 사장님 본인 계정으로 접속 중입니다! 일반 고객 계정으로 1:1 대화를 테스트해주세요 😅'); return; }
+      if (currentUser.uid === ADMIN_UID) { addBotMsg('현재 사장님 관리자 계정으로 접속 중입니다. 일반 고객 계정으로 연결을 테스트해주세요 😅'); return; }
       
-      addBotMsg('사장님께 즉시 연결합니다! 1:1 대화방으로 이동할게요 🏃‍♂️');
+      addBotMsg('1:1 고객상담 센터로 연결해 드릴게요! 잠시만요 👨‍💼');
       setTimeout(async () => {
-        await openOrCreateDmRoom(ADMIN_UID, '타이어세이프 사장님', '');
+        await openOrCreateDmRoom(ADMIN_UID, '고객상담센터', '');
       }, 1000);
     } 
-    // 챗봇이 대답을 모를 때 강제 연결
+    // 챗봇이 모르는 질문일 때 (무시하지 않고 친절하게 응답)
     else if (answer === undefined) {
-      if (!currentUser) { addBotMsg('로그인 후 이용하실 수 있어요!'); return; }
-      if (currentUser.uid === ADMIN_UID) { addBotMsg('챗봇이 모르는 질문입니다. (현재 사장님 계정이라 연결은 생략됩니다)'); return; }
-      
-      addBotMsg('정확한 답변을 드리기 어렵네요 😅\n사장님과 직접 상담하실 수 있도록 1:1 대화방을 열어드릴게요!');
-      setTimeout(async () => {
-        const roomId = getRoomId(currentUser.uid, ADMIN_UID);
-        await db.collection('dmRooms').doc(roomId).set({
-          users: [currentUser.uid, ADMIN_UID], 
-          userNames: { [currentUser.uid]: currentUser.displayName||'고객', [ADMIN_UID]: '타이어세이프 사장님' },
-          updatedAt: firebase.firestore.FieldValue.serverTimestamp(), 
-          lastSenderId: currentUser.uid, isRead: false
-        }, { merge: true });
-        
-        await db.collection('dmRooms').doc(roomId).collection('messages').add({
-          text: `[챗봇에서 넘어온 질문]\n"${msg}"\n\n고객님이 위 질문을 하셨습니다. 답변 부탁드립니다!`, 
-          uid: 'system', name: '시스템', createdAt: firebase.firestore.FieldValue.serverTimestamp(), isSystem: true,
-        });
-        
-        switchTab('chat');
-        openDmRoom(roomId, '타이어세이프 사장님');
-      }, 1500);
-    } else { 
+      addBotMsg('정확한 답변을 찾지 못했어요 😅\n도움이 필요하시면 아래 [1:1 고객상담] 버튼을 눌러주세요!');
+      addBotMsg('<button class="quick-btn" style="border-color:var(--blue); color:var(--blue); margin-top:4px;" onclick="quickAsk(\'1:1 고객상담\')">👨‍💼 1:1 고객상담 연결하기</button>');
+    } 
+    // 정상적인 답변일 때
+    else { 
       addBotMsg(answer); 
     }
   }, 500);
 }
 
+// ── 매물, 사진 업로드 ──
 function compressImage(file) {
   return new Promise(resolve => {
     const reader = new FileReader();
@@ -777,22 +821,6 @@ function openModal(t) {
 
 function closeModal() { document.getElementById('modal-overlay').classList.remove('open'); document.body.style.overflow = ''; }
 
-function toast(msg) {
-  const el = document.getElementById('toast');
-  el.textContent = msg; el.classList.add('show');
-  setTimeout(() => el.classList.remove('show'), 2500);
-}
-
-async function deleteTire() {
-  if (!currentModalTire || !currentModalTire.id) return;
-  if (!confirm("정말 이 매물 게시글을 삭제하시겠습니까?")) return;
-  try {
-    await db.collection('tires').doc(currentModalTire.id).delete();
-    toast('🗑️ 게시글이 삭제되었습니다.');
-    closeModal(); loadTires(); 
-  } catch(e) { toast('❌ 삭제 실패: ' + e.message); }
-}
-
 function openEditModal() {
   document.getElementById('e-title').value = currentModalTire.title || '';
   document.getElementById('e-size').value = currentModalTire.size || '';
@@ -823,7 +851,6 @@ async function submitEdit() {
   
   try {
     let updateData = { title: title, size: size, price: parseInt(price), description: desc };
-    
     if (files && files.length > 0) {
       let imageUrls = [];
       for (let i = 0; i < files.length; i++) {
@@ -833,15 +860,11 @@ async function submitEdit() {
       updateData.imageUrls = imageUrls;
       updateData.imageUrl = imageUrls.length > 0 ? imageUrls[0] : null;
     }
-
     await db.collection('tires').doc(currentModalTire.id).update(updateData);
     toast('✅ 게시글이 수정되었습니다.');
     closeEditModal(); closeModal(); loadTires();
-  } catch(e) { 
-    toast('❌ 수정 실패: ' + e.message); 
-  } finally {
-    btn.disabled = false; btn.textContent = '수정 완료';
-  }
+  } catch(e) { toast('❌ 수정 실패: ' + e.message); } 
+  finally { btn.disabled = false; btn.textContent = '수정 완료'; }
 }
 
 async function toggleVerify() {
@@ -853,7 +876,6 @@ async function toggleVerify() {
     closeModal(); loadTires();
   } catch(e) { toast('❌ 오류: ' + e.message); }
 }
-
 </script>
 </body>
 </html>
