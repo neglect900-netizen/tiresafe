@@ -16,7 +16,6 @@
     --gray-50: #f9fafb; --gray-100: #f3f4f6; --gray-200: #e5e7eb;
     --gray-400: #9ca3af; --gray-600: #4b5563; --gray-800: #1f2937;
     --white: #ffffff; --shadow: 0 1px 3px rgba(0,0,0,0.1);
-    --kakao: #FEE500; --kakao-text: #3A1D1D;
   }
   body { font-family: 'Noto Sans KR', sans-serif; background: var(--gray-100); color: var(--gray-800); min-height: 100vh; padding-bottom: 80px; }
   .app { max-width: 480px; margin: 0 auto; background: var(--white); min-height: 100vh; }
@@ -116,19 +115,33 @@
 
   .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 100; align-items: flex-end; justify-content: center; }
   .modal-overlay.open { display: flex; }
-  .modal { background: white; border-radius: 20px 20px 0 0; width: 100%; max-width: 480px; max-height: 90vh; overflow-y: auto; padding: 24px 20px 32px; position: relative; }
-  .modal-close { position: absolute; top: 16px; right: 16px; background: var(--gray-100); border: none; width: 32px; height: 32px; border-radius: 50%; font-size: 16px; cursor: pointer; }
-  .modal-img { width: 100%; height: 220px; object-fit: cover; border-radius: 12px; margin-bottom: 16px; }
+  .modal { background: white; border-radius: 20px 20px 0 0; width: 100%; max-width: 480px; max-height: 90vh; overflow-y: hidden; padding: 24px 20px 32px; position: relative; display: flex; flex-direction: column; }
+  .modal-close { position: absolute; top: 16px; right: 16px; background: var(--gray-100); border: none; width: 32px; height: 32px; border-radius: 50%; font-size: 16px; cursor: pointer; z-index: 10; }
+  
+  /* 위아래 스크롤 영역 (사진과 설명 부분 묶음) */
+  .modal-scroll-area { overflow-y: auto; padding-right: 4px; margin-bottom: 16px; flex: 1; }
+  
   .modal-badge { font-size: 11px; font-weight: 700; color: var(--green); margin-bottom: 6px; }
   .modal-title { font-size: 20px; font-weight: 900; margin-bottom: 4px; }
   .modal-size { font-size: 13px; color: var(--gray-400); margin-bottom: 16px; }
   .modal-info { background: var(--gray-50); border-radius: 12px; padding: 14px 16px; margin-bottom: 20px; }
-  .modal-info p { font-size: 13px; color: var(--gray-600); line-height: 1.8; }
+  .modal-info p { font-size: 13px; color: var(--gray-600); line-height: 1.8; white-space: pre-wrap; }
   .modal-price-row { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 8px; }
   .modal-price { font-size: 26px; font-weight: 900; color: var(--blue); }
   .modal-seller-row { font-size: 12px; color: var(--gray-400); margin-bottom: 16px; }
-  .modal-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .modal-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; flex-shrink: 0; }
   .btn-secondary { padding: 14px; border: 1.5px solid var(--gray-200); border-radius: 12px; background: white; font-size: 14px; font-weight: 700; cursor: pointer; font-family: inherit; }
+
+  /* 가상 결제창 모달 스타일 */
+  .pay-modal { background: #f9fafb; border-radius: 20px 20px 0 0; width: 100%; max-width: 480px; padding: 0; position: relative; overflow: hidden; }
+  .pay-header { background: white; padding: 20px; border-bottom: 1px solid var(--gray-200); text-align: center; font-weight: 900; font-size: 18px; position: relative; }
+  .pay-close { position: absolute; left: 16px; top: 18px; font-size: 20px; background: none; border: none; cursor: pointer; color: var(--gray-600); }
+  .pay-content { padding: 24px 20px; }
+  .pay-box { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 20px; }
+  .pay-label { font-size: 12px; color: var(--gray-400); font-weight: 600; margin-bottom: 4px; }
+  .pay-amount { font-size: 28px; font-weight: 900; color: var(--blue); margin-bottom: 16px; }
+  .pay-divider { height: 1px; background: var(--gray-100); margin: 16px 0; }
+  .pay-desc { font-size: 13px; color: var(--gray-600); line-height: 1.6; text-align: center; background: #e0e7ff; padding: 12px; border-radius: 8px; font-weight: 600; color: var(--blue-dark); }
 
   /* 로그인 모달 */
   .login-modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 200; align-items: flex-end; justify-content: center; }
@@ -137,7 +150,6 @@
   .login-modal h3 { font-size: 18px; font-weight: 900; margin-bottom: 6px; }
   .login-modal p { font-size: 13px; color: var(--gray-400); margin-bottom: 24px; }
   .login-modal-close { position: absolute; top: 16px; right: 16px; background: var(--gray-100); border: none; width: 32px; height: 32px; border-radius: 50%; font-size: 16px; cursor: pointer; }
-  /* 로그인 안내 박스 */
   .login-info-box { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 10px; padding: 12px 14px; font-size: 12px; color: var(--blue); margin-top: 14px; line-height: 1.6; }
 
   .toast { position: fixed; bottom: 84px; left: 50%; transform: translateX(-50%) translateY(20px); background: var(--gray-800); color: white; padding: 12px 20px; border-radius: 10px; font-size: 13px; font-weight: 600; opacity: 0; transition: all 0.3s; z-index: 300; white-space: nowrap; }
@@ -236,24 +248,58 @@
   <div class="modal">
     <button class="modal-close" onclick="closeModal()">✕</button>
     
-    <div id="modal-img-container" style="display:flex; gap:8px; overflow-x:auto; margin-bottom:16px; scroll-snap-type: x mandatory;">
-      <img class="modal-img" id="modal-img" src="" alt="" style="display:none; flex-shrink:0; scroll-snap-align: start;">
+    <div class="modal-scroll-area">
+      <div id="modal-img-container" style="display:flex; flex-direction:column; gap:12px; margin-bottom:20px;">
+        <img class="modal-img" id="modal-img" src="" alt="" style="display:none;">
+      </div>
+      
+      <div class="modal-badge">✅ 전문가 검증 완료</div>
+      <div class="modal-title" id="modal-title"></div>
+      <div class="modal-size" id="modal-size"></div>
+      <div class="modal-info"><p id="modal-desc"></p></div>
+      <div class="modal-price-row">
+        <div><div style="font-size:12px;color:var(--gray-400)">판매가</div><div class="modal-price" id="modal-price"></div></div>
+        <div style="font-size:12px;color:var(--gray-400)">장착 공임 별도</div>
+      </div>
+      <div class="modal-seller-row" id="modal-seller"></div>
     </div>
     
-    <div class="modal-badge">✅ 전문가 검증 완료</div>
-    <div class="modal-title" id="modal-title"></div>
-    <div class="modal-size" id="modal-size"></div>
-    <div class="modal-info"><p id="modal-desc"></p></div>
-    <div class="modal-price-row">
-      <div><div style="font-size:12px;color:var(--gray-400)">판매가</div><div class="modal-price" id="modal-price"></div></div>
-      <div style="font-size:12px;color:var(--gray-400)">장착 공임 별도</div>
-    </div>
-    <div class="modal-seller-row" id="modal-seller"></div>
     <div class="modal-btns">
       <button class="btn-secondary" id="modal-chat-btn" onclick="chatWithSeller()">💬 판매자 채팅</button>
-      <button class="btn-primary" id="modal-pay-btn" style="margin:0" onclick="closeModal();toast('💳 결제 모듈 준비 중입니다')">🔒 세이프페이</button>
+      <button class="btn-primary" id="modal-pay-btn" style="margin:0" onclick="openPayModal()">🔒 세이프페이</button>
       
       <button class="btn-primary" id="modal-delete-btn" style="background:var(--red); display:none; grid-column: 1 / -1; margin-top:8px;" onclick="deleteTire()">🗑️ 이 게시글 삭제하기</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="pay-modal-overlay" onclick="if(event.target===this)closePayModal()">
+  <div class="modal pay-modal" style="height: 80vh;">
+    <div class="pay-header">
+      <button class="pay-close" onclick="closePayModal()">←</button>
+      세이프페이 결제
+    </div>
+    <div class="pay-content">
+      <div class="pay-box">
+        <div class="pay-label">결제하실 금액</div>
+        <div class="pay-amount" id="pay-modal-price">0원</div>
+        <div class="pay-divider"></div>
+        <div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:8px;">
+          <span style="color:var(--gray-600)">상품명</span>
+          <span style="font-weight:700" id="pay-modal-title">타이어</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; font-size:13px;">
+          <span style="color:var(--gray-600)">판매자</span>
+          <span style="font-weight:700" id="pay-modal-seller">판매자</span>
+        </div>
+      </div>
+      
+      <div class="pay-desc">
+        🛡️ 대금은 타이어세이프가 안전하게 보관하며,<br>
+        '장착 완료' 확인 후 판매자에게 지급됩니다.
+      </div>
+      
+      <button class="btn-primary" style="margin-top:24px;" onclick="simulatePayment()">결제 진행하기 (테스트)</button>
     </div>
   </div>
 </div>
@@ -551,7 +597,7 @@ async function sendBotMsg() {
   }, 400);
 }
 
-// ── 매물, 사진 다중 업로드 및 삭제 ──
+// ── 매물, 사진 다중 업로드(최대 9장) 및 압축 ──
 function compressImage(file) {
   return new Promise(resolve => {
     const reader = new FileReader();
@@ -598,7 +644,7 @@ function renderSellForm() {
     <div class="photo-upload" onclick="document.getElementById('file-input').click()">
       <div id="preview-placeholder" style="text-align:center;">
         <div style="font-size:36px;margin-bottom:8px">📸</div>
-        <div style="font-size:13px;color:var(--gray-400);font-weight:600">사진 선택 (최대 3장)</div>
+        <div style="font-size:13px;color:var(--gray-400);font-weight:600">사진 선택 (최대 9장)</div>
       </div>
       <div id="preview-container" style="position:absolute; inset:0; display:none; gap:8px; padding:16px; overflow-x:auto; background:var(--gray-50); align-items:center;"></div>
     </div>
@@ -615,8 +661,9 @@ function renderSellForm() {
 function handlePhoto(input) {
   const files = input.files; 
   if (!files || files.length === 0) return;
-  if (files.length > 3) {
-    toast('사진은 최대 3장까지만 올릴 수 있습니다.');
+  // 사진 최대 9장으로 제한
+  if (files.length > 9) {
+    toast('사진은 최대 9장까지만 올릴 수 있습니다.');
     input.value = ''; 
     return;
   }
@@ -698,7 +745,8 @@ function openModal(t) {
   
   if (urls.length > 0) {
     urls.forEach(url => {
-      imgContainer.innerHTML += `<img class="modal-img" src="${url}" style="flex-shrink:0; width:100%; object-fit:cover; scroll-snap-align: start; border-radius:12px;">`;
+      // 사진이 위아래로 쌓이도록 스타일 변경 (width:100%, border-radius 추가)
+      imgContainer.innerHTML += `<img src="${url}" style="width:100%; height:auto; border-radius:12px; object-fit:contain; background:#f3f4f6;">`;
     });
     imgContainer.style.display = 'flex';
   } else {
@@ -730,6 +778,33 @@ function openModal(t) {
 }
 
 function closeModal() { document.getElementById('modal-overlay').classList.remove('open'); document.body.style.overflow = ''; }
+
+// ── 세이프페이 가상 결제 모달 기능 ──
+function openPayModal() {
+  if (!currentUser) {
+    toast('결제는 로그인이 필요합니다.');
+    showLoginModal();
+    return;
+  }
+  document.getElementById('pay-modal-price').textContent = Number(currentModalTire.price).toLocaleString() + '원';
+  document.getElementById('pay-modal-title').textContent = currentModalTire.title;
+  document.getElementById('pay-modal-seller').textContent = currentModalTire.sellerName;
+  
+  document.getElementById('pay-modal-overlay').classList.add('open');
+}
+
+function closePayModal() {
+  document.getElementById('pay-modal-overlay').classList.remove('open');
+}
+
+function simulatePayment() {
+  toast('🔄 안전 결제 모듈을 불러오는 중...');
+  setTimeout(() => {
+    alert("테스트 결제가 완료되었습니다!\n(실제 상용화를 위해서는 PG사 계약 및 추가 연동이 필요합니다.)");
+    closePayModal();
+    closeModal();
+  }, 1500);
+}
 
 function toast(msg) {
   const el = document.getElementById('toast');
