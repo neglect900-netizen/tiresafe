@@ -162,7 +162,6 @@
     </div>
   </header>
 
-  <!-- 홈 -->
   <div class="tab active" id="tab-home">
     <div class="hero">
       <div class="hero-badge">🔧 카센터 10년 경력 전문가 검증</div>
@@ -179,7 +178,6 @@
     </div>
   </div>
 
-  <!-- 판매 -->
   <div class="tab" id="tab-sell">
     <div class="sell-wrap">
       <div class="sell-title">타이어 판매하기</div>
@@ -187,7 +185,6 @@
     </div>
   </div>
 
-  <!-- 채팅 -->
   <div class="tab" id="tab-chat">
     <div class="chat-tab-wrap">
       <button class="chat-tab-btn active" id="ctab-dm" onclick="switchChatTab('dm')">💬 1:1 대화</button>
@@ -235,11 +232,14 @@
   </nav>
 </div>
 
-<!-- 매물 모달 -->
 <div class="modal-overlay" id="modal-overlay" onclick="if(event.target===this)closeModal()">
   <div class="modal">
     <button class="modal-close" onclick="closeModal()">✕</button>
-    <img class="modal-img" id="modal-img" src="" alt="" style="display:none">
+    
+    <div id="modal-img-container" style="display:flex; gap:8px; overflow-x:auto; margin-bottom:16px; scroll-snap-type: x mandatory;">
+      <img class="modal-img" id="modal-img" src="" alt="" style="display:none; flex-shrink:0; scroll-snap-align: start;">
+    </div>
+    
     <div class="modal-badge">✅ 전문가 검증 완료</div>
     <div class="modal-title" id="modal-title"></div>
     <div class="modal-size" id="modal-size"></div>
@@ -251,12 +251,13 @@
     <div class="modal-seller-row" id="modal-seller"></div>
     <div class="modal-btns">
       <button class="btn-secondary" id="modal-chat-btn" onclick="chatWithSeller()">💬 판매자 채팅</button>
-      <button class="btn-primary" style="margin:0" onclick="closeModal();toast('💳 결제 모듈 준비 중입니다')">🔒 세이프페이</button>
+      <button class="btn-primary" id="modal-pay-btn" style="margin:0" onclick="closeModal();toast('💳 결제 모듈 준비 중입니다')">🔒 세이프페이</button>
+      
+      <button class="btn-primary" id="modal-delete-btn" style="background:var(--red); display:none; grid-column: 1 / -1; margin-top:8px;" onclick="deleteTire()">🗑️ 이 게시글 삭제하기</button>
     </div>
   </div>
 </div>
 
-<!-- 로그인 모달 -->
 <div class="login-modal-overlay" id="login-modal-overlay" onclick="if(event.target===this)hideLoginModal()">
   <div class="login-modal">
     <button class="login-modal-close" onclick="hideLoginModal()">✕</button>
@@ -281,7 +282,7 @@ const ADMIN_UID = 'SMB8eJMGJ4VPpKbZqbEjlXw2eG32';
 // ── 핵심: authDomain을 firebaseapp.com 으로 설정 ──
 const firebaseConfig = {
   apiKey: "AIzaSyDP414CWLGAJj06_bhBbGD9rkOcZHb2--I",
-  authDomain: "tire-f9ebb.firebaseapp.com", // ← 이게 핵심
+  authDomain: "tire-f9ebb.firebaseapp.com",
   projectId: "tire-f9ebb",
   storageBucket: "tire-f9ebb.firebasestorage.app",
   messagingSenderId: "394141245307",
@@ -304,7 +305,7 @@ window.addEventListener('DOMContentLoaded', () => {
 function showLoginModal() { document.getElementById('login-modal-overlay').classList.add('open'); }
 function hideLoginModal() { document.getElementById('login-modal-overlay').classList.remove('open'); }
 
-// ── Redirect 결과 처리 (모바일 redirect 후 복귀) ──
+// ── Redirect 결과 처리 ──
 auth.getRedirectResult().then(result => {
   if (result && result.user) {
     toast('✅ 로그인 성공!');
@@ -327,17 +328,13 @@ auth.onAuthStateChanged(user => {
 function googleLogin() {
   const provider = new firebase.auth.GoogleAuthProvider();
   provider.setCustomParameters({ prompt: 'select_account' });
-  // 팝업 시도 → 실패하면 redirect
   auth.signInWithPopup(provider)
     .then(() => { hideLoginModal(); runPendingChat(); })
     .catch(err => {
       if (err.code === 'auth/popup-blocked' ||
           err.code === 'auth/popup-closed-by-user' ||
-          err.code === 'auth/cancelled-popup-request') {
-        // 팝업 안 되면 redirect로 전환
-        auth.signInWithRedirect(provider);
-      } else if (err.code === 'auth/operation-not-supported-in-this-environment') {
-        // WebView 등 팝업 자체가 불가한 환경 → redirect
+          err.code === 'auth/cancelled-popup-request' ||
+          err.code === 'auth/operation-not-supported-in-this-environment') {
         auth.signInWithRedirect(provider);
       } else {
         toast('로그인 오류: ' + err.message);
@@ -554,7 +551,7 @@ async function sendBotMsg() {
   }, 400);
 }
 
-// ── 매물 ──
+// ── 매물, 사진 다중 업로드 및 삭제 ──
 function compressImage(file) {
   return new Promise(resolve => {
     const reader = new FileReader();
@@ -573,6 +570,7 @@ function compressImage(file) {
     reader.readAsDataURL(file);
   });
 }
+
 async function loadTires() {
   const grid = document.getElementById('tire-grid');
   grid.innerHTML = '<div class="loading" style="grid-column:1/-1"><div class="spinner"></div><p>불러오는 중...</p></div>';
@@ -581,7 +579,7 @@ async function loadTires() {
     if (snap.empty) { grid.innerHTML = '<div class="empty-state"><div class="empty-icon">🛞</div><p>등록된 매물이 없습니다.<br>첫 번째 타이어를 올려보세요!</p></div>'; return; }
     grid.innerHTML = snap.docs.map(doc => {
       const t = { id: doc.id, ...doc.data() };
-      const safe = JSON.stringify({ id:t.id, title:t.title, size:t.size, price:t.price, description:t.description, imageUrl:t.imageUrl, sellerName:t.sellerName, sellerId:t.sellerId }).replace(/'/g,'&#39;');
+      const safe = JSON.stringify({ id:t.id, title:t.title, size:t.size, price:t.price, description:t.description, imageUrl:t.imageUrl, imageUrls:t.imageUrls, sellerName:t.sellerName, sellerId:t.sellerId }).replace(/'/g,'&#39;');
       return `<div class="tire-card" onclick='openModal(${JSON.stringify(safe)})'>
         ${t.imageUrl ? `<img class="tire-card-img" src="${t.imageUrl}" loading="lazy">` : '<div class="tire-card-placeholder">🛞</div>'}
         <div class="tire-card-body">
@@ -594,14 +592,17 @@ async function loadTires() {
     }).join('');
   } catch(e) { grid.innerHTML = `<div style="grid-column:1/-1;padding:20px;color:var(--red);font-size:13px">오류: ${e.message}</div>`; }
 }
+
 function renderSellForm() {
   document.getElementById('sell-content').innerHTML = `
     <div class="photo-upload" onclick="document.getElementById('file-input').click()">
-      <div style="font-size:36px;margin-bottom:8px">📸</div>
-      <div style="font-size:13px;color:var(--gray-400);font-weight:600">사진 선택 (선택사항)</div>
-      <img id="preview-img" src="" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none">
+      <div id="preview-placeholder" style="text-align:center;">
+        <div style="font-size:36px;margin-bottom:8px">📸</div>
+        <div style="font-size:13px;color:var(--gray-400);font-weight:600">사진 선택 (최대 3장)</div>
+      </div>
+      <div id="preview-container" style="position:absolute; inset:0; display:none; gap:8px; padding:16px; overflow-x:auto; background:var(--gray-50); align-items:center;"></div>
     </div>
-    <input type="file" id="file-input" accept="image/*" style="display:none" onchange="handlePhoto(this)">
+    <input type="file" id="file-input" accept="image/*" multiple style="display:none" onchange="handlePhoto(this)">
     <div class="form-group"><label class="form-label">타이어 모델명 *</label><input type="text" class="form-input" id="f-title" placeholder="예: 금호 마제스티9"></div>
     <div class="form-row">
       <div class="form-group"><label class="form-label">사이즈</label><input type="text" class="form-input" id="f-size" placeholder="245/45/18"></div>
@@ -610,52 +611,145 @@ function renderSellForm() {
     <div class="form-group"><label class="form-label">상태 설명</label><textarea class="form-textarea" id="f-desc" placeholder="트레드 잔량, DOT 제조일자, 특이사항 등"></textarea></div>
     <button class="btn-primary" id="submit-btn" onclick="submitTire()">매물 등록하기</button>`;
 }
+
 function handlePhoto(input) {
-  const file = input.files[0]; if (!file) return;
-  const reader = new FileReader();
-  reader.onload = e => { const img = document.getElementById('preview-img'); img.src = e.target.result; img.style.display = 'block'; };
-  reader.readAsDataURL(file);
+  const files = input.files; 
+  if (!files || files.length === 0) return;
+  if (files.length > 3) {
+    toast('사진은 최대 3장까지만 올릴 수 있습니다.');
+    input.value = ''; 
+    return;
+  }
+  
+  const container = document.getElementById('preview-container');
+  const placeholder = document.getElementById('preview-placeholder');
+  
+  container.innerHTML = ''; 
+  placeholder.style.display = 'none';
+  container.style.display = 'flex';
+  
+  Array.from(files).forEach(file => {
+    const reader = new FileReader();
+    reader.onload = e => { 
+      const img = document.createElement('img');
+      img.src = e.target.result;
+      img.style.height = '100%';
+      img.style.width = '100px';
+      img.style.objectFit = 'cover';
+      img.style.borderRadius = '8px';
+      img.style.flexShrink = '0';
+      container.appendChild(img); 
+    };
+    reader.readAsDataURL(file);
+  });
 }
+
 async function submitTire() {
   if (!currentUser) { toast('로그인이 필요합니다'); return; }
   const title = document.getElementById('f-title').value.trim();
   const size  = document.getElementById('f-size').value.trim();
   const price = document.getElementById('f-price').value.trim();
   const desc  = document.getElementById('f-desc').value.trim();
-  const file  = document.getElementById('file-input').files[0];
+  const files = document.getElementById('file-input').files;
+  
   if (!title) { toast('모델명을 입력해주세요'); return; }
   if (!price) { toast('가격을 입력해주세요'); return; }
   const btn = document.getElementById('submit-btn');
   btn.disabled = true; btn.textContent = '등록 중...';
+  
   try {
-    let imageUrl = null;
-    if (file) imageUrl = await compressImage(file);
-    await db.collection('tires').add({ title, size, price: parseInt(price), description: desc, imageUrl, sellerName: currentUser.displayName||'판매자', sellerId: currentUser.uid, createdAt: firebase.firestore.FieldValue.serverTimestamp() });
+    let imageUrls = [];
+    if (files && files.length > 0) {
+      for (let i = 0; i < files.length; i++) {
+        const compressed = await compressImage(files[i]);
+        imageUrls.push(compressed);
+      }
+    }
+    
+    await db.collection('tires').add({ 
+      title, 
+      size, 
+      price: parseInt(price), 
+      description: desc, 
+      imageUrls: imageUrls, 
+      imageUrl: imageUrls.length > 0 ? imageUrls[0] : null, 
+      sellerName: currentUser.displayName || '판매자', 
+      sellerId: currentUser.uid, 
+      createdAt: firebase.firestore.FieldValue.serverTimestamp() 
+    });
+    
     toast('✅ 매물이 등록되었습니다!');
     setTimeout(() => switchTab('home'), 1000);
-  } catch(e) { toast('❌ ' + e.message); }
-  finally { btn.disabled = false; btn.textContent = '매물 등록하기'; }
+  } catch(e) { 
+    toast('❌ ' + e.message); 
+  } finally { 
+    btn.disabled = false; btn.textContent = '매물 등록하기'; 
+  }
 }
+
 function openModal(t) {
   if (typeof t === 'string') t = JSON.parse(t);
   currentModalTire = t;
-  const img = document.getElementById('modal-img');
-  img.src = t.imageUrl || ''; img.style.display = t.imageUrl ? 'block' : 'none';
+  
+  const imgContainer = document.getElementById('modal-img-container');
+  imgContainer.innerHTML = ''; 
+  
+  const urls = (t.imageUrls && t.imageUrls.length > 0) ? t.imageUrls : (t.imageUrl ? [t.imageUrl] : []);
+  
+  if (urls.length > 0) {
+    urls.forEach(url => {
+      imgContainer.innerHTML += `<img class="modal-img" src="${url}" style="flex-shrink:0; width:100%; object-fit:cover; scroll-snap-align: start; border-radius:12px;">`;
+    });
+    imgContainer.style.display = 'flex';
+  } else {
+    imgContainer.style.display = 'none';
+  }
+  
   document.getElementById('modal-title').textContent = t.title;
   document.getElementById('modal-size').textContent = t.size || '';
   document.getElementById('modal-desc').textContent = t.description || '전문가가 직접 검수한 상품입니다.';
   document.getElementById('modal-price').textContent = Number(t.price).toLocaleString() + '원';
   document.getElementById('modal-seller').textContent = t.sellerName ? '판매자: ' + t.sellerName : '';
+  
   const chatBtn = document.getElementById('modal-chat-btn');
-  chatBtn.style.display = (currentUser && currentUser.uid === t.sellerId) ? 'none' : '';
+  const payBtn = document.getElementById('modal-pay-btn');
+  const deleteBtn = document.getElementById('modal-delete-btn');
+  
+  if (currentUser && currentUser.uid === t.sellerId) {
+    chatBtn.style.display = 'none';
+    payBtn.style.display = 'none';
+    deleteBtn.style.display = 'block';
+  } else {
+    chatBtn.style.display = '';
+    payBtn.style.display = '';
+    deleteBtn.style.display = 'none';
+  }
+  
   document.getElementById('modal-overlay').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
+
 function closeModal() { document.getElementById('modal-overlay').classList.remove('open'); document.body.style.overflow = ''; }
+
 function toast(msg) {
   const el = document.getElementById('toast');
   el.textContent = msg; el.classList.add('show');
   setTimeout(() => el.classList.remove('show'), 2500);
+}
+
+// ── 게시글 삭제 기능 ──
+async function deleteTire() {
+  if (!currentModalTire || !currentModalTire.id) return;
+  if (!confirm("정말 이 매물 게시글을 삭제하시겠습니까?")) return;
+  
+  try {
+    await db.collection('tires').doc(currentModalTire.id).delete();
+    toast('🗑️ 게시글이 삭제되었습니다.');
+    closeModal();
+    loadTires(); 
+  } catch(e) {
+    toast('❌ 삭제 실패: ' + e.message);
+  }
 }
 </script>
 </body>
