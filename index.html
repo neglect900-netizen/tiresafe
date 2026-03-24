@@ -3,1245 +3,446 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>타이어세이프 | 전문가 인증 중고타이어</title>
+<title>TireSafe · 중고타이어 직거래</title>
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800;900&family=Noto+Sans+KR:wght@400;600;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-/* ── Reset & Base ── */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-:root {
-  --blue: #2563EB;
-  --blue-dark: #1D4ED8;
-  --blue-light: #EFF6FF;
-  --blue-mid: #BFDBFE;
-  --green: #059669;
-  --green-light: #D1FAE5;
-  --red: #DC2626;
-  --red-light: #FEE2E2;
-  --amber: #F59E0B;
-  --amber-light: #FEF3C7;
-  --gray-50: #F8FAFC;
-  --gray-100: #F1F5F9;
-  --gray-200: #E2E8F0;
-  --gray-300: #CBD5E1;
-  --gray-400: #94A3B8;
-  --gray-500: #64748B;
-  --gray-600: #475569;
-  --gray-700: #334155;
-  --gray-800: #1E293B;
-  --gray-900: #0F172A;
-  --white: #FFFFFF;
-  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
-  --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.05);
-  --shadow-md: 0 4px 6px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.05);
-  --shadow-lg: 0 10px 25px rgba(0,0,0,0.1), 0 4px 10px rgba(0,0,0,0.06);
-  --radius-sm: 8px;
-  --radius: 12px;
-  --radius-lg: 16px;
-  --radius-xl: 20px;
-  --font: 'Pretendard', 'Noto Sans KR', -apple-system, sans-serif;
-  --nav-h: 64px;
-  --header-h: 56px;
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0D0F14;--bg2:#141720;--bg3:#1C1F2A;
+  --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.12);
+  --accent:#FF6B35;--accent2:#FF8C5A;--accent-bg:rgba(255,107,53,0.12);--accent-bg2:rgba(255,107,53,0.06);
+  --green:#22C55E;--green-bg:rgba(34,197,94,0.1);
+  --red:#EF4444;--red-bg:rgba(239,68,68,0.1);
+  --t1:#F0F2F7;--t2:#A0A6B8;--t3:#5E657A;
+  --nav:60px;--head:52px;
+  --font:'DM Sans','Noto Sans KR',-apple-system,sans-serif;
+  --r:14px;--r2:20px;
 }
+html,body{height:100%;overflow:hidden}
+body{font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-tap-highlight-color:transparent;-webkit-font-smoothing:antialiased;}
 
-html { height: 100%; }
-body {
-  font-family: var(--font);
-  background: var(--gray-100);
-  color: var(--gray-800);
-  height: 100%;
-  overflow: hidden;
-  -webkit-tap-highlight-color: transparent;
-  -webkit-font-smoothing: antialiased;
-}
+.app{max-width:480px;margin:0 auto;background:var(--bg);height:100vh;display:flex;flex-direction:column;position:relative;overflow:hidden;}
 
-/* ── App Shell ── */
-.app {
-  max-width: 480px;
-  margin: 0 auto;
-  background: var(--white);
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  overflow: hidden;
-}
+/* HEADER */
+.hdr{flex-shrink:0;height:var(--head);display:flex;align-items:center;justify-content:space-between;padding:0 18px;background:rgba(13,15,20,0.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);z-index:40;}
+.logo{font-size:19px;font-weight:800;letter-spacing:-0.5px;color:var(--t1);}
+.logo em{color:var(--accent);font-style:normal;}
+.logo-dot{display:inline-block;width:6px;height:6px;background:var(--accent);border-radius:50%;margin-left:2px;vertical-align:middle;margin-bottom:2px;}
+.avatar{width:32px;height:32px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;cursor:pointer;overflow:hidden;box-shadow:0 0 0 2px var(--accent-bg);}
+.avatar img{width:100%;height:100%;object-fit:cover;}
+.login-btn{font-size:12px;font-weight:700;padding:7px 15px;border-radius:20px;background:var(--accent);color:#fff;border:none;cursor:pointer;font-family:var(--font);box-shadow:0 2px 12px rgba(255,107,53,0.35);transition:background .15s,transform .1s;}
+.login-btn:hover{background:var(--accent2);}
+.login-btn:active{transform:scale(0.96);}
 
-/* ── Header ── */
-.header {
-  flex-shrink: 0;
-  height: var(--header-h);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 20px;
-  background: var(--white);
-  border-bottom: 1px solid var(--gray-100);
-  z-index: 40;
-  position: relative;
-}
-.header-logo {
-  font-size: 22px;
-  font-weight: 900;
-  color: var(--blue);
-  letter-spacing: -0.5px;
-}
-.header-logo span { color: var(--gray-900); }
-.header-logo sub {
-  font-size: 9px;
-  font-weight: 700;
-  background: var(--blue);
-  color: white;
-  border-radius: 4px;
-  padding: 1px 4px;
-  margin-left: 2px;
-  vertical-align: middle;
-  letter-spacing: 0;
-}
+/* TABS */
+.tab{display:none;flex:1;overflow-y:auto;overflow-x:hidden;padding-bottom:var(--nav);}
+.tab.active{display:block;}
+/* 채팅탭은 flex column + overflow hidden 으로 내부 레이아웃 제어 */
+#tab-chat.active{display:flex;flex-direction:column;overflow:hidden;padding-bottom:0;}
 
-.user-avatar {
-  width: 34px; height: 34px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--blue), var(--blue-dark));
-  color: white;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 13px; font-weight: 700;
-  cursor: pointer;
-  overflow: hidden;
-  box-shadow: 0 2px 8px rgba(37,99,235,0.3);
-  transition: transform 0.15s, box-shadow 0.15s;
-}
-.user-avatar:hover { transform: scale(1.05); box-shadow: 0 4px 12px rgba(37,99,235,0.4); }
-.user-avatar img { width: 100%; height: 100%; object-fit: cover; }
+/* HOME */
+.hero{position:relative;overflow:hidden;padding:28px 20px 32px;background:linear-gradient(160deg,#1a1200 0%,#2a1500 40%,var(--bg2) 100%);}
+.hero-glow{position:absolute;top:-60px;right:-40px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(255,107,53,0.18) 0%,transparent 70%);pointer-events:none;}
+.hero-glow2{position:absolute;bottom:-80px;left:-30px;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,rgba(255,107,53,0.08) 0%,transparent 70%);pointer-events:none;}
+.hero-eye{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:var(--accent);padding:4px 12px;border-radius:20px;background:var(--accent-bg);border:1px solid rgba(255,107,53,0.25);margin-bottom:16px;}
+.hero h2{font-size:28px;font-weight:800;line-height:1.2;letter-spacing:-0.8px;color:var(--t1);margin-bottom:6px;}
+.hero h2 span{color:var(--accent);}
+.hero-sub{font-size:13px;color:var(--t2);margin-bottom:22px;line-height:1.5;}
+.search-box{display:flex;gap:8px;position:relative;z-index:1;}
+.search-box input{flex:1;padding:13px 16px;background:rgba(255,255,255,0.06);border:1px solid var(--border2);border-radius:var(--r);font-size:13px;font-family:var(--font);outline:none;color:var(--t1);transition:border-color .2s,background .2s;}
+.search-box input::placeholder{color:var(--t3);}
+.search-box input:focus{border-color:var(--accent);background:rgba(255,107,53,0.05);}
+.search-btn{background:var(--accent);color:#fff;border:none;border-radius:var(--r);padding:13px 18px;font-weight:700;font-size:13px;cursor:pointer;font-family:var(--font);white-space:nowrap;box-shadow:0 4px 16px rgba(255,107,53,0.4);transition:background .15s,transform .1s;}
+.search-btn:hover{background:var(--accent2);}
+.search-btn:active{transform:scale(0.96);}
 
-.login-btn {
-  font-size: 13px; font-weight: 700;
-  padding: 8px 16px;
-  border-radius: 20px;
-  background: var(--blue);
-  color: white;
-  border: none;
-  cursor: pointer;
-  font-family: var(--font);
-  transition: background 0.15s, transform 0.1s;
-  box-shadow: 0 2px 8px rgba(37,99,235,0.25);
-}
-.login-btn:hover { background: var(--blue-dark); }
-.login-btn:active { transform: scale(0.97); }
+.chips{display:flex;gap:6px;padding:14px 18px;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid var(--border);}
+.chips::-webkit-scrollbar{display:none;}
+.chip{flex-shrink:0;white-space:nowrap;padding:6px 13px;border-radius:20px;background:var(--bg3);border:1px solid var(--border);font-size:12px;font-weight:600;color:var(--t2);cursor:pointer;font-family:var(--font);transition:all .15s;}
+.chip:hover,.chip.active{border-color:var(--accent);color:var(--accent);background:var(--accent-bg);}
 
-/* ── Tab System ── */
-.tab { display: none; flex: 1; overflow-y: auto; overflow-x: hidden; padding-bottom: var(--nav-h); }
-.tab.active { display: block; }
-#tab-chat.active { display: flex; flex-direction: column; overflow: hidden; padding-bottom: 0; }
+.sec-hdr{display:flex;align-items:center;justify-content:space-between;padding:18px 18px 10px;}
+.sec-title{font-size:15px;font-weight:700;color:var(--t1);}
+.sec-action{font-size:12px;font-weight:600;color:var(--accent);cursor:pointer;padding:4px 10px;border-radius:20px;background:var(--accent-bg);border:1px solid rgba(255,107,53,0.2);transition:background .15s;}
+.sec-action:hover{background:rgba(255,107,53,0.18);}
 
-/* ── Home Tab ── */
-.hero {
-  background: linear-gradient(150deg, #1E3A8A 0%, #2563EB 50%, #3B82F6 100%);
-  padding: 24px 20px 28px;
-  color: white;
-  position: relative;
-  overflow: hidden;
-}
-.hero::before {
-  content: '';
-  position: absolute;
-  top: -40px; right: -40px;
-  width: 200px; height: 200px;
-  background: rgba(255,255,255,0.05);
-  border-radius: 50%;
-}
-.hero::after {
-  content: '';
-  position: absolute;
-  bottom: -60px; left: -20px;
-  width: 160px; height: 160px;
-  background: rgba(255,255,255,0.04);
-  border-radius: 50%;
-}
-.hero-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  background: rgba(255,255,255,0.18);
-  border: 1px solid rgba(255,255,255,0.28);
-  border-radius: 20px;
-  font-size: 11px;
-  font-weight: 700;
-  padding: 4px 12px;
-  margin-bottom: 14px;
-  backdrop-filter: blur(4px);
-  letter-spacing: 0.2px;
-}
-.hero h2 {
-  font-size: 26px;
-  font-weight: 900;
-  line-height: 1.25;
-  margin-bottom: 8px;
-  letter-spacing: -0.5px;
-}
-.hero-sub {
-  font-size: 13px;
-  opacity: 0.8;
-  margin-bottom: 20px;
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.hero-sub span {
-  display: inline-flex;
-  align-items: center;
-  gap: 3px;
-  background: rgba(255,255,255,0.15);
-  padding: 2px 8px;
-  border-radius: 20px;
-  font-size: 11px;
-}
-.hero-search {
-  display: flex;
-  gap: 8px;
-  position: relative;
-  z-index: 1;
-}
-.hero-search input {
-  flex: 1;
-  padding: 12px 16px;
-  border: none;
-  border-radius: var(--radius);
-  font-size: 14px;
-  font-family: var(--font);
-  outline: none;
-  background: rgba(255,255,255,0.95);
-  color: var(--gray-800);
-  font-weight: 500;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
-}
-.hero-search input::placeholder { color: var(--gray-400); }
-.hero-search button {
-  background: var(--amber);
-  color: var(--gray-900);
-  border: none;
-  border-radius: var(--radius);
-  padding: 12px 18px;
-  font-weight: 800;
-  font-size: 14px;
-  cursor: pointer;
-  font-family: var(--font);
-  box-shadow: 0 2px 8px rgba(245,158,11,0.3);
-  transition: background 0.15s, transform 0.1s;
-  white-space: nowrap;
-}
-.hero-search button:hover { background: #D97706; }
-.hero-search button:active { transform: scale(0.96); }
+.tire-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 14px 20px;}
+.tire-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;cursor:pointer;transition:transform .15s,border-color .15s,box-shadow .15s;position:relative;}
+.tire-card:hover{transform:translateY(-2px);border-color:var(--border2);box-shadow:0 8px 32px rgba(0,0,0,0.4);}
+.tire-card:active{transform:scale(0.97);}
+.card-img{width:100%;height:124px;object-fit:cover;display:block;background:var(--bg3);}
+.card-ph{width:100%;height:124px;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:34px;}
+.card-v{position:absolute;top:8px;right:8px;background:var(--green);color:#fff;font-size:9px;font-weight:800;padding:3px 7px;border-radius:6px;box-shadow:0 2px 8px rgba(34,197,94,0.4);}
+.card-body{padding:10px 12px 12px;}
+.card-name{font-size:13px;font-weight:700;color:var(--t1);margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.card-size{font-size:11px;color:var(--t3);margin-bottom:8px;}
+.card-btm{display:flex;align-items:flex-end;justify-content:space-between;}
+.card-price{font-size:15px;font-weight:800;color:var(--accent);}
+.card-seller{font-size:10px;color:var(--t3);}
 
-/* ── Stats Bar ── */
-.stats-bar {
-  display: flex;
-  padding: 14px 20px;
-  gap: 0;
-  border-bottom: 1px solid var(--gray-100);
-  background: var(--gray-50);
-}
-.stat-item {
-  flex: 1;
-  text-align: center;
-  position: relative;
-}
-.stat-item + .stat-item::before {
-  content: '';
-  position: absolute;
-  left: 0; top: 20%; bottom: 20%;
-  width: 1px;
-  background: var(--gray-200);
-}
-.stat-num {
-  font-size: 18px;
-  font-weight: 900;
-  color: var(--blue);
-  letter-spacing: -0.5px;
-  line-height: 1.2;
-}
-.stat-label {
-  font-size: 10px;
-  color: var(--gray-400);
-  font-weight: 600;
-  margin-top: 2px;
-}
+.empty{grid-column:1/-1;text-align:center;padding:60px 20px;}
+.empty-icon{font-size:48px;margin-bottom:14px;}
+.empty p{font-size:14px;color:var(--t3);line-height:1.6;}
+.loading{text-align:center;padding:60px 20px;color:var(--t3);}
+.spinner{width:28px;height:28px;border:2.5px solid var(--bg3);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 12px;}
+@keyframes spin{to{transform:rotate(360deg)}}
 
-/* ── Section ── */
-.section-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 18px 20px 12px;
-}
-.section-title {
-  font-size: 16px;
-  font-weight: 800;
-  color: var(--gray-900);
-  letter-spacing: -0.3px;
-}
-.section-action {
-  font-size: 12px;
-  color: var(--blue);
-  font-weight: 700;
-  cursor: pointer;
-  padding: 4px 10px;
-  border-radius: 20px;
-  background: var(--blue-light);
-  transition: background 0.15s;
-}
-.section-action:hover { background: var(--blue-mid); }
+/* SELL */
+.sell-wrap{padding:22px 18px;}
+.sell-title{font-size:20px;font-weight:800;color:var(--t1);margin-bottom:4px;letter-spacing:-0.5px;}
+.sell-sub{font-size:13px;color:var(--t3);margin-bottom:24px;}
+.photo-up{border:1.5px dashed var(--border2);border-radius:var(--r);height:150px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;background:var(--bg2);overflow:hidden;position:relative;transition:border-color .2s,background .2s;margin-bottom:18px;}
+.photo-up:hover{border-color:var(--accent);background:var(--accent-bg2);}
+.pup-icon{font-size:28px;margin-bottom:6px;}
+.pup-txt{font-size:13px;font-weight:600;color:var(--t2);}
+.pup-hint{font-size:11px;color:var(--t3);margin-top:3px;}
+.f-group{margin-bottom:14px;}
+.f-label{display:block;font-size:11px;font-weight:700;color:var(--t3);margin-bottom:7px;text-transform:uppercase;letter-spacing:0.6px;}
+.f-input{width:100%;padding:13px 15px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);font-size:14px;font-family:var(--font);outline:none;color:var(--t1);transition:border-color .2s,box-shadow .2s;}
+.f-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(255,107,53,0.12);}
+.f-input::placeholder{color:var(--t3);font-weight:400;}
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.f-ta{width:100%;padding:13px 15px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);font-size:14px;font-family:var(--font);outline:none;color:var(--t1);resize:none;height:100px;transition:border-color .2s,box-shadow .2s;line-height:1.6;}
+.f-ta:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(255,107,53,0.12);}
+.f-ta::placeholder{color:var(--t3);}
 
-/* ── Tire Grid ── */
-.tire-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  padding: 0 16px 20px;
-}
-.tire-card {
-  background: var(--white);
-  border: 1px solid var(--gray-200);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  cursor: pointer;
-  box-shadow: var(--shadow);
-  transition: transform 0.15s, box-shadow 0.15s;
-  position: relative;
-}
-.tire-card:active { transform: scale(0.97); box-shadow: var(--shadow-sm); }
-.tire-card:hover { box-shadow: var(--shadow-md); transform: translateY(-1px); }
-.tire-card-img {
-  width: 100%; height: 130px;
-  object-fit: cover;
-  display: block;
-  background: var(--gray-100);
-}
-.tire-card-placeholder {
-  width: 100%; height: 130px;
-  background: linear-gradient(135deg, var(--gray-100), var(--gray-200));
-  display: flex; align-items: center; justify-content: center;
-  font-size: 36px;
-}
-.verified-ribbon {
-  position: absolute;
-  top: 8px; left: 8px;
-  background: var(--green);
-  color: white;
-  font-size: 9px;
-  font-weight: 800;
-  padding: 3px 7px;
-  border-radius: 6px;
-  letter-spacing: 0.3px;
-  box-shadow: 0 2px 6px rgba(5,150,105,0.3);
-}
-.tire-card-body { padding: 10px 12px 12px; }
-.tire-card-title {
-  font-size: 13px;
-  font-weight: 700;
-  margin-bottom: 3px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  color: var(--gray-900);
-}
-.tire-card-meta {
-  font-size: 11px;
-  color: var(--gray-400);
-  margin-bottom: 7px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.tire-card-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.tire-card-price {
-  font-size: 16px;
-  font-weight: 900;
-  color: var(--blue);
-  letter-spacing: -0.5px;
-}
-.tire-card-seller {
-  font-size: 10px;
-  color: var(--gray-400);
-  font-weight: 600;
-}
+/* BUTTONS */
+.btn{width:100%;padding:14px;border:none;border-radius:var(--r);font-size:14px;font-weight:700;font-family:var(--font);cursor:pointer;transition:background .15s,transform .1s;letter-spacing:-0.2px;}
+.btn-ac{background:var(--accent);color:#fff;box-shadow:0 4px 16px rgba(255,107,53,0.35);}
+.btn-ac:hover{background:var(--accent2);}
+.btn-ac:active{transform:scale(0.98);}
+.btn-ac:disabled{background:var(--t3);box-shadow:none;cursor:not-allowed;}
+.btn-gh{background:var(--bg2);color:var(--t2);border:1px solid var(--border);}
+.btn-gh:hover{border-color:var(--border2);color:var(--t1);}
+.btn-red{background:var(--red);color:#fff;box-shadow:0 4px 16px rgba(239,68,68,0.3);}
+.btn-red:hover{background:#DC2626;}
+.btn-grn{background:var(--green);color:#fff;box-shadow:0 4px 16px rgba(34,197,94,0.3);}
+.btn-dk{background:var(--bg3);color:var(--t1);border:1px solid var(--border2);}
+.need-login{text-align:center;padding:60px 20px;}
+.need-login .ni-icon{font-size:48px;margin-bottom:16px;}
+.need-login h3{font-size:17px;font-weight:800;color:var(--t1);margin-bottom:8px;}
+.need-login p{font-size:13px;color:var(--t3);margin-bottom:24px;line-height:1.6;}
+.need-login .btn{max-width:260px;margin:0 auto;}
 
-.empty-state {
-  grid-column: 1 / -1;
-  text-align: center;
-  padding: 60px 20px;
-  color: var(--gray-400);
-}
-.empty-icon { font-size: 52px; margin-bottom: 14px; }
-.empty-state p { font-size: 14px; line-height: 1.6; color: var(--gray-500); }
+/* CHAT OUTER TABS */
+.chat-tabs{flex-shrink:0;display:flex;border-bottom:1px solid var(--border);background:var(--bg);}
+.ctab{flex:1;padding:14px 8px;font-size:13px;font-weight:700;font-family:var(--font);border:none;background:none;color:var(--t3);cursor:pointer;border-bottom:2px solid transparent;transition:color .2s;}
+.ctab.active{color:var(--accent);border-bottom-color:var(--accent);}
 
-/* ── Loading ── */
-.loading { text-align: center; padding: 60px 20px; color: var(--gray-400); }
-.spinner {
-  width: 32px; height: 32px;
-  border: 3px solid var(--gray-200);
-  border-top-color: var(--blue);
-  border-radius: 50%;
-  animation: spin 0.7s linear infinite;
-  margin: 0 auto 12px;
-}
-@keyframes spin { to { transform: rotate(360deg); } }
+/*
+  채팅 핵심 레이아웃 규칙:
+  #tab-chat       → display:flex; flex-direction:column; overflow:hidden
+  .chat-tabs      → flex-shrink:0 (높이 고정)
+  #chat-dm-area   → flex:1; position:relative; overflow:hidden
+  .room-list      → position:absolute; inset:0 (top/left/right/bottom=0)
+  .dm-wrap        → position:absolute; inset:0; z-index:10 → 룸리스트 위에 덮음
+  .bot-inner      → position:absolute; inset:0
+  각 내부 chat-wrap → flex:1 + overflow:hidden → 메시지박스+인풋 분리
+*/
+#chat-dm-area{flex:1;position:relative;overflow:hidden;}
+#chat-bot-area{flex:1;position:relative;overflow:hidden;}
 
-/* ── Sell Tab ── */
-.sell-wrap { padding: 24px 20px; }
-.sell-title {
-  font-size: 20px;
-  font-weight: 900;
-  margin-bottom: 6px;
-  color: var(--gray-900);
-  letter-spacing: -0.5px;
-}
-.sell-subtitle { font-size: 13px; color: var(--gray-500); margin-bottom: 24px; }
+.room-list{position:absolute;inset:0;overflow-y:auto;background:var(--bg);}
+.room-item{display:flex;align-items:center;gap:12px;padding:14px 18px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .1s;}
+.room-item:hover{background:var(--bg2);}
+.room-item.unread{background:rgba(255,107,53,0.04);}
+.r-av{width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;flex-shrink:0;overflow:hidden;}
+.r-av img{width:100%;height:100%;object-fit:cover;}
+.r-info{flex:1;min-width:0;}
+.r-name{font-size:14px;font-weight:700;color:var(--t1);margin-bottom:3px;}
+.r-last{font-size:12px;color:var(--t3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.r-meta{flex-shrink:0;display:flex;flex-direction:column;align-items:flex-end;gap:5px;}
+.r-time{font-size:10px;color:var(--t3);}
+.r-dot{width:8px;height:8px;background:var(--accent);border-radius:50%;}
 
-.photo-upload {
-  border: 2px dashed var(--gray-300);
-  border-radius: var(--radius-lg);
-  height: 160px;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  cursor: pointer;
-  margin-bottom: 20px;
-  background: var(--gray-50);
-  overflow: hidden;
-  position: relative;
-  transition: border-color 0.2s, background 0.2s;
-}
-.photo-upload:hover { border-color: var(--blue); background: var(--blue-light); }
-.photo-upload-icon { font-size: 32px; margin-bottom: 8px; }
-.photo-upload-text { font-size: 13px; color: var(--gray-500); font-weight: 600; }
-.photo-upload-hint { font-size: 11px; color: var(--gray-400); margin-top: 3px; }
+/* DM 채팅창: absolute로 room-list 위에 완전히 덮음 */
+.dm-wrap{display:none;flex-direction:column;position:absolute;inset:0;background:var(--bg);z-index:10;}
+.dm-wrap.open{display:flex;}
+.dm-hdr{flex-shrink:0;display:flex;align-items:center;gap:12px;padding:11px 16px;border-bottom:1px solid var(--border);}
+.dm-back{width:34px;height:34px;border-radius:50%;background:var(--bg3);border:none;cursor:pointer;color:var(--t2);font-size:17px;display:flex;align-items:center;justify-content:center;transition:background .15s;flex-shrink:0;}
+.dm-back:hover{background:var(--border2);}
+.dm-title{font-size:15px;font-weight:700;color:var(--t1);}
 
-.form-group { margin-bottom: 16px; }
-.form-label {
-  display: block;
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--gray-600);
-  margin-bottom: 7px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-.form-input {
-  width: 100%;
-  padding: 13px 16px;
-  border: 1.5px solid var(--gray-200);
-  border-radius: var(--radius);
-  font-size: 14px;
-  font-family: var(--font);
-  outline: none;
-  color: var(--gray-900);
-  background: var(--white);
-  transition: border-color 0.2s, box-shadow 0.2s;
-  font-weight: 500;
-}
-.form-input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
-.form-input::placeholder { color: var(--gray-300); font-weight: 400; }
-.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.form-textarea {
-  width: 100%;
-  padding: 13px 16px;
-  border: 1.5px solid var(--gray-200);
-  border-radius: var(--radius);
-  font-size: 14px;
-  font-family: var(--font);
-  outline: none;
-  color: var(--gray-900);
-  resize: none;
-  height: 110px;
-  transition: border-color 0.2s, box-shadow 0.2s;
-  font-weight: 500;
-  line-height: 1.6;
-}
-.form-textarea:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
-.form-textarea::placeholder { color: var(--gray-300); font-weight: 400; }
+/* 봇 inner 래퍼 */
+.bot-inner{position:absolute;inset:0;display:flex;flex-direction:column;overflow:hidden;}
 
-/* ── Buttons ── */
-.btn-primary {
-  width: 100%;
-  padding: 15px;
-  background: var(--blue);
-  color: white;
-  border: none;
-  border-radius: var(--radius);
-  font-size: 15px;
-  font-weight: 800;
-  font-family: var(--font);
-  cursor: pointer;
-  transition: background 0.15s, transform 0.1s, box-shadow 0.15s;
-  letter-spacing: -0.2px;
-  box-shadow: 0 4px 12px rgba(37,99,235,0.25);
-}
-.btn-primary:hover { background: var(--blue-dark); box-shadow: 0 6px 16px rgba(37,99,235,0.35); }
-.btn-primary:active { transform: scale(0.98); }
-.btn-primary:disabled { background: var(--gray-300); cursor: not-allowed; box-shadow: none; }
+/* 채팅 공통 */
+.chat-wrap{flex:1;display:flex;flex-direction:column;overflow:hidden;min-height:0;}
+.chat-msgs{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;background:var(--bg);}
+.bub-wrap{display:flex;flex-direction:column;align-items:flex-start;max-width:78%;}
+.bub-wrap.me{align-items:flex-end;align-self:flex-end;}
+.bub-sender{font-size:11px;color:var(--t3);margin-bottom:4px;margin-left:2px;font-weight:600;}
+.bubble{padding:10px 14px;border-radius:18px;font-size:14px;line-height:1.55;background:var(--bg3);color:var(--t1);border-bottom-left-radius:4px;word-break:break-word;overflow-wrap:anywhere;white-space:pre-wrap;}
+.bub-wrap.me .bubble{background:var(--accent);color:#fff;border-bottom-left-radius:18px;border-bottom-right-radius:4px;}
+.bubble.bot{border:1px solid var(--border2);}
+.bub-time{font-size:10px;color:var(--t3);margin-top:4px;}
+.chat-in-row{flex-shrink:0;display:flex;gap:8px;padding:10px 14px 12px;background:var(--bg);border-top:1px solid var(--border);}
+.chat-in{flex:1;padding:11px 15px;background:var(--bg2);border:1px solid var(--border);border-radius:24px;font-size:14px;font-family:var(--font);outline:none;color:var(--t1);transition:border-color .2s;}
+.chat-in:focus{border-color:var(--accent);}
+.chat-in::placeholder{color:var(--t3);}
+.chat-send{width:42px;height:42px;flex-shrink:0;background:var(--accent);color:#fff;border:none;border-radius:50%;cursor:pointer;font-size:17px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 10px rgba(255,107,53,0.35);transition:background .15s,transform .1s;}
+.chat-send:hover{background:var(--accent2);}
+.chat-send:active{transform:scale(0.9);}
+.quick-row{flex-shrink:0;display:flex;gap:6px;padding:10px 14px;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid var(--border);}
+.quick-row::-webkit-scrollbar{display:none;}
+.qbtn{flex-shrink:0;white-space:nowrap;padding:7px 13px;border-radius:20px;background:var(--bg2);border:1px solid var(--border);font-size:12px;font-weight:600;color:var(--t2);cursor:pointer;font-family:var(--font);transition:all .15s;}
+.qbtn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-bg);}
 
-.btn-secondary {
-  padding: 14px;
-  border: 1.5px solid var(--gray-200);
-  border-radius: var(--radius);
-  background: var(--gray-50);
-  font-size: 14px;
-  font-weight: 700;
-  cursor: pointer;
-  font-family: var(--font);
-  color: var(--gray-700);
-  transition: background 0.15s, border-color 0.15s;
-}
-.btn-secondary:hover { background: var(--gray-100); border-color: var(--gray-300); }
+/* NAV */
+.bnav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;height:var(--nav);display:flex;z-index:50;background:rgba(13,15,20,0.96);backdrop-filter:blur(20px);border-top:1px solid var(--border);}
+.nbtn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border:none;background:none;cursor:pointer;color:var(--t3);font-family:var(--font);transition:color .2s;position:relative;}
+.nbtn.active{color:var(--accent);}
+.n-icon{font-size:20px;line-height:1;}
+.n-label{font-size:10px;font-weight:600;}
+.n-badge{position:absolute;top:8px;right:calc(50% - 16px);width:7px;height:7px;background:var(--red);border-radius:50%;display:none;border:1.5px solid var(--bg);}
 
-/* ── Login Required ── */
-.login-required {
-  text-align: center;
-  padding: 60px 20px;
-}
-.login-required .icon { font-size: 52px; margin-bottom: 16px; }
-.login-required h3 { font-size: 18px; font-weight: 800; color: var(--gray-900); margin-bottom: 8px; }
-.login-required p { font-size: 14px; margin-bottom: 24px; color: var(--gray-500); line-height: 1.6; }
+/* OVERLAYS */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.72);z-index:100;align-items:flex-end;justify-content:center;backdrop-filter:blur(3px);}
+.overlay.open{display:flex;}
+.sheet{background:var(--bg2);border-radius:22px 22px 0 0;width:100%;max-width:480px;max-height:92vh;overflow:hidden;display:flex;flex-direction:column;animation:sup .28s cubic-bezier(.34,1.4,.64,1);position:relative;}
+@keyframes sup{from{transform:translateY(60px);opacity:0}to{transform:translateY(0);opacity:1}}
+.sh-handle{flex-shrink:0;display:flex;justify-content:center;padding:12px 0 4px;}
+.sh-handle::after{content:'';width:36px;height:4px;background:var(--border2);border-radius:2px;}
+.sh-close{position:absolute;top:14px;right:14px;background:var(--bg3);border:1px solid var(--border);width:30px;height:30px;border-radius:50%;font-size:14px;cursor:pointer;color:var(--t2);display:flex;align-items:center;justify-content:center;transition:background .15s;z-index:1;}
+.sh-close:hover{background:var(--border2);}
+.sh-scroll{overflow-y:auto;flex:1;padding:0 18px 12px;}
+.m-gallery img{width:100%;border-radius:var(--r);margin-bottom:8px;object-fit:contain;background:var(--bg3);display:block;}
+.m-badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;color:var(--green);padding:3px 10px;background:var(--green-bg);border:1px solid rgba(34,197,94,0.2);border-radius:20px;margin-bottom:10px;}
+.m-title{font-size:22px;font-weight:800;color:var(--t1);margin-bottom:4px;letter-spacing:-0.5px;}
+.m-size{font-size:13px;color:var(--t3);margin-bottom:14px;}
+.m-desc{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:14px;margin-bottom:16px;}
+.m-desc p{font-size:13px;color:var(--t2);line-height:1.8;white-space:pre-wrap;}
+.m-price-row{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:6px;}
+.m-price-lbl{font-size:10px;color:var(--t3);margin-bottom:2px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;}
+.m-price{font-size:28px;font-weight:900;color:var(--accent);}
+.m-note{font-size:11px;color:var(--t3);padding-bottom:3px;}
+.m-seller{font-size:12px;color:var(--t3);margin-bottom:16px;}
+.sh-btns{flex-shrink:0;display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:10px 18px 28px;border-top:1px solid var(--border);}
+.sh-btns .btn{margin:0;}
 
-/* ── Chat System ── */
-.chat-tab-wrap {
-  flex-shrink: 0;
-  display: flex;
-  border-bottom: 1px solid var(--gray-100);
-  background: white;
-  z-index: 10;
-  padding: 0 8px;
-}
-.chat-tab-btn {
-  flex: 1;
-  padding: 14px 8px;
-  font-size: 13px;
-  font-weight: 700;
-  font-family: var(--font);
-  border: none;
-  background: none;
-  color: var(--gray-400);
-  cursor: pointer;
-  border-bottom: 2px solid transparent;
-  transition: color 0.2s;
-  letter-spacing: -0.2px;
-}
-.chat-tab-btn.active { color: var(--blue); border-bottom-color: var(--blue); }
+/* AUTH */
+.auth-sheet{background:var(--bg2);border-radius:22px 22px 0 0;width:100%;max-width:480px;position:relative;overflow:hidden;animation:sup .28s cubic-bezier(.34,1.4,.64,1);}
+.auth-inner{padding:6px 22px 36px;}
+.auth-title{font-size:21px;font-weight:800;color:var(--t1);margin-bottom:4px;letter-spacing:-0.5px;}
+.auth-sub{font-size:13px;color:var(--t3);margin-bottom:22px;}
+.auth-box{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:14px;margin-bottom:18px;}
+.auth-box .f-input{background:var(--bg2);margin-bottom:10px;}
+.auth-box .btn{margin-top:14px;}
+.auth-sw{text-align:center;font-size:13px;color:var(--t3);margin-bottom:18px;}
+.auth-sw a{color:var(--accent);font-weight:700;cursor:pointer;}
+.auth-div{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+.auth-div::before,.auth-div::after{content:'';flex:1;height:1px;background:var(--border);}
+.auth-div span{font-size:11px;color:var(--t3);font-weight:600;white-space:nowrap;}
+.btn-google{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:13px;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r);font-size:14px;font-weight:700;font-family:var(--font);cursor:pointer;color:var(--t1);transition:background .15s;}
+.btn-google:hover{background:var(--border);}
 
-#chat-dm-area, #chat-bot-area {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  position: relative;
-}
-#chat-dm-area { padding-bottom: var(--nav-h); }
-#chat-bot-area { padding-bottom: var(--nav-h); }
-
-/* DM Room List */
-.room-list { flex: 1; overflow-y: auto; background: white; }
-.room-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 14px 20px;
-  border-bottom: 1px solid var(--gray-100);
-  cursor: pointer;
-  transition: background 0.1s;
-  position: relative;
-}
-.room-item:hover { background: var(--gray-50); }
-.room-item.unread { background: #FAFBFF; }
-.room-avatar {
-  width: 46px; height: 46px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--blue), var(--blue-dark));
-  color: white;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 17px; font-weight: 700;
-  flex-shrink: 0;
-  overflow: hidden;
-}
-.room-avatar img { width: 100%; height: 100%; object-fit: cover; }
-.room-info { flex: 1; min-width: 0; }
-.room-name { font-size: 14px; font-weight: 700; margin-bottom: 3px; color: var(--gray-900); }
-.room-last { font-size: 12px; color: var(--gray-400); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.room-meta { flex-shrink: 0; display: flex; flex-direction: column; align-items: flex-end; gap: 5px; }
-.room-time { font-size: 10px; color: var(--gray-400); }
-.unread-dot { width: 8px; height: 8px; background: var(--red); border-radius: 50%; }
-
-/* DM Chat Window */
-.dm-wrap {
-  display: none;
-  flex-direction: column;
-  position: absolute;
-  inset: 0;
-  background: white;
-  z-index: 20;
-  bottom: 0;
-}
-.dm-wrap.open { display: flex; }
-
-.dm-header {
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 16px;
-  border-bottom: 1px solid var(--gray-100);
-  background: white;
-}
-.dm-back {
-  background: var(--gray-100);
-  border: none;
-  font-size: 18px;
-  cursor: pointer;
-  line-height: 1;
-  color: var(--gray-700);
-  width: 36px; height: 36px;
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  transition: background 0.15s;
-  flex-shrink: 0;
-}
-.dm-back:hover { background: var(--gray-200); }
-.dm-title { font-size: 16px; font-weight: 800; color: var(--gray-900); flex: 1; }
-
-/* Chat messages */
-.chat-wrap { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
-.chat-messages {
-  flex: 1;
-  overflow-y: auto;
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  background: var(--gray-50);
-  scroll-behavior: smooth;
-}
-.chat-bubble-wrap { display: flex; flex-direction: column; align-items: flex-start; max-width: 80%; }
-.chat-bubble-wrap.me { align-items: flex-end; align-self: flex-end; }
-.chat-sender { font-size: 11px; color: var(--gray-500); margin-bottom: 4px; margin-left: 2px; font-weight: 600; }
-.chat-bubble {
-  padding: 10px 14px;
-  border-radius: 18px;
-  font-size: 14px;
-  line-height: 1.55;
-  background: white;
-  color: var(--gray-800);
-  border-bottom-left-radius: 4px;
-  box-shadow: var(--shadow);
-  word-break: break-word;
-  overflow-wrap: anywhere;
-  white-space: pre-wrap;
-}
-.chat-bubble-wrap.me .chat-bubble {
-  background: var(--blue);
-  color: white;
-  border-bottom-left-radius: 18px;
-  border-bottom-right-radius: 4px;
-  box-shadow: 0 2px 8px rgba(37,99,235,0.2);
-}
-.chat-bubble.bot { background: var(--blue-light); border: 1px solid var(--blue-mid); }
-.chat-time { font-size: 10px; color: var(--gray-400); margin-top: 4px; }
-
-/* Chat Input */
-.chat-input-wrap {
-  flex-shrink: 0;
-  display: flex;
-  gap: 8px;
-  padding: 10px 16px 12px;
-  background: white;
-  border-top: 1px solid var(--gray-100);
-}
-.chat-input {
-  flex: 1;
-  padding: 11px 16px;
-  border: 1.5px solid var(--gray-200);
-  border-radius: 24px;
-  font-size: 14px;
-  font-family: var(--font);
-  outline: none;
-  background: var(--gray-50);
-  transition: border-color 0.2s, background 0.2s;
-  font-weight: 500;
-}
-.chat-input:focus { border-color: var(--blue); background: white; }
-.chat-send {
-  width: 44px; height: 44px;
-  background: var(--blue);
-  color: white;
-  border: none;
-  border-radius: 50%;
-  cursor: pointer;
-  font-size: 18px;
-  flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 2px 8px rgba(37,99,235,0.25);
-  transition: background 0.15s, transform 0.1s;
-}
-.chat-send:hover { background: var(--blue-dark); }
-.chat-send:active { transform: scale(0.92); }
-
-/* Quick Buttons */
-.quick-btns {
-  display: flex;
-  gap: 8px;
-  padding: 10px 16px;
-  overflow-x: auto;
-  background: white;
-  border-bottom: 1px solid var(--gray-100);
-  scrollbar-width: none;
-  flex-shrink: 0;
-}
-.quick-btns::-webkit-scrollbar { display: none; }
-.quick-btn {
-  white-space: nowrap;
-  padding: 7px 13px;
-  border: 1.5px solid var(--blue);
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--blue);
-  background: white;
-  cursor: pointer;
-  font-family: var(--font);
-  flex-shrink: 0;
-  transition: background 0.15s, color 0.15s;
-}
-.quick-btn:hover { background: var(--blue-light); }
-
-/* ── Bottom Nav ── */
-.bottom-nav {
-  position: fixed;
-  bottom: 0; left: 50%;
-  transform: translateX(-50%);
-  width: 100%; max-width: 480px;
-  height: var(--nav-h);
-  background: rgba(255,255,255,0.95);
-  backdrop-filter: blur(12px);
-  border-top: 1px solid var(--gray-100);
-  display: flex;
-  z-index: 50;
-  box-shadow: 0 -4px 20px rgba(0,0,0,0.06);
-}
-.nav-btn {
-  flex: 1;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  gap: 3px;
-  border: none; background: none;
-  cursor: pointer;
-  color: var(--gray-400);
-  font-family: var(--font);
-  position: relative;
-  transition: color 0.2s;
-}
-.nav-btn.active { color: var(--blue); }
-.nav-icon {
-  font-size: 22px;
-  line-height: 1;
-  transition: transform 0.2s;
-}
-.nav-btn.active .nav-icon { transform: scale(1.1); }
-.nav-label { font-size: 10px; font-weight: 700; letter-spacing: -0.2px; }
-.nav-badge {
-  position: absolute;
-  top: 8px; right: calc(50% - 18px);
-  width: 8px; height: 8px;
-  background: var(--red);
-  border-radius: 50%;
-  display: none;
-  border: 2px solid white;
-}
-
-/* ── Modal ── */
-.modal-overlay {
-  display: none;
-  position: fixed; inset: 0;
-  background: rgba(15,23,42,0.55);
-  z-index: 100;
-  align-items: flex-end; justify-content: center;
-  backdrop-filter: blur(2px);
-}
-.modal-overlay.open { display: flex; }
-.modal {
-  background: white;
-  border-radius: 24px 24px 0 0;
-  width: 100%; max-width: 480px;
-  max-height: 92vh;
-  overflow: hidden;
-  display: flex; flex-direction: column;
-  animation: slideUp 0.3s cubic-bezier(0.34,1.56,0.64,1);
-}
-@keyframes slideUp { from { transform: translateY(60px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-
-.modal-handle {
-  flex-shrink: 0;
-  display: flex; justify-content: center;
-  padding: 12px 0 4px;
-}
-.modal-handle::after {
-  content: '';
-  width: 40px; height: 4px;
-  background: var(--gray-200);
-  border-radius: 2px;
-}
-.modal-close {
-  position: absolute;
-  top: 16px; right: 16px;
-  background: var(--gray-100);
-  border: none;
-  width: 32px; height: 32px;
-  border-radius: 50%;
-  font-size: 15px;
-  cursor: pointer;
-  z-index: 10;
-  color: var(--gray-600);
-  display: flex; align-items: center; justify-content: center;
-  transition: background 0.15s;
-}
-.modal-close:hover { background: var(--gray-200); }
-
-.modal-scroll-area { overflow-y: auto; flex: 1; padding: 0 20px 16px; }
-.modal-img-gallery { margin-bottom: 16px; }
-.modal-img-gallery img {
-  width: 100%;
-  border-radius: var(--radius-lg);
-  margin-bottom: 8px;
-  object-fit: contain;
-  background: var(--gray-100);
-  display: block;
-}
-.modal-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 11px;
-  font-weight: 800;
-  color: var(--green);
-  margin-bottom: 8px;
-  padding: 4px 10px;
-  background: var(--green-light);
-  border-radius: var(--radius-sm);
-  letter-spacing: 0.2px;
-}
-.modal-title { font-size: 22px; font-weight: 900; margin-bottom: 4px; letter-spacing: -0.5px; color: var(--gray-900); }
-.modal-size { font-size: 13px; color: var(--gray-500); margin-bottom: 14px; font-weight: 500; }
-.modal-desc-box {
-  background: var(--gray-50);
-  border-radius: var(--radius);
-  padding: 14px 16px;
-  margin-bottom: 18px;
-  border: 1px solid var(--gray-100);
-}
-.modal-desc-box p { font-size: 13px; color: var(--gray-600); line-height: 1.8; white-space: pre-wrap; }
-.modal-price-row { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 6px; }
-.modal-price-label { font-size: 11px; color: var(--gray-400); margin-bottom: 2px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
-.modal-price { font-size: 28px; font-weight: 900; color: var(--blue); letter-spacing: -1px; }
-.modal-price-note { font-size: 11px; color: var(--gray-400); padding-bottom: 4px; }
-.modal-seller { font-size: 12px; color: var(--gray-400); margin-bottom: 18px; font-weight: 500; }
-
-.modal-btns {
-  flex-shrink: 0;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  padding: 12px 20px 24px;
-  background: white;
-  border-top: 1px solid var(--gray-100);
-}
-.modal-btns .btn-primary { margin: 0; font-size: 14px; padding: 13px; }
-.modal-btns .btn-secondary { font-size: 14px; padding: 13px; }
-
-/* ── Login Modal ── */
-.login-modal-overlay {
-  display: none;
-  position: fixed; inset: 0;
-  background: rgba(15,23,42,0.55);
-  z-index: 200;
-  align-items: flex-end; justify-content: center;
-  backdrop-filter: blur(2px);
-}
-.login-modal-overlay.open { display: flex; }
-.login-modal {
-  background: white;
-  border-radius: 24px 24px 0 0;
-  width: 100%; max-width: 480px;
-  padding: 0;
-  position: relative;
-  animation: slideUp 0.3s cubic-bezier(0.34,1.56,0.64,1);
-  overflow: hidden;
-}
-.login-modal-inner { padding: 28px 24px 36px; }
-.login-modal-handle {
-  display: flex; justify-content: center;
-  padding: 12px 0 0;
-}
-.login-modal-handle::after {
-  content: '';
-  width: 40px; height: 4px;
-  background: var(--gray-200);
-  border-radius: 2px;
-}
-.login-modal-close {
-  position: absolute;
-  top: 16px; right: 16px;
-  background: var(--gray-100); border: none;
-  width: 32px; height: 32px;
-  border-radius: 50%; font-size: 15px;
-  cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  color: var(--gray-600);
-  transition: background 0.15s;
-}
-.login-modal-close:hover { background: var(--gray-200); }
-
-.auth-title { font-size: 22px; font-weight: 900; color: var(--gray-900); margin-bottom: 4px; letter-spacing: -0.5px; }
-.auth-subtitle { font-size: 13px; color: var(--gray-500); margin-bottom: 24px; }
-
-.auth-form-box {
-  background: var(--gray-50);
-  border-radius: var(--radius-lg);
-  padding: 16px;
-  margin-bottom: 20px;
-  border: 1px solid var(--gray-100);
-}
-.auth-form-box .form-input { margin-bottom: 10px; background: white; }
-.auth-form-box .form-input:last-of-type { margin-bottom: 14px; }
-
-.auth-divider {
-  display: flex; align-items: center; gap: 12px;
-  margin-bottom: 16px;
-}
-.auth-divider::before, .auth-divider::after {
-  content: ''; flex: 1;
-  height: 1px; background: var(--gray-200);
-}
-.auth-divider span { font-size: 12px; color: var(--gray-400); font-weight: 600; white-space: nowrap; }
-
-.btn-google {
-  display: flex; align-items: center; justify-content: center; gap: 10px;
-  width: 100%; padding: 14px;
-  background: white;
-  border: 1.5px solid var(--gray-200);
-  border-radius: var(--radius);
-  font-size: 14px; font-weight: 700;
-  font-family: var(--font);
-  cursor: pointer;
-  color: var(--gray-800);
-  transition: background 0.15s, border-color 0.15s, box-shadow 0.15s;
-}
-.btn-google:hover { background: var(--gray-50); border-color: var(--gray-300); box-shadow: var(--shadow-sm); }
-
-.auth-switch {
-  text-align: center;
-  font-size: 13px;
-  color: var(--gray-500);
-  margin-bottom: 20px;
-}
-.auth-switch a {
-  color: var(--blue);
-  font-weight: 700;
-  cursor: pointer;
-  text-decoration: none;
-}
-.auth-switch a:hover { text-decoration: underline; }
-
-/* ── Edit Modal ── */
-#edit-modal-overlay .modal-content {
-  overflow-y: auto;
-  padding: 24px 20px 36px;
-}
-#edit-modal-overlay .modal {
-  height: auto;
-  max-height: 92vh;
-}
-
-/* ── Toast ── */
-.toast {
-  position: fixed;
-  top: 20px; left: 50%;
-  transform: translateX(-50%) translateY(-8px);
-  background: var(--gray-900);
-  color: white;
-  padding: 12px 20px;
-  border-radius: 24px;
-  font-size: 13px;
-  font-weight: 700;
-  opacity: 0;
-  transition: opacity 0.25s, transform 0.25s;
-  z-index: 9999;
-  white-space: nowrap;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-  pointer-events: none;
-  max-width: calc(100vw - 40px);
-  white-space: normal;
-  text-align: center;
-}
-.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-
-/* ── System message ── */
-.system-msg {
-  text-align: center;
-  font-size: 11px;
-  color: var(--gray-400);
-  padding: 4px 12px;
-  background: var(--gray-100);
-  border-radius: 20px;
-  align-self: center;
-  font-weight: 600;
-}
-
-/* ── Scrollbar ── */
-::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--gray-200); border-radius: 2px; }
-
-/* ── Animations ── */
-.fade-in { animation: fadeIn 0.25s ease-out; }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+/* TOAST */
+.toast{position:fixed;top:18px;left:50%;transform:translateX(-50%) translateY(-6px);background:var(--bg3);color:var(--t1);padding:11px 20px;border-radius:24px;font-size:13px;font-weight:700;border:1px solid var(--border2);opacity:0;transition:opacity .22s,transform .22s;z-index:9999;box-shadow:0 8px 32px rgba(0,0,0,0.5);pointer-events:none;max-width:calc(100vw - 40px);text-align:center;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+.sys-msg{align-self:center;font-size:11px;color:var(--t3);padding:4px 12px;background:var(--bg3);border-radius:20px;}
+::-webkit-scrollbar{width:3px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--bg3);border-radius:2px;}
+.fi{animation:fi .22s ease-out}
+@keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 </style>
 </head>
 <body>
 <div class="app">
-  <!-- Header -->
-  <header class="header">
-    <div class="header-logo">Tire<span>Safe</span><sub>KR</sub></div>
-    <div id="auth-area">
-      <button class="login-btn" onclick="showLoginModal()">로그인</button>
-    </div>
+
+  <header class="hdr">
+    <div class="logo">Tire<em>Safe</em><span class="logo-dot"></span></div>
+    <div id="auth-area"><button class="login-btn" onclick="showLoginModal()">로그인</button></div>
   </header>
 
-  <!-- Home Tab -->
+  <!-- HOME -->
   <div class="tab active" id="tab-home">
     <div class="hero">
-      <div class="hero-badge">🔧 카센터 10년 경력 전문가 검증</div>
-      <h2>믿고 사는<br>중고 타이어</h2>
-      <div class="hero-sub">
-        <span>🔒 세이프페이 보호</span>
-        <span>✅ 전문가 검수</span>
-      </div>
-      <div class="hero-search">
-        <input type="text" id="search-input" placeholder="사이즈 검색 (예: 245/45/18)" onkeydown="if(event.key==='Enter')loadTires()">
-        <button onclick="loadTires()">검색</button>
+      <div class="hero-glow"></div><div class="hero-glow2"></div>
+      <div class="hero-eye">🛞 중고타이어 직거래 플랫폼</div>
+      <h2>안전하게 사고<br><span>안심하고 팔자</span></h2>
+      <p class="hero-sub">검증된 매물 · 세이프페이 보호 · 전국 직거래</p>
+      <div class="search-box">
+        <input id="search-input" type="text" placeholder="사이즈 검색  예) 245/45/18" onkeydown="if(event.key==='Enter')loadTires()">
+        <button class="search-btn" onclick="loadTires()">검색</button>
       </div>
     </div>
-
-    <div class="stats-bar" id="stats-bar">
-      <div class="stat-item"><div class="stat-num" id="stat-count">-</div><div class="stat-label">등록 매물</div></div>
-      <div class="stat-item"><div class="stat-num" id="stat-verified">-</div><div class="stat-label">인증 완료</div></div>
-      <div class="stat-item"><div class="stat-num">10년</div><div class="stat-label">전문가 경력</div></div>
+    <div class="chips">
+      <div class="chip active" onclick="filterChip(this,'')">전체</div>
+      <div class="chip" onclick="filterChip(this,'195')">195</div>
+      <div class="chip" onclick="filterChip(this,'205')">205</div>
+      <div class="chip" onclick="filterChip(this,'215')">215</div>
+      <div class="chip" onclick="filterChip(this,'225')">225</div>
+      <div class="chip" onclick="filterChip(this,'235')">235</div>
+      <div class="chip" onclick="filterChip(this,'245')">245</div>
+      <div class="chip" onclick="filterChip(this,'255')">255</div>
+      <div class="chip" onclick="filterChip(this,'265')">265</div>
     </div>
-
-    <div class="section-header">
-      <div class="section-title">실시간 매물</div>
-      <div class="section-action" onclick="loadTires()">🔄 새로고침</div>
+    <div class="sec-hdr">
+      <div class="sec-title">실시간 매물</div>
+      <div class="sec-action" onclick="loadTires()">새로고침</div>
     </div>
     <div class="tire-grid" id="tire-grid">
-      <div class="loading" style="grid-column:1/-1">
-        <div class="spinner"></div>
-        <p>불러오는 중...</p>
-      </div>
+      <div class="loading" style="grid-column:1/-1"><div class="spinner"></div><p>불러오는 중...</p></div>
     </div>
   </div>
 
-  <!-- Sell Tab -->
+  <!-- SELL -->
   <div class="tab" id="tab-sell">
     <div class="sell-wrap">
       <div class="sell-title">타이어 판매하기</div>
-      <div class="sell-subtitle">사진과 정보를 등록하면 바로 노출됩니다</div>
+      <div class="sell-sub">사진과 정보를 입력하면 바로 등록됩니다</div>
       <div id="sell-content"></div>
     </div>
   </div>
 
-  <!-- Chat Tab -->
+  <!-- CHAT -->
   <div class="tab" id="tab-chat">
-    <div class="chat-tab-wrap">
-      <button class="chat-tab-btn active" id="ctab-dm" onclick="switchChatTab('dm')">💬 1:1 대화</button>
-      <button class="chat-tab-btn" id="ctab-bot" onclick="switchChatTab('bot')">🤖 고객센터</button>
+    <div class="chat-tabs">
+      <button class="ctab active" id="ctab-dm"  onclick="switchChatTab('dm')">💬 1:1 대화</button>
+      <button class="ctab"        id="ctab-bot" onclick="switchChatTab('bot')">🤖 고객센터</button>
     </div>
 
-    <!-- DM Area -->
+    <!-- DM -->
     <div id="chat-dm-area">
       <div id="dm-room-list" class="room-list">
-        <div class="empty-state" style="padding: 40px 20px;">
+        <div class="empty" style="padding:50px 20px;">
           <div class="empty-icon">💬</div>
-          <p>아직 대화가 없어요.<br>매물을 클릭해서 판매자에게 문의해보세요!</p>
+          <p>아직 대화가 없어요.<br>매물을 눌러 판매자에게 문의해보세요!</p>
         </div>
       </div>
       <div class="dm-wrap" id="dm-chat-wrap">
-        <div class="dm-header">
+        <div class="dm-hdr">
           <button class="dm-back" onclick="closeDmRoom()">←</button>
-          <div class="dm-title" id="dm-chat-title">채팅</div>
+          <div class="dm-title" id="dm-title">채팅</div>
         </div>
         <div class="chat-wrap">
-          <div class="chat-messages" id="dm-messages"></div>
-          <div class="chat-input-wrap">
-            <input type="text" class="chat-input" id="dm-input" placeholder="메시지 입력..."
-              onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendDmMsg()}">
-            <button class="chat-send" onclick="sendDmMsg()">↑</button>
+          <div class="chat-msgs" id="dm-msgs"></div>
+          <div class="chat-in-row">
+            <input class="chat-in" id="dm-input" type="text" placeholder="메시지 입력..."
+              onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendDm()}">
+            <button class="chat-send" onclick="sendDm()">↑</button>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Bot Area -->
+    <!-- BOT -->
     <div id="chat-bot-area" style="display:none">
-      <div class="quick-btns">
-        <button class="quick-btn" onclick="quickAsk('타이어 사이즈 고르는 법')">🔍 사이즈 선택</button>
-        <button class="quick-btn" onclick="quickAsk('배송은 어떻게 하나요?')">🚚 배송 안내</button>
-        <button class="quick-btn" onclick="quickAsk('장착은 어디서 해요?')">🔧 장착 방법</button>
-        <button class="quick-btn" onclick="quickAsk('환불 정책')">💰 환불 정책</button>
-        <button class="quick-btn" onclick="quickAsk('1:1 고객상담')">👨‍💼 1:1 상담</button>
-      </div>
-      <div class="chat-wrap">
-        <div class="chat-messages" id="bot-messages"></div>
-        <div class="chat-input-wrap">
-          <input type="text" class="chat-input" id="bot-input" placeholder="궁금한 점을 물어보세요..."
-            onkeydown="if(event.key==='Enter')sendBotMsg()">
-          <button class="chat-send" onclick="sendBotMsg()">↑</button>
+      <div class="bot-inner">
+        <div class="quick-row">
+          <button class="qbtn" onclick="qa('사이즈 고르는 법')">🔍 사이즈</button>
+          <button class="qbtn" onclick="qa('배송 안내')">🚚 배송</button>
+          <button class="qbtn" onclick="qa('장착 방법')">🔧 장착</button>
+          <button class="qbtn" onclick="qa('환불 정책')">💰 환불</button>
+          <button class="qbtn" onclick="qa('세이프페이란')">🔒 세이프페이</button>
+          <button class="qbtn" onclick="qa('1:1 고객상담')">👨‍💼 1:1 상담</button>
+        </div>
+        <div class="chat-wrap">
+          <div class="chat-msgs" id="bot-msgs"></div>
+          <div class="chat-in-row">
+            <input class="chat-in" id="bot-input" type="text" placeholder="궁금한 점을 입력하세요..."
+              onkeydown="if(event.key==='Enter')sendBot()">
+            <button class="chat-send" onclick="sendBot()">↑</button>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Bottom Nav -->
-  <nav class="bottom-nav">
-    <button class="nav-btn active" id="nav-home" onclick="switchTab('home')">
-      <span class="nav-icon">🏠</span><span class="nav-label">홈</span>
-    </button>
-    <button class="nav-btn" id="nav-sell" onclick="switchTab('sell')">
-      <span class="nav-icon">➕</span><span class="nav-label">판매하기</span>
-    </button>
-    <button class="nav-btn" id="nav-chat" onclick="switchTab('chat')">
-      <span class="nav-icon">💬</span><span class="nav-label">채팅</span>
-      <div class="nav-badge" id="chat-badge"></div>
-    </button>
+  <nav class="bnav">
+    <button class="nbtn active" id="nav-home" onclick="switchTab('home')"><span class="n-icon">🏠</span><span class="n-label">홈</span></button>
+    <button class="nbtn"        id="nav-sell" onclick="switchTab('sell')"><span class="n-icon">➕</span><span class="n-label">판매하기</span></button>
+    <button class="nbtn"        id="nav-chat" onclick="switchTab('chat')"><span class="n-icon">💬</span><span class="n-label">채팅</span><div class="n-badge" id="chat-badge"></div></button>
   </nav>
 </div>
 
-<!-- Product Modal -->
-<div class="modal-overlay" id="modal-overlay" onclick="if(event.target===this)closeModal()">
-  <div class="modal">
-    <div class="modal-handle"></div>
-    <button class="modal-close" onclick="closeModal()">✕</button>
-
-    <div class="modal-scroll-area">
-      <div class="modal-img-gallery" id="modal-img-container"></div>
-      <div class="modal-badge" id="modal-badge" style="display:none;">✅ 전문가 검증 완료</div>
-      <div class="modal-title" id="modal-title"></div>
-      <div class="modal-size" id="modal-size"></div>
-      <div class="modal-desc-box"><p id="modal-desc"></p></div>
-      <div class="modal-price-row">
-        <div>
-          <div class="modal-price-label">판매가</div>
-          <div class="modal-price" id="modal-price"></div>
-        </div>
-        <div class="modal-price-note">장착 공임 별도</div>
+<!-- PRODUCT MODAL -->
+<div class="overlay" id="prod-ov" onclick="if(event.target===this)closeModal()">
+  <div class="sheet">
+    <div class="sh-handle"></div>
+    <button class="sh-close" onclick="closeModal()">✕</button>
+    <div class="sh-scroll">
+      <div class="m-gallery" id="m-gallery"></div>
+      <div class="m-badge" id="m-badge" style="display:none;">✅ 인증 완료</div>
+      <div class="m-title"  id="m-title"></div>
+      <div class="m-size"   id="m-size"></div>
+      <div class="m-desc"><p id="m-desc"></p></div>
+      <div class="m-price-row">
+        <div><div class="m-price-lbl">판매가</div><div class="m-price" id="m-price"></div></div>
+        <div class="m-note">장착 공임 별도</div>
       </div>
-      <div class="modal-seller" id="modal-seller"></div>
+      <div class="m-seller" id="m-seller"></div>
     </div>
-
-    <div class="modal-btns" id="modal-btns">
-      <button class="btn-secondary" id="modal-chat-btn" onclick="chatWithSeller()">💬 판매자 채팅</button>
-      <button class="btn-primary" id="modal-pay-btn" style="margin:0" onclick="toast('결제 시스템 준비 중입니다 🔒')">🔒 세이프페이</button>
-      <button class="btn-secondary" id="modal-edit-btn" style="display:none" onclick="openEditModal()">✏️ 수정</button>
-      <button class="btn-primary" id="modal-delete-btn" style="display:none; background:var(--red); box-shadow:0 4px 12px rgba(220,38,38,0.25);" onclick="deleteTire()">🗑️ 삭제</button>
-      <button class="btn-primary" id="modal-verify-btn" style="display:none; grid-column:1/-1; background:var(--green); box-shadow:0 4px 12px rgba(5,150,105,0.25);" onclick="toggleVerify()">✅ 인증 마크 달기</button>
-      <button class="btn-primary" id="modal-block-btn" style="display:none; grid-column:1/-1; background:var(--gray-900);" onclick="blockUser()">🚫 이 작성자 영구 차단</button>
+    <div class="sh-btns" id="sh-btns">
+      <button class="btn btn-gh"  id="m-chat" onclick="chatSeller()">💬 판매자 채팅</button>
+      <button class="btn btn-ac"  id="m-pay"  style="margin:0" onclick="toast('결제 시스템 준비 중 🔒')">🔒 세이프페이</button>
+      <button class="btn btn-gh"  id="m-edit" style="display:none" onclick="openEdit()">✏️ 수정</button>
+      <button class="btn btn-red" id="m-del"  style="display:none;margin:0" onclick="delTire()">🗑️ 삭제</button>
+      <button class="btn btn-grn" id="m-vrfy" style="display:none;grid-column:1/-1;margin:0" onclick="toggleVerify()">✅ 인증 달기</button>
+      <button class="btn btn-dk"  id="m-blk"  style="display:none;grid-column:1/-1;margin:0" onclick="blockUser()">🚫 영구 차단</button>
     </div>
   </div>
 </div>
 
-<!-- Edit Modal -->
-<div class="modal-overlay" id="edit-modal-overlay" onclick="if(event.target===this)closeEditModal()">
-  <div class="modal" style="height:auto; max-height:92vh; overflow-y:auto;">
-    <div class="modal-handle"></div>
-    <button class="modal-close" onclick="closeEditModal()">✕</button>
-    <div style="padding: 4px 20px 32px;">
-      <div class="sell-title" style="margin-bottom:4px;">✏️ 게시글 수정</div>
-      <div class="sell-subtitle">내용을 수정하고 저장하세요</div>
-
-      <div class="photo-upload" onclick="document.getElementById('e-file-input').click()" style="margin-bottom:20px;">
-        <div id="e-preview-placeholder" style="text-align:center;">
-          <div class="photo-upload-icon">📸</div>
-          <div class="photo-upload-text">새 사진 선택 (최대 9장)</div>
-          <div class="photo-upload-hint">※ 선택 시 기존 사진이 교체됩니다</div>
-        </div>
-        <div id="e-preview-container" style="position:absolute; inset:0; display:none; gap:8px; padding:12px; overflow-x:auto; align-items:center;"></div>
+<!-- EDIT MODAL -->
+<div class="overlay" id="edit-ov" onclick="if(event.target===this)closeEdit()">
+  <div class="sheet" style="height:auto;max-height:92vh;overflow-y:auto;">
+    <div class="sh-handle"></div>
+    <button class="sh-close" onclick="closeEdit()">✕</button>
+    <div style="padding:4px 18px 32px;">
+      <div class="sell-title" style="margin-bottom:4px;">게시글 수정</div>
+      <div class="sell-sub">내용을 수정하고 저장하세요</div>
+      <div class="photo-up" onclick="document.getElementById('e-file').click()" style="margin-bottom:18px;">
+        <div id="e-ph"><div class="pup-icon">📸</div><div class="pup-txt">새 사진 (최대 9장)</div><div class="pup-hint">선택 시 기존 교체</div></div>
+        <div id="e-prev" style="position:absolute;inset:0;display:none;gap:8px;padding:12px;overflow-x:auto;align-items:center;"></div>
       </div>
-      <input type="file" id="e-file-input" accept="image/*" multiple style="display:none" onchange="handleEditPhoto(this)">
-
-      <div class="form-group"><label class="form-label">타이어 모델명</label><input type="text" id="e-title" class="form-input"></div>
-      <div class="form-row">
-        <div class="form-group"><label class="form-label">사이즈</label><input type="text" id="e-size" class="form-input"></div>
-        <div class="form-group"><label class="form-label">가격 (원)</label><input type="number" id="e-price" class="form-input"></div>
+      <input type="file" id="e-file" accept="image/*" multiple style="display:none" onchange="handleEditPh(this)">
+      <div class="f-group"><label class="f-label">타이어 모델명</label><input id="e-title" class="f-input" type="text"></div>
+      <div class="f-row">
+        <div class="f-group"><label class="f-label">사이즈</label><input id="e-size" class="f-input" type="text"></div>
+        <div class="f-group"><label class="f-label">가격 (원)</label><input id="e-price" class="f-input" type="number"></div>
       </div>
-      <div class="form-group"><label class="form-label">상태 설명</label><textarea id="e-desc" class="form-textarea"></textarea></div>
-      <button class="btn-primary" id="edit-submit-btn" onclick="submitEdit()">수정 완료</button>
+      <div class="f-group"><label class="f-label">상태 설명</label><textarea id="e-desc" class="f-ta"></textarea></div>
+      <button class="btn btn-ac" id="edit-btn" onclick="submitEdit()">수정 완료</button>
     </div>
   </div>
 </div>
 
-<!-- Login Modal -->
-<div class="login-modal-overlay" id="login-modal-overlay" onclick="if(event.target===this)hideLoginModal()">
-  <div class="login-modal">
-    <div class="login-modal-handle"></div>
-    <button class="login-modal-close" onclick="hideLoginModal()">✕</button>
-    <div class="login-modal-inner">
-
-      <!-- Login View -->
-      <div id="login-view">
-        <div class="auth-title">🔐 로그인</div>
-        <div class="auth-subtitle">타이어세이프에 오신 것을 환영합니다</div>
-        <div class="auth-form-box">
-          <input type="email" id="l-email" class="form-input" placeholder="이메일 주소"
-            onkeydown="if(event.key==='Enter')document.getElementById('l-pw').focus()">
-          <input type="password" id="l-pw" class="form-input" placeholder="비밀번호"
-            onkeydown="if(event.key==='Enter')emailLogin()">
-          <button class="btn-primary" style="font-size:14px; padding:13px;" onclick="emailLogin()">이메일로 로그인</button>
+<!-- LOGIN MODAL -->
+<div class="overlay" id="login-ov" onclick="if(event.target===this)hideLogin()">
+  <div class="auth-sheet">
+    <div class="sh-handle" style="padding:12px 0 0;"></div>
+    <button class="sh-close" onclick="hideLogin()">✕</button>
+    <div class="auth-inner">
+      <div id="lv-login">
+        <div class="auth-title">로그인</div>
+        <div class="auth-sub">TireSafe에 오신 것을 환영해요</div>
+        <div class="auth-box">
+          <input id="l-email" class="f-input" type="email" placeholder="이메일" onkeydown="if(event.key==='Enter')document.getElementById('l-pw').focus()">
+          <input id="l-pw"    class="f-input" type="password" placeholder="비밀번호" onkeydown="if(event.key==='Enter')doLogin()" style="margin-top:0;">
+          <button class="btn btn-ac" onclick="doLogin()">이메일로 로그인</button>
         </div>
-        <div class="auth-switch">
-          계정이 없으신가요? <a onclick="toggleAuthView('signup')">회원가입하기</a>
-        </div>
-        <div class="auth-divider"><span>또는 간편 로그인</span></div>
-        <button class="btn-google" onclick="googleLogin()">
-          <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="20" alt="Google">
-          구글로 시작하기
-        </button>
+        <div class="auth-sw">계정이 없으신가요? <a onclick="toggleAuth('signup')">회원가입</a></div>
+        <div class="auth-div"><span>또는</span></div>
+        <button class="btn-google" onclick="googleLogin()"><img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18" alt=""> 구글로 시작하기</button>
       </div>
-
-      <!-- Signup View -->
-      <div id="signup-view" style="display:none;">
-        <div class="auth-title">📝 회원가입</div>
-        <div class="auth-subtitle">몇 초 만에 시작하세요</div>
-        <div class="auth-form-box">
-          <input type="email" id="s-email" class="form-input" placeholder="이메일 주소 (아이디)"
-            onkeydown="if(event.key==='Enter')document.getElementById('s-pw').focus()">
-          <input type="password" id="s-pw" class="form-input" placeholder="비밀번호 (6자 이상)"
-            onkeydown="if(event.key==='Enter')document.getElementById('s-name').focus()">
-          <input type="text" id="s-name" class="form-input" placeholder="닉네임"
-            onkeydown="if(event.key==='Enter')emailSignUp()">
-          <button class="btn-primary" style="font-size:14px; padding:13px;" onclick="emailSignUp()">가입 완료하기</button>
+      <div id="lv-signup" style="display:none;">
+        <div class="auth-title">회원가입</div>
+        <div class="auth-sub">몇 초면 완료돼요</div>
+        <div class="auth-box">
+          <input id="s-email" class="f-input" type="email"    placeholder="이메일" onkeydown="if(event.key==='Enter')document.getElementById('s-pw').focus()">
+          <input id="s-pw"    class="f-input" type="password" placeholder="비밀번호 (6자 이상)" onkeydown="if(event.key==='Enter')document.getElementById('s-name').focus()" style="margin-top:0;">
+          <input id="s-name"  class="f-input" type="text"     placeholder="닉네임" onkeydown="if(event.key==='Enter')doSignup()" style="margin-top:0;">
+          <button class="btn btn-ac" onclick="doSignup()">가입 완료</button>
         </div>
-        <div class="auth-switch">
-          이미 계정이 있으신가요? <a onclick="toggleAuthView('login')">로그인하기</a>
-        </div>
-        <div class="auth-divider"><span>또는 간편 로그인</span></div>
-        <button class="btn-google" onclick="googleLogin()">
-          <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="20" alt="Google">
-          구글로 시작하기
-        </button>
+        <div class="auth-sw">이미 계정이 있으신가요? <a onclick="toggleAuth('login')">로그인</a></div>
+        <div class="auth-div"><span>또는</span></div>
+        <button class="btn-google" onclick="googleLogin()"><img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18" alt=""> 구글로 시작하기</button>
       </div>
-
     </div>
   </div>
 </div>
@@ -1249,735 +450,392 @@ body {
 <div class="toast" id="toast"></div>
 
 <script>
-/* ═══════════════════════════════════
-   CONFIG
-═══════════════════════════════════ */
-const ADMIN_UID = 'SMB8eJMGJ4VPpKbZqbEjlXw2eG32';
+/* ═══════════════ FIREBASE ═══════════════ */
+const ADMIN = 'SMB8eJMGJ4VPpKbZqbEjlXw2eG32';
+firebase.initializeApp({
+  apiKey:"AIzaSyDP414CWLGAJj06_bhBbGD9rkOcZHb2--I",
+  authDomain:"tire-f9ebb.firebaseapp.com",
+  projectId:"tire-f9ebb",
+  storageBucket:"tire-f9ebb.firebasestorage.app",
+  messagingSenderId:"394141245307",
+  appId:"1:394141245307:web:66b79b11761f120565e7de"
+});
+const auth=firebase.auth(), db=firebase.firestore();
 
-const firebaseConfig = {
-  apiKey: "AIzaSyDP414CWLGAJj06_bhBbGD9rkOcZHb2--I",
-  authDomain: "tire-f9ebb.firebaseapp.com",
-  projectId: "tire-f9ebb",
-  storageBucket: "tire-f9ebb.firebasestorage.app",
-  messagingSenderId: "394141245307",
-  appId: "1:394141245307:web:66b79b11761f120565e7de"
-};
-firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-const db = firebase.firestore();
+/* ═══════════════ STATE ═══════════════ */
+let CU=null,          // currentUser
+    dmRoomId=null,
+    unsubDm=null,
+    unsubRooms=null,
+    tire=null,        // currentTire for modal
+    pendingChat=null,
+    firstLoad=true,
+    toastTmr=null;
 
-/* ═══════════════════════════════════
-   STATE
-═══════════════════════════════════ */
-let currentUser = null;
-let currentDmRoomId = null;
-let unsubDm = null;
-let unsubRoomList = null;
-let currentModalTire = null;
-let pendingChatAfterLogin = null;
-let isFirstChatLoad = true;
-let toastTimeout = null;
-
-/* ═══════════════════════════════════
-   INIT
-═══════════════════════════════════ */
-window.addEventListener('DOMContentLoaded', () => {
-  addBotMsg('안녕하세요! 타이어세이프 고객센터입니다 😊\n아래 버튼을 눌러 자주 묻는 질문을 확인하거나 직접 입력해주세요!');
+/* ═══════════════ INIT ═══════════════ */
+window.addEventListener('DOMContentLoaded',()=>{
+  botMsg('안녕하세요! TireSafe 고객센터입니다 😊\n아래 버튼을 눌러보세요!');
 });
 
-/* ═══════════════════════════════════
-   TOAST
-═══════════════════════════════════ */
-function toast(msg) {
-  const el = document.getElementById('toast');
-  el.textContent = msg;
-  el.classList.add('show');
-  if (toastTimeout) clearTimeout(toastTimeout);
-  toastTimeout = setTimeout(() => el.classList.remove('show'), 2800);
+/* ═══════════════ TOAST ═══════════════ */
+function toast(m){
+  const el=document.getElementById('toast');
+  el.textContent=m; el.classList.add('show');
+  if(toastTmr)clearTimeout(toastTmr);
+  toastTmr=setTimeout(()=>el.classList.remove('show'),2800);
 }
 
-/* ═══════════════════════════════════
-   AUTH
-═══════════════════════════════════ */
-async function checkBanStatus(uid) {
-  try {
-    const doc = await db.collection('bannedUsers').doc(uid).get();
-    return doc.exists;
-  } catch { return false; }
-}
+/* ═══════════════ UTILS ═══════════════ */
+function esc(s){if(!s)return'';return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
+function compress(file){return new Promise(res=>{const r=new FileReader();r.onload=e=>{const i=new Image();i.onload=()=>{const c=document.createElement('canvas');const M=600;let w=i.width,h=i.height;if(w>h&&w>M){h=h*M/w;w=M;}else if(h>M){w=w*M/h;h=M;}c.width=w;c.height=h;c.getContext('2d').drawImage(i,0,0,w,h);res(c.toDataURL('image/jpeg',.65));};i.src=e.target.result;};r.readAsDataURL(file);});}
 
-function toggleAuthView(view) {
-  document.getElementById('login-view').style.display = view === 'login' ? 'block' : 'none';
-  document.getElementById('signup-view').style.display = view === 'signup' ? 'block' : 'none';
-}
-
-function showLoginModal() {
-  // clear fields
-  ['l-email','l-pw','s-email','s-pw','s-name'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.value = '';
-  });
-  toggleAuthView('login');
-  document.getElementById('login-modal-overlay').classList.add('open');
-}
-function hideLoginModal() {
-  document.getElementById('login-modal-overlay').classList.remove('open');
-}
-
-async function emailSignUp() {
-  const email = document.getElementById('s-email').value.trim();
-  const pw    = document.getElementById('s-pw').value.trim();
-  const name  = document.getElementById('s-name').value.trim();
-  if (!email || !pw) return toast('⚠️ 이메일과 비밀번호를 입력해주세요.');
-  if (pw.length < 6) return toast('⚠️ 비밀번호는 6자 이상이어야 합니다.');
-  if (!name) return toast('⚠️ 닉네임을 입력해주세요.');
+/* ═══════════════ AUTH ═══════════════ */
+async function banned(uid){try{return(await db.collection('bannedUsers').doc(uid).get()).exists;}catch{return false;}}
+function toggleAuth(v){document.getElementById('lv-login').style.display=v==='login'?'block':'none';document.getElementById('lv-signup').style.display=v==='signup'?'block':'none';}
+function showLoginModal(){['l-email','l-pw','s-email','s-pw','s-name'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});toggleAuth('login');document.getElementById('login-ov').classList.add('open');}
+function hideLogin(){document.getElementById('login-ov').classList.remove('open');}
+async function doSignup(){
+  const email=document.getElementById('s-email').value.trim();
+  const pw=document.getElementById('s-pw').value.trim();
+  const name=document.getElementById('s-name').value.trim();
+  if(!email||!pw)return toast('⚠️ 이메일과 비밀번호를 입력해주세요.');
+  if(pw.length<6)return toast('⚠️ 비밀번호는 6자 이상이어야 합니다.');
+  if(!name)return toast('⚠️ 닉네임을 입력해주세요.');
   toast('⏳ 가입 처리 중...');
-  try {
-    const cred = await auth.createUserWithEmailAndPassword(email, pw);
-    await cred.user.updateProfile({ displayName: name });
-    toast('🎉 회원가입 완료! 환영합니다.');
-    hideLoginModal(); runPendingChat();
-  } catch (e) {
-    if (e.code === 'auth/email-already-in-use') toast('❌ 이미 가입된 이메일입니다. 로그인해주세요.');
-    else toast('❌ 가입 오류: ' + e.message);
-  }
+  try{const c=await auth.createUserWithEmailAndPassword(email,pw);await c.user.updateProfile({displayName:name});toast('🎉 가입 완료! 환영합니다.');hideLogin();runPending();}
+  catch(e){if(e.code==='auth/email-already-in-use')toast('❌ 이미 가입된 이메일입니다.');else toast('❌ '+e.message);}
 }
-
-async function emailLogin() {
-  const email = document.getElementById('l-email').value.trim();
-  const pw    = document.getElementById('l-pw').value.trim();
-  if (!email || !pw) return toast('⚠️ 이메일과 비밀번호를 입력해주세요.');
+async function doLogin(){
+  const email=document.getElementById('l-email').value.trim();
+  const pw=document.getElementById('l-pw').value.trim();
+  if(!email||!pw)return toast('⚠️ 이메일과 비밀번호를 입력해주세요.');
   toast('⏳ 로그인 중...');
-  try {
-    await auth.signInWithEmailAndPassword(email, pw);
-    toast('✅ 로그인 성공!');
-    hideLoginModal(); runPendingChat();
-  } catch (e) {
-    if (['auth/invalid-credential','auth/user-not-found','auth/wrong-password'].includes(e.code))
-      toast('❌ 이메일 또는 비밀번호가 틀립니다.');
-    else if (e.code === 'auth/too-many-requests')
-      toast('❌ 시도 횟수 초과. 잠시 후 다시 시도해주세요.');
-    else toast('❌ 로그인 오류: ' + e.message);
-  }
+  try{await auth.signInWithEmailAndPassword(email,pw);toast('✅ 로그인 성공!');hideLogin();runPending();}
+  catch(e){if(['auth/invalid-credential','auth/user-not-found','auth/wrong-password'].includes(e.code))toast('❌ 이메일 또는 비밀번호가 틀립니다.');else if(e.code==='auth/too-many-requests')toast('❌ 잠시 후 다시 시도해주세요.');else toast('❌ '+e.message);}
 }
-
-function googleLogin() {
-  const provider = new firebase.auth.GoogleAuthProvider();
-  provider.setCustomParameters({ prompt: 'select_account' });
-  auth.signInWithPopup(provider)
-    .then(() => { hideLoginModal(); runPendingChat(); })
-    .catch(() => auth.signInWithRedirect(provider));
-}
-
-function logout() {
-  if (confirm('로그아웃 하시겠습니까?')) auth.signOut();
-}
-
-auth.getRedirectResult().then(result => {
-  if (result && result.user) { toast('✅ 로그인 성공!'); hideLoginModal(); runPendingChat(); }
-}).catch(() => {});
-
-auth.onAuthStateChanged(user => {
-  currentUser = user;
-  updateAuthUI(user);
-  loadTires();
-  if (user) { hideLoginModal(); initChatListener(); runPendingChat(); }
-  else { if (unsubRoomList) unsubRoomList(); document.getElementById('chat-badge').style.display = 'none'; }
+function googleLogin(){const p=new firebase.auth.GoogleAuthProvider();p.setCustomParameters({prompt:'select_account'});auth.signInWithPopup(p).then(()=>{hideLogin();runPending();}).catch(()=>auth.signInWithRedirect(p));}
+function logout(){if(confirm('로그아웃 하시겠습니까?'))auth.signOut();}
+auth.getRedirectResult().then(r=>{if(r&&r.user){toast('✅ 로그인 성공!');hideLogin();runPending();}}).catch(()=>{});
+auth.onAuthStateChanged(u=>{
+  CU=u; updateAuthUI(u); loadTires();
+  if(u){hideLogin();initRooms();runPending();}
+  else{if(unsubRooms)unsubRooms();document.getElementById('chat-badge').style.display='none';}
 });
+function updateAuthUI(u){
+  const a=document.getElementById('auth-area');
+  if(u){
+    const n=u.displayName||'유저';
+    a.innerHTML=`<div class="avatar" onclick="logout()" title="${esc(n)} · 탭하여 로그아웃">${u.photoURL?`<img src="${u.photoURL}" alt="">`:n[0]}</div>`;
+    renderSell();
+  }else{
+    a.innerHTML=`<button class="login-btn" onclick="showLoginModal()">로그인</button>`;
+    document.getElementById('sell-content').innerHTML=`<div class="need-login"><div class="ni-icon">🔒</div><h3>로그인이 필요해요</h3><p>판매 등록은 로그인 후 이용 가능합니다</p><button class="btn btn-ac" onclick="showLoginModal()">로그인 / 회원가입</button></div>`;
+  }
+}
+function runPending(){if(pendingChat&&CU){const{uid,name}=pendingChat;pendingChat=null;setTimeout(()=>openRoom(uid,name,''),400);}}
 
-function updateAuthUI(user) {
-  const area = document.getElementById('auth-area');
-  if (user) {
-    const name = user.displayName || '유저';
-    area.innerHTML = `<div class="user-avatar" onclick="logout()" title="${name} · 탭하여 로그아웃">${user.photoURL ? `<img src="${user.photoURL}" alt="">` : name[0]}</div>`;
-    renderSellForm();
-  } else {
-    area.innerHTML = `<button class="login-btn" onclick="showLoginModal()">로그인</button>`;
-    document.getElementById('sell-content').innerHTML = `
-      <div class="login-required">
-        <div class="icon">🔒</div>
-        <h3>로그인이 필요해요</h3>
-        <p>판매 등록은 로그인 후<br>이용하실 수 있어요.</p>
-        <button class="btn-primary" onclick="showLoginModal()">로그인 / 회원가입</button>
+/* ═══════════════ TABS ═══════════════ */
+function switchTab(n){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.nbtn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+n).classList.add('active');
+  document.getElementById('nav-'+n).classList.add('active');
+  closeDm();
+  if(n==='home')loadTires();
+  if(n==='chat')switchChatTab('dm');
+}
+function switchChatTab(t){
+  closeDm();
+  document.getElementById('ctab-dm').classList.toggle('active',t==='dm');
+  document.getElementById('ctab-bot').classList.toggle('active',t==='bot');
+  document.getElementById('chat-dm-area').style.display  = t==='dm'  ? 'block' : 'none';
+  document.getElementById('chat-bot-area').style.display = t==='bot' ? 'block' : 'none';
+}
+
+/* ═══════════════ CHIPS ═══════════════ */
+function filterChip(el,v){
+  document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('search-input').value=v;
+  loadTires();
+}
+
+/* ═══════════════ TIRES ═══════════════ */
+async function loadTires(){
+  const grid=document.getElementById('tire-grid');
+  grid.innerHTML='<div class="loading" style="grid-column:1/-1"><div class="spinner"></div><p>불러오는 중...</p></div>';
+  const q=(document.getElementById('search-input')?.value||'').trim().toLowerCase().replace(/\s/g,'');
+  try{
+    const snap=await db.collection('tires').orderBy('createdAt','desc').get();
+    const docs=snap.docs.filter(d=>{
+      if(!q)return true;
+      const t=d.data();
+      return(t.title||'').toLowerCase().includes(q)||(t.size||'').toLowerCase().replace(/\s/g,'').includes(q);
+    });
+    if(!docs.length){grid.innerHTML=`<div class="empty"><div class="empty-icon">🔍</div><p>${q?`"${q}" 검색 결과가 없어요.`:'등록된 매물이 없어요.'}<br>첫 번째 타이어를 올려보세요!</p></div>`;return;}
+    grid.innerHTML=docs.map(doc=>{
+      const t={id:doc.id,...doc.data()};
+      const sd=JSON.stringify({id:t.id,title:t.title,size:t.size,price:t.price,description:t.description,imageUrl:t.imageUrl,imageUrls:t.imageUrls,sellerName:t.sellerName,sellerId:t.sellerId,isVerified:!!t.isVerified}).replace(/'/g,'&#39;');
+      return`<div class="tire-card fi" onclick='openModal(${JSON.stringify(sd)})'>
+        ${t.imageUrl?`<img class="card-img" src="${t.imageUrl}" loading="lazy" alt="${esc(t.title)}">`:'<div class="card-ph">🛞</div>'}
+        ${t.isVerified?'<div class="card-v">✅ 인증</div>':''}
+        <div class="card-body">
+          <div class="card-name">${esc(t.title)}</div>
+          <div class="card-size">${esc(t.size||'-')}</div>
+          <div class="card-btm">
+            <div class="card-price">${Number(t.price).toLocaleString()}원</div>
+            <div class="card-seller">${esc(t.sellerName||'판매자')}</div>
+          </div>
+        </div>
       </div>`;
-  }
+    }).join('');
+  }catch(e){grid.innerHTML=`<div style="grid-column:1/-1;padding:30px;color:var(--red);text-align:center;font-size:13px;">⚠️ ${esc(e.message)}</div>`;}
 }
 
-function runPendingChat() {
-  if (pendingChatAfterLogin && currentUser) {
-    const { sellerId, sellerName } = pendingChatAfterLogin;
-    pendingChatAfterLogin = null;
-    setTimeout(() => openOrCreateDmRoom(sellerId, sellerName, ''), 400);
-  }
+/* ═══════════════ SELL ═══════════════ */
+function renderSell(){
+  document.getElementById('sell-content').innerHTML=`
+    <div class="photo-up" onclick="document.getElementById('f-file').click()">
+      <div id="f-ph"><div class="pup-icon">📸</div><div class="pup-txt">사진 선택 (최대 9장)</div><div class="pup-hint">타이어 측면·트레드·전체 권장</div></div>
+      <div id="f-prev" style="position:absolute;inset:0;display:none;gap:8px;padding:12px;overflow-x:auto;align-items:center;"></div>
+    </div>
+    <input type="file" id="f-file" accept="image/*" multiple style="display:none" onchange="handlePh(this)">
+    <div class="f-group"><label class="f-label">타이어 모델명 *</label><input class="f-input" id="f-title" placeholder="예: 금호 마제스티9"></div>
+    <div class="f-row">
+      <div class="f-group"><label class="f-label">사이즈</label><input class="f-input" id="f-size" placeholder="245/45/18"></div>
+      <div class="f-group"><label class="f-label">가격 (원) *</label><input class="f-input" id="f-price" type="number" placeholder="100000"></div>
+    </div>
+    <div class="f-group"><label class="f-label">상태 설명</label><textarea class="f-ta" id="f-desc" placeholder="트레드 잔량, DOT 날짜, 특이사항 등"></textarea></div>
+    <button class="btn btn-ac" id="submit-btn" onclick="submitTire()">매물 등록하기 →</button>`;
+}
+function handlePh(input){
+  const files=input.files;if(!files||!files.length)return;
+  if(files.length>9){toast('최대 9장까지 가능합니다.');input.value='';return;}
+  const c=document.getElementById('f-prev'),ph=document.getElementById('f-ph');
+  c.innerHTML='';ph.style.display='none';c.style.display='flex';
+  Array.from(files).forEach(f=>{const r=new FileReader();r.onload=e=>{const img=document.createElement('img');img.src=e.target.result;Object.assign(img.style,{height:'100%',width:'86px',objectFit:'cover',borderRadius:'8px',flexShrink:'0'});c.appendChild(img);};r.readAsDataURL(f);});
+}
+function handleEditPh(input){
+  const files=input.files;if(!files||!files.length)return;
+  if(files.length>9){toast('최대 9장까지 가능합니다.');input.value='';return;}
+  const c=document.getElementById('e-prev'),ph=document.getElementById('e-ph');
+  c.innerHTML='';ph.style.display='none';c.style.display='flex';
+  Array.from(files).forEach(f=>{const r=new FileReader();r.onload=e=>{const img=document.createElement('img');img.src=e.target.result;Object.assign(img.style,{height:'100%',width:'86px',objectFit:'cover',borderRadius:'8px',flexShrink:'0'});c.appendChild(img);};r.readAsDataURL(f);});
+}
+async function submitTire(){
+  if(!CU)return toast('로그인이 필요합니다.');
+  if(await banned(CU.uid))return toast('🚫 이용이 정지된 계정입니다.');
+  const title=document.getElementById('f-title').value.trim();
+  const size=document.getElementById('f-size').value.trim();
+  const price=document.getElementById('f-price').value.trim();
+  const desc=document.getElementById('f-desc').value.trim();
+  const files=document.getElementById('f-file').files;
+  if(!title)return toast('모델명을 입력해주세요.');
+  if(!price)return toast('가격을 입력해주세요.');
+  const btn=document.getElementById('submit-btn');btn.disabled=true;btn.textContent='등록 중...';
+  try{
+    let imgs=[];if(files&&files.length)for(const f of files)imgs.push(await compress(f));
+    await db.collection('tires').add({title,size,price:parseInt(price),description:desc,imageUrls:imgs,imageUrl:imgs[0]||null,sellerName:CU.displayName||'판매자',sellerId:CU.uid,isVerified:false,createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+    toast('✅ 매물이 등록되었습니다!');setTimeout(()=>switchTab('home'),900);
+  }catch(e){toast('❌ '+e.message);}finally{btn.disabled=false;btn.textContent='매물 등록하기 →';}
 }
 
-/* ═══════════════════════════════════
-   TABS
-═══════════════════════════════════ */
-function switchTab(name) {
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('tab-' + name).classList.add('active');
-  document.getElementById('nav-' + name).classList.add('active');
-  closeDmRoom();
-  if (name === 'home') loadTires();
-  if (name === 'chat') switchChatTab('dm');
+/* ═══════════════ MODAL ═══════════════ */
+function openModal(t){
+  if(typeof t==='string')t=JSON.parse(t);
+  tire=t;
+  const g=document.getElementById('m-gallery');g.innerHTML='';
+  const urls=(t.imageUrls&&t.imageUrls.length)?t.imageUrls:(t.imageUrl?[t.imageUrl]:[]);
+  if(urls.length){g.style.display='block';urls.forEach(u=>g.innerHTML+=`<img src="${u}" alt="${esc(t.title)}" loading="lazy">`);}
+  else g.style.display='none';
+  document.getElementById('m-badge').style.display=t.isVerified?'inline-flex':'none';
+  document.getElementById('m-title').textContent=t.title;
+  document.getElementById('m-size').textContent=t.size||'';
+  document.getElementById('m-desc').textContent=t.description||'상태 설명이 없습니다.';
+  document.getElementById('m-price').textContent=Number(t.price).toLocaleString()+'원';
+  document.getElementById('m-seller').textContent=t.sellerName?'👤 '+t.sellerName:'';
+  const own=CU&&CU.uid===t.sellerId,adm=CU&&CU.uid===ADMIN;
+  document.getElementById('m-chat').style.display=own?'none':'';
+  document.getElementById('m-pay').style.display=own?'none':'';
+  document.getElementById('m-edit').style.display=(own||adm)?'':'none';
+  document.getElementById('m-del').style.display=(own||adm)?'':'none';
+  const vb=document.getElementById('m-vrfy'),bb=document.getElementById('m-blk');
+  if(adm){vb.style.display='';vb.textContent=t.isVerified?'❌ 인증 빼기':'✅ 인증 달기';vb.style.background=t.isVerified?'var(--t3)':'var(--green)';bb.style.display=own?'none':'';}
+  else{vb.style.display='none';bb.style.display='none';}
+  document.getElementById('prod-ov').classList.add('open');
+}
+function closeModal(){document.getElementById('prod-ov').classList.remove('open');}
+function openEdit(){
+  if(!tire)return;
+  document.getElementById('e-title').value=tire.title||'';
+  document.getElementById('e-size').value=tire.size||'';
+  document.getElementById('e-price').value=tire.price||'';
+  document.getElementById('e-desc').value=tire.description||'';
+  document.getElementById('e-file').value='';
+  document.getElementById('e-prev').innerHTML='';document.getElementById('e-prev').style.display='none';
+  document.getElementById('e-ph').style.display='block';
+  document.getElementById('edit-ov').classList.add('open');
+}
+function closeEdit(){document.getElementById('edit-ov').classList.remove('open');}
+async function submitEdit(){
+  if(!tire?.id)return;
+  const title=document.getElementById('e-title').value.trim();
+  const size=document.getElementById('e-size').value.trim();
+  const price=document.getElementById('e-price').value.trim();
+  const desc=document.getElementById('e-desc').value.trim();
+  const files=document.getElementById('e-file').files;
+  if(!title||!price)return toast('모델명과 가격을 입력해주세요.');
+  const btn=document.getElementById('edit-btn');btn.disabled=true;btn.textContent='수정 중...';
+  try{
+    const u={title,size,price:parseInt(price),description:desc};
+    if(files&&files.length){const imgs=[];for(const f of files)imgs.push(await compress(f));u.imageUrls=imgs;u.imageUrl=imgs[0]||null;}
+    await db.collection('tires').doc(tire.id).update(u);
+    toast('✅ 수정되었습니다.');closeEdit();closeModal();loadTires();
+  }catch(e){toast('❌ '+e.message);}finally{btn.disabled=false;btn.textContent='수정 완료';}
+}
+async function delTire(){
+  if(!tire?.id)return;if(!confirm('이 매물을 삭제하시겠습니까?'))return;
+  try{await db.collection('tires').doc(tire.id).delete();toast('삭제되었습니다.');closeModal();loadTires();}
+  catch(e){toast('❌ '+e.message);}
+}
+async function toggleVerify(){
+  if(!tire?.id)return;const v=!tire.isVerified;
+  try{await db.collection('tires').doc(tire.id).update({isVerified:v});toast(v?'✅ 인증 추가':'❌ 인증 해제');closeModal();loadTires();}
+  catch(e){toast('❌ '+e.message);}
+}
+async function blockUser(){
+  if(!tire?.sellerId)return;if(!confirm('이 작성자를 영구 차단하시겠습니까?'))return;
+  try{await db.collection('bannedUsers').doc(tire.sellerId).set({blockedAt:firebase.firestore.FieldValue.serverTimestamp(),reason:'관리자 차단'});toast('🚫 차단되었습니다.');closeModal();}
+  catch(e){toast('❌ '+e.message);}
+}
+async function chatSeller(){
+  if(!tire)return;if(!tire.sellerId)return toast('판매자 정보가 없습니다.');
+  await openRoom(tire.sellerId,tire.sellerName||'판매자','');
 }
 
-function switchChatTab(tab) {
-  closeDmRoom();
-  document.getElementById('ctab-dm').classList.toggle('active', tab === 'dm');
-  document.getElementById('ctab-bot').classList.toggle('active', tab === 'bot');
-  document.getElementById('chat-dm-area').style.display = tab === 'dm' ? 'flex' : 'none';
-  document.getElementById('chat-bot-area').style.display = tab === 'bot' ? 'flex' : 'none';
-}
-
-/* ═══════════════════════════════════
-   DM / CHAT
-═══════════════════════════════════ */
-function getRoomId(uid1, uid2) { return [uid1, uid2].sort().join('_'); }
-
-async function openOrCreateDmRoom(targetUid, targetName, targetPhoto) {
-  if (!currentUser) {
-    pendingChatAfterLogin = { sellerId: targetUid, sellerName: targetName };
-    showLoginModal(); return;
-  }
-  if (currentUser.uid === targetUid) { toast('본인에게는 채팅을 보낼 수 없어요 😅'); return; }
-  const isBanned = await checkBanStatus(currentUser.uid);
-  if (isBanned) return toast('🚫 차단된 계정은 채팅을 이용할 수 없습니다.');
-
-  const roomId = getRoomId(currentUser.uid, targetUid);
+/* ═══════════════ DM ═══════════════ */
+function rid(a,b){return[a,b].sort().join('_');}
+async function openRoom(targetUid,targetName,targetPhoto){
+  if(!CU){pendingChat={uid:targetUid,name:targetName};showLoginModal();return;}
+  if(CU.uid===targetUid)return toast('본인에게는 채팅을 보낼 수 없어요.');
+  if(await banned(CU.uid))return toast('🚫 차단된 계정은 채팅을 이용할 수 없습니다.');
+  const roomId=rid(CU.uid,targetUid);
   await db.collection('dmRooms').doc(roomId).set({
-    users: [currentUser.uid, targetUid],
-    userNames: { [currentUser.uid]: currentUser.displayName || '나', [targetUid]: targetName },
-    userPhotos: { [currentUser.uid]: currentUser.photoURL || '', [targetUid]: targetPhoto || '' },
-    updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-  }, { merge: true });
-  closeModal();
-  switchTab('chat');
-  setTimeout(() => openDmRoom(roomId, targetName), 200);
+    users:[CU.uid,targetUid],
+    userNames:{[CU.uid]:CU.displayName||'나',[targetUid]:targetName},
+    userPhotos:{[CU.uid]:CU.photoURL||'',[targetUid]:targetPhoto||''},
+    updatedAt:firebase.firestore.FieldValue.serverTimestamp()
+  },{merge:true});
+  closeModal();switchTab('chat');
+  setTimeout(()=>openDm(roomId,targetName),200);
 }
-
-async function chatWithSeller() {
-  if (!currentModalTire) return;
-  const { sellerId, sellerName } = currentModalTire;
-  if (!sellerId) { toast('판매자 정보가 없습니다'); return; }
-  await openOrCreateDmRoom(sellerId, sellerName || '판매자', '');
+function initRooms(){
+  if(unsubRooms)unsubRooms();
+  const list=document.getElementById('dm-room-list');
+  unsubRooms=db.collection('dmRooms').where('users','array-contains',CU.uid).onSnapshot(snap=>{
+    const rooms=snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(b.updatedAt?.toMillis()||0)-(a.updatedAt?.toMillis()||0));
+    let unread=false;
+    rooms.forEach(r=>{if(r.lastSenderId&&r.lastSenderId!==CU.uid&&!r.isRead)unread=true;});
+    document.getElementById('chat-badge').style.display=unread?'block':'none';
+    if(!firstLoad){
+      snap.docChanges().forEach(ch=>{
+        if(ch.type==='modified'){const d=ch.doc.data();if(d.lastSenderId!==CU.uid&&!d.isRead&&dmRoomId!==ch.doc.id)toast('💬 새 메시지가 도착했습니다!');}
+      });
+    }
+    firstLoad=false;
+    if(!rooms.length){list.innerHTML='<div class="empty" style="padding:50px 20px;"><div class="empty-icon">💬</div><p>아직 대화가 없어요.<br>매물을 눌러 판매자에게 문의해보세요!</p></div>';return;}
+    list.innerHTML=rooms.map(r=>{
+      const oid=r.users.find(u=>u!==CU.uid);
+      const oName=r.userNames?.[oid]||'상대방';
+      const oPhoto=r.userPhotos?.[oid]||'';
+      const last=r.lastMsg||'채팅을 시작해보세요';
+      const time=r.updatedAt?new Date(r.updatedAt.toDate()).toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit'}):'';
+      const u=r.lastSenderId&&r.lastSenderId!==CU.uid&&!r.isRead;
+      return`<div class="room-item ${u?'unread':''}" onclick="openDm('${r.id}','${oName.replace(/'/g,"\\'")}')">
+        <div class="r-av">${oPhoto?`<img src="${oPhoto}" alt="">`:`${oName[0]}`}</div>
+        <div class="r-info"><div class="r-name">${esc(oName)}</div><div class="r-last" style="${u?'font-weight:700;color:var(--t1);':''}">${esc(last)}</div></div>
+        <div class="r-meta"><div class="r-time">${time}</div>${u?'<div class="r-dot"></div>':''}</div>
+      </div>`;
+    }).join('');
+  });
 }
-
-function initChatListener() {
-  if (unsubRoomList) unsubRoomList();
-  const list = document.getElementById('dm-room-list');
-  unsubRoomList = db.collection('dmRooms')
-    .where('users', 'array-contains', currentUser.uid)
-    .onSnapshot(snap => {
-      const rooms = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      rooms.sort((a, b) => (b.updatedAt?.toMillis() || 0) - (a.updatedAt?.toMillis() || 0));
-
-      let hasUnread = false;
-      rooms.forEach(r => { if (r.lastSenderId && r.lastSenderId !== currentUser.uid && !r.isRead) hasUnread = true; });
-      document.getElementById('chat-badge').style.display = hasUnread ? 'block' : 'none';
-
-      if (!isFirstChatLoad) {
-        snap.docChanges().forEach(change => {
-          if (change.type === 'modified') {
-            const d = change.doc.data();
-            if (d.lastSenderId !== currentUser.uid && !d.isRead && currentDmRoomId !== change.doc.id)
-              toast('💬 새 메시지가 도착했습니다!');
-          }
-        });
-      }
-      isFirstChatLoad = false;
-
-      if (!rooms.length) {
-        list.innerHTML = `<div class="empty-state" style="padding:50px 20px;"><div class="empty-icon">💬</div><p>아직 대화가 없어요.<br>매물을 클릭해서 판매자에게 문의해보세요!</p></div>`;
-        return;
-      }
-
-      list.innerHTML = rooms.map(r => {
-        const otherId   = r.users.find(u => u !== currentUser.uid);
-        const otherName = r.userNames?.[otherId] || '상대방';
-        const otherPhoto= r.userPhotos?.[otherId] || '';
-        const lastMsg   = r.lastMsg || '채팅을 시작해보세요';
-        const time      = r.updatedAt ? new Date(r.updatedAt.toDate()).toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit'}) : '';
-        const isUnread  = r.lastSenderId && r.lastSenderId !== currentUser.uid && !r.isRead;
-        return `<div class="room-item ${isUnread ? 'unread' : ''}" onclick="openDmRoom('${r.id}','${otherName.replace(/'/g,"\\'")}')">
-          <div class="room-avatar">${otherPhoto ? `<img src="${otherPhoto}" alt="">` : otherName[0]}</div>
-          <div class="room-info">
-            <div class="room-name">${otherName}</div>
-            <div class="room-last" style="${isUnread ? 'font-weight:700;color:var(--gray-800);' : ''}">${lastMsg}</div>
-          </div>
-          <div class="room-meta">
-            <div class="room-time">${time}</div>
-            ${isUnread ? '<div class="unread-dot"></div>' : ''}
-          </div>
-        </div>`;
-      }).join('');
-    });
-}
-
-function openDmRoom(roomId, title) {
-  currentDmRoomId = roomId;
-  document.getElementById('dm-chat-title').textContent = title;
-  document.getElementById('dm-room-list').style.display = 'none';
+function openDm(rid,title){
+  dmRoomId=rid;
+  document.getElementById('dm-title').textContent=title;
+  document.getElementById('dm-room-list').style.display='none';
   document.getElementById('dm-chat-wrap').classList.add('open');
-
-  db.collection('dmRooms').doc(roomId).get().then(doc => {
-    if (doc.exists && doc.data().lastSenderId !== currentUser.uid)
-      doc.ref.update({ isRead: true });
+  db.collection('dmRooms').doc(rid).get().then(d=>{if(d.exists&&d.data().lastSenderId!==CU.uid)d.ref.update({isRead:true});});
+  if(unsubDm)unsubDm();
+  const box=document.getElementById('dm-msgs');box.innerHTML='';
+  unsubDm=db.collection('dmRooms').doc(rid).collection('messages').orderBy('createdAt').onSnapshot(snap=>{
+    box.innerHTML=snap.docs.map(d=>{
+      const m=d.data();
+      if(m.isSystem)return`<div class="sys-msg">${esc(m.text)}</div>`;
+      const me=CU&&m.uid===CU.uid;
+      return`<div class="bub-wrap ${me?'me':''}">
+        ${!me?`<div class="bub-sender">${esc(m.name||'상대방')}</div>`:''}
+        <div class="bubble">${esc(m.text)}</div>
+        <div class="bub-time">${m.createdAt?new Date(m.createdAt.toDate()).toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit'}):''}</div>
+      </div>`;
+    }).join('');
+    box.scrollTop=box.scrollHeight;
+    if(snap.docs.length){const last=snap.docs[snap.docs.length-1].data();if(last.uid!==CU.uid)db.collection('dmRooms').doc(rid).update({isRead:true});}
   });
-
-  if (unsubDm) unsubDm();
-  const msgBox = document.getElementById('dm-messages');
-  msgBox.innerHTML = '';
-
-  unsubDm = db.collection('dmRooms').doc(roomId).collection('messages')
-    .orderBy('createdAt').onSnapshot(snap => {
-      msgBox.innerHTML = snap.docs.map(doc => {
-        const m = doc.data();
-        if (m.isSystem) return `<div class="system-msg">${m.text}</div>`;
-        const isMe = currentUser && m.uid === currentUser.uid;
-        return `<div class="chat-bubble-wrap ${isMe ? 'me' : ''}">
-          ${!isMe ? `<div class="chat-sender">${m.name || '상대방'}</div>` : ''}
-          <div class="chat-bubble">${escapeHtml(m.text)}</div>
-          <div class="chat-time">${m.createdAt ? new Date(m.createdAt.toDate()).toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit'}) : ''}</div>
-        </div>`;
-      }).join('');
-      msgBox.scrollTop = msgBox.scrollHeight;
-      if (snap.docs.length > 0) {
-        const last = snap.docs[snap.docs.length - 1].data();
-        if (last.uid !== currentUser.uid) db.collection('dmRooms').doc(roomId).update({ isRead: true });
-      }
-    });
 }
-
-function closeDmRoom() {
-  currentDmRoomId = null;
-  if (unsubDm) { unsubDm(); unsubDm = null; }
-  document.getElementById('dm-room-list').style.display = 'block';
-  document.getElementById('dm-chat-wrap').classList.remove('open');
+function closeDm(){
+  dmRoomId=null;
+  if(unsubDm){unsubDm();unsubDm=null;}
+  const rl=document.getElementById('dm-room-list');if(rl)rl.style.display='block';
+  const dw=document.getElementById('dm-chat-wrap');if(dw)dw.classList.remove('open');
 }
-
-async function sendDmMsg() {
-  if (!currentUser || !currentDmRoomId) return;
-  const input = document.getElementById('dm-input');
-  const text = input.value.trim();
-  if (!text) return;
-  const isBanned = await checkBanStatus(currentUser.uid);
-  if (isBanned) return toast('🚫 차단된 계정은 채팅을 이용할 수 없습니다.');
-  input.value = '';
-  const batch = db.batch();
-  const msgRef = db.collection('dmRooms').doc(currentDmRoomId).collection('messages').doc();
-  batch.set(msgRef, { text, uid: currentUser.uid, name: currentUser.displayName || '나', createdAt: firebase.firestore.FieldValue.serverTimestamp() });
-  batch.update(db.collection('dmRooms').doc(currentDmRoomId), {
-    lastMsg: text, updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-    lastSenderId: currentUser.uid, isRead: false
-  });
+async function sendDm(){
+  if(!CU||!dmRoomId)return;
+  const input=document.getElementById('dm-input');
+  const text=input.value.trim();if(!text)return;
+  if(await banned(CU.uid))return toast('🚫 차단된 계정은 채팅을 이용할 수 없습니다.');
+  input.value='';
+  const batch=db.batch();
+  const msgRef=db.collection('dmRooms').doc(dmRoomId).collection('messages').doc();
+  batch.set(msgRef,{text,uid:CU.uid,name:CU.displayName||'나',createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+  batch.update(db.collection('dmRooms').doc(dmRoomId),{lastMsg:text,updatedAt:firebase.firestore.FieldValue.serverTimestamp(),lastSenderId:CU.uid,isRead:false});
   await batch.commit();
 }
 
-/* ═══════════════════════════════════
-   BOT
-═══════════════════════════════════ */
-function addBotMsg(text, isUser = false) {
-  const box = document.getElementById('bot-messages');
-  const div = document.createElement('div');
-  div.className = 'chat-bubble-wrap fade-in' + (isUser ? ' me' : '');
-  div.innerHTML = `<div class="chat-bubble${isUser ? '' : ' bot'}">${text}</div>`;
-  box.appendChild(div);
-  box.scrollTop = box.scrollHeight;
+/* ═══════════════ BOT ═══════════════ */
+function botMsg(text,isUser=false){
+  const box=document.getElementById('bot-msgs');
+  const d=document.createElement('div');d.className='bub-wrap fi'+(isUser?' me':'');
+  d.innerHTML=`<div class="bubble${isUser?'':' bot'}">${text}</div>`;
+  box.appendChild(d);box.scrollTop=box.scrollHeight;
 }
-
-const BOT_ANSWERS = [
-  { keys: ['사이즈','규격','고르는','선택'], answer: '타이어 사이즈는 운전석 문 안쪽 스티커나 현재 타이어 측면에서 확인하세요!\n\n예: 205/55R16 → 폭 205mm / 편평비 55% / 림 16인치\n\n⚠️ 사이즈가 다르면 안전 문제가 생길 수 있어요. 꼭 동일 사이즈를 사용해 주세요 🙏' },
-  { keys: ['배송','언제','도착','얼마나','택배'], answer: '배송은 판매자와 1:1 채팅으로 협의하세요! 🚚\n\n착불 또는 선불로 진행하며, 택배사·발송일정도 판매자에게 직접 문의해주세요.' },
-  { keys: ['장착','설치','공임','어디서'], answer: '구매 후 가까운 타이어 전문점이나 카센터에서 장착하시면 돼요 🔧\n\n장착 공임은 보통 1개당 5,000~15,000원 수준입니다!' },
-  { keys: ['환불','반품','교환','취소'], answer: '수령 후 7일 이내 환불/교환 가능합니다 💰\n\n단, 장착 후에는 환불이 어렵습니다. 수령 즉시 상태를 꼭 확인해주세요!' },
-  { keys: ['세이프페이','안전결제','보호','사기'], answer: '세이프페이는 타이어세이프의 안전 결제 시스템이에요 🔒\n\n장착 완료 확인 후 판매자에게 대금이 지급돼, 사기 걱정 없이 거래할 수 있어요!' },
-  { keys: ['가격','얼마','비용'], answer: '중고타이어는 새 타이어 대비 30~60% 수준이에요 💡\n\n홈 탭에서 현재 등록된 매물을 바로 확인해보세요!' },
-  { keys: ['전문가','검증','인증','믿을'], answer: '모든 매물은 카센터 10년 경력 전문가가 직접 검수해요 ✅\n\n인증 마크가 붙은 매물은 특히 품질을 보증합니다!' },
-  { keys: ['상담','고객상담','1:1','직접','연결'], answer: null }
+const BOT=[
+  {k:['사이즈','규격','고르는','선택'],a:'타이어 사이즈는 운전석 문 안쪽 스티커나 현재 타이어 측면에서 확인하세요!\n\n예: 205/55R16 → 폭 205mm / 편평비 55% / 림 16인치\n\n⚠️ 다른 사이즈는 안전에 영향을 줄 수 있으니 꼭 동일 사이즈로 구매하세요 🙏'},
+  {k:['배송','택배','언제','도착'],a:'배송은 판매자와 1:1 채팅으로 직접 협의하세요! 🚚\n착불 또는 선불로 진행하며 택배사·일정도 판매자에게 문의해주세요.'},
+  {k:['장착','설치','공임','어디서'],a:'구매 후 가까운 타이어 전문점이나 카센터에서 장착하시면 돼요 🔧\n보통 1개당 5,000~15,000원 수준입니다.'},
+  {k:['환불','반품','교환','취소'],a:'수령 후 7일 이내 환불/교환 가능합니다 💰\n단, 장착 후에는 환불이 어렵습니다. 받으면 바로 상태를 확인해주세요!'},
+  {k:['세이프페이','안전결제','에스크로'],a:'세이프페이는 TireSafe의 안전 결제 시스템이에요 🔒\n장착 완료 확인 후에만 판매자에게 대금이 지급돼, 사기 걱정 없이 거래하세요!'},
+  {k:['가격','얼마','비용'],a:'중고타이어는 새 타이어 대비 30~60% 수준이에요 💡\n홈 탭에서 현재 매물을 확인해보세요!'},
+  {k:['상담','고객상담','1:1','연결','문의'],a:null}
 ];
-
-function getBotAnswer(msg) {
-  const m = msg.toLowerCase();
-  for (const item of BOT_ANSWERS) {
-    if (item.keys.some(k => m.includes(k))) return item.answer;
-  }
-  return undefined;
-}
-
-function quickAsk(q) { document.getElementById('bot-input').value = q; sendBotMsg(); }
-
-async function sendBotMsg() {
-  const input = document.getElementById('bot-input');
-  const msg = input.value.trim();
-  if (!msg) return;
-  input.value = '';
-  addBotMsg(msg, true);
-  setTimeout(async () => {
-    const answer = getBotAnswer(msg);
-    if (answer === null) {
-      if (!currentUser) { addBotMsg('로그인 후 이용하실 수 있어요! 오른쪽 위 로그인 버튼을 눌러주세요.'); return; }
-      if (currentUser.uid === ADMIN_UID) { addBotMsg('현재 관리자 계정입니다. 일반 계정으로 테스트해주세요 😅'); return; }
-      const isBanned = await checkBanStatus(currentUser.uid);
-      if (isBanned) return addBotMsg('🚫 차단된 계정은 1:1 상담을 이용할 수 없습니다.');
-      addBotMsg('1:1 고객상담 센터로 연결해 드릴게요! 잠시만요 👨‍💼');
-      setTimeout(() => openOrCreateDmRoom(ADMIN_UID, '고객상담센터', ''), 1000);
-    } else if (answer === undefined) {
-      addBotMsg('정확한 답변을 찾지 못했어요 😅\n아래 1:1 고객상담으로 연결해 드릴게요!');
-      setTimeout(() => {
-        const box = document.getElementById('bot-messages');
-        const div = document.createElement('div');
-        div.className = 'chat-bubble-wrap fade-in';
-        div.innerHTML = `<button class="quick-btn" style="margin-top:4px;" onclick="quickAsk('1:1 고객상담')">👨‍💼 1:1 고객상담 연결하기</button>`;
-        box.appendChild(div);
-        box.scrollTop = box.scrollHeight;
-      }, 100);
-    } else {
-      addBotMsg(answer);
-    }
-  }, 400);
-}
-
-/* ═══════════════════════════════════
-   IMAGE
-═══════════════════════════════════ */
-function compressImage(file) {
-  return new Promise(resolve => {
-    const reader = new FileReader();
-    reader.onload = e => {
-      const img = new Image();
-      img.onload = () => {
-        const canvas = document.createElement('canvas');
-        const MAX = 600;
-        let w = img.width, h = img.height;
-        if (w > h && w > MAX) { h = h * MAX / w; w = MAX; }
-        else if (h > MAX) { w = w * MAX / h; h = MAX; }
-        canvas.width = w; canvas.height = h;
-        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-        resolve(canvas.toDataURL('image/jpeg', 0.65));
-      };
-      img.src = e.target.result;
-    };
-    reader.readAsDataURL(file);
-  });
-}
-
-/* ═══════════════════════════════════
-   TIRES - LOAD
-═══════════════════════════════════ */
-async function loadTires() {
-  const grid = document.getElementById('tire-grid');
-  const q = document.getElementById('search-input')?.value.trim() || '';
-  grid.innerHTML = '<div class="loading" style="grid-column:1/-1"><div class="spinner"></div><p>불러오는 중...</p></div>';
-  try {
-    const snap = await db.collection('tires').orderBy('createdAt', 'desc').get();
-
-    // update stats
-    const all = snap.docs.map(d => d.data());
-    document.getElementById('stat-count').textContent = all.length;
-    document.getElementById('stat-verified').textContent = all.filter(t => t.isVerified).length;
-
-    let filtered = all;
-    if (q) {
-      const lq = q.toLowerCase();
-      filtered = all.filter(t =>
-        (t.title && t.title.toLowerCase().includes(lq)) ||
-        (t.size && t.size.toLowerCase().replace(/\s/g,'').includes(lq.replace(/\s/g,'')))
-      );
-    }
-
-    if (!filtered.length) {
-      grid.innerHTML = `<div class="empty-state"><div class="empty-icon">🔍</div><p>${q ? `"${q}" 검색 결과가 없어요.` : '등록된 매물이 없습니다.'}<br>첫 번째 타이어를 올려보세요!</p></div>`;
-      return;
-    }
-
-    const docs = snap.docs;
-    grid.innerHTML = docs
-      .filter(doc => {
-        const t = doc.data();
-        if (!q) return true;
-        const lq = q.toLowerCase();
-        return (t.title && t.title.toLowerCase().includes(lq)) || (t.size && t.size.toLowerCase().replace(/\s/g,'').includes(lq.replace(/\s/g,'')));
-      })
-      .map(doc => {
-        const t = { id: doc.id, ...doc.data() };
-        const safeData = JSON.stringify({
-          id:t.id, title:t.title, size:t.size, price:t.price,
-          description:t.description, imageUrl:t.imageUrl, imageUrls:t.imageUrls,
-          sellerName:t.sellerName, sellerId:t.sellerId, isVerified:t.isVerified||false
-        }).replace(/'/g,'&#39;');
-        return `<div class="tire-card fade-in" onclick='openModal(${JSON.stringify(safeData)})'>
-          ${t.imageUrl ? `<img class="tire-card-img" src="${t.imageUrl}" loading="lazy" alt="${t.title}">` : '<div class="tire-card-placeholder">🛞</div>'}
-          ${t.isVerified ? '<div class="verified-ribbon">✅ 인증</div>' : ''}
-          <div class="tire-card-body">
-            <div class="tire-card-title">${escapeHtml(t.title)}</div>
-            <div class="tire-card-meta">${t.size || '-'}</div>
-            <div class="tire-card-footer">
-              <div class="tire-card-price">${Number(t.price).toLocaleString()}원</div>
-              <div class="tire-card-seller">${escapeHtml(t.sellerName || '판매자')}</div>
-            </div>
-          </div>
-        </div>`;
-      }).join('');
-  } catch (e) {
-    grid.innerHTML = `<div style="grid-column:1/-1;padding:30px 20px;color:var(--red);font-size:13px;text-align:center;">⚠️ 오류: ${e.message}</div>`;
-  }
-}
-
-/* ═══════════════════════════════════
-   SELL FORM
-═══════════════════════════════════ */
-function renderSellForm() {
-  document.getElementById('sell-content').innerHTML = `
-    <div class="photo-upload" onclick="document.getElementById('file-input').click()">
-      <div id="preview-placeholder" style="text-align:center;">
-        <div class="photo-upload-icon">📸</div>
-        <div class="photo-upload-text">사진 선택 (최대 9장)</div>
-        <div class="photo-upload-hint">타이어 측면, 트레드, 전체 사진 권장</div>
-      </div>
-      <div id="preview-container" style="position:absolute;inset:0;display:none;gap:8px;padding:12px;overflow-x:auto;align-items:center;"></div>
-    </div>
-    <input type="file" id="file-input" accept="image/*" multiple style="display:none" onchange="handlePhoto(this)">
-    <div class="form-group">
-      <label class="form-label">타이어 모델명 *</label>
-      <input type="text" class="form-input" id="f-title" placeholder="예: 금호 마제스티9">
-    </div>
-    <div class="form-row">
-      <div class="form-group">
-        <label class="form-label">사이즈</label>
-        <input type="text" class="form-input" id="f-size" placeholder="245/45/18">
-      </div>
-      <div class="form-group">
-        <label class="form-label">가격 (원) *</label>
-        <input type="number" class="form-input" id="f-price" placeholder="100000">
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="form-label">상태 설명</label>
-      <textarea class="form-textarea" id="f-desc" placeholder="트레드 잔량, DOT 제조일자, 특이사항 등을 적어주세요"></textarea>
-    </div>
-    <button class="btn-primary" id="submit-btn" onclick="submitTire()">매물 등록하기 →</button>`;
-}
-
-function handlePhoto(input) {
-  const files = input.files;
-  if (!files || !files.length) return;
-  if (files.length > 9) { toast('사진은 최대 9장까지 올릴 수 있습니다.'); input.value = ''; return; }
-  const container = document.getElementById('preview-container');
-  const placeholder = document.getElementById('preview-placeholder');
-  container.innerHTML = '';
-  placeholder.style.display = 'none';
-  container.style.display = 'flex';
-  Array.from(files).forEach(file => {
-    const reader = new FileReader();
-    reader.onload = e => {
-      const img = document.createElement('img');
-      img.src = e.target.result;
-      Object.assign(img.style, { height:'100%', width:'90px', objectFit:'cover', borderRadius:'8px', flexShrink:'0' });
-      container.appendChild(img);
-    };
-    reader.readAsDataURL(file);
-  });
-}
-
-function handleEditPhoto(input) {
-  const files = input.files;
-  if (!files || !files.length) return;
-  if (files.length > 9) { toast('사진은 최대 9장까지 올릴 수 있습니다.'); input.value = ''; return; }
-  const container = document.getElementById('e-preview-container');
-  const placeholder = document.getElementById('e-preview-placeholder');
-  container.innerHTML = '';
-  placeholder.style.display = 'none';
-  container.style.display = 'flex';
-  Array.from(files).forEach(file => {
-    const reader = new FileReader();
-    reader.onload = e => {
-      const img = document.createElement('img');
-      img.src = e.target.result;
-      Object.assign(img.style, { height:'100%', width:'90px', objectFit:'cover', borderRadius:'8px', flexShrink:'0' });
-      container.appendChild(img);
-    };
-    reader.readAsDataURL(file);
-  });
-}
-
-async function submitTire() {
-  if (!currentUser) { toast('로그인이 필요합니다'); return; }
-  const isBanned = await checkBanStatus(currentUser.uid);
-  if (isBanned) { toast('🚫 이용이 정지된 계정입니다.'); return; }
-  const title = document.getElementById('f-title').value.trim();
-  const size  = document.getElementById('f-size').value.trim();
-  const price = document.getElementById('f-price').value.trim();
-  const desc  = document.getElementById('f-desc').value.trim();
-  const files = document.getElementById('file-input').files;
-  if (!title) return toast('모델명을 입력해주세요');
-  if (!price) return toast('가격을 입력해주세요');
-  const btn = document.getElementById('submit-btn');
-  btn.disabled = true; btn.textContent = '등록 중...';
-  try {
-    let imageUrls = [];
-    if (files && files.length > 0) {
-      for (const file of files) { imageUrls.push(await compressImage(file)); }
-    }
-    await db.collection('tires').add({
-      title, size, price: parseInt(price), description: desc,
-      imageUrls, imageUrl: imageUrls[0] || null,
-      sellerName: currentUser.displayName || '판매자',
-      sellerId: currentUser.uid,
-      isVerified: false,
-      createdAt: firebase.firestore.FieldValue.serverTimestamp()
-    });
-    toast('✅ 매물이 등록되었습니다!');
-    setTimeout(() => switchTab('home'), 1000);
-  } catch (e) {
-    toast('❌ ' + e.message);
-  } finally {
-    btn.disabled = false; btn.textContent = '매물 등록하기 →';
-  }
-}
-
-/* ═══════════════════════════════════
-   MODAL
-═══════════════════════════════════ */
-function openModal(t) {
-  if (typeof t === 'string') t = JSON.parse(t);
-  currentModalTire = t;
-
-  // images
-  const imgContainer = document.getElementById('modal-img-container');
-  imgContainer.innerHTML = '';
-  const urls = (t.imageUrls && t.imageUrls.length) ? t.imageUrls : (t.imageUrl ? [t.imageUrl] : []);
-  if (urls.length) {
-    urls.forEach(url => {
-      imgContainer.innerHTML += `<img src="${url}" alt="${escapeHtml(t.title)}" loading="lazy">`;
-    });
-    imgContainer.style.display = 'block';
-  } else {
-    imgContainer.style.display = 'none';
-  }
-
-  document.getElementById('modal-badge').style.display = t.isVerified ? 'inline-flex' : 'none';
-  document.getElementById('modal-title').textContent = t.title;
-  document.getElementById('modal-size').textContent = t.size || '';
-  document.getElementById('modal-desc').textContent = t.description || '상태 설명이 없습니다.';
-  document.getElementById('modal-price').textContent = Number(t.price).toLocaleString() + '원';
-  document.getElementById('modal-seller').textContent = t.sellerName ? '👤 판매자: ' + t.sellerName : '';
-
-  const isOwner = currentUser && currentUser.uid === t.sellerId;
-  const isAdmin = currentUser && currentUser.uid === ADMIN_UID;
-
-  const chatBtn   = document.getElementById('modal-chat-btn');
-  const payBtn    = document.getElementById('modal-pay-btn');
-  const editBtn   = document.getElementById('modal-edit-btn');
-  const deleteBtn = document.getElementById('modal-delete-btn');
-  const verifyBtn = document.getElementById('modal-verify-btn');
-  const blockBtn  = document.getElementById('modal-block-btn');
-
-  chatBtn.style.display   = isOwner ? 'none' : '';
-  payBtn.style.display    = isOwner ? 'none' : '';
-  editBtn.style.display   = (isOwner || isAdmin) ? '' : 'none';
-  deleteBtn.style.display = (isOwner || isAdmin) ? '' : 'none';
-
-  if (isAdmin) {
-    verifyBtn.style.display = '';
-    verifyBtn.textContent = t.isVerified ? '❌ 인증 마크 빼기' : '✅ 인증 마크 달기';
-    verifyBtn.style.background = t.isVerified ? 'var(--gray-400)' : 'var(--green)';
-    blockBtn.style.display = !isOwner ? '' : 'none';
-  } else {
-    verifyBtn.style.display = 'none';
-    blockBtn.style.display = 'none';
-  }
-
-  document.getElementById('modal-overlay').classList.add('open');
-}
-
-function closeModal() {
-  document.getElementById('modal-overlay').classList.remove('open');
-}
-
-function openEditModal() {
-  if (!currentModalTire) return;
-  document.getElementById('e-title').value = currentModalTire.title || '';
-  document.getElementById('e-size').value  = currentModalTire.size || '';
-  document.getElementById('e-price').value = currentModalTire.price || '';
-  document.getElementById('e-desc').value  = currentModalTire.description || '';
-  document.getElementById('e-file-input').value = '';
-  document.getElementById('e-preview-container').innerHTML = '';
-  document.getElementById('e-preview-container').style.display = 'none';
-  document.getElementById('e-preview-placeholder').style.display = 'block';
-  document.getElementById('edit-modal-overlay').classList.add('open');
-}
-function closeEditModal() { document.getElementById('edit-modal-overlay').classList.remove('open'); }
-
-async function submitEdit() {
-  if (!currentModalTire?.id) return;
-  const title = document.getElementById('e-title').value.trim();
-  const size  = document.getElementById('e-size').value.trim();
-  const price = document.getElementById('e-price').value.trim();
-  const desc  = document.getElementById('e-desc').value.trim();
-  const files = document.getElementById('e-file-input').files;
-  if (!title || !price) return toast('모델명과 가격을 입력해주세요.');
-  const btn = document.getElementById('edit-submit-btn');
-  btn.disabled = true; btn.textContent = '수정 중...';
-  try {
-    const update = { title, size, price: parseInt(price), description: desc };
-    if (files && files.length) {
-      const imageUrls = [];
-      for (const file of files) { imageUrls.push(await compressImage(file)); }
-      update.imageUrls = imageUrls;
-      update.imageUrl  = imageUrls[0] || null;
-    }
-    await db.collection('tires').doc(currentModalTire.id).update(update);
-    toast('✅ 게시글이 수정되었습니다.');
-    closeEditModal(); closeModal(); loadTires();
-  } catch (e) {
-    toast('❌ 수정 실패: ' + e.message);
-  } finally {
-    btn.disabled = false; btn.textContent = '수정 완료';
-  }
-}
-
-async function deleteTire() {
-  if (!currentModalTire?.id) return;
-  if (!confirm('정말 이 매물을 삭제하시겠습니까?')) return;
-  try {
-    await db.collection('tires').doc(currentModalTire.id).delete();
-    toast('🗑️ 게시글이 삭제되었습니다.');
-    closeModal(); loadTires();
-  } catch (e) { toast('❌ 삭제 실패: ' + e.message); }
-}
-
-async function toggleVerify() {
-  if (!currentModalTire?.id) return;
-  const newVal = !currentModalTire.isVerified;
-  try {
-    await db.collection('tires').doc(currentModalTire.id).update({ isVerified: newVal });
-    toast(newVal ? '✅ 인증 마크가 추가되었습니다.' : '❌ 인증 마크가 해제되었습니다.');
-    closeModal(); loadTires();
-  } catch (e) { toast('❌ 오류: ' + e.message); }
-}
-
-async function blockUser() {
-  if (!currentModalTire?.sellerId) return;
-  if (!confirm('이 작성자를 영구 차단하시겠습니까? (되돌릴 수 없습니다)')) return;
-  try {
-    await db.collection('bannedUsers').doc(currentModalTire.sellerId).set({
-      blockedAt: firebase.firestore.FieldValue.serverTimestamp(),
-      reason: '관리자 차단'
-    });
-    toast('🚫 해당 유저가 영구 차단되었습니다.');
-    closeModal();
-  } catch (e) { toast('❌ 차단 실패: ' + e.message); }
-}
-
-/* ═══════════════════════════════════
-   UTILS
-═══════════════════════════════════ */
-function escapeHtml(str) {
-  if (!str) return '';
-  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+function getAns(msg){const m=msg.toLowerCase();for(const q of BOT)if(q.k.some(k=>m.includes(k)))return q.a;return undefined;}
+function qa(q){document.getElementById('bot-input').value=q;sendBot();}
+async function sendBot(){
+  const input=document.getElementById('bot-input');
+  const msg=input.value.trim();if(!msg)return;
+  input.value='';botMsg(msg,true);
+  setTimeout(async()=>{
+    const ans=getAns(msg);
+    if(ans===null){
+      if(!CU)return botMsg('로그인 후 이용하실 수 있어요!');
+      if(CU.uid===ADMIN)return botMsg('현재 관리자 계정입니다. 일반 계정으로 테스트해주세요 😅');
+      if(await banned(CU.uid))return botMsg('🚫 차단된 계정은 1:1 상담을 이용할 수 없습니다.');
+      botMsg('1:1 고객상담으로 연결할게요! 잠시만요 👨‍💼');
+      setTimeout(()=>openRoom(ADMIN,'고객상담센터',''),900);
+    }else if(ans===undefined){
+      botMsg('정확한 답변을 찾지 못했어요 😅');
+      setTimeout(()=>{const box=document.getElementById('bot-msgs');const d=document.createElement('div');d.className='bub-wrap fi';d.innerHTML=`<button class="qbtn" onclick="qa('1:1 고객상담')" style="margin-top:4px;">👨‍💼 1:1 고객상담 연결</button>`;box.appendChild(d);box.scrollTop=box.scrollHeight;},80);
+    }else botMsg(ans);
+  },380);
 }
 </script>
 </body>
