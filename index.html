@@ -1,160 +1,56 @@
 <!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>타이어세이프 | 전문가 인증 중고타이어</title>
 
 <script>
+    // 🚀 카카오톡 탈출 스크립트
     var url = location.href;
     var userAgent = navigator.userAgent.toLowerCase();
     if (userAgent.indexOf('kakaotalk') > -1) {
-        // 카톡 브라우저라면 강제로 외부 브라우저 호출
         location.href = 'kakaotalk://web/openExternal?url=' + encodeURIComponent(url);
-        // 화면에 안내 메시지 표시 (잠깐 보임)
-        document.write('<div style="padding:50px; text-align:center; font-family:sans-serif;"><h3>안전한 로그인을 위해<br>외부 브라우저로 이동 중입니다...</h3><p>잠시만 기다려 주세요.</p></div>');
+        document.write('<div style="padding:50px; text-align:center;"><h3>외부 브라우저로 이동 중...</h3></div>');
     }
 </script>
 
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
+
 <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root { --blue: #1a56db; --blue-dark: #1245b3; --gray-100: #f3f4f6; --gray-400: #9ca3af; --white: #ffffff; --shadow: 0 1px 3px rgba(0,0,0,0.1); }
-    body { font-family: 'Noto Sans KR', sans-serif; background: var(--gray-100); color: #1f2937; min-height: 100vh; padding-bottom: 80px; }
-    .app { max-width: 480px; margin: 0 auto; background: var(--white); min-height: 100vh; position: relative; }
-    .header { position: sticky; top: 0; z-index: 50; background: var(--white); border-bottom: 1px solid #e5e7eb; padding: 0 16px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
-    .header-logo { font-size: 20px; font-weight: 900; color: var(--blue); }
-    .user-avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--blue); color: white; display: flex; align-items: center; justify-content: center; cursor: pointer; overflow: hidden; }
-    .user-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Noto Sans KR', sans-serif; background: #f3f4f6; color: #1f2937; padding-bottom: 70px; }
+    .app { max-width: 480px; margin: 0 auto; background: white; min-height: 100vh; }
+    .header { height: 56px; padding: 0 16px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #eee; position: sticky; top: 0; background: white; z-index: 100; }
+    .logo { font-size: 20px; font-weight: 900; color: #1a56db; }
+    .hero { background: linear-gradient(135deg, #1a56db, #1245b3); padding: 25px 20px; color: white; }
     .tab { display: none; } .tab.active { display: block; }
-    .hero { background: linear-gradient(135deg, #1a56db 0%, #1245b3 100%); padding: 24px 20px; color: white; }
-    .hero h2 { font-size: 22px; font-weight: 900; line-height: 1.3; margin-bottom: 10px; }
-    .hero-search { display: flex; gap: 8px; }
-    .hero-search input { flex: 1; padding: 12px; border: none; border-radius: 10px; outline: none; }
-    .hero-search button { background: #fbbf24; border: none; border-radius: 10px; padding: 0 16px; font-weight: 700; cursor: pointer; }
-    .tire-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 16px; }
-    .tire-card { background: white; border: 1px solid #e5e7eb; border-radius: 14px; overflow: hidden; box-shadow: var(--shadow); }
-    .tire-card-img { width: 100%; height: 120px; object-fit: cover; }
-    .tire-card-body { padding: 10px; }
-    .tire-card-price { font-weight: 900; color: var(--blue); }
-    .btn-primary { width: 100%; padding: 15px; background: var(--blue); color: white; border: none; border-radius: 12px; font-weight: 700; cursor: pointer; margin-top: 10px; }
-    .bottom-nav { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; height: 64px; background: white; border-top: 1px solid #eee; display: flex; z-index: 100; }
-    .nav-btn { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; border: none; background: none; color: #9ca3af; }
-    .nav-btn.active { color: var(--blue); }
-    .toast { position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%); background: #333; color: white; padding: 10px 20px; border-radius: 20px; font-size: 13px; opacity: 0; transition: 0.3s; z-index: 1000; }
-</style></head><body>
+    .tire-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 15px; }
+    .tire-card { border: 1px solid #eee; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+    .tire-img { width: 100%; height: 120px; object-fit: cover; background: #eee; }
+    .tire-info { padding: 8px; }
+    .btn-primary { width: 100%; padding: 15px; background: #1a56db; color: white; border: none; border-radius: 10px; font-weight: 700; margin-top: 10px; cursor: pointer; }
+    .bottom-nav { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; height: 60px; background: white; border-top: 1px solid #eee; display: flex; }
+    .nav-btn { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; border: none; background: none; color: #9ca3af; font-size: 10px; }
+    .nav-btn.active { color: #1a56db; }
+    input, textarea { width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 8px; }
+</style>
+</head>
+<body>
 
 <div class="app">
     <header class="header">
-        <div class="header-logo">Tire<span>Safe</span></div>
-        <div id="auth-area"><button onclick="googleLogin()" style="padding:5px 10px; border-radius:15px; border:none; background:#eee;">로그인</button></div>
+        <div class="logo">TireSafe</div>
+        <div id="auth-area"><button onclick="googleLogin()">로그인</button></div>
     </header>
 
     <div class="tab active" id="tab-home">
-        <div class="hero"><h2>카센터 경력 10년 전문가<br>엄선 중고타이어</h2><div class="hero-search"><input type="text" placeholder="사이즈 입력"><button onclick="loadTires()">검색</button></div></div>
+        <div class="hero"><h2>카센터 10년 경력<br>검증 중고타이어</h2></div>
         <div class="tire-grid" id="tire-grid"></div>
     </div>
 
-    <div class="tab" id="tab-sell"><div style="padding:20px;" id="sell-content"></div></div>
-
-    <div class="tab" id="tab-chat">
-        <div id="chat-messages" style="height:calc(100vh - 180px); overflow-y:auto; padding:16px; background:#f9fafb;"></div>
-        <div style="padding:10px; display:flex; gap:5px;"><input type="text" id="chat-input" style="flex:1; padding:10px; border-radius:20px; border:1px solid #ddd;"><button onclick="sendMsg()" style="padding:10px 20px; border-radius:20px; border:none; background:var(--blue); color:white;">전송</button></div>
+    <div class="tab" id="tab-sell" style="padding:20px;">
+        <div id="sell-content">로그인이 필요합니다.</div>
     </div>
 
-    <nav class="bottom-nav">
-        <button class="nav-btn active" id="nav-home" onclick="switchTab('home')">🏠<span style="font-size:10px">홈</span></button>
-        <button class="nav-btn" id="nav-sell" onclick="switchTab('sell')">➕<span style="font-size:10px">판매</span></button>
-        <button class="nav-btn" id="nav-chat" onclick="switchTab('chat')">💬<span style="font-size:10px">채팅</span></button>
-    </nav>
-</div>
-<div class="toast" id="toast"></div>
-
-<script>
-    const firebaseConfig = { apiKey: "AIzaSyDP414CWLGAJj06_bhBbGD9rkOcZHb2--I", authDomain: "tire-f9ebb.firebaseapp.com", projectId: "tire-f9ebb", storageBucket: "tire-f9ebb.firebasestorage.app", messagingSenderId: "394141245307", appId: "1:394141245307:web:66b79b11761f120565e7de" };
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth(); const db = firebase.firestore(); let currentUser = null;
-
-    auth.onAuthStateChanged(user => { currentUser = user; updateAuthUI(); loadTires(); });
-
-    function googleLogin() { 
-        const provider = new firebase.auth.GoogleAuthProvider();
-        auth.signInWithRedirect(provider); 
-    }
-
-    function updateAuthUI() {
-        const area = document.getElementById('auth-area');
-        if (currentUser) {
-            area.innerHTML = `<div class="user-avatar" onclick="if(confirm('로그아웃?'))auth.signOut()">${currentUser.photoURL ? `<img src="${currentUser.photoURL}">` : '👤'}</div>`;
-            renderSellForm();
-        } else {
-            area.innerHTML = `<button onclick="googleLogin()" style="padding:5px 10px; border-radius:15px; border:none; background:#eee;">로그인</button>`;
-            document.getElementById('sell-content').innerHTML = '<p style="text-align:center; padding:50px">로그인 후 판매 등록이 가능합니다.</p>';
-        }
-    }
-
-    function renderSellForm() {
-        document.getElementById('sell-content').innerHTML = `<h3>매물 등록</h3><div onclick="document.getElementById('file-input').click()" style="width:100%; height:150px; background:#eee; border-radius:10px; display:flex; align-items:center; justify-content:center; margin:10px 0; overflow:hidden; position:relative;">📸 사진 선택<img id="preview" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:none"></div><input type="file" id="file-input" style="display:none" onchange="previewImg(this)"><input type="text" id="f-title" placeholder="모델명 (예: 금호 마제스티)" style="width:100%; padding:12px; margin-bottom:10px;"><input type="number" id="f-price" placeholder="판매가 (원)" style="width:100%; padding:12px; margin-bottom:10px;"><button class="btn-primary" onclick="submitTire()">매물 올리기</button>`;
-    }
-
-    function previewImg(input) { if(input.files[0]) { const r = new FileReader(); r.onload = e => { const i = document.getElementById('preview'); i.src = e.target.result; i.style.display='block'; }; r.readAsDataURL(input.files[0]); } }
-
-    async function compress(file) {
-        return new Promise(res => {
-            const r = new FileReader(); r.onload = e => {
-                const i = new Image(); i.onload = () => {
-                    const c = document.createElement('canvas'); const m = 400; let w=i.width, h=i.height;
-                    if(w>h && w>m){h=h*m/w; w=m;} else if(h>m){w=w*m/h; h=m;}
-                    c.width=w; c.height=h; c.getContext('2d').drawImage(i,0,0,w,h); res(c.toDataURL('image/jpeg', 0.6));
-                }; i.src = e.target.result;
-            }; r.readAsDataURL(file);
-        });
-    }
-
-    async function submitTire() {
-        const t = document.getElementById('f-title').value; const p = document.getElementById('f-price').value; const f = document.getElementById('file-input').files[0];
-        if(!t || !p) return toast('모델명과 가격을 입력하세요.');
-        const btn = document.querySelector('.btn-primary'); btn.disabled = true; btn.innerText = '등록 중...';
-        let img = null; if(f) img = await compress(f);
-        try {
-            await db.collection('tires').add({ title: t, price: Number(p), imageUrl: img, seller: currentUser.displayName, createdAt: firebase.firestore.FieldValue.serverTimestamp() });
-            toast('등록 성공!'); switchTab('home');
-        } catch(e) { toast('오류 발생: ' + e.message); } finally { btn.disabled = false; btn.innerText = '매물 올리기'; }
-    }
-
-    function switchTab(n) {
-        document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-        document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
-        document.getElementById('tab-'+n).classList.add('active');
-        document.getElementById('nav-'+n).classList.add('active');
-        if(n==='home') loadTires(); if(n==='chat') loadMsgs();
-    }
-
-    async function loadTires() {
-        const grid = document.getElementById('tire-grid');
-        grid.innerHTML = '불러오는 중...';
-        const snap = await db.collection('tires').orderBy('createdAt', 'desc').get();
-        if(snap.empty) { grid.innerHTML = '등록된 매물이 없습니다.'; return; }
-        grid.innerHTML = snap.docs.map(doc => {
-            const d = doc.data();
-            return `<div class="tire-card">${d.imageUrl ? `<img src="${d.imageUrl}" class="tire-card-img">` : '<div style="height:120px; background:#eee;"></div>'}<div class="tire-card-body"><div class="tire-card-title">${d.title}</div><div class="tire-card-price">${d.price.toLocaleString()}원</div></div></div>`;
-        }).join('');
-    }
-
-    function toast(m) { const t = document.getElementById('toast'); t.innerText=m; t.style.opacity=1; setTimeout(()=>t.style.opacity=0, 2000); }
-    
-    function sendMsg() {
-        const i = document.getElementById('chat-input'); if(!i.value || !currentUser) return;
-        db.collection('messages').add({ content: i.value, uid: currentUser.uid, name: currentUser.displayName, createdAt: firebase.firestore.FieldValue.serverTimestamp() });
-        i.value = '';
-    }
-
-    function loadMsgs() {
-        db.collection('messages').orderBy('createdAt').onSnapshot(snap => {
-            const box = document.getElementById('chat-messages');
-            box.innerHTML = snap.docs.map(doc => {
-                const m = doc.data(); const isMe = m.uid === currentUser?.uid;
-                return `<div style="margin-bottom:10px; text-align:${isMe?'right':'left'}"><div style="display:inline-block; padding:8px 12px; border-radius:15px; background:${isMe?var(--blue):'white'}; color:${isMe?'white':'black'}; box-shadow:var(--shadow);">${m.content}</div></div>`;
-            }).join('');
-            box.scrollTop = box.scrollHeight;
-        });
-    }
-</script></body></html>
+    <div class="tab" id="tab-chat">
+        <div id="chat-box" style="height:400px; overflow-y:auto; padding:15px; background:#f9fafb;"></div>
+        <div style="padding:10px; display:flex; gap
