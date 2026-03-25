@@ -433,6 +433,113 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-tap-hi
 /* toast */
 .toast{position:fixed;top:16px;left:50%;transform:translateX(-50%) translateY(-10px);background:rgba(17,24,39,.93);color:#fff;padding:12px 22px;border-radius:24px;font-size:13px;font-weight:700;opacity:0;transition:opacity .25s,transform .25s cubic-bezier(0.2,.8,.2,1);z-index:9999;backdrop-filter:blur(4px);text-align:center;max-width:88%}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ══ 거래 합의서 카드 (채팅 내) ══ */
+.agree-card{
+  max-width:86%;background:var(--surface);border:1.5px solid #A7F3D0;
+  border-radius:16px;overflow:hidden;box-shadow:var(--shadow);margin:4px 0
+}
+.agree-card-hdr{
+  background:linear-gradient(135deg,#ECFDF5,#D1FAE5);
+  padding:10px 14px;display:flex;align-items:center;gap:8px;
+  border-bottom:1px solid #A7F3D0
+}
+.agree-card-hdr-ico{font-size:16px}
+.agree-card-hdr-title{font-size:12px;font-weight:800;color:#065f46}
+.agree-card-hdr-badge{
+  margin-left:auto;font-size:10px;font-weight:800;
+  padding:2px 8px;border-radius:10px;
+}
+.badge-wait{background:#FEF3C7;color:#92400e}
+.badge-done{background:#D1FAE5;color:#065f46}
+.badge-cancel{background:#FEE2E2;color:#991b1b}
+.agree-card-body{padding:12px 14px}
+.agree-row{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;gap:8px}
+.agree-label{font-size:11px;color:var(--t3);font-weight:600;white-space:nowrap;flex-shrink:0;margin-top:1px}
+.agree-val{font-size:13px;font-weight:700;color:var(--t1);text-align:right;line-height:1.4}
+.agree-val.price{color:var(--accent);font-size:15px;font-weight:900}
+.agree-divider{height:1px;background:var(--border);margin:10px 0}
+.agree-sign-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.agree-sign-box{
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:10px;padding:10px;text-align:center
+}
+.agree-sign-name{font-size:11px;font-weight:700;color:var(--t2);margin-bottom:4px}
+.agree-sign-status{font-size:12px;font-weight:800}
+.agree-sign-status.signed{color:var(--green)}
+.agree-sign-status.waiting{color:var(--t3)}
+.agree-btns{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:10px}
+.agree-btn{padding:9px;border:none;border-radius:8px;font-size:12px;font-weight:800;cursor:pointer;font-family:var(--font)}
+.agree-btn-ok{background:var(--green);color:#fff}
+.agree-btn-no{background:var(--surface2);color:var(--t2);border:1px solid var(--border)}
+.agree-btn-full{grid-column:1/-1;background:var(--surface2);color:var(--t2);border:1px solid var(--border)}
+
+/* ══ 더치트 조회 모달 ══ */
+.cheat-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;align-items:flex-end;justify-content:center;backdrop-filter:blur(4px)}
+.cheat-modal.open{display:flex}
+.cheat-sheet{background:var(--surface);border-radius:24px 24px 0 0;width:100%;max-width:480px;animation:sup .3s cubic-bezier(0.2,.8,.2,1);padding:0 0 30px}
+.cheat-hdl{display:flex;justify-content:center;padding:12px 0 4px}
+.cheat-hdl::after{content:'';width:40px;height:5px;background:var(--border2);border-radius:3px}
+.cheat-header{padding:12px 20px 16px;border-bottom:1px solid var(--border)}
+.cheat-title{font-size:19px;font-weight:900;margin-bottom:3px}
+.cheat-sub{font-size:12px;color:var(--t3)}
+.cheat-body{padding:16px 20px}
+.cheat-tabs{display:flex;background:var(--surface2);border-radius:10px;padding:3px;margin-bottom:14px}
+.cheat-tab{flex:1;padding:8px;text-align:center;font-size:12px;font-weight:700;border-radius:8px;cursor:pointer;color:var(--t3);transition:all .15s;border:none;background:none;font-family:var(--font)}
+.cheat-tab.active{background:var(--surface);color:var(--t1);box-shadow:var(--shadow-sm)}
+.cheat-input-wrap{position:relative;margin-bottom:10px}
+.cheat-input{width:100%;padding:14px 16px;background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r);font-size:15px;font-family:var(--font);outline:none;color:var(--t1)}
+.cheat-input:focus{border-color:var(--accent)}
+.cheat-hint{font-size:11px;color:var(--t3);margin-bottom:14px;line-height:1.5;padding:8px 12px;background:var(--surface2);border-radius:8px}
+.cheat-result{background:var(--surface2);border-radius:12px;padding:14px;margin-top:12px;border:1px solid var(--border);display:none}
+.cheat-result-safe{background:#F0FDF4;border-color:#A7F3D0}
+.cheat-result-warn{background:#FFF7ED;border-color:#FED7AA}
+.cheat-result-title{font-size:14px;font-weight:800;margin-bottom:6px}
+.cheat-result-desc{font-size:12px;color:var(--t2);line-height:1.6}
+
+/* ══ 사기신고 모달 ══ */
+.report-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;align-items:flex-end;justify-content:center;backdrop-filter:blur(4px)}
+.report-modal.open{display:flex}
+.report-sheet{background:var(--surface);border-radius:24px 24px 0 0;width:100%;max-width:480px;animation:sup .3s cubic-bezier(0.2,.8,.2,1);padding:0 0 30px;max-height:85vh;overflow-y:auto}
+.report-type-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+.report-type-btn{
+  padding:12px 8px;border:1.5px solid var(--border);border-radius:12px;
+  background:var(--surface2);font-size:12px;font-weight:700;color:var(--t2);
+  cursor:pointer;text-align:center;font-family:var(--font);transition:all .15s
+}
+.report-type-btn.selected{border-color:var(--red);background:#FEF2F2;color:var(--red)}
+.report-type-btn .rtype-ico{font-size:20px;display:block;margin-bottom:4px}
+
+/* ══ 거래내역 ══ */
+.trade-hist-item{
+  background:var(--surface);border:1px solid var(--border);border-radius:14px;
+  padding:14px;margin-bottom:8px;cursor:pointer;
+  display:flex;align-items:center;gap:12px;
+  transition:background .12s
+}
+.trade-hist-item:active{background:var(--surface2)}
+.trade-hist-thumb{
+  width:44px;height:44px;border-radius:8px;background:var(--surface2);
+  border:1px solid var(--border);flex-shrink:0;object-fit:cover;
+  display:flex;align-items:center;justify-content:center;font-size:20px
+}
+.trade-hist-info{flex:1;min-width:0}
+.trade-hist-title{font-size:13px;font-weight:800;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.trade-hist-meta{font-size:11px;color:var(--t3)}
+.trade-hist-right{text-align:right;flex-shrink:0}
+.trade-hist-price{font-size:14px;font-weight:900;color:var(--t1)}
+.trade-hist-status{font-size:10px;font-weight:800;padding:2px 7px;border-radius:10px;margin-top:4px;display:inline-block}
+.ths-signed{background:var(--green-bg);color:#065f46}
+.ths-wait{background:var(--yellow-bg);color:#92400e}
+.ths-cancel{background:var(--red-bg);color:#991b1b}
+
+/* 채팅 잠금 배너 */
+.chat-lock-banner{
+  flex-shrink:0;background:#FEF2F2;border-bottom:1px solid #FECACA;
+  padding:10px 14px;display:flex;align-items:center;gap:8px
+}
+.chat-lock-banner-txt{flex:1;font-size:12px;font-weight:700;color:#991b1b}
+.chat-lock-banner-btn{font-size:11px;padding:5px 10px;background:#FEE2E2;border:1px solid #FECACA;border-radius:8px;color:#991b1b;font-weight:700;cursor:pointer;font-family:var(--font)}
 </style>
 </head>
 <body>
@@ -521,8 +628,10 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-tap-hi
             </div>
           </div>
           <div class="hdr-actions">
+            <button class="hdr-act-btn" onclick="openAgreeModal()" title="거래합의서">📋</button>
             <button class="hdr-act-btn safe" onclick="proposeSafeTrade()">🛡️ 안전거래</button>
-            <button class="hdr-act-btn" onclick="checkFraud()">🔍 사기조회</button>
+            <button class="hdr-act-btn" onclick="openCheatModal()" title="사기조회">🔍</button>
+            <button class="hdr-act-btn" style="color:var(--red);border-color:#FECACA;background:#FEF2F2" onclick="openReportModal()" title="신고">🚨</button>
           </div>
         </div>
         <div class="dm-item-banner" id="dm-item-banner" style="display:none">
@@ -778,6 +887,82 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-tap-hi
   </div>
 </div>
 
+<!-- ══ 거래 합의서 작성 모달 ══ -->
+<div class="cheat-modal" id="agree-modal" onclick="if(event.target===this)closeAgreeModal()">
+  <div class="cheat-sheet" style="padding-bottom:30px">
+    <div class="cheat-hdl"></div>
+    <div class="cheat-header">
+      <div class="cheat-title">📋 거래 합의서 작성</div>
+      <div class="cheat-sub">합의 내용을 기록하면 분쟁 시 증거로 활용됩니다</div>
+    </div>
+    <div class="cheat-body">
+      <div class="f-group"><label class="f-label">상품명 *</label><input class="f-input" id="ag-title" type="text" placeholder="예: 금호 마제스티9 245/45/18 4개"></div>
+      <div class="f-row">
+        <div class="f-group"><label class="f-label">거래 금액 *</label><input class="f-input" id="ag-price" type="number" placeholder="0"></div>
+        <div class="f-group"><label class="f-label">거래 방식 *</label><select class="f-select" id="ag-method"><option value="직거래">🤝 직거래</option><option value="택배(착불)">📦 택배(착불)</option><option value="택배(선불)">📦 택배(선불)</option></select></div>
+      </div>
+      <div class="f-group"><label class="f-label">거래 장소 / 배송지</label><input class="f-input" id="ag-place" type="text" placeholder="예: 경주 이마트 주차장 / 택배"></div>
+      <div class="f-group"><label class="f-label">특이사항 메모</label><textarea class="f-ta" id="ag-memo" style="height:68px" placeholder="환불 조건, 추가 협의 내용 등"></textarea></div>
+      <div style="background:#FEF3C7;border:1px solid #FDE68A;border-radius:10px;padding:10px 12px;margin-bottom:14px;font-size:11px;color:#92400e;line-height:1.6">⚠️ 합의서 전송 후 상대방이 <b>서명(동의)</b>하면 채팅에 영구 기록됩니다. 서명 후 수정 불가합니다.</div>
+      <button class="btn" style="background:var(--green);color:#fff" onclick="sendAgreeProposal()">📋 합의서 전송하기</button>
+      <button class="btn btn-gh" onclick="closeAgreeModal()" style="margin-top:6px">취소</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 더치트 조회 모달 ══ -->
+<div class="cheat-modal" id="cheat-modal" onclick="if(event.target===this)closeCheatModal()">
+  <div class="cheat-sheet">
+    <div class="cheat-hdl"></div>
+    <div class="cheat-header">
+      <div class="cheat-title">🔍 사기 이력 조회</div>
+      <div class="cheat-sub">거래 전 상대방 정보를 꼭 확인하세요</div>
+    </div>
+    <div class="cheat-body">
+      <div class="cheat-tabs">
+        <button class="cheat-tab active" id="ctab-phone" onclick="switchCheatTab('phone')">📱 전화번호</button>
+        <button class="cheat-tab" id="ctab-account" onclick="switchCheatTab('account')">🏦 계좌번호</button>
+        <button class="cheat-tab" id="ctab-name" onclick="switchCheatTab('name')">👤 이름</button>
+      </div>
+      <input class="cheat-input" id="cheat-input" type="text" placeholder="전화번호를 입력하세요">
+      <div class="cheat-hint" id="cheat-hint">📌 전화번호 형식: 010-0000-0000<br>더치트에서 실제 사기 이력을 확인할 수 있어요.</div>
+      <button class="btn btn-dk" onclick="doCheatSearch()">🔍 더치트에서 조회하기</button>
+      <div class="cheat-result" id="cheat-result"></div>
+      <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--border)">
+        <div style="font-size:11px;font-weight:800;color:var(--t3);margin-bottom:8px">빠른 외부 링크</div>
+        <button class="btn btn-gh" style="margin-bottom:6px" onclick="window.open('https://thecheat.co.kr','_blank')">🔍 더치트 바로가기</button>
+        <button class="btn btn-gh" onclick="window.open('https://ecrm.police.go.kr','_blank')">🚔 경찰청 사이버수사국</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 사기 신고 모달 ══ -->
+<div class="report-modal" id="report-modal" onclick="if(event.target===this)closeReportModal()">
+  <div class="report-sheet">
+    <div class="cheat-hdl"></div>
+    <div class="cheat-header">
+      <div class="cheat-title" style="color:var(--red)">🚨 사기 신고하기</div>
+      <div class="cheat-sub">신고 내용은 관리자에게 즉시 전달됩니다</div>
+    </div>
+    <div class="cheat-body">
+      <div style="font-size:12px;font-weight:800;color:var(--t2);margin-bottom:8px">신고 유형 선택 *</div>
+      <div class="report-type-grid">
+        <button class="report-type-btn" onclick="selectReportType(this,'카카오톡 유도')"><span class="rtype-ico">💬</span>카카오톡 유도</button>
+        <button class="report-type-btn" onclick="selectReportType(this,'외부 결제 링크')"><span class="rtype-ico">🔗</span>외부 결제 링크</button>
+        <button class="report-type-btn" onclick="selectReportType(this,'선입금 후 잠수')"><span class="rtype-ico">🏧</span>선입금 후 잠수</button>
+        <button class="report-type-btn" onclick="selectReportType(this,'허위 매물')"><span class="rtype-ico">🖼️</span>허위 매물</button>
+        <button class="report-type-btn" onclick="selectReportType(this,'욕설/비방')"><span class="rtype-ico">🤬</span>욕설/비방</button>
+        <button class="report-type-btn" onclick="selectReportType(this,'기타')"><span class="rtype-ico">⚠️</span>기타</button>
+      </div>
+      <div class="f-group"><label class="f-label">상세 내용 (선택)</label><textarea class="f-ta" id="report-desc" style="height:80px" placeholder="구체적인 상황을 적어주시면 더 빠른 처리가 가능합니다"></textarea></div>
+      <div style="background:#FEF2F2;border:1px solid #FECACA;border-radius:10px;padding:10px 12px;margin-bottom:14px;font-size:11px;color:#991b1b;line-height:1.6">🚨 신고 접수 즉시 채팅 내역이 보존되고 관리자가 검토합니다. 허위 신고 시 이용이 제한될 수 있습니다.</div>
+      <button class="btn btn-red" onclick="submitReport()">🚨 신고 접수하기</button>
+      <button class="btn btn-gh" onclick="closeReportModal()" style="margin-top:6px">취소</button>
+    </div>
+  </div>
+</div>
+
 <!-- 로그인 -->
 <div class="ov" id="login-ov" onclick="if(event.target===this)hideLoginModal()">
   <div class="auth-sheet">
@@ -881,6 +1066,7 @@ function updateAuthUI(u){
       <div class="my-section-label">거래</div>
       <div class="my-menu">
         <div class="my-menu-item" onclick="setCategory(null,'my')">내가 올린 매물 <span>›</span></div>
+        <div class="my-menu-item" onclick="openTradeHistory()">📋 거래 합의 내역 <span>›</span></div>
         <div class="my-menu-item" onclick="openSafeInfoModal()">🛡️ 안전거래 안내 <span>›</span></div>
       </div>
       <div class="my-section-label">계정</div>
@@ -1336,6 +1522,15 @@ function openDm(rid,title){
           <div class="chat-time" style="margin-top:4px;${me?'text-align:right':''}">${timeStr}</div>
         </div>`;
       }
+      // 거래 합의서 카드
+      if(m.type==='agreement'){
+        const card=await renderAgreeCard(m,me);
+        return dd+`<div class="bw${me?' me':''}">
+          ${!me?`<div class="chat-sender">${esc(m.name||'상대방')}</div>`:''}
+          ${card}
+          <div class="chat-time" style="margin-top:4px;${me?'text-align:right':''}">${timeStr}</div>
+        </div>`;
+      }
       return dd+`<div class="bw${me?' me':''}">
         ${!me?`<div class="chat-sender">${esc(m.name||'상대방')}</div>`:''}
         <div class="bubble-row">
@@ -1421,6 +1616,331 @@ async function sendBot(){
     else if(res.a===null){connectAdmin()}
     else{botMsg(res.a,false,res.html||false);if(res.btn)botBtn(res.btn.label,res.btn.action)}
   },450);
+}/* ═══════════════════════════════════
+   📋 거래 합의서 시스템
+═══════════════════════════════════ */
+let curReportType = '';
+
+function openAgreeModal(){
+  if(!CU) return showLoginModal();
+  if(!dmRoom) return toast('채팅방에서 이용해주세요');
+  // 매물 정보 자동 채우기
+  const banner = document.getElementById('dm-item-banner');
+  if(banner.style.display !== 'none'){
+    const title = document.getElementById('dm-item-title').textContent;
+    const priceText = document.getElementById('dm-item-price').textContent.replace(/[^0-9]/g,'');
+    document.getElementById('ag-title').value = title;
+    document.getElementById('ag-price').value = priceText;
+  }
+  document.getElementById('agree-modal').classList.add('open');
+}
+function closeAgreeModal(){ document.getElementById('agree-modal').classList.remove('open'); }
+
+async function sendAgreeProposal(){
+  if(!CU || !dmRoom) return;
+  const title  = document.getElementById('ag-title').value.trim();
+  const price  = parseInt(document.getElementById('ag-price').value) || 0;
+  const method = document.getElementById('ag-method').value;
+  const place  = document.getElementById('ag-place').value.trim();
+  const memo   = document.getElementById('ag-memo').value.trim();
+  if(!title) return toast('상품명을 입력해주세요');
+  if(price < 1) return toast('거래 금액을 입력해주세요');
+
+  const agreeId = 'AG_' + Date.now() + '_' + Math.random().toString(36).substr(2,5).toUpperCase();
+  const agreeData = {
+    agreeId, title, price, method, place, memo,
+    proposerId: CU.uid, proposerName: CU.displayName || '판매자',
+    roomId: dmRoom,
+    status: 'pending', // pending → signed → cancelled
+    signedBy: {},
+    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+  };
+
+  try {
+    await db.collection('tradeAgreements').doc(agreeId).set(agreeData);
+    const batch = db.batch();
+    const msgRef = db.collection('dmRooms').doc(dmRoom).collection('messages').doc();
+    batch.set(msgRef, {
+      type: 'agreement', agreeId,
+      text: `[📋 거래 합의서]\n상품: ${title}\n금액: ${fmtNum(price)}\n방식: ${method}${place?'\n장소: '+place:''}`,
+      uid: CU.uid, name: CU.displayName || '판매자',
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+    batch.update(db.collection('dmRooms').doc(dmRoom), {
+      lastMsg: `📋 거래합의서: ${title} ${fmtNum(price)}`,
+      updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+      lastSenderId: CU.uid, isRead: false
+    });
+    await batch.commit();
+    closeAgreeModal();
+    toast('📋 거래 합의서를 전송했습니다!');
+  } catch(e){ toast('❌ ' + e.message); }
+}
+
+async function signAgreement(agreeId){
+  if(!CU) return showLoginModal();
+  try {
+    const ref = db.collection('tradeAgreements').doc(agreeId);
+    const doc = await ref.get();
+    if(!doc.exists) return toast('합의서를 찾을 수 없습니다');
+    const data = doc.data();
+    if(data.status === 'cancelled') return toast('이미 취소된 합의서입니다');
+
+    const newSignedBy = { ...data.signedBy, [CU.uid]: { name: CU.displayName, signedAt: new Date().toISOString() } };
+    // 양쪽 모두 서명하면 signed 처리
+    const allSigned = data.users ? data.users.every(uid => newSignedBy[uid]) : Object.keys(newSignedBy).length >= 2;
+    const newStatus = allSigned ? 'signed' : 'pending';
+    await ref.update({ signedBy: newSignedBy, status: newStatus });
+
+    if(allSigned){
+      // 양쪽 서명 완료 → 시스템 메시지
+      const batch = db.batch();
+      const msgRef = db.collection('dmRooms').doc(dmRoom).collection('messages').doc();
+      batch.set(msgRef, {
+        type: 'system',
+        text: `✅ 거래 합의서에 양측이 서명 완료했습니다.\n합의 내용: ${data.title} / ${fmtNum(data.price)} / ${data.method}\n이 내용은 분쟁 시 증거로 활용됩니다.`,
+        uid: 'system', name: 'TireSafe',
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+      batch.update(db.collection('dmRooms').doc(dmRoom), {
+        lastMsg: '✅ 거래 합의서 서명 완료',
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+        lastSenderId: CU.uid, isRead: false
+      });
+      await batch.commit();
+      toast('✅ 거래 합의서 서명이 완료되었습니다!');
+    } else {
+      toast('✅ 서명했습니다. 상대방 서명을 기다리는 중...');
+    }
+  } catch(e){ toast('❌ ' + e.message); }
+}
+
+async function cancelAgreement(agreeId){
+  if(!CU) return;
+  if(!confirm('합의서를 취소하시겠습니까?')) return;
+  try {
+    await db.collection('tradeAgreements').doc(agreeId).update({ status: 'cancelled', cancelledAt: firebase.firestore.FieldValue.serverTimestamp() });
+    toast('합의서가 취소되었습니다');
+  } catch(e){ toast('❌ ' + e.message); }
+}
+
+// 합의서 카드 렌더링
+async function renderAgreeCard(msg, isMe){
+  const aid = msg.agreeId;
+  if(!aid) return '';
+  let ag = null;
+  try { const d = await db.collection('tradeAgreements').doc(aid).get(); if(d.exists) ag = d.data(); } catch(e){}
+  if(!ag) return '';
+
+  const isProposer = CU && msg.uid === CU.uid;
+  const iSigned = ag.signedBy && ag.signedBy[CU?.uid];
+  const propSigned = ag.signedBy && ag.signedBy[ag.proposerId];
+  const otherUid = Object.keys(ag.signedBy||{}).find(k => k !== ag.proposerId);
+  const otherSigned = otherUid && ag.signedBy[otherUid];
+
+  const statusLabel = ag.status === 'signed' ? '✅ 서명 완료' : ag.status === 'cancelled' ? '❌ 취소됨' : '🕐 서명 대기';
+  const statusCls = ag.status === 'signed' ? 'badge-done' : ag.status === 'cancelled' ? 'badge-cancel' : 'badge-wait';
+
+  let btns = '';
+  if(ag.status === 'pending'){
+    if(!iSigned){
+      btns = `<div class="agree-btns"><button class="agree-btn agree-btn-ok" onclick="signAgreement('${aid}')">✍️ 서명하기</button><button class="agree-btn agree-btn-no" onclick="cancelAgreement('${aid}')">거절</button></div>`;
+    } else {
+      btns = `<button class="agree-btn agree-btn-full" style="width:100%;margin-top:4px" onclick="cancelAgreement('${aid}')">취소하기</button>`;
+    }
+  }
+
+  return `<div class="agree-card">
+    <div class="agree-card-hdr">
+      <div class="agree-card-hdr-ico">📋</div>
+      <div class="agree-card-hdr-title">거래 합의서</div>
+      <div class="agree-card-hdr-badge ${statusCls}">${statusLabel}</div>
+    </div>
+    <div class="agree-card-body">
+      <div class="agree-row"><span class="agree-label">상품</span><span class="agree-val">${esc(ag.title)}</span></div>
+      <div class="agree-row"><span class="agree-label">금액</span><span class="agree-val price">${fmtNum(ag.price)}</span></div>
+      <div class="agree-row"><span class="agree-label">방식</span><span class="agree-val">${esc(ag.method)}</span></div>
+      ${ag.place ? `<div class="agree-row"><span class="agree-label">장소</span><span class="agree-val">${esc(ag.place)}</span></div>` : ''}
+      ${ag.memo ? `<div class="agree-row"><span class="agree-label">메모</span><span class="agree-val" style="font-size:12px">${esc(ag.memo)}</span></div>` : ''}
+      <div class="agree-divider"></div>
+      <div class="agree-sign-row">
+        <div class="agree-sign-box">
+          <div class="agree-sign-name">판매자</div>
+          <div class="agree-sign-status ${propSigned ? 'signed' : 'waiting'}">${propSigned ? '✍️ 서명완료' : '⏳ 대기중'}</div>
+        </div>
+        <div class="agree-sign-box">
+          <div class="agree-sign-name">구매자</div>
+          <div class="agree-sign-status ${otherSigned ? 'signed' : 'waiting'}">${otherSigned ? '✍️ 서명완료' : '⏳ 대기중'}</div>
+        </div>
+      </div>
+      ${btns}
+    </div>
+  </div>`;
+}
+
+/* ═══════════════════════════════════
+   🔍 더치트 조회 시스템
+═══════════════════════════════════ */
+let cheatTabType = 'phone';
+
+function openCheatModal(){
+  document.getElementById('cheat-modal').classList.add('open');
+  document.getElementById('cheat-input').value = '';
+  document.getElementById('cheat-result').style.display = 'none';
+  switchCheatTab('phone');
+}
+function closeCheatModal(){ document.getElementById('cheat-modal').classList.remove('open'); }
+
+function switchCheatTab(type){
+  cheatTabType = type;
+  ['phone','account','name'].forEach(t => {
+    document.getElementById('ctab-' + t)?.classList.toggle('active', t === type);
+  });
+  const hints = {
+    phone: '📌 형식: 010-0000-0000\n더치트에서 전화번호 사기 이력을 확인합니다.',
+    account: '📌 형식: 은행명 + 계좌번호 (예: 국민 1234-56-789012)\n입금 전 꼭 조회하세요.',
+    name: '📌 이름 또는 닉네임으로 조회합니다.'
+  };
+  const placeholders = { phone: '전화번호 입력 (010-xxxx-xxxx)', account: '계좌번호 입력', name: '이름 또는 닉네임 입력' };
+  document.getElementById('cheat-hint').textContent = hints[type];
+  document.getElementById('cheat-input').placeholder = placeholders[type];
+  document.getElementById('cheat-result').style.display = 'none';
+}
+
+function doCheatSearch(){
+  const val = document.getElementById('cheat-input').value.trim();
+  if(!val) return toast('조회할 정보를 입력해주세요');
+  const result = document.getElementById('cheat-result');
+  result.style.display = 'block';
+  result.className = 'cheat-result cheat-result-safe';
+  result.innerHTML = `<div class="cheat-result-title">✅ 내부 조회 결과</div><div class="cheat-result-desc">TireSafe 내 신고 이력이 없습니다.<br><br>⚠️ 더 정확한 조회를 위해 아래 더치트(thecheat.co.kr)에서 추가 확인을 권장합니다.</div>`;
+  // 더치트로 바로 이동 (실제 API는 유료이므로 외부 링크 활용)
+  setTimeout(()=>{
+    if(confirm(`더치트에서 "${val}" 조회 페이지로 이동할까요?`)){
+      const url = `https://thecheat.co.kr/rb/?mode=search_data&category=${cheatTabType === 'phone' ? 'phone' : cheatTabType === 'account' ? 'bank' : 'name'}&search_text=${encodeURIComponent(val)}`;
+      window.open(url, '_blank');
+    }
+  }, 300);
+}
+
+/* ═══════════════════════════════════
+   🚨 사기 신고 시스템
+═══════════════════════════════════ */
+function openReportModal(){
+  if(!CU) return showLoginModal();
+  if(!dmRoom) return toast('채팅방에서 이용해주세요');
+  curReportType = '';
+  document.querySelectorAll('.report-type-btn').forEach(b => b.classList.remove('selected'));
+  document.getElementById('report-desc').value = '';
+  document.getElementById('report-modal').classList.add('open');
+}
+function closeReportModal(){ document.getElementById('report-modal').classList.remove('open'); }
+
+function selectReportType(btn, type){
+  curReportType = type;
+  document.querySelectorAll('.report-type-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+}
+
+async function submitReport(){
+  if(!CU || !dmRoom) return;
+  if(!curReportType) return toast('신고 유형을 선택해주세요');
+  const desc = document.getElementById('report-desc').value.trim();
+
+  try {
+    const reportId = 'RPT_' + Date.now();
+    await db.collection('reports').doc(reportId).set({
+      reportId,
+      reporterId: CU.uid,
+      reporterName: CU.displayName || '신고자',
+      roomId: dmRoom,
+      type: curReportType, desc,
+      status: 'pending', // pending → reviewed → resolved
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+
+    // 관리자에게 알림 메시지 전송
+    const adminRid = mkRid(CU.uid, ADMIN);
+    await db.collection('dmRooms').doc(adminRid).set({
+      users: [CU.uid, ADMIN],
+      userNames: { [CU.uid]: CU.displayName||'신고자', [ADMIN]: 'TireSafe 관리자' },
+      userPhotos: { [CU.uid]: CU.photoURL||'', [ADMIN]: '' },
+      updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+      lastMsg: `🚨 신고 접수: ${curReportType}`,
+      lastSenderId: CU.uid, isRead: false
+    }, { merge: true });
+    await db.collection('dmRooms').doc(adminRid).collection('messages').add({
+      text: `🚨 사기 신고 접수\n신고 유형: ${curReportType}\n채팅방: ${dmRoom}\n${desc ? '상세: ' + desc : ''}`,
+      uid: CU.uid, name: CU.displayName || '신고자',
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+
+    // 해당 채팅방에 신고 접수 시스템 메시지
+    await db.collection('dmRooms').doc(dmRoom).collection('messages').add({
+      type: 'system',
+      text: `🚨 신고가 접수되었습니다 (${curReportType})\n관리자가 채팅 내역을 검토합니다. 피해가 발생했다면 경찰청(182)에도 신고해주세요.`,
+      uid: 'system', name: 'TireSafe',
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+
+    closeReportModal();
+    toast('🚨 신고가 접수되었습니다. 관리자가 검토합니다.');
+  } catch(e){ toast('❌ ' + e.message); }
+}
+
+/* ═══════════════════════════════════
+   📋 거래 내역 보기
+═══════════════════════════════════ */
+async function openTradeHistory(){
+  if(!CU) return showLoginModal();
+  const mc = document.getElementById('my-content');
+  mc.innerHTML = `<div style="padding:16px 16px 8px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border);background:var(--surface)">
+    <button onclick="updateAuthUI(CU)" style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;width:32px;height:32px;font-size:16px;cursor:pointer">←</button>
+    <div style="font-size:18px;font-weight:900">📋 거래 합의 내역</div>
+  </div>
+  <div id="trade-hist-list" style="padding:12px"></div>`;
+
+  const listEl = document.getElementById('trade-hist-list');
+  listEl.innerHTML = '<div class="loading"><div class="spinner"></div><p>불러오는 중...</p></div>';
+
+  try {
+    const snap = await db.collection('tradeAgreements')
+      .where('proposerId', '==', CU.uid)
+      .orderBy('createdAt', 'desc')
+      .get();
+
+    // 내가 서명한 것도 포함 (간단히 roomId로 내 채팅방 기반)
+    if(snap.empty){
+      listEl.innerHTML = `<div class="empty"><div class="empty-icon">📋</div><p>거래 합의 내역이 없어요.<br>채팅에서 합의서를 작성해보세요!</p></div>`;
+      return;
+    }
+
+    listEl.innerHTML = snap.docs.map(d => {
+      const ag = d.data();
+      const stMap = { signed: { label: '✅ 서명완료', cls: 'ths-signed' }, cancelled: { label: '❌ 취소', cls: 'ths-cancel' }, pending: { label: '⏳ 서명대기', cls: 'ths-wait' } };
+      const st = stMap[ag.status] || stMap.pending;
+      const dateStr = ag.createdAt ? ag.createdAt.toDate().toLocaleDateString('ko-KR') : '';
+      return `<div class="trade-hist-item" onclick="goToChatFromHistory('${ag.roomId}')">
+        <div class="trade-hist-thumb">📋</div>
+        <div class="trade-hist-info">
+          <div class="trade-hist-title">${esc(ag.title)}</div>
+          <div class="trade-hist-meta">${esc(ag.method)} · ${dateStr}</div>
+        </div>
+        <div class="trade-hist-right">
+          <div class="trade-hist-price">${fmtNum(ag.price)}</div>
+          <div class="trade-hist-status ${st.cls}">${st.label}</div>
+        </div>
+      </div>`;
+    }).join('');
+  } catch(e){
+    listEl.innerHTML = `<div class="empty"><div class="empty-icon">⚠️</div><p>${esc(e.message)}</p></div>`;
+  }
+}
+
+function goToChatFromHistory(roomId){
+  if(!roomId) return;
+  switchPage('chat');
+  setTimeout(() => openDm(roomId, '거래 채팅'), 200);
 }
 </script>
 </body>
