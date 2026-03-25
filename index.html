@@ -27,8 +27,18 @@
     --t2:      #4B5563;
     --t3:      #9CA3AF;
     --t4:      #D1D5DB;
-    --chat-bg: #b2c7d9; /* 카카오톡 배경색 */
-    --my-msg:  #fee500; /* 카카오톡 내 메시지색 */
+
+    /* 채팅 - 모던 다크 테마 */
+    --chat-bg: #0F1117;
+    --chat-surface: #1A1D27;
+    --chat-surface2: #22263A;
+    --chat-border: #2E3247;
+    --chat-t1: #F1F3F9;
+    --chat-t2: #9DA5BE;
+    --chat-t3: #5C647E;
+    --msg-me: #E8480A;
+    --msg-other: #22263A;
+
     --nav:     64px;
     --head:    54px;
     --font:    'Noto Sans KR',-apple-system,sans-serif;
@@ -51,20 +61,90 @@
   /* ── PAGES ── */
   .page { display: none; flex: 1; overflow-y: auto; padding-bottom: var(--nav); }
   .page.active { display: block; }
-  #pg-chat { display: none; position: absolute; top: var(--head); bottom: var(--nav); left: 0; right: 0; flex-direction: column; overflow: hidden; background: var(--bg); }
+  #pg-chat { display: none; position: absolute; top: var(--head); bottom: var(--nav); left: 0; right: 0; flex-direction: column; overflow: hidden; }
   #pg-chat.active { display: flex; }
 
-  /* ── HOME ── */
-  .hero { background: linear-gradient(145deg,#FFF5F2 0%,#FFF 60%); padding: 24px 18px 26px; border-bottom: 1px solid var(--border); }
-  .hero-tag { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 700; color: var(--accent); background: var(--accent-bg); border: 1px solid var(--accent-bd); border-radius: 20px; padding: 4px 11px; margin-bottom: 13px; }
-  .hero h2 { font-size: 26px; font-weight: 900; letter-spacing: -0.7px; line-height: 1.2; margin-bottom: 6px; }
+  /* ── HOME HERO - 새 문구 ── */
+  .hero {
+    background: linear-gradient(160deg, #111827 0%, #1f2937 50%, #111827 100%);
+    padding: 28px 18px 28px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(232,72,10,0.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -30px; left: -30px;
+    width: 160px; height: 160px;
+    background: radial-gradient(circle, rgba(37,99,235,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 11px; font-weight: 700; color: #fdba74;
+    background: rgba(232,72,10,0.2); border: 1px solid rgba(232,72,10,0.3);
+    border-radius: 20px; padding: 4px 11px; margin-bottom: 14px;
+    position: relative; z-index: 1;
+  }
+  .hero h2 {
+    font-size: 26px; font-weight: 900; letter-spacing: -0.7px; line-height: 1.25;
+    margin-bottom: 8px; color: #fff; position: relative; z-index: 1;
+  }
   .hero h2 b { color: var(--accent); }
-  .hero-sub { font-size: 13px; color: var(--t2); margin-bottom: 20px; line-height: 1.5; }
-  .hero-sub span { display: inline-block; background: var(--surface2); border-radius: 6px; padding: 2px 7px; margin-right: 4px; font-weight: 600; font-size: 12px; }
-  .sbox { display: flex; gap: 8px; }
-  .sbox input { flex: 1; padding: 12px 15px; background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--r); font-size: 13px; font-family: var(--font); outline: none; }
-  .sbox input:focus { border-color: var(--accent); }
-  .sbtn { background: var(--t1); color: #fff; border: none; border-radius: var(--r); padding: 12px 16px; font-weight: 700; font-size: 13px; cursor: pointer; white-space: nowrap; }
+  .hero h2 .hero-sub-line { display: block; font-size: 16px; font-weight: 600; color: #9ca3af; margin-top: 4px; letter-spacing: -0.3px; }
+  .hero-pills { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 18px; position: relative; z-index: 1; }
+  .hero-pill {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 11px; font-weight: 700; color: #d1d5db;
+    background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 20px; padding: 5px 11px;
+  }
+  .hero-pill.accent { background: rgba(232,72,10,0.15); border-color: rgba(232,72,10,0.3); color: #fdba74; }
+  .sbox { display: flex; gap: 8px; position: relative; z-index: 1; }
+  .sbox input {
+    flex: 1; padding: 13px 15px;
+    background: rgba(255,255,255,0.08); border: 1.5px solid rgba(255,255,255,0.15);
+    border-radius: var(--r); font-size: 13px; font-family: var(--font); outline: none;
+    color: #fff;
+  }
+  .sbox input::placeholder { color: rgba(255,255,255,0.4); }
+  .sbox input:focus { border-color: var(--accent); background: rgba(255,255,255,0.12); }
+  .sbtn { background: var(--accent); color: #fff; border: none; border-radius: var(--r); padding: 12px 18px; font-weight: 800; font-size: 13px; cursor: pointer; white-space: nowrap; font-family: var(--font); }
+
+  /* 사기예방 배너 */
+  .fraud-banner {
+    margin: 12px 12px 0;
+    background: linear-gradient(135deg, #fff7ed, #fff);
+    border: 1px solid #fed7aa;
+    border-radius: 12px;
+    padding: 12px 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .fraud-banner::before {
+    content: '';
+    position: absolute; left: 0; top: 0; bottom: 0;
+    width: 4px; background: linear-gradient(180deg, #f97316, #dc2626);
+    border-radius: 4px 0 0 4px;
+  }
+  .fraud-banner-icon { font-size: 22px; flex-shrink: 0; }
+  .fraud-banner-text { flex: 1; }
+  .fraud-banner-text strong { display: block; font-size: 12px; font-weight: 800; color: #c2410c; margin-bottom: 2px; }
+  .fraud-banner-text span { font-size: 11px; color: #78716c; font-weight: 500; line-height: 1.4; }
+  .fraud-banner-arrow { font-size: 14px; color: #c2410c; font-weight: 700; }
 
   .cat-tabs { display: flex; border-bottom: 1px solid var(--border); background: var(--surface); }
   .cat-btn { flex: 1; padding: 12px 8px; font-size: 13px; font-weight: 700; font-family: var(--font); border: none; background: none; color: var(--t3); cursor: pointer; border-bottom: 2px solid transparent; transition: color .2s; }
@@ -98,13 +178,14 @@
   .spinner { width: 28px; height: 28px; border: 2.5px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin .7s linear infinite; margin: 0 auto 10px; }
   @keyframes spin { to { transform: rotate(360deg) } }
 
-  /* ── FORM (SELL & EDIT) ── */
+  /* ── SELL FORM ── */
   .sell-wrap { padding: 20px 16px 10px; }
   .sell-title { font-size: 22px; font-weight: 900; margin-bottom: 3px; letter-spacing: -0.5px; }
   .sell-sub { font-size: 13px; color: var(--t3); margin-bottom: 22px; }
   .photo-up { border: 2px dashed var(--border2); border-radius: var(--r2); height: 148px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; background: var(--surface2); overflow: hidden; position: relative; margin-bottom: 16px; }
   .pup-icon { font-size: 28px; margin-bottom: 6px; }
   .pup-txt { font-size: 13px; font-weight: 600; color: var(--t2); }
+  .pup-hint { font-size: 11px; color: var(--t3); margin-top: 2px; }
   .f-group { margin-bottom: 13px; }
   .f-label { display: block; font-size: 11px; font-weight: 800; color: var(--t2); margin-bottom: 6px; }
   .f-input, .f-select, .f-ta { width: 100%; padding: 13px 14px; background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--r); font-size: 14px; font-family: var(--font); outline: none; color: var(--t1); }
@@ -126,72 +207,227 @@
   .my-name { font-size: 20px; font-weight: 900; margin-bottom: 4px; }
   .my-email { font-size: 13px; color: var(--t3); }
   .my-edit-btn { background: var(--surface2); color: var(--t2); border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 700; cursor: pointer; margin-top: 8px; }
-  
   .my-menu { margin-top: 10px; background: var(--surface); }
   .my-menu-item { display: flex; align-items: center; justify-content: space-between; padding: 18px 20px; border-bottom: 1px solid var(--border); cursor: pointer; font-size: 15px; font-weight: 600; color: var(--t1); }
   .my-menu-item:active { background: var(--surface2); }
   .my-menu-item span { color: var(--t3); }
 
-  /* ── CHAT SYSTEM (카카오톡 스타일 강화) ── */
-  .chat-tabs { flex-shrink: 0; display: flex; border-bottom: 1px solid var(--border); background: var(--surface); }
-  .ctab { flex: 1; padding: 13px 8px; font-size: 13px; font-weight: 700; border: none; background: none; color: var(--t3); cursor: pointer; border-bottom: 2px solid transparent; }
-  .ctab.active { color: var(--t1); border-bottom-color: var(--t1); }
+  /* ═══════════════════════════════════
+     CHAT - 모던 다크 UI (완전 리디자인)
+  ═══════════════════════════════════ */
+  #pg-chat { background: var(--chat-bg); }
+
+  .chat-tabs {
+    flex-shrink: 0; display: flex;
+    background: var(--chat-surface);
+    border-bottom: 1px solid var(--chat-border);
+  }
+  .ctab {
+    flex: 1; padding: 14px 8px; font-size: 13px; font-weight: 700;
+    border: none; background: none; color: var(--chat-t3); cursor: pointer;
+    border-bottom: 2px solid transparent; font-family: var(--font);
+    transition: color .2s;
+  }
+  .ctab.active { color: var(--chat-t1); border-bottom-color: var(--accent); }
 
   #dm-area, #bot-area { flex: 1; display: flex; flex-direction: column; overflow: hidden; position: relative; }
-  #room-list { flex: 1; overflow-y: auto; background: var(--surface); }
-  .room-item { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-bottom: 1px solid var(--border); cursor: pointer; }
-  .room-item.unread { background: #fdf2f2; }
-  .r-av { width: 44px; height: 44px; border-radius: 16px; background: var(--surface2); color: var(--t3); display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; overflow: hidden; border: 1px solid var(--border); }
+
+  /* 채팅방 목록 */
+  #room-list { flex: 1; overflow-y: auto; background: var(--chat-bg); }
+  #room-list::-webkit-scrollbar { width: 0; }
+
+  .room-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 14px 16px; border-bottom: 1px solid var(--chat-border); cursor: pointer;
+    transition: background .15s;
+  }
+  .room-item:hover { background: var(--chat-surface); }
+  .room-item.unread { background: rgba(232,72,10,0.06); }
+
+  .r-av {
+    width: 46px; height: 46px; border-radius: 16px;
+    background: var(--chat-surface2); color: var(--chat-t2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; font-weight: 700; flex-shrink: 0; overflow: hidden;
+    border: 1px solid var(--chat-border);
+  }
   .r-av img { width: 100%; height: 100%; object-fit: cover; }
   .r-info { flex: 1; min-width: 0; }
-  .r-name { font-size: 14px; font-weight: 800; margin-bottom: 2px; }
-  .r-last { font-size: 13px; color: var(--t2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .r-meta { flex-shrink: 0; display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
-  .r-time { font-size: 11px; color: var(--t3); }
-  .r-dot { width: 8px; height: 8px; background: var(--red); border-radius: 50%; }
+  .r-name { font-size: 14px; font-weight: 700; margin-bottom: 3px; color: var(--chat-t1); }
+  .r-last { font-size: 12px; color: var(--chat-t2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .r-meta { flex-shrink: 0; display: flex; flex-direction: column; align-items: flex-end; gap: 5px; }
+  .r-time { font-size: 11px; color: var(--chat-t3); }
+  .r-unread-count {
+    min-width: 18px; height: 18px; background: var(--accent); border-radius: 9px;
+    color: #fff; font-size: 10px; font-weight: 800;
+    display: flex; align-items: center; justify-content: center; padding: 0 5px;
+  }
 
-  .dm-win { display: none; position: absolute; inset: 0; flex-direction: column; background: var(--chat-bg); z-index: 20; }
+  /* DM 창 */
+  .dm-win {
+    display: none; position: absolute; inset: 0;
+    flex-direction: column; background: var(--chat-bg); z-index: 20;
+  }
   .dm-win.open { display: flex; }
-  .dm-hdr { flex-shrink: 0; display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; border-bottom: 1px solid rgba(0,0,0,0.05); background: var(--chat-bg); }
-  .dm-back { background: none; border: none; cursor: pointer; font-size: 22px; font-weight: 400; padding: 0 8px; color: #111; }
-  .dm-hdr-name { font-size: 16px; font-weight: 800; color: #111; }
-  
-  /* 사기조회 버튼 */
-  .fraud-btn { background: rgba(255,255,255,0.5); border: none; padding: 5px 10px; border-radius: 12px; font-size: 11px; font-weight: 700; color: #111; cursor: pointer; display: flex; align-items: center; gap: 4px; }
 
-  /* 🌟 채팅방 상단 매물 고정 배너 */
-  .dm-item-banner { flex-shrink: 0; display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: #fff; border-bottom: 1px solid var(--border); box-shadow: 0 2px 5px rgba(0,0,0,0.03); }
-  .dm-item-banner img { width: 44px; height: 44px; border-radius: 6px; object-fit: cover; background: var(--surface2); }
+  .dm-hdr {
+    flex-shrink: 0; display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 16px; background: var(--chat-surface);
+    border-bottom: 1px solid var(--chat-border);
+  }
+  .dm-hdr-left { display: flex; align-items: center; gap: 10px; }
+  .dm-back {
+    background: rgba(255,255,255,0.07); border: 1px solid var(--chat-border);
+    cursor: pointer; font-size: 16px; padding: 0; color: var(--chat-t1);
+    width: 34px; height: 34px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .dm-hdr-name { font-size: 15px; font-weight: 800; color: var(--chat-t1); }
+  .dm-hdr-sub { font-size: 11px; color: var(--chat-t3); }
+
+  /* 사기조회 & 안전거래 버튼 */
+  .hdr-actions { display: flex; gap: 6px; }
+  .hdr-action-btn {
+    background: rgba(255,255,255,0.06); border: 1px solid var(--chat-border);
+    border-radius: 8px; padding: 6px 10px; font-size: 11px; font-weight: 700;
+    color: var(--chat-t2); cursor: pointer; white-space: nowrap; font-family: var(--font);
+    display: flex; align-items: center; gap: 4px;
+  }
+  .hdr-action-btn.warn { color: #fb923c; border-color: rgba(251,146,60,0.3); background: rgba(251,146,60,0.08); }
+
+  /* 매물 고정 배너 */
+  .dm-item-banner {
+    flex-shrink: 0; display: flex; align-items: center; gap: 10px;
+    padding: 10px 14px; background: var(--chat-surface);
+    border-bottom: 1px solid var(--chat-border);
+  }
+  .dm-item-banner img {
+    width: 40px; height: 40px; border-radius: 8px; object-fit: cover;
+    background: var(--chat-surface2); border: 1px solid var(--chat-border);
+  }
   .dm-item-banner .i-info { flex: 1; overflow: hidden; }
-  .dm-item-banner .i-title { font-size: 13px; font-weight: 700; color: var(--t1); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 2px; }
-  .dm-item-banner .i-price { font-size: 13px; font-weight: 800; color: var(--t1); }
-  .dm-item-banner .i-btn { background: var(--surface2); border: 1px solid var(--border); font-size: 11px; padding: 4px 8px; border-radius: 4px; font-weight: 700; color: var(--t2); cursor: pointer; }
+  .dm-item-banner .i-title { font-size: 12px; font-weight: 700; color: var(--chat-t1); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .dm-item-banner .i-price { font-size: 13px; font-weight: 800; color: var(--accent); margin-top: 1px; }
+  .dm-item-banner .i-btn {
+    background: rgba(255,255,255,0.07); border: 1px solid var(--chat-border);
+    font-size: 11px; padding: 5px 9px; border-radius: 6px;
+    font-weight: 700; color: var(--chat-t2); cursor: pointer; font-family: var(--font);
+  }
 
+  /* 메시지 영역 */
   .chat-wrap { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
-  .msgs { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
-  .bw { display: flex; flex-direction: column; align-items: flex-start; width: 100%; }
+  .msgs {
+    flex: 1; overflow-y: auto; padding: 16px;
+    display: flex; flex-direction: column; gap: 4px;
+    scrollbar-width: thin; scrollbar-color: var(--chat-surface2) transparent;
+  }
+  .msgs::-webkit-scrollbar { width: 4px; }
+  .msgs::-webkit-scrollbar-track { background: transparent; }
+  .msgs::-webkit-scrollbar-thumb { background: var(--chat-surface2); border-radius: 4px; }
+
+  /* 메시지 그룹 */
+  .bw { display: flex; flex-direction: column; align-items: flex-start; width: 100%; margin-bottom: 4px; }
   .bw.me { align-items: flex-end; }
-  
-  /* 🌟 카카오톡 스타일 말풍선 */
-  .chat-bubble { max-width: 75%; width: fit-content; padding: 10px 14px; border-radius: 16px; font-size: 14px; line-height: 1.5; background: var(--surface); color: #111; box-shadow: 0 1px 2px rgba(0,0,0,0.1); word-break: break-word; white-space: pre-wrap; border-top-left-radius: 4px; }
-  .bw.me .chat-bubble { background: var(--my-msg); border-top-left-radius: 16px; border-top-right-radius: 4px; }
-  
-  /* 시스템 메시지 스타일 (가운데 정렬) */
-  .sys-msg-wrap { display: flex; justify-content: center; width: 100%; margin: 8px 0; }
-  .sys-msg { font-size: 11px; color: #fff; padding: 5px 14px; background: rgba(0,0,0,0.3); border-radius: 20px; font-weight: 600; text-align: center; line-height: 1.4; }
+  .bw + .bw.from-same { margin-top: -8px; }
 
-  .chat-time { font-size: 10px; color: #556677; margin-top: 4px; padding: 0 4px; }
-  .bw.me .chat-time { text-align: right; }
-  .chat-sender { font-size: 12px; color: #445566; margin-bottom: 4px; margin-left: 4px; font-weight: 600; }
-  
-  .input-row { flex-shrink: 0; display: flex; align-items: center; gap: 8px; padding: 10px 12px; background: var(--surface); border-top: 1px solid var(--border); }
-  .chat-in { flex: 1; padding: 12px 16px; background: var(--surface2); border: 1px solid transparent; border-radius: 24px; font-size: 14px; font-family: var(--font); outline: none; transition: background .2s; }
-  .chat-in:focus { background: var(--surface); border-color: var(--border2); }
-  .send-btn { width: 42px; height: 42px; flex-shrink: 0; background: var(--my-msg); color: #111; border: none; border-radius: 50%; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+  /* 말풍선 - 모던 스타일 */
+  .bubble-row { display: flex; align-items: flex-end; gap: 6px; }
+  .bw.me .bubble-row { flex-direction: row-reverse; }
 
-  .quick-row { flex-shrink: 0; display: flex; gap: 6px; padding: 10px 12px; overflow-x: auto; scrollbar-width: none; border-bottom: 1px solid var(--border); background: var(--surface); }
+  .chat-bubble {
+    max-width: 72%; width: fit-content; padding: 11px 15px;
+    border-radius: 18px; font-size: 14px; line-height: 1.55;
+    word-break: break-word; white-space: pre-wrap;
+    background: var(--msg-other); color: var(--chat-t1);
+    border: 1px solid var(--chat-border);
+    border-bottom-left-radius: 4px;
+  }
+  .bw.me .chat-bubble {
+    background: var(--msg-me); color: #fff; border: none;
+    border-bottom-left-radius: 18px; border-bottom-right-radius: 4px;
+  }
+
+  /* 시스템 메시지 */
+  .sys-wrap { display: flex; justify-content: center; width: 100%; margin: 10px 0; }
+  .sys-msg {
+    font-size: 11px; color: var(--chat-t3);
+    padding: 6px 14px; background: rgba(255,255,255,0.05);
+    border: 1px solid var(--chat-border);
+    border-radius: 20px; text-align: center; line-height: 1.4;
+    backdrop-filter: blur(4px);
+  }
+  .sys-msg.warn {
+    color: #fb923c; background: rgba(251,146,60,0.08);
+    border-color: rgba(251,146,60,0.25); font-weight: 700;
+  }
+
+  /* 날짜 구분선 */
+  .date-divider { display: flex; align-items: center; gap: 10px; width: 100%; margin: 12px 0; }
+  .date-divider::before, .date-divider::after { content: ''; flex: 1; height: 1px; background: var(--chat-border); }
+  .date-divider span { font-size: 11px; color: var(--chat-t3); white-space: nowrap; }
+
+  .chat-time { font-size: 10px; color: var(--chat-t3); flex-shrink: 0; margin-bottom: 2px; }
+  .chat-sender { font-size: 12px; color: var(--chat-t2); margin-bottom: 5px; margin-left: 2px; font-weight: 600; }
+
+  /* 입력창 */
+  .input-area {
+    flex-shrink: 0; background: var(--chat-surface);
+    border-top: 1px solid var(--chat-border);
+  }
+  .input-row { display: flex; align-items: center; gap: 8px; padding: 10px 12px; }
+  .chat-in {
+    flex: 1; padding: 11px 16px; background: var(--chat-surface2);
+    border: 1px solid var(--chat-border); border-radius: 24px;
+    font-size: 14px; font-family: var(--font); outline: none;
+    color: var(--chat-t1); transition: border-color .2s;
+  }
+  .chat-in::placeholder { color: var(--chat-t3); }
+  .chat-in:focus { border-color: rgba(232,72,10,0.5); }
+  .send-btn {
+    width: 40px; height: 40px; flex-shrink: 0;
+    background: var(--accent); color: #fff;
+    border: none; border-radius: 50%; cursor: pointer; font-size: 14px;
+    display: flex; align-items: center; justify-content: center;
+    transition: transform .15s, opacity .15s;
+  }
+  .send-btn:active { transform: scale(0.92); opacity: 0.85; }
+
+  /* 빠른 답변 */
+  .quick-row {
+    display: flex; gap: 6px; padding: 8px 12px;
+    overflow-x: auto; scrollbar-width: none;
+  }
   .quick-row::-webkit-scrollbar { display: none; }
-  .qbtn { flex-shrink: 0; padding: 8px 14px; border-radius: 20px; background: var(--surface); border: 1px solid var(--border2); font-size: 12px; font-weight: 600; color: var(--t2); cursor: pointer; white-space: nowrap; }
+  .qbtn {
+    flex-shrink: 0; padding: 7px 13px; border-radius: 20px;
+    background: var(--chat-surface2); border: 1px solid var(--chat-border);
+    font-size: 12px; font-weight: 600; color: var(--chat-t2);
+    cursor: pointer; white-space: nowrap; font-family: var(--font);
+    transition: all .15s;
+  }
+  .qbtn:hover { border-color: var(--accent); color: #fb923c; background: rgba(232,72,10,0.08); }
+
+  /* ── 사기예방 모달 ── */
+  .fraud-guide { padding: 0 20px 24px; }
+  .fraud-section { margin-bottom: 20px; }
+  .fraud-section-title { font-size: 13px; font-weight: 800; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+  .fraud-item {
+    display: flex; gap: 10px; padding: 11px 13px;
+    background: var(--surface2); border-radius: 10px; margin-bottom: 7px;
+    border: 1px solid var(--border); align-items: flex-start;
+  }
+  .fraud-item-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .fraud-item-text strong { display: block; font-size: 13px; font-weight: 800; margin-bottom: 2px; }
+  .fraud-item-text span { font-size: 12px; color: var(--t2); line-height: 1.5; }
+  .fraud-item.red { background: #fef2f2; border-color: #fecaca; }
+  .fraud-item.green { background: #f0fdf4; border-color: #bbf7d0; }
+  .fraud-item.blue { background: #eff6ff; border-color: #bfdbfe; }
+  .fraud-link-btn {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    width: 100%; padding: 13px; background: var(--t1); color: #fff;
+    border: none; border-radius: var(--r); font-size: 14px; font-weight: 700;
+    cursor: pointer; font-family: var(--font); margin-top: 4px;
+  }
 
   /* ── NAV ── */
   .bnav { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; height: var(--nav); background: var(--surface); border-top: 1px solid var(--border); display: flex; z-index: 50; padding-bottom: env(safe-area-inset-bottom); box-shadow: 0 -2px 10px rgba(0,0,0,0.03); }
@@ -204,7 +440,7 @@
   .n-badge { position: absolute; top: 8px; right: calc(50% - 16px); width: 8px; height: 8px; background: var(--red); border-radius: 50%; display: none; border: 2px solid var(--surface); }
 
   /* ── OVERLAYS ── */
-  .ov { display: none; position: fixed; inset: 0; background: rgba(17,24,39,0.6); z-index: 100; align-items: flex-end; justify-content: center; backdrop-filter: blur(3px); }
+  .ov { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 100; align-items: flex-end; justify-content: center; backdrop-filter: blur(6px); }
   .ov.open { display: flex; }
   .sheet { background: var(--surface); border-radius: 24px 24px 0 0; width: 100%; max-width: 480px; max-height: 92vh; overflow: hidden; display: flex; flex-direction: column; animation: sup .3s cubic-bezier(0.2, 0.8, 0.2, 1); position: relative; }
   @keyframes sup { from{ transform:translateY(100%); } to{ transform:translateY(0); } }
@@ -220,7 +456,6 @@
 
   .m-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 800; color: var(--green); padding: 4px 10px; background: var(--green-bg); border-radius: 6px; margin-bottom: 10px; }
   .m-ship-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 700; color: var(--t2); padding: 4px 10px; background: var(--surface2); border-radius: 6px; margin-bottom: 10px; margin-left: 4px; }
-  
   .m-title { font-size: 22px; font-weight: 900; margin-bottom: 4px; letter-spacing: -0.5px; }
   .m-size { font-size: 13px; color: var(--t3); margin-bottom: 16px; font-weight: 500; }
   .m-desc-box { background: var(--surface2); border-radius: var(--r); padding: 16px; margin-bottom: 16px; border: 1px solid var(--border); }
@@ -233,7 +468,7 @@
   .m-trust { font-size: 12px; font-weight: 800; color: var(--blue); background: var(--surface2); padding: 4px 10px; border-radius: 20px; }
   .sh-btns { flex-shrink: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 12px 20px 24px; border-top: 1px solid var(--border); background: var(--surface); }
 
-  /* 모던 로그인 UI */
+  /* 로그인 */
   .auth-sheet { background: var(--surface); border-radius: 24px 24px 0 0; width: 100%; max-width: 480px; position: relative; animation: sup .3s cubic-bezier(0.2, 0.8, 0.2, 1); padding: 16px 24px 40px; }
   .auth-tabs { display: flex; border-bottom: 2px solid var(--border); margin-bottom: 24px; margin-top: 10px; }
   .auth-tab { flex: 1; text-align: center; padding: 12px 0; font-size: 15px; font-weight: 800; color: var(--t3); cursor: pointer; transition: color 0.2s; position: relative; }
@@ -245,32 +480,51 @@
   .btn-google { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 16px; background: var(--surface); border: 1px solid var(--border2); border-radius: var(--r); font-size: 15px; font-weight: 800; cursor: pointer; color: var(--t1); margin-top: 16px; }
 
   /* toast */
-  .toast { position: fixed; top: 16px; left: 50%; transform: translateX(-50%) translateY(-10px); background: rgba(17,24,39,0.9); color: #fff; padding: 12px 22px; border-radius: 24px; font-size: 13px; font-weight: 700; opacity: 0; transition: opacity .25s, transform .25s cubic-bezier(0.2, 0.8, 0.2, 1); z-index: 9999; backdrop-filter: blur(4px); text-align: center; }
+  .toast { position: fixed; top: 16px; left: 50%; transform: translateX(-50%) translateY(-10px); background: rgba(17,24,39,0.93); color: #fff; padding: 12px 22px; border-radius: 24px; font-size: 13px; font-weight: 700; opacity: 0; transition: opacity .25s, transform .25s cubic-bezier(0.2, 0.8, 0.2, 1); z-index: 9999; backdrop-filter: blur(4px); text-align: center; max-width: 88%; }
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  /* 수정 오버레이 */
+  .edit-inner { padding: 4px 20px 32px; overflow-y: auto; }
 </style>
 </head>
 <body>
 <div class="app">
 
   <header class="hdr">
-    <div class="logo" onclick="switchPage('home', true)">Tire<em>Safe</em><span class="logo-dot"></span></div>
+    <div class="logo" onclick="switchPage('home', true)">Tire<em>Safe</em></div>
     <div id="auth-area"><button class="login-btn" onclick="showLoginModal()">로그인</button></div>
   </header>
 
+  <!-- HOME -->
   <div class="page active" id="pg-home">
     <div class="hero">
-      <div class="hero-tag">🛞 중고타이어·휠 직거래</div>
-      <h2>안전하게 사고<br><b>안심하고 팔자</b></h2>
-      <p class="hero-sub">
-        <span>🤝 직거래</span>
-        <span>✅ 인증 매물</span>
-        <span>🚚 배송 협의</span>
-      </p>
+      <div class="hero-tag">🛞 No.1 중고타이어·휠 직거래 플랫폼</div>
+      <h2>
+        타이어, 이제<br><b>제값 주고 사지 마세요.</b>
+        <span class="hero-sub-line">검증된 매물만, 직거래로 안전하게</span>
+      </h2>
+      <div class="hero-pills">
+        <span class="hero-pill accent">🛡️ 사기예방 시스템</span>
+        <span class="hero-pill">🤝 판매자 직거래</span>
+        <span class="hero-pill">✅ 전문가 인증</span>
+        <span class="hero-pill">🚚 배송 협의</span>
+      </div>
       <div class="sbox">
-        <input id="s-input" type="text" placeholder="모델명, 사이즈 검색" onkeydown="if(event.key==='Enter')loadItems()">
+        <input id="s-input" type="text" placeholder="모델명, 사이즈 검색 (예: 245/45/18)" onkeydown="if(event.key==='Enter')loadItems()">
         <button class="sbtn" onclick="loadItems()">검색</button>
       </div>
     </div>
+
+    <!-- 사기예방 배너 -->
+    <div class="fraud-banner" onclick="openFraudGuide()">
+      <div class="fraud-banner-icon">🚨</div>
+      <div class="fraud-banner-text">
+        <strong>거래 전 꼭 확인하세요 — 사기 피해 예방 가이드</strong>
+        <span>카톡 유도·외부 결제 요구 시 즉시 신고하세요 →</span>
+      </div>
+      <div class="fraud-banner-arrow">›</div>
+    </div>
+
     <div class="cat-tabs">
       <button class="cat-btn active" id="cat-all"   onclick="setCategory(this,'all')">전체</button>
       <button class="cat-btn"        id="cat-tire"  onclick="setCategory(this,'tire')">🛞 중고타이어</button>
@@ -281,10 +535,11 @@
       <div class="sec-ref" onclick="loadItems()">🔄 새로고침</div>
     </div>
     <div class="tire-grid" id="item-grid">
-      <div class="loading"><div class="spinner" style="border-top-color:var(--t1)"></div><p>불러오는 중...</p></div>
+      <div class="loading"><div class="spinner"></div><p>불러오는 중...</p></div>
     </div>
   </div>
 
+  <!-- SELL -->
   <div class="page" id="pg-sell">
     <div class="sell-wrap">
       <div class="sell-title">매물 등록하기</div>
@@ -293,20 +548,27 @@
     </div>
   </div>
 
+  <!-- CHAT -->
   <div id="pg-chat">
     <div class="chat-tabs">
-      <button class="ctab active" id="ctab-dm"  onclick="switchChatTab('dm')">💬 1:1 대화</button>
-      <button class="ctab"        id="ctab-bot" onclick="switchChatTab('bot')">🤖 고객센터</button>
+      <button class="ctab active" id="ctab-dm"  onclick="switchChatTab('dm')">💬 1:1 채팅</button>
+      <button class="ctab"        id="ctab-bot" onclick="switchChatTab('bot')">🤖 AI 도우미</button>
     </div>
     <div id="dm-area">
       <div id="room-list"></div>
       <div class="dm-win" id="dm-win">
         <div class="dm-hdr">
-          <div style="display:flex; align-items:center; gap:8px;">
+          <div class="dm-hdr-left">
             <button class="dm-back" onclick="closeDm()">←</button>
-            <div class="dm-hdr-name" id="dm-hdr-name">채팅</div>
+            <div>
+              <div class="dm-hdr-name" id="dm-hdr-name">채팅</div>
+              <div class="dm-hdr-sub" id="dm-hdr-sub"></div>
+            </div>
           </div>
-          <button class="fraud-btn" onclick="checkFraud()">🚨 사기조회</button>
+          <div class="hdr-actions">
+            <button class="hdr-action-btn warn" onclick="openFraudGuide()">🚨 사기예방</button>
+            <button class="hdr-action-btn" onclick="checkFraud()">🔍 번호조회</button>
+          </div>
         </div>
         
         <div class="dm-item-banner" id="dm-item-banner" style="display:none;">
@@ -315,37 +577,50 @@
             <div class="i-title" id="dm-item-title"></div>
             <div class="i-price" id="dm-item-price"></div>
           </div>
-          <button class="i-btn" onclick="toast('매물 상세로 이동 (준비중)')">게시글 보기</button>
+          <button class="i-btn" onclick="toast('매물 상세로 이동 (준비중)')">보기</button>
         </div>
         
         <div class="chat-wrap">
           <div class="msgs" id="dm-msgs"></div>
-          <div class="input-row">
-            <input class="chat-in" id="dm-in" type="text" placeholder="메시지 입력..."
-              onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendDm()}">
-            <button class="send-btn" onclick="sendDm()">↑</button>
+          <div class="input-area">
+            <div class="input-row">
+              <input class="chat-in" id="dm-in" type="text" placeholder="메시지를 입력하세요..."
+                onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendDm()}">
+              <button class="send-btn" onclick="sendDm()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </div>
+
+    <!-- AI 도우미 -->
     <div id="bot-area" style="display:none">
       <div class="quick-row">
-        <button class="qbtn" onclick="qa('사이즈 고르는 법')">🔍 사이즈</button>
-        <button class="qbtn" onclick="qa('배송 안내')">🚚 배송</button>
-        <button class="qbtn" onclick="qa('장착 방법')">🔧 장착</button>
+        <button class="qbtn" onclick="qa('사이즈 고르는 법')">🔍 사이즈 선택</button>
+        <button class="qbtn" onclick="qa('배송 안내')">🚚 배송 안내</button>
+        <button class="qbtn" onclick="qa('장착 방법')">🔧 장착 정보</button>
+        <button class="qbtn" onclick="qa('사기 예방')">🚨 사기 예방</button>
+        <button class="qbtn" onclick="qa('환불 정책')">💰 환불 정책</button>
         <button class="qbtn" onclick="qa('1:1 고객상담')">👨‍💼 1:1 상담</button>
       </div>
       <div class="chat-wrap">
         <div class="msgs" id="bot-msgs"></div>
-        <div class="input-row">
-          <input class="chat-in" id="bot-in" type="text" placeholder="궁금한 점을 입력하세요..."
-            onkeydown="if(event.key==='Enter')sendBot()">
-          <button class="send-btn" onclick="sendBot()">↑</button>
+        <div class="input-area">
+          <div class="input-row">
+            <input class="chat-in" id="bot-in" type="text" placeholder="무엇이든 물어보세요..."
+              onkeydown="if(event.key==='Enter')sendBot()">
+            <button class="send-btn" onclick="sendBot()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+            </button>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- MY -->
   <div class="page" id="pg-my">
     <div id="my-content"></div>
   </div>
@@ -371,6 +646,7 @@
   </nav>
 </div>
 
+<!-- 매물 상세 -->
 <div class="ov" id="prod-ov" onclick="if(event.target===this)closeModal()">
   <div class="sheet">
     <div class="sh-hdl"></div>
@@ -393,11 +669,12 @@
   </div>
 </div>
 
+<!-- 상태 변경 -->
 <div class="ov" id="status-ov" onclick="if(event.target===this)document.getElementById('status-ov').classList.remove('open')">
   <div class="sheet" style="height:auto;">
     <div class="sh-hdl"></div>
-    <div style="padding: 20px 20px 30px;">
-      <h3 style="margin-bottom:16px;">거래 상태 변경</h3>
+    <div style="padding:20px 20px 30px;">
+      <h3 style="margin-bottom:16px; font-size:17px; font-weight:900;">거래 상태 변경</h3>
       <button class="btn btn-gh" style="margin-bottom:8px;" onclick="changeStatus(0)">🟢 판매중</button>
       <button class="btn btn-dk" style="background:#2563EB; margin-bottom:8px;" onclick="changeStatus(1)">⏳ 예약중</button>
       <button class="btn btn-dk" onclick="changeStatus(2)">🤝 판매완료</button>
@@ -405,20 +682,19 @@
   </div>
 </div>
 
+<!-- 수정 -->
 <div class="ov" id="edit-ov" onclick="if(event.target===this)closeEdit()">
   <div class="sheet" style="height:auto;max-height:92vh;overflow-y:auto;">
     <div class="sh-hdl"></div>
     <button class="sh-x" onclick="closeEdit()">✕</button>
-    <div style="padding:4px 20px 32px;">
+    <div class="edit-inner">
       <div class="sell-title" style="margin-bottom:3px; font-size:20px;">게시글 수정</div>
       <div class="sell-sub" style="margin-bottom:16px;">내용을 수정하고 저장하세요</div>
-      
       <div class="photo-up" onclick="document.getElementById('e-file').click()" style="margin-bottom:16px; height:120px;">
         <div id="e-ph"><div class="pup-icon">📸</div><div class="pup-txt">새 사진 (기존 덮어쓰기)</div></div>
         <div id="e-prev" style="position:absolute;inset:0;display:none;gap:8px;padding:12px;overflow-x:auto;align-items:center;"></div>
       </div>
       <input type="file" id="e-file" accept="image/*" multiple style="display:none" onchange="handleEPh(this)">
-      
       <div class="f-row">
         <div class="f-group"><label class="f-label">카테고리</label>
           <select id="e-cat" class="f-select"><option value="tire">중고타이어</option><option value="wheel">중고휠</option></select>
@@ -438,6 +714,7 @@
   </div>
 </div>
 
+<!-- 로그인 -->
 <div class="ov" id="login-ov" onclick="if(event.target===this)hideLoginModal()">
   <div class="auth-sheet">
     <button class="sh-x" onclick="hideLoginModal()">✕</button>
@@ -445,7 +722,6 @@
       <div class="auth-tab active" id="tab-login" onclick="toggleAuthView('login')">로그인</div>
       <div class="auth-tab" id="tab-signup" onclick="toggleAuthView('signup')">회원가입</div>
     </div>
-
     <div id="login-view">
       <div class="auth-box">
         <input id="l-email" class="f-input" type="email" placeholder="이메일 주소" onkeydown="if(event.key==='Enter')document.getElementById('l-pw').focus()">
@@ -454,7 +730,6 @@
       </div>
       <button class="btn-google" onclick="googleLogin()"><img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18" alt=""> 구글로 계속하기</button>
     </div>
-
     <div id="signup-view" style="display:none;">
       <div class="auth-box">
         <input id="s-email" class="f-input" type="email" placeholder="이메일 주소" onkeydown="if(event.key==='Enter')document.getElementById('s-pw').focus()">
@@ -463,6 +738,107 @@
         <button class="btn btn-dk" style="margin-top:4px;" onclick="emailSignUp()">가입 완료하기</button>
       </div>
       <button class="btn-google" onclick="googleLogin()"><img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18" alt=""> 구글로 계속하기</button>
+    </div>
+  </div>
+</div>
+
+<!-- 사기예방 가이드 모달 -->
+<div class="ov" id="fraud-ov" onclick="if(event.target===this)closeFraudGuide()">
+  <div class="sheet">
+    <div class="sh-hdl"></div>
+    <button class="sh-x" onclick="closeFraudGuide()">✕</button>
+    <div style="padding: 0 20px 12px;">
+      <div style="font-size:20px; font-weight:900; margin-bottom:4px;">🛡️ 사기 피해 예방 가이드</div>
+      <div style="font-size:13px; color:var(--t3);">이것만 알아도 사기 피해를 막을 수 있어요</div>
+    </div>
+    <div class="sh-scroll">
+      <div class="fraud-guide">
+
+        <!-- 위험 신호 -->
+        <div class="fraud-section">
+          <div class="fraud-section-title" style="color:var(--red);">🚫 이러면 사기! 즉시 거래 중단하세요</div>
+          <div class="fraud-item red">
+            <div class="fraud-item-icon">💬</div>
+            <div class="fraud-item-text">
+              <strong>카카오톡/문자로 유도</strong>
+              <span>앱 밖에서 대화하자고 하면 의심하세요. TireSafe 채팅 안에서만 거래하는 게 원칙입니다.</span>
+            </div>
+          </div>
+          <div class="fraud-item red">
+            <div class="fraud-item-icon">🔗</div>
+            <div class="fraud-item-text">
+              <strong>외부 링크 결제 요구</strong>
+              <span>알 수 없는 결제 링크 전송은 전형적인 사기 수법입니다. 클릭하지 마세요.</span>
+            </div>
+          </div>
+          <div class="fraud-item red">
+            <div class="fraud-item-icon">🏧</div>
+            <div class="fraud-item-text">
+              <strong>선입금 요구 후 잠수</strong>
+              <span>택배비, 보증금 명목의 선입금 후 연락 두절 사례가 많습니다. 직거래를 우선하세요.</span>
+            </div>
+          </div>
+          <div class="fraud-item red">
+            <div class="fraud-item-icon">⚡</div>
+            <div class="fraud-item-text">
+              <strong>가격이 너무 싸거나, 빠른 결정 촉구</strong>
+              <span>"지금 아니면 다른 사람 준다"는 압박은 사기 신호일 수 있습니다.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 안전 거래 방법 -->
+        <div class="fraud-section">
+          <div class="fraud-section-title" style="color:var(--green);">✅ 이렇게 하면 안전해요</div>
+          <div class="fraud-item green">
+            <div class="fraud-item-icon">🤝</div>
+            <div class="fraud-item-text">
+              <strong>직거래 우선</strong>
+              <span>가능하면 직접 만나서 상태 확인 후 현금/계좌 이체하세요. 공공장소에서 만나는 게 좋아요.</span>
+            </div>
+          </div>
+          <div class="fraud-item green">
+            <div class="fraud-item-icon">📸</div>
+            <div class="fraud-item-text">
+              <strong>사진·영상 추가 요청</strong>
+              <span>실물 확인 전 트레드 잔량, DOT, 측면 균열 등 추가 사진을 꼭 요청하세요.</span>
+            </div>
+          </div>
+          <div class="fraud-item green">
+            <div class="fraud-item-icon">📋</div>
+            <div class="fraud-item-text">
+              <strong>거래 내역 채팅에 남기기</strong>
+              <span>TireSafe 채팅 기록은 분쟁 시 증거로 활용됩니다. 채팅 밖 대화는 보호받기 어렵습니다.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 피해 발생 시 -->
+        <div class="fraud-section">
+          <div class="fraud-section-title" style="color:var(--blue);">📞 피해 발생 시 대처 방법</div>
+          <div class="fraud-item blue">
+            <div class="fraud-item-icon">🚔</div>
+            <div class="fraud-item-text">
+              <strong>경찰청 사이버수사국 신고</strong>
+              <span>ecrm.police.go.kr 또는 국번 없이 182로 신고하세요.</span>
+            </div>
+          </div>
+          <div class="fraud-item blue">
+            <div class="fraud-item-icon">🔍</div>
+            <div class="fraud-item-text">
+              <strong>더치트(The Cheat) 사기 이력 조회</strong>
+              <span>거래 전 상대방 계좌번호·전화번호로 사기 이력을 미리 확인하세요.</span>
+            </div>
+          </div>
+        </div>
+
+        <button class="fraud-link-btn" onclick="window.open('https://thecheat.co.kr','_blank')">
+          🔍 더치트에서 사기 이력 조회하기
+        </button>
+        <button class="fraud-link-btn" style="background:var(--blue); margin-top:8px;" onclick="window.open('https://ecrm.police.go.kr','_blank')">
+          🚔 경찰청 사이버수사국 신고하기
+        </button>
+      </div>
     </div>
   </div>
 </div>
@@ -476,176 +852,154 @@ const auth=firebase.auth(),db=firebase.firestore();
 
 let CU=null,dmRoom=null,unsubDm=null,unsubRooms=null,curItem=null,pendChat=null,firstLoad=true,toastTmr=null,curCat='all';
 
-window.addEventListener('DOMContentLoaded',()=>{});
-
 function toast(m){const el=document.getElementById('toast');el.textContent=m;el.classList.add('show');if(toastTmr)clearTimeout(toastTmr);toastTmr=setTimeout(()=>el.classList.remove('show'),2800);}
 function esc(s){if(!s)return'';return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
 function compress(file){return new Promise(r=>{const fr=new FileReader();fr.onload=e=>{const i=new Image();i.onload=()=>{const c=document.createElement('canvas');const M=700;let w=i.width,h=i.height;if(w>h&&w>M){h=h*M/w;w=M;}else if(h>M){w=w*M/h;h=M;}c.width=w;c.height=h;c.getContext('2d').drawImage(i,0,0,w,h);r(c.toDataURL('image/jpeg',.7));};i.src=e.target.result;};fr.readAsDataURL(file);});}
 
-// 🌟 상대적인 시간 표시 함수 (방금 전, 3시간 전 등)
-function timeAgo(date) {
-  if(!date) return '';
-  const seconds = Math.floor((new Date() - date) / 1000);
-  if(seconds < 60) return '방금 전';
-  const minutes = Math.floor(seconds / 60);
-  if(minutes < 60) return `${minutes}분 전`;
-  const hours = Math.floor(minutes / 60);
-  if(hours < 24) return `${hours}시간 전`;
-  const days = Math.floor(hours / 24);
-  if(days < 30) return `${days}일 전`;
+function timeAgo(date){
+  if(!date)return'';
+  const s=Math.floor((new Date()-date)/1000);
+  if(s<60)return'방금 전';
+  const m=Math.floor(s/60);if(m<60)return`${m}분 전`;
+  const h=Math.floor(m/60);if(h<24)return`${h}시간 전`;
+  const d=Math.floor(h/24);if(d<30)return`${d}일 전`;
   return date.toLocaleDateString('ko-KR');
 }
 
 async function isBanned(uid){try{return(await db.collection('bannedUsers').doc(uid).get()).exists;}catch{return false;}}
 
-function toggleAuthView(view) {
-  document.getElementById('login-view').style.display = view === 'login' ? 'block' : 'none';
-  document.getElementById('signup-view').style.display = view === 'signup' ? 'block' : 'none';
-  document.getElementById('tab-login').classList.toggle('active', view === 'login');
-  document.getElementById('tab-signup').classList.toggle('active', view === 'signup');
+function toggleAuthView(view){
+  document.getElementById('login-view').style.display=view==='login'?'block':'none';
+  document.getElementById('signup-view').style.display=view==='signup'?'block':'none';
+  document.getElementById('tab-login').classList.toggle('active',view==='login');
+  document.getElementById('tab-signup').classList.toggle('active',view==='signup');
 }
-
-function showLoginModal() { 
-  document.getElementById('l-email').value = ''; document.getElementById('l-pw').value = '';
-  document.getElementById('s-email').value = ''; document.getElementById('s-pw').value = ''; document.getElementById('s-name').value = '';
-  toggleAuthView('login'); 
-  document.getElementById('login-ov').classList.add('open'); 
+function showLoginModal(){
+  document.getElementById('l-email').value='';document.getElementById('l-pw').value='';
+  document.getElementById('s-email').value='';document.getElementById('s-pw').value='';document.getElementById('s-name').value='';
+  toggleAuthView('login');document.getElementById('login-ov').classList.add('open');
 }
-function hideLoginModal() { document.getElementById('login-ov').classList.remove('open'); }
+function hideLoginModal(){document.getElementById('login-ov').classList.remove('open');}
 
-async function emailSignUp() {
-  const email=document.getElementById('s-email').value.trim(), pw=document.getElementById('s-pw').value.trim(), name=document.getElementById('s-name').value.trim();
-  if(!email||!pw) return toast('⚠️ 이메일과 비밀번호를 입력해주세요.');
-  if(pw.length<6) return toast('⚠️ 비밀번호는 6자 이상이어야 합니다.');
-  if(!name) return toast('⚠️ 닉네임을 입력해주세요.');
+async function emailSignUp(){
+  const email=document.getElementById('s-email').value.trim(),pw=document.getElementById('s-pw').value.trim(),name=document.getElementById('s-name').value.trim();
+  if(!email||!pw)return toast('⚠️ 이메일과 비밀번호를 입력해주세요.');
+  if(pw.length<6)return toast('⚠️ 비밀번호는 6자 이상이어야 합니다.');
+  if(!name)return toast('⚠️ 닉네임을 입력해주세요.');
   toast('⏳ 가입 처리 중...');
-  try{
-    const c = await auth.createUserWithEmailAndPassword(email,pw);
-    await c.user.updateProfile({displayName:name});
-    toast('🎉 회원가입 완료! 환영합니다.'); hideLoginModal(); runPend();
-  } catch(e) { toast(e.code==='auth/email-already-in-use'?'❌ 이미 가입된 이메일입니다.':'❌ '+e.message); }
+  try{const c=await auth.createUserWithEmailAndPassword(email,pw);await c.user.updateProfile({displayName:name});toast('🎉 회원가입 완료! 환영합니다.');hideLoginModal();runPend();}
+  catch(e){toast(e.code==='auth/email-already-in-use'?'❌ 이미 가입된 이메일입니다.':'❌ '+e.message);}
 }
-
-async function emailLogin() {
-  const email=document.getElementById('l-email').value.trim(), pw=document.getElementById('l-pw').value.trim();
-  if(!email||!pw) return toast('⚠️ 이메일과 비밀번호를 입력해주세요.');
+async function emailLogin(){
+  const email=document.getElementById('l-email').value.trim(),pw=document.getElementById('l-pw').value.trim();
+  if(!email||!pw)return toast('⚠️ 이메일과 비밀번호를 입력해주세요.');
   toast('⏳ 로그인 중...');
-  try{
-    await auth.signInWithEmailAndPassword(email,pw);
-    toast('✅ 로그인 성공!'); hideLoginModal(); runPend();
-  } catch(e) { toast('❌ 계정 정보가 틀립니다.'); }
+  try{await auth.signInWithEmailAndPassword(email,pw);toast('✅ 로그인 성공!');hideLoginModal();runPend();}
+  catch(e){toast('❌ 계정 정보가 틀립니다.');}
 }
-
 function googleLogin(){const p=new firebase.auth.GoogleAuthProvider();p.setCustomParameters({prompt:'select_account'});auth.signInWithPopup(p).then(()=>{hideLoginModal();runPend();}).catch(()=>auth.signInWithRedirect(p));}
 function logout(){if(confirm('로그아웃 하시겠습니까?'))auth.signOut();}
 
-async function deleteAccount() {
-  if(!confirm("정말 회원 탈퇴를 하시겠습니까?\n내 정보가 삭제되며 되돌릴 수 없습니다.")) return;
-  try {
-    await CU.delete(); toast("회원 탈퇴가 완료되었습니다.");
-  } catch(e) {
-    if(e.code === 'auth/requires-recent-login') { toast("⚠️ 보안을 위해 재로그인 후 탈퇴해주세요."); auth.signOut(); } 
-    else { toast("❌ 오류: " + e.message); }
-  }
+async function deleteAccount(){
+  if(!confirm("정말 회원 탈퇴를 하시겠습니까?\n내 정보가 삭제되며 되돌릴 수 없습니다."))return;
+  try{await CU.delete();toast("회원 탈퇴가 완료되었습니다.");}
+  catch(e){if(e.code==='auth/requires-recent-login'){toast("⚠️ 보안을 위해 재로그인 후 탈퇴해주세요.");auth.signOut();}else{toast("❌ 오류: "+e.message);}}
 }
 
-async function editProfileName() {
-  if(!CU) return;
-  try {
-    const userRef = db.collection('users').doc(CU.uid);
-    const userDoc = await userRef.get();
-    const now = Date.now();
-    if(userDoc.exists) {
-      const lastChange = userDoc.data().lastNameChange || 0;
-      const thirtyDays = 30 * 24 * 60 * 60 * 1000;
-      if(now - lastChange < thirtyDays) {
-        const daysLeft = Math.ceil((thirtyDays - (now - lastChange)) / (1000 * 60 * 60 * 24));
-        return toast(`⚠️ 닉네임은 30일에 한 번만 변경할 수 있습니다. (${daysLeft}일 후 가능)`);
-      }
-    }
-    const newName = prompt("새로운 닉네임을 입력하세요\n(※ 30일에 1번만 변경 가능합니다)", CU.displayName);
-    if(!newName || newName.trim() === "" || newName === CU.displayName) return;
-    await CU.updateProfile({displayName: newName.trim()});
-    await userRef.set({ lastNameChange: now }, { merge: true });
-    toast("✅ 닉네임이 변경되었습니다.");
-    updateAuthUI(CU);
-  } catch(e) { toast("❌ 오류: " + e.message); }
+async function editProfileName(){
+  if(!CU)return;
+  try{
+    const userRef=db.collection('users').doc(CU.uid);const userDoc=await userRef.get();const now=Date.now();
+    if(userDoc.exists){const lastChange=userDoc.data().lastNameChange||0;const thirtyDays=30*24*60*60*1000;if(now-lastChange<thirtyDays){const daysLeft=Math.ceil((thirtyDays-(now-lastChange))/(1000*60*60*24));return toast(`⚠️ 닉네임은 30일에 한 번만 변경 가능합니다. (${daysLeft}일 후 가능)`);}}
+    const newName=prompt("새로운 닉네임을 입력하세요\n(※ 30일에 1번만 변경 가능합니다)",CU.displayName);
+    if(!newName||newName.trim()===""||newName===CU.displayName)return;
+    await CU.updateProfile({displayName:newName.trim()});await userRef.set({lastNameChange:now},{merge:true});toast("✅ 닉네임이 변경되었습니다.");updateAuthUI(CU);
+  }catch(e){toast("❌ 오류: "+e.message);}
 }
 
 auth.getRedirectResult().then(r=>{if(r&&r.user){toast('✅ 로그인 성공!');hideLoginModal();runPend();}}).catch(()=>{});
 auth.onAuthStateChanged(u=>{CU=u;updateAuthUI(u);loadItems();if(u){hideLoginModal();initRooms();runPend();}else{if(unsubRooms)unsubRooms();document.getElementById('chat-badge').style.display='none';}});
 
 function updateAuthUI(u){
-  const a=document.getElementById('auth-area');
-  const myContent=document.getElementById('my-content');
+  const a=document.getElementById('auth-area'),myContent=document.getElementById('my-content');
   if(u){
     const n=u.displayName||'유저';
     a.innerHTML=`<div class="avatar" onclick="switchPage('my')" title="${esc(n)}">${u.photoURL?`<img src="${u.photoURL}" alt="">`:n[0]}</div>`;
     renderSell();
-    myContent.innerHTML = `
+    myContent.innerHTML=`
       <div class="my-hdr">
         <div class="my-av">${u.photoURL?`<img src="${u.photoURL}" alt="">`:n[0]}</div>
-        <div class="my-info">
-          <div class="my-name">${esc(n)}</div>
-          <div class="my-email">${esc(u.email||'')}</div>
-          <button class="my-edit-btn" onclick="editProfileName()">닉네임 변경</button>
-        </div>
+        <div class="my-info"><div class="my-name">${esc(n)}</div><div class="my-email">${esc(u.email||'')}</div><button class="my-edit-btn" onclick="editProfileName()">닉네임 변경</button></div>
       </div>
       <div class="my-menu">
         <div class="my-menu-item" onclick="setCategory(null,'my')">내가 올린 매물 보기 <span style="font-size:18px">›</span></div>
+        <div class="my-menu-item" onclick="openFraudGuide()">🛡️ 사기예방 가이드 <span style="font-size:18px">›</span></div>
         <div class="my-menu-item" onclick="logout()">로그아웃 <span style="font-size:18px">›</span></div>
         <div class="my-menu-item" style="color:var(--red);" onclick="deleteAccount()">회원 탈퇴 <span style="font-size:18px">›</span></div>
       </div>`;
   } else {
     a.innerHTML=`<button class="login-btn" onclick="showLoginModal()">로그인</button>`;
-    document.getElementById('sell-content').innerHTML=`<div class="empty" style="padding-top:60px;"><div class="empty-icon">🔒</div><p style="margin-bottom:20px;">판매 등록은 로그인 후 이용 가능합니다.</p><button class="btn btn-dk" style="max-width:200px; margin:0 auto;" onclick="showLoginModal()">로그인 / 회원가입</button></div>`;
-    myContent.innerHTML = `<div class="empty" style="padding-top:80px;"><div class="empty-icon">👤</div><p style="margin-bottom:20px;">로그인 후 내 정보를 관리하세요.</p><button class="btn btn-dk" style="max-width:200px; margin:0 auto;" onclick="showLoginModal()">로그인 하기</button></div>`;
+    document.getElementById('sell-content').innerHTML=`<div class="empty" style="padding-top:60px;"><div class="empty-icon">🔒</div><p style="margin-bottom:20px;">판매 등록은 로그인 후 이용 가능합니다.</p><button class="btn btn-dk" style="max-width:200px;margin:0 auto;" onclick="showLoginModal()">로그인 / 회원가입</button></div>`;
+    myContent.innerHTML=`<div class="empty" style="padding-top:80px;"><div class="empty-icon">👤</div><p style="margin-bottom:20px;">로그인 후 내 정보를 관리하세요.</p><button class="btn btn-dk" style="max-width:200px;margin:0 auto;" onclick="showLoginModal()">로그인 하기</button></div>`;
   }
 }
 function runPend(){if(pendChat&&CU){const{uid,name,msg,item}=pendChat;pendChat=null;setTimeout(()=>openRoom(uid,name,'',msg,item),400);}}
 
-function switchPage(n, fromNav = false){
+function switchPage(n,fromNav=false){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById('pg-chat').classList.remove('active');
   document.querySelectorAll('.nbtn').forEach(b=>b.classList.remove('active'));
   document.getElementById('nav-'+n).classList.add('active');
   closeDm();
-  if(n==='chat'){ document.getElementById('pg-chat').classList.add('active'); switchChatTab('dm'); } 
-  else { 
+  if(n==='chat'){document.getElementById('pg-chat').classList.add('active');switchChatTab('dm');}
+  else{
     document.getElementById('pg-'+n).classList.add('active');
-    if(n==='home') {
-      if (fromNav && curCat === 'my') { setCategory(document.getElementById('cat-all'), 'all'); } else { loadItems(); }
-    }
+    if(n==='home'){if(fromNav&&curCat==='my'){setCategory(document.getElementById('cat-all'),'all');}else{loadItems();}}
   }
 }
 function switchChatTab(t){
   closeDm();
   document.getElementById('ctab-dm').classList.toggle('active',t==='dm');
   document.getElementById('ctab-bot').classList.toggle('active',t==='bot');
-  document.getElementById('dm-area').style.display  = t==='dm'  ? 'flex' : 'none';
-  document.getElementById('bot-area').style.display = t==='bot' ? 'flex' : 'none';
+  document.getElementById('dm-area').style.display=t==='dm'?'flex':'none';
+  document.getElementById('bot-area').style.display=t==='bot'?'flex':'none';
+  if(t==='bot'&&document.getElementById('bot-msgs').children.length===0) initBot();
+}
+
+// AI 도우미 초기 인사 메시지
+function initBot(){
+  const box=document.getElementById('bot-msgs');
+  const greet=document.createElement('div');
+  greet.className='bw';
+  greet.innerHTML=`
+    <div class="chat-sender">🤖 TireSafe AI 도우미</div>
+    <div class="chat-bubble">
+      안녕하세요! TireSafe AI 도우미입니다 👋<br><br>
+      타이어·휠 관련 궁금한 점이나 거래 관련 문의를 도와드릴게요.<br><br>
+      아래 자주 묻는 질문을 선택하거나, 직접 입력해보세요!
+    </div>
+  `;
+  box.appendChild(greet);
 }
 
 const CAT_LABEL={all:'실시간 전체 매물',tire:'중고타이어 매물',wheel:'중고휠 매물',my:'내가 올린 매물'};
 function setCategory(el,cat){
-  if(el) { document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active')); el.classList.add('active'); } 
-  else { document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active')); }
-  curCat=cat; 
-  document.getElementById('sec-label').textContent=CAT_LABEL[cat]; 
-  if(cat === 'my') switchPage('home', false);
-  else loadItems();
+  if(el){document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active');}
+  else{document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));}
+  curCat=cat;document.getElementById('sec-label').textContent=CAT_LABEL[cat];
+  if(cat==='my')switchPage('home',false);else loadItems();
 }
 
 async function loadItems(){
   const grid=document.getElementById('item-grid');
-  grid.innerHTML='<div class="loading"><div class="spinner" style="border-top-color:var(--t1)"></div><p>불러오는 중...</p></div>';
+  grid.innerHTML='<div class="loading"><div class="spinner"></div><p>불러오는 중...</p></div>';
   const q=(document.getElementById('s-input')?.value||'').trim().toLowerCase().replace(/\s/g,'');
   try{
     const snap=await db.collection('tires').orderBy('createdAt','desc').get();
     const docs=snap.docs.filter(d=>{
       const t=d.data();
-      if(curCat==='my'){ if(!CU || t.sellerId !== CU.uid) return false; }
-      else if(curCat!=='all'){ if((t.category||'tire')!==curCat) return false; }
+      if(curCat==='my'){if(!CU||t.sellerId!==CU.uid)return false;}
+      else if(curCat!=='all'){if((t.category||'tire')!==curCat)return false;}
       if(!q)return true;
       return(t.title||'').toLowerCase().includes(q)||(t.size||'').toLowerCase().replace(/\s/g,'').includes(q);
     });
@@ -653,15 +1007,12 @@ async function loadItems(){
     grid.innerHTML=docs.map(doc=>{
       const t={id:doc.id,...doc.data()};
       const cat=t.category||'tire';
-      const status = t.status || 0;
-      const isSold = (status === 2 || t.isSold === true);
-      const isResv = (status === 1);
+      const status=t.status||0;
+      const isSold=(status===2||t.isSold===true),isResv=(status===1);
       const sd=JSON.stringify({id:t.id,title:t.title,size:t.size,price:t.price,description:t.description,imageUrl:t.imageUrl,imageUrls:t.imageUrls,sellerName:t.sellerName,sellerId:t.sellerId,isVerified:!!t.isVerified,category:cat,status:status,shipping:t.shipping||'배송협의'}).replace(/'/g,'&#39;');
-      let stateClass = ''; if(isSold) stateClass = 'sold'; else if(isResv) stateClass = 'reserved';
-      
-      const timeStr = t.createdAt ? timeAgo(t.createdAt.toDate()) : '';
-
-      return`<div class="card fi ${stateClass}" onclick='openModal(${JSON.stringify(sd)})'>
+      let stateClass='';if(isSold)stateClass='sold';else if(isResv)stateClass='reserved';
+      const timeStr=t.createdAt?timeAgo(t.createdAt.toDate()):'';
+      return`<div class="card ${stateClass}" onclick='openModal(${JSON.stringify(sd)})'>
         <div class="card-img-wrap">
           ${t.imageUrl?`<img class="card-img" src="${t.imageUrl}" loading="lazy" alt="${esc(t.title)}">`:`<div class="card-ph">${cat==='wheel'?'⭕':'🛞'}</div>`}
           ${t.isVerified?'<div class="card-v">✅ 인증</div>':''}
@@ -670,9 +1021,7 @@ async function loadItems(){
         <div class="card-body">
           <div class="card-name">${esc(t.title)}</div>
           <div class="card-size">${esc(t.size||'사이즈 미기재')} · ${timeStr}</div>
-          <div class="card-btm">
-            <div class="card-price">${Number(t.price).toLocaleString()}원</div>
-          </div>
+          <div class="card-price">${Number(t.price).toLocaleString()}원</div>
         </div>
       </div>`;
     }).join('');
@@ -729,54 +1078,37 @@ async function submitItem(){
 function openModal(t){
   if(typeof t==='string')t=JSON.parse(t);curItem=t;
   const g=document.getElementById('m-gallery');g.innerHTML='';
-  const isSold = (t.status === 2 || t.isSold === true);
-  const isResv = (t.status === 1);
-  g.className = 'm-gallery';
-  if(isSold) g.classList.add('sold'); else if(isResv) g.classList.add('reserved');
+  const isSold=(t.status===2||t.isSold===true),isResv=(t.status===1);
+  g.className='m-gallery';
+  if(isSold)g.classList.add('sold');else if(isResv)g.classList.add('reserved');
   const urls=(t.imageUrls&&t.imageUrls.length)?t.imageUrls:(t.imageUrl?[t.imageUrl]:[]);
   if(urls.length){g.style.display='block';urls.forEach(u=>g.innerHTML+=`<img src="${u}" alt="${esc(t.title)}" loading="lazy">`);}else g.style.display='none';
-  
   document.getElementById('m-badge').style.display=t.isVerified?'inline-flex':'none';
-  document.getElementById('m-ship').textContent='🚚 배송/거래: ' + (t.shipping||'협의');
+  document.getElementById('m-ship').textContent='🚚 배송/거래: '+(t.shipping||'협의');
   document.getElementById('m-title').textContent=t.title;
   document.getElementById('m-size').textContent=(t.category==='wheel'?'⭕ 중고휠':'🛞 중고타이어')+(t.size?' · '+t.size:'');
   document.getElementById('m-desc').textContent=t.description||'상태 설명이 없습니다.';
   document.getElementById('m-price').textContent=Number(t.price).toLocaleString()+'원';
-  
-  // 🌟 프로필 & 신뢰지수(매너온도 컨셉) 표시
   document.getElementById('m-seller').innerHTML=`
     <div class="m-seller-l">
-      <div class="avatar" style="width:32px;height:32px;font-size:12px;">${t.sellerName[0]||'👤'}</div> 
+      <div class="avatar" style="width:32px;height:32px;font-size:12px;">${(t.sellerName||'?')[0]}</div>
       <div><div style="font-size:14px;color:#111;">${esc(t.sellerName||'판매자')}</div></div>
     </div>
-    <div class="m-trust">신뢰지수 36.5 🌡️</div>
-  `;
-  
-  const own=CU&&CU.uid===t.sellerId, adm=CU&&CU.uid===ADMIN;
-  let btnHTML = '';
-  if(isSold) {
-    btnHTML += `<button class="btn" style="grid-column:1/-1; background:var(--surface2); color:var(--t2); cursor:not-allowed;" disabled>판매가 완료된 상품입니다</button>`;
-    if(own || adm) {
-      btnHTML += `<button class="btn btn-gh" style="grid-column:1/-1;" onclick="document.getElementById('status-ov').classList.add('open')">상태 변경하기</button>`;
-      btnHTML += `<button class="btn btn-gh" onclick="openEdit()">✏️ 수정</button> <button class="btn btn-red" onclick="delItem()">🗑️ 삭제</button>`;
-    }
+    <div class="m-trust">신뢰지수 36.5 🌡️</div>`;
+  const own=CU&&CU.uid===t.sellerId,adm=CU&&CU.uid===ADMIN;
+  let btnHTML='';
+  if(isSold){
+    btnHTML+=`<button class="btn" style="grid-column:1/-1;background:var(--surface2);color:var(--t2);cursor:not-allowed;" disabled>판매가 완료된 상품입니다</button>`;
+    if(own||adm){btnHTML+=`<button class="btn btn-gh" style="grid-column:1/-1;" onclick="document.getElementById('status-ov').classList.add('open')">상태 변경하기</button>`;btnHTML+=`<button class="btn btn-gh" onclick="openEdit()">✏️ 수정</button><button class="btn btn-red" onclick="delItem()">🗑️ 삭제</button>`;}
   } else {
-    if(own) {
-      btnHTML += `<button class="btn btn-dk" style="grid-column:1/-1;" onclick="document.getElementById('status-ov').classList.add('open')">상태 변경하기</button>`;
-      btnHTML += `<button class="btn btn-gh" onclick="openEdit()">✏️ 수정</button> <button class="btn btn-red" onclick="delItem()">🗑️ 삭제</button>`;
-    } else {
-      btnHTML += `<button class="btn btn-gh" onclick="chatSeller()">💬 채팅하기</button> <button class="btn btn-dk" style="background:var(--blue);" onclick="proposeDirectTrade()">🤝 직거래 제안</button>`;
-    }
+    if(own){btnHTML+=`<button class="btn btn-dk" style="grid-column:1/-1;" onclick="document.getElementById('status-ov').classList.add('open')">상태 변경하기</button>`;btnHTML+=`<button class="btn btn-gh" onclick="openEdit()">✏️ 수정</button><button class="btn btn-red" onclick="delItem()">🗑️ 삭제</button>`;}
+    else{btnHTML+=`<button class="btn btn-gh" onclick="chatSeller()">💬 채팅하기</button><button class="btn btn-dk" style="background:var(--blue);" onclick="proposeDirectTrade()">🤝 직거래 제안</button>`;}
   }
-  if(adm) {
-    btnHTML += `<button class="btn" style="grid-column:1/-1; background:${t.isVerified?'var(--t3)':'var(--green)'}; color:#fff;" onclick="toggleVerify()">${t.isVerified?'❌ 인증 빼기':'✅ 인증 달기'}</button>`;
-    if(!own) {
-      btnHTML += `<button class="btn btn-gh" style="grid-column:1/-1;" onclick="document.getElementById('status-ov').classList.add('open')">상태 변경 (관리자)</button>`;
-      btnHTML += `<button class="btn btn-gh" onclick="openEdit()">✏️ 수정 (관리자)</button> <button class="btn btn-red" onclick="delItem()">🗑️ 삭제 (관리자)</button>`;
-      btnHTML += `<button class="btn btn-red" style="grid-column:1/-1;" onclick="blockUser()">🚫 영구 차단</button>`;
-    }
+  if(adm){
+    btnHTML+=`<button class="btn" style="grid-column:1/-1;background:${t.isVerified?'var(--t3)':'var(--green)'};color:#fff;" onclick="toggleVerify()">${t.isVerified?'❌ 인증 빼기':'✅ 인증 달기'}</button>`;
+    if(!own){btnHTML+=`<button class="btn btn-gh" style="grid-column:1/-1;" onclick="document.getElementById('status-ov').classList.add('open')">상태 변경 (관리자)</button>`;btnHTML+=`<button class="btn btn-gh" onclick="openEdit()">✏️ 수정 (관리자)</button><button class="btn btn-red" onclick="delItem()">🗑️ 삭제 (관리자)</button>`;btnHTML+=`<button class="btn btn-red" style="grid-column:1/-1;" onclick="blockUser()">🚫 영구 차단</button>`;}
   }
-  document.getElementById('m-action-btns').innerHTML = btnHTML;
+  document.getElementById('m-action-btns').innerHTML=btnHTML;
   document.getElementById('prod-ov').classList.add('open');
 }
 function closeModal(){document.getElementById('prod-ov').classList.remove('open');}
@@ -789,7 +1121,7 @@ function openEdit(){
   document.getElementById('e-size').value=curItem.size||'';
   document.getElementById('e-price').value=curItem.price||'';
   document.getElementById('e-desc').value=curItem.description||'';
-  document.getElementById('e-file').value=''; document.getElementById('e-prev').innerHTML='';document.getElementById('e-prev').style.display='none'; document.getElementById('e-ph').style.display='block';
+  document.getElementById('e-file').value='';document.getElementById('e-prev').innerHTML='';document.getElementById('e-prev').style.display='none';document.getElementById('e-ph').style.display='block';
   document.getElementById('edit-ov').classList.add('open');
 }
 function closeEdit(){document.getElementById('edit-ov').classList.remove('open');}
@@ -815,10 +1147,10 @@ async function delItem(){
 async function changeStatus(statusCode){
   if(!curItem?.id)return;
   try{
-    await db.collection('tires').doc(curItem.id).update({status: statusCode, isSold: statusCode===2});
+    await db.collection('tires').doc(curItem.id).update({status:statusCode,isSold:statusCode===2});
     document.getElementById('status-ov').classList.remove('open');
     toast(statusCode===2?'🎉 판매완료 처리되었습니다.':statusCode===1?'⏳ 예약중으로 변경되었습니다.':'🟢 판매중으로 변경되었습니다.');
-    closeModal(); loadItems();
+    closeModal();loadItems();
   }catch(e){toast('❌ '+e.message);}
 }
 
@@ -833,51 +1165,42 @@ async function blockUser(){
   catch(e){toast('❌ '+e.message);}
 }
 
-/* ═══════════ DM & SMART CHAT ═══════════ */
-function mkRid(a,b){return[a,b].sort().join('_');}
-
+/* ─── 사기예방 가이드 ─── */
+function openFraudGuide(){document.getElementById('fraud-ov').classList.add('open');}
+function closeFraudGuide(){document.getElementById('fraud-ov').classList.remove('open');}
 function checkFraud(){
-  toast('안전 거래를 위해 송금 전 더치트 조회를 권장합니다!');
-  setTimeout(()=>{ window.open('https://thecheat.co.kr', '_blank'); }, 1500);
+  toast('더치트로 사기 이력을 조회합니다...');
+  setTimeout(()=>window.open('https://thecheat.co.kr','_blank'),800);
 }
 
-// 🌟 채팅방 생성 및 입장 (매물 정보 함께 저장)
-async function openRoom(tUid,tName,tPhoto, initMsg, itemObj){
+/* ─── DM 시스템 ─── */
+function mkRid(a,b){return[a,b].sort().join('_');}
+
+async function openRoom(tUid,tName,tPhoto,initMsg,itemObj){
   if(!CU){pendChat={uid:tUid,name:tName,msg:initMsg,item:itemObj};showLoginModal();return;}
   if(CU.uid===tUid)return toast('본인에게는 채팅을 보낼 수 없어요.');
   if(await isBanned(CU.uid))return toast('🚫 차단된 계정은 채팅을 이용할 수 없습니다.');
-  
   const rid=mkRid(CU.uid,tUid);
-  let roomData = {
+  let roomData={
     users:[CU.uid,tUid],
     userNames:{[CU.uid]:CU.displayName||'나',[tUid]:tName},
     userPhotos:{[CU.uid]:CU.photoURL||'',[tUid]:tPhoto||''},
     updatedAt:firebase.firestore.FieldValue.serverTimestamp()
   };
-  // 매물 정보가 전달되었다면 채팅방 데이터에 저장
-  if(itemObj) {
-    roomData.itemInfo = { title: itemObj.title, price: itemObj.price, imageUrl: itemObj.imageUrl||'' };
-  }
-  
+  if(itemObj)roomData.itemInfo={title:itemObj.title,price:itemObj.price,imageUrl:itemObj.imageUrl||''};
   await db.collection('dmRooms').doc(rid).set(roomData,{merge:true});
-  closeModal(); switchPage('chat');
-  
-  setTimeout(()=>{
-    openDm(rid,tName);
-    if(initMsg) { document.getElementById('dm-in').value = initMsg; }
-  },200);
+  closeModal();switchPage('chat');
+  setTimeout(()=>{openDm(rid,tName);if(initMsg)document.getElementById('dm-in').value=initMsg;},200);
 }
 
 async function chatSeller(){
-  if(!curItem)return; if(!curItem.sellerId)return toast('판매자 정보가 없습니다.');
-  const initMsg = `안녕하세요, [${curItem.title}] 매물 보고 연락드립니다!`;
-  await openRoom(curItem.sellerId, curItem.sellerName||'판매자', '', initMsg, curItem);
+  if(!curItem||!curItem.sellerId)return toast('판매자 정보가 없습니다.');
+  await openRoom(curItem.sellerId,curItem.sellerName||'판매자','',`안녕하세요, [${curItem.title}] 매물 보고 연락드립니다!`,curItem);
 }
-
 async function proposeDirectTrade(){
-  if(!curItem)return; if(!curItem.sellerId)return toast('판매자 정보가 없습니다.');
-  const initMsg = `[직거래 제안]\n안녕하세요, [${curItem.title}] 매물 직거래 원합니다.\n\n- 희망 일시: \n- 희망 장소: \n\n편하게 말씀해주세요!`;
-  await openRoom(curItem.sellerId, curItem.sellerName||'판매자', '', initMsg, curItem);
+  if(!curItem||!curItem.sellerId)return toast('판매자 정보가 없습니다.');
+  const msg=`[직거래 제안] 안녕하세요!\n[${curItem.title}] 직거래 원합니다.\n\n- 희망 일시: \n- 희망 장소: \n\n편하게 말씀해주세요!`;
+  await openRoom(curItem.sellerId,curItem.sellerName||'판매자','',msg,curItem);
 }
 
 function initRooms(){
@@ -894,137 +1217,160 @@ function initRooms(){
     list.innerHTML=rooms.map(r=>{
       const oid=r.users.find(u=>u!==CU.uid),oName=r.userNames?.[oid]||'상대방',oPhoto=r.userPhotos?.[oid]||'';
       const last=r.lastMsg||'채팅을 시작해보세요';
-      const time = r.updatedAt ? timeAgo(r.updatedAt.toDate()) : '';
+      const time=r.updatedAt?timeAgo(r.updatedAt.toDate()):'';
       const u=r.lastSenderId&&r.lastSenderId!==CU.uid&&!r.isRead;
-      return`<div class="room-item ${u?'unread':''}" onclick="openDm('${r.id}','${oName.replace(/'/g,"\\'")}')">
+      return`<div class="room-item${u?' unread':''}" onclick="openDm('${r.id}','${oName.replace(/'/g,"\\'")}')">
         <div class="r-av">${oPhoto?`<img src="${oPhoto}" alt="">`:oName[0]}</div>
-        <div class="r-info"><div class="r-name">${esc(oName)}</div><div class="r-last" style="${u?'font-weight:700;color:var(--t1);':''}">${esc(last)}</div></div>
-        <div class="r-meta"><div class="r-time">${time}</div>${u?'<div class="r-dot"></div>':''}</div>
+        <div class="r-info"><div class="r-name">${esc(oName)}</div><div class="r-last" style="${u?'font-weight:700;color:var(--chat-t1);':''}">${esc(last)}</div></div>
+        <div class="r-meta"><div class="r-time">${time}</div>${u?'<div class="r-unread-count">N</div>':''}</div>
       </div>`;
     }).join('');
   });
 }
 
 function openDm(rid,title){
-  dmRoom=rid; document.getElementById('dm-hdr-name').textContent=title;
-  document.getElementById('room-list').style.display='none'; document.getElementById('dm-win').classList.add('open');
+  dmRoom=rid;
+  document.getElementById('dm-hdr-name').textContent=title;
+  document.getElementById('room-list').style.display='none';
+  document.getElementById('dm-win').classList.add('open');
   
-  // 🌟 채팅방 매물 고정 배너 표시 로직
   db.collection('dmRooms').doc(rid).get().then(d=>{
-    if(d.exists) {
-      const data = d.data();
-      if(data.lastSenderId!==CU.uid) d.ref.update({isRead:true});
-      
-      const banner = document.getElementById('dm-item-banner');
-      if(data.itemInfo) {
-        document.getElementById('dm-item-img').src = data.itemInfo.imageUrl || '';
-        document.getElementById('dm-item-title').textContent = data.itemInfo.title;
-        document.getElementById('dm-item-price').textContent = Number(data.itemInfo.price).toLocaleString() + '원';
-        banner.style.display = 'flex';
-      } else {
-        banner.style.display = 'none';
-      }
+    if(d.exists){
+      const data=d.data();
+      if(data.lastSenderId!==CU?.uid)d.ref.update({isRead:true});
+      const banner=document.getElementById('dm-item-banner');
+      if(data.itemInfo){
+        document.getElementById('dm-item-img').src=data.itemInfo.imageUrl||'';
+        document.getElementById('dm-item-title').textContent=data.itemInfo.title;
+        document.getElementById('dm-item-price').textContent=Number(data.itemInfo.price).toLocaleString()+'원';
+        banner.style.display='flex';
+      } else {banner.style.display='none';}
     }
   });
 
   if(unsubDm)unsubDm();
   const box=document.getElementById('dm-msgs');
-  
-  // 🌟 사기방지 경고 시스템 메시지 항상 고정
-  box.innerHTML=`<div class="sys-msg-wrap"><div class="sys-msg" style="background:#8ca5b9; color:#fff;">🚨 주의: 외부 링크 결제나 카카오톡 유도 시 사기일 수 있습니다.</div></div>`;
+  // 사기방지 경고 - 고정
+  box.innerHTML=`<div class="sys-wrap"><div class="sys-msg warn">🚨 카카오톡 유도·외부 결제 요구는 사기입니다. 신고 버튼을 눌러주세요.</div></div>`;
   
   unsubDm=db.collection('dmRooms').doc(rid).collection('messages').orderBy('createdAt').onSnapshot(snap=>{
-    // 기존 경고 메시지는 유지하고 뒤에 추가
-    const msgsHTML = snap.docs.map(d=>{
-      const m=d.data(); 
-      if(m.isSystem) return `<div class="sys-msg-wrap"><div class="sys-msg">${esc(m.text)}</div></div>`;
+    const sysHTML=`<div class="sys-wrap"><div class="sys-msg warn">🚨 카카오톡 유도·외부 결제 요구는 사기입니다. 신고하세요.</div></div>`;
+    
+    // 날짜 구분선 추가 로직
+    let lastDate='';
+    const msgsHTML=snap.docs.map(d=>{
+      const m=d.data();
+      if(m.isSystem)return`<div class="sys-wrap"><div class="sys-msg">${esc(m.text)}</div></div>`;
       const me=CU&&m.uid===CU.uid;
-      const timeStr = m.createdAt ? new Date(m.createdAt.toDate()).toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit'}) : '';
-      return`<div class="bw ${me?'me':''}">
+      const msgDate=m.createdAt?m.createdAt.toDate().toLocaleDateString('ko-KR'):'';
+      const timeStr=m.createdAt?m.createdAt.toDate().toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit'}):'';
+      let dateDivider='';
+      if(msgDate&&msgDate!==lastDate){dateDivider=`<div class="date-divider"><span>${msgDate}</span></div>`;lastDate=msgDate;}
+      return dateDivider+`<div class="bw${me?' me':''}">
         ${!me?`<div class="chat-sender">${esc(m.name||'상대방')}</div>`:''}
-        <div style="display:flex; align-items:flex-end; gap:4px; flex-direction:${me?'row-reverse':'row'}">
+        <div class="bubble-row">
           <div class="chat-bubble">${esc(m.text)}</div>
           <div class="chat-time">${timeStr}</div>
         </div>
       </div>`;
     }).join('');
     
-    // 경고 + 실제 메시지
-    box.innerHTML = `<div class="sys-msg-wrap"><div class="sys-msg" style="background:#8ca5b9; color:#fff;">🚨 주의: 카카오톡 유도나 외부 링크 결제는 사기일 수 있습니다.</div></div>` + msgsHTML;
-    
+    box.innerHTML=sysHTML+msgsHTML;
     box.scrollTop=box.scrollHeight;
-    if(snap.docs.length){const last=snap.docs[snap.docs.length-1].data();if(last.uid!==CU.uid)db.collection('dmRooms').doc(rid).update({isRead:true});}
+    if(snap.docs.length){const last=snap.docs[snap.docs.length-1].data();if(last.uid!==CU?.uid)db.collection('dmRooms').doc(rid).update({isRead:true});}
   });
 }
 function closeDm(){dmRoom=null;if(unsubDm){unsubDm();unsubDm=null;}document.getElementById('room-list').style.display='block';document.getElementById('dm-win').classList.remove('open');}
 
 async function sendDm(){
-  if(!CU||!dmRoom)return; const input=document.getElementById('dm-in');const text=input.value.trim();if(!text)return;
+  if(!CU||!dmRoom)return;
+  const input=document.getElementById('dm-in');const text=input.value.trim();if(!text)return;
   if(await isBanned(CU.uid))return toast('🚫 차단된 계정은 채팅을 이용할 수 없습니다.');
-  input.value=''; const batch=db.batch(); const msgRef=db.collection('dmRooms').doc(dmRoom).collection('messages').doc();
+  input.value='';
+  const batch=db.batch();
+  const msgRef=db.collection('dmRooms').doc(dmRoom).collection('messages').doc();
   batch.set(msgRef,{text,uid:CU.uid,name:CU.displayName||'나',createdAt:firebase.firestore.FieldValue.serverTimestamp()});
   batch.update(db.collection('dmRooms').doc(dmRoom),{lastMsg:text,updatedAt:firebase.firestore.FieldValue.serverTimestamp(),lastSenderId:CU.uid,isRead:false});
   await batch.commit();
 }
 
-function botMsg(text,isUser=false){const box=document.getElementById('bot-msgs');const d=document.createElement('div');d.className='bw fi'+(isUser?' me':'');d.innerHTML=`<div class="chat-bubble${isUser?'':' bot'}">${text}</div>`;box.appendChild(d);box.scrollTop=box.scrollHeight;}
+/* ─── AI 도우미 챗봇 ─── */
+function botMsg(text, isUser=false, isHTML=false){
+  const box=document.getElementById('bot-msgs');
+  const d=document.createElement('div');
+  d.className='bw'+(isUser?' me':'');
+  if(isUser){
+    d.innerHTML=`<div class="bubble-row"><div class="chat-bubble">${esc(text)}</div></div>`;
+  } else {
+    d.innerHTML=`<div class="chat-sender">🤖 TireSafe AI 도우미</div><div class="bubble-row"><div class="chat-bubble">${isHTML?text:esc(text)}</div></div>`;
+  }
+  box.appendChild(d);
+  box.scrollTop=box.scrollHeight;
+}
+
 const BOT=[
-  {k:['사이즈','규격','고르는','선택'],a:'타이어 사이즈는 운전석 문 안쪽 스티커나 현재 타이어 측면에서 확인하세요!\n예: 205/55R16 → 폭 205mm / 편평비 55% / 림 16인치\n⚠️ 사이즈가 다르면 안전에 영향을 줄 수 있으니 꼭 확인하세요 🙏'},
-  {k:['배송','택배','언제','도착'],a:'배송은 판매자와 1:1 채팅으로 협의하여 착불/선불을 결정해주세요! 🚚\n(택배사 및 일정도 판매자에게 직접 문의해주세요)'},
-  {k:['장착','설치','공임','어디서'],a:'구매 후 가까운 타이어 전문점이나 카센터에서 장착하시면 돼요 🔧\n공임은 보통 1개당 1~2만 원 수준입니다.'},
-  {k:['환불','반품','교환','취소'],a:'수령 후 7일 이내 환불/교환 가능합니다 💰\n단, 장착 후에는 환불이 어려우니 받자마자 상태를 확인해주세요!'},
-  {k:['가격','얼마','비용'],a:'중고타이어·휠은 새 제품 대비 30~60% 수준이에요 💡\n홈 탭에서 매물을 확인해보세요!'},
-  {k:['상담','고객상담','1:1','직접','연결','상담원'],a:null} 
+  {k:['사이즈','규격','고르는','선택','확인'],a:`타이어 사이즈는 두 곳에서 확인할 수 있어요 👇\n\n📌 운전석 문 안쪽 스티커\n📌 현재 장착된 타이어 측면\n\n예시: <b>205/55R16</b>\n- 205 = 타이어 폭(mm)\n- 55 = 편평비(%)\n- R16 = 림 직경(인치)\n\n⚠️ 사이즈가 다르면 안전에 영향을 줄 수 있어요!`,html:true},
+  {k:['배송','택배','언제','도착','기간'],a:`배송 방법은 판매자와 1:1 채팅으로 협의해 결정해요 🚚\n\n• 착불 — 받는 분이 배송비 부담\n• 선불 — 보내는 분이 배송비 부담\n• 직거래 — 직접 만나서 거래\n\n💡 직거래가 가장 안전합니다!`},
+  {k:['장착','설치','공임','어디서','공장'],a:`구매 후 가까운 타이어 전문점·카센터에서 장착하시면 돼요 🔧\n\n💰 공임 기준\n• 타이어 교체: 1개당 약 1~2만 원\n• 휠 교체: 1개당 약 1~2만 원\n• 얼라이먼트 추가 시 3~5만 원\n\n💡 네이버 지도에서 "타이어 교체" 검색!`},
+  {k:['환불','반품','교환','취소','반환'],a:`환불·교환 정책 안내 💰\n\n• 수령 후 7일 이내 환불/교환 요청 가능\n• 장착 전 상태를 반드시 확인하세요\n• ⚠️ 장착 완료 후에는 환불이 어렵습니다\n\n분쟁 발생 시 채팅 내역이 중요한 증거가 됩니다.`},
+  {k:['사기','조회','더치트','예방','피해','신고','안전'],a:`사기 예방 꿀팁 🛡️\n\n🚫 이건 사기예요!\n• 카카오톡으로 대화 유도\n• 외부 링크 결제 요구\n• 선입금 후 잠수\n\n✅ 안전한 거래법\n• 가능하면 직거래\n• TireSafe 채팅 안에서만 대화\n• 거래 전 더치트에서 계좌/번호 조회`,btn:{label:'🔍 더치트 사기 조회하기',action:"window.open('https://thecheat.co.kr','_blank')"}},
+  {k:['가격','얼마','비용','시세'],a:`중고 타이어·휠 평균 시세 💡\n\n🛞 중고타이어 (4개 기준)\n• 경차/소형: 5~15만 원\n• 중형: 15~30만 원\n• SUV/대형: 25~50만 원\n\n⭕ 중고휠 (4개 기준)\n• 순정 스틸: 3~10만 원\n• 순정 알로이: 10~40만 원\n• 단품 인기 브랜드: 30~100만 원+\n\n💡 새 제품 대비 30~60% 수준이에요!`},
+  {k:['DOT','제조년도','제조','연식','유통기한'],a:`타이어 DOT 보는 법 📅\n\nDOT 번호 마지막 4자리를 확인하세요.\n예: <b>2023</b> → 20주차, 2023년 제조\n\n⚠️ 권장 교체 시기\n• 제조 후 5년 이상 = 점검 권장\n• 제조 후 10년 이상 = 교체 필수\n• 트레드 2mm 이하 = 즉시 교체\n\n💡 중고 구매 시 DOT 꼭 확인하세요!`,html:true},
+  {k:['트레드','마모','잔량','남은'],a:`트레드 잔량 확인법 🔍\n\n💰 100원짜리 동전 테스트\n동전의 이순신 장군 머리가 보이면 교체 시기!\n\n📊 잔량별 상태\n• 8mm 이상 = 신품 수준\n• 5~8mm = 양호\n• 3~5mm = 보통 (구매 고려)\n• 2mm 이하 = 교체 필요\n\n💡 중고 구매 시 4mm 이상 권장!`},
+  {k:['1:1','고객상담','상담','연결','문의','직접'],a:null}
 ];
 
-function getAns(msg){const m=msg.toLowerCase();for(const q of BOT)if(q.k.some(k=>m.includes(k)))return q.a;return undefined;}
+function getAns(msg){
+  const m=msg.toLowerCase();
+  for(const q of BOT)if(q.k.some(k=>m.includes(k)))return q;
+  return undefined;
+}
 function qa(q){document.getElementById('bot-in').value=q;sendBot();}
 
-// 🌟 고객센터 연결 시 자동 인사말 및 시스템 메시지 추가
-async function connectAdmin() {
-  if(!CU) { botMsg('로그인 후 이용하실 수 있어요!'); return showLoginModal(); }
-  if(CU.uid===ADMIN) return botMsg('현재 사장님 관리자 계정으로 접속 중입니다. 일반 계정으로 1:1 대화를 테스트해주세요 😅');
-  if(await isBanned(CU.uid)) return botMsg('🚫 차단된 계정은 1:1 상담을 이용할 수 없습니다.');
-
+async function connectAdmin(){
+  if(!CU){botMsg('로그인 후 이용하실 수 있어요!');return showLoginModal();}
+  if(CU.uid===ADMIN)return botMsg('관리자 계정으로 접속 중입니다 😅');
+  if(await isBanned(CU.uid))return botMsg('🚫 차단된 계정은 1:1 상담을 이용할 수 없습니다.');
   botMsg('1:1 고객상담 센터로 연결해 드릴게요! 잠시만요 👨‍💼');
-  
-  setTimeout(async () => {
-    const rid = mkRid(CU.uid, ADMIN);
-    const roomRef = db.collection('dmRooms').doc(rid);
-    const doc = await roomRef.get();
-    
-    if (!doc.exists) {
-      await roomRef.set({
-        users: [CU.uid, ADMIN],
-        userNames: { [CU.uid]: CU.displayName||'고객', [ADMIN]: '타이어세이프 고객센터' },
-        userPhotos: { [CU.uid]: CU.photoURL||'', [ADMIN]: '' },
-        updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-        lastMsg: '안녕하세요! 타이어세이프입니다. 무엇을 도와드릴까요?',
-        lastSenderId: ADMIN, isRead: false
-      }, { merge: true });
-      
-      await db.collection('dmRooms').doc(rid).collection('messages').add({
-        text: '안녕하세요! 타이어세이프입니다.\n무엇을 도와드릴까요?',
-        uid: ADMIN, name: '타이어세이프 고객센터', createdAt: firebase.firestore.FieldValue.serverTimestamp()
-      });
+  setTimeout(async()=>{
+    const rid=mkRid(CU.uid,ADMIN);
+    const roomRef=db.collection('dmRooms').doc(rid);
+    const doc=await roomRef.get();
+    if(!doc.exists){
+      await roomRef.set({users:[CU.uid,ADMIN],userNames:{[CU.uid]:CU.displayName||'고객',[ADMIN]:'TireSafe 고객센터'},userPhotos:{[CU.uid]:CU.photoURL||'',[ADMIN]:''},updatedAt:firebase.firestore.FieldValue.serverTimestamp(),lastMsg:'안녕하세요! TireSafe입니다. 무엇을 도와드릴까요?',lastSenderId:ADMIN,isRead:false},{merge:true});
+      await db.collection('dmRooms').doc(rid).collection('messages').add({text:'안녕하세요! TireSafe 고객센터입니다.\n무엇을 도와드릴까요? 😊',uid:ADMIN,name:'TireSafe 고객센터',createdAt:firebase.firestore.FieldValue.serverTimestamp()});
     }
     switchPage('chat');
-    setTimeout(() => openDm(rid, '고객상담센터'), 200);
-  }, 1000);
+    setTimeout(()=>openDm(rid,'TireSafe 고객센터'),200);
+  },1000);
 }
 
 async function sendBot(){
   const input=document.getElementById('bot-in');const msg=input.value.trim();if(!msg)return;
-  input.value='';botMsg(msg,true);
-  
+  input.value='';
+  botMsg(msg,true);
   setTimeout(async()=>{
-    const ans=getAns(msg);
-    if(ans===null) { connectAdmin(); } 
-    else if(ans===undefined){
-      botMsg('정확한 답변을 찾지 못했어요 😅\n도움이 필요하시면 아래 [1:1 고객상담] 버튼을 눌러주세요!');
-      botMsg('<button class="qbtn" style="border-color:var(--t1); color:var(--t1); margin-top:4px;" onclick="connectAdmin()">👨‍💼 1:1 고객상담 바로 연결하기</button>');
-    } else { botMsg(ans); }
-  }, 500);
+    const result=getAns(msg);
+    if(result===undefined){
+      botMsg(`"${msg}"에 대한 정확한 답변을 못 찾겠어요 😅\n1:1 상담을 연결해 드릴까요?`,false,false);
+      const box=document.getElementById('bot-msgs');
+      const btn=document.createElement('div');
+      btn.className='bw';
+      btn.innerHTML=`<div class="chat-bubble" style="padding:8px 10px;"><button onclick="connectAdmin()" style="background:var(--chat-surface2);border:1px solid var(--chat-border);border-radius:8px;padding:8px 14px;font-size:12px;font-weight:700;color:var(--chat-t1);cursor:pointer;font-family:var(--font);">👨‍💼 1:1 고객상담 연결하기</button></div>`;
+      box.appendChild(btn);box.scrollTop=box.scrollHeight;
+    } else if(result.a===null){
+      connectAdmin();
+    } else {
+      botMsg(result.a,false,result.html||false);
+      if(result.btn){
+        const box=document.getElementById('bot-msgs');
+        const btn=document.createElement('div');
+        btn.className='bw';
+        btn.innerHTML=`<div class="chat-bubble" style="padding:8px 10px;"><button onclick="${result.btn.action}" style="background:var(--chat-surface2);border:1px solid var(--chat-border);border-radius:8px;padding:8px 14px;font-size:12px;font-weight:700;color:var(--chat-t1);cursor:pointer;font-family:var(--font);">${result.btn.label}</button></div>`;
+        box.appendChild(btn);box.scrollTop=box.scrollHeight;
+      }
+    }
+  },450);
 }
 </script>
 </body>
