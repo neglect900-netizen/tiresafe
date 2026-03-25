@@ -17,13 +17,11 @@
     --border:  #E4E7EF;
     --border2: #CDD1DF;
     --accent:  #E8480A;
-    --accent2: #FF6633;
     --accent-bg:#FFF0EB;
     --accent-bd:#FFD4C2;
     --green:   #16A34A;
     --green-bg:#DCFCE7;
     --red:     #DC2626;
-    --red-bg:  #FEE2E2;
     --blue:    #2563EB;
     --t1:      #111827;
     --t2:      #4B5563;
@@ -44,10 +42,8 @@
   .hdr { flex-shrink: 0; height: var(--head); display: flex; align-items: center; justify-content: space-between; padding: 0 18px; background: var(--surface); border-bottom: 1px solid var(--border); z-index: 40; }
   .logo { font-size: 21px; font-weight: 900; letter-spacing: -0.5px; color: var(--t1); }
   .logo em { color: var(--accent); font-style: normal; }
-  .logo-dot { display: inline-block; width: 5px; height: 5px; background: var(--accent); border-radius: 50%; margin-left: 1px; vertical-align: middle; margin-bottom: 3px; }
   .avatar { width: 34px; height: 34px; border-radius: 50%; background: var(--accent); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; cursor: pointer; overflow: hidden; }
-  .avatar img { width: 100%; height: 100%; object-fit: cover; }
-  .login-btn { font-size: 13px; font-weight: 700; padding: 8px 16px; border-radius: 20px; background: var(--accent); color: #fff; border: none; cursor: pointer; font-family: inherit; }
+  .login-btn { font-size: 13px; font-weight: 700; padding: 8px 16px; border-radius: 20px; background: var(--t1); color: #fff; border: none; cursor: pointer; font-family: inherit; }
 
   /* ── PAGES ── */
   .page { display: none; flex: 1; overflow-y: auto; padding-bottom: var(--nav); }
@@ -57,43 +53,40 @@
 
   /* ── HOME ── */
   .hero { background: linear-gradient(145deg,#FFF5F2 0%,#FFF 60%); padding: 24px 18px 26px; border-bottom: 1px solid var(--border); }
-  .hero-tag { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 700; letter-spacing: 0.5px; color: var(--accent); background: var(--accent-bg); border: 1px solid var(--accent-bd); border-radius: 20px; padding: 4px 11px; margin-bottom: 13px; }
-  .hero h2 { font-size: 26px; font-weight: 900; letter-spacing: -0.7px; color: var(--t1); line-height: 1.2; margin-bottom: 6px; }
+  .hero-tag { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 700; color: var(--accent); background: var(--accent-bg); border: 1px solid var(--accent-bd); border-radius: 20px; padding: 4px 11px; margin-bottom: 13px; }
+  .hero h2 { font-size: 26px; font-weight: 900; letter-spacing: -0.7px; line-height: 1.2; margin-bottom: 6px; }
   .hero h2 b { color: var(--accent); }
   .hero-sub { font-size: 13px; color: var(--t2); margin-bottom: 20px; line-height: 1.5; }
-  .hero-sub span { display: inline-block; background: var(--surface2); border-radius: 6px; padding: 2px 7px; margin-right: 4px; font-weight: 600; color: var(--t2); font-size: 12px; }
+  .hero-sub span { display: inline-block; background: var(--surface2); border-radius: 6px; padding: 2px 7px; margin-right: 4px; font-weight: 600; font-size: 12px; }
   .sbox { display: flex; gap: 8px; }
-  .sbox input { flex: 1; padding: 12px 15px; background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--r); font-size: 13px; font-family: var(--font); outline: none; color: var(--t1); transition: border-color .2s; }
+  .sbox input { flex: 1; padding: 12px 15px; background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--r); font-size: 13px; font-family: var(--font); outline: none; }
   .sbox input:focus { border-color: var(--accent); }
-  .sbox input::placeholder { color: var(--t3); }
-  .sbtn { background: var(--t1); color: #fff; border: none; border-radius: var(--r); padding: 12px 16px; font-weight: 700; font-size: 13px; cursor: pointer; font-family: var(--font); white-space: nowrap; }
+  .sbtn { background: var(--t1); color: #fff; border: none; border-radius: var(--r); padding: 12px 16px; font-weight: 700; font-size: 13px; cursor: pointer; white-space: nowrap; }
 
   .cat-tabs { display: flex; border-bottom: 1px solid var(--border); background: var(--surface); }
-  .cat-btn { flex: 1; padding: 12px 8px; font-size: 13px; font-weight: 700; font-family: var(--font); border: none; background: none; color: var(--t3); cursor: pointer; border-bottom: 2px solid transparent; transition: color .2s; }
+  .cat-btn { flex: 1; padding: 12px 8px; font-size: 13px; font-weight: 700; font-family: var(--font); border: none; background: none; color: var(--t3); cursor: pointer; border-bottom: 2px solid transparent; }
   .cat-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
 
   .sec-hdr { display: flex; align-items: center; justify-content: space-between; padding: 16px 16px 10px; }
-  .sec-title { font-size: 14px; font-weight: 800; color: var(--t1); }
+  .sec-title { font-size: 14px; font-weight: 800; }
   .sec-ref { font-size: 12px; font-weight: 600; color: var(--t3); cursor: pointer; padding: 4px 9px; background: var(--surface2); border-radius: 20px; }
 
   /* ── GRID & CARDS ── */
   .tire-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 0 12px 20px; }
-  .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r2); overflow: hidden; cursor: pointer; transition: box-shadow .15s, transform .12s; position: relative; }
-  .card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.1); transform: translateY(-1px); }
-  .card:active { transform: scale(0.97); }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r2); overflow: hidden; cursor: pointer; position: relative; }
   .card-img-wrap { position: relative; height: 128px; background: var(--surface2); }
   .card-img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .card-ph { width: 100%; height: 100%; background: linear-gradient(135deg, var(--surface2), var(--border)); display: flex; align-items: center; justify-content: center; font-size: 36px; }
+  .card-ph { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 36px; }
   .card-v { position: absolute; top: 8px; left: 8px; background: var(--green); color: #fff; font-size: 9px; font-weight: 800; padding: 3px 7px; border-radius: 6px; z-index: 2; }
   .card-cat { position: absolute; top: 8px; right: 8px; background: rgba(255,255,255,0.92); color: var(--t2); font-size: 9px; font-weight: 700; padding: 2px 7px; border-radius: 6px; border: 1px solid var(--border); z-index: 2; }
   .card-body { padding: 10px 12px 12px; }
-  .card-name { font-size: 13px; font-weight: 800; color: var(--t1); margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .card-name { font-size: 13px; font-weight: 800; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .card-size { font-size: 11px; color: var(--t3); margin-bottom: 7px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .card-btm { display: flex; align-items: flex-end; justify-content: space-between; }
   .card-price { font-size: 15px; font-weight: 900; color: var(--t1); letter-spacing: -0.3px; }
   
-  /* 판매완료 상태 클래스 */
-  .card.sold .card-img-wrap::after { content: '판매완료'; position: absolute; inset: 0; background: rgba(0,0,0,0.55); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 800; z-index: 5; backdrop-filter: blur(1px); }
+  /* 거래 상태 클래스 (0:판매중, 1:예약중, 2:판매완료) */
+  .card.reserved .card-img-wrap::after { content: '예약중'; position: absolute; inset: 0; background: rgba(37, 99, 235, 0.6); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 800; z-index: 5; backdrop-filter: blur(1px); }
+  .card.sold .card-img-wrap::after { content: '판매완료'; position: absolute; inset: 0; background: rgba(0,0,0,0.6); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 800; z-index: 5; backdrop-filter: blur(1px); }
   .card.sold .card-body { opacity: 0.5; }
 
   .empty { grid-column: 1/-1; text-align: center; padding: 60px 20px; }
@@ -103,86 +96,88 @@
   .spinner { width: 28px; height: 28px; border: 2.5px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin .7s linear infinite; margin: 0 auto 10px; }
   @keyframes spin { to { transform: rotate(360deg) } }
 
-  /* ── SELL & EDIT FORM ── */
+  /* ── FORM (SELL & EDIT) ── */
   .sell-wrap { padding: 20px 16px 10px; }
-  .sell-title { font-size: 22px; font-weight: 900; color: var(--t1); margin-bottom: 3px; letter-spacing: -0.5px; }
+  .sell-title { font-size: 22px; font-weight: 900; margin-bottom: 3px; letter-spacing: -0.5px; }
   .sell-sub { font-size: 13px; color: var(--t3); margin-bottom: 22px; }
-  .photo-up { border: 2px dashed var(--border2); border-radius: var(--r2); height: 148px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; background: var(--surface2); overflow: hidden; position: relative; transition: border-color .2s; margin-bottom: 16px; }
-  .photo-up:hover { border-color: var(--accent); }
+  .photo-up { border: 2px dashed var(--border2); border-radius: var(--r2); height: 148px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; background: var(--surface2); overflow: hidden; position: relative; margin-bottom: 16px; }
   .pup-icon { font-size: 28px; margin-bottom: 6px; }
   .pup-txt { font-size: 13px; font-weight: 600; color: var(--t2); }
-  .pup-hint { font-size: 11px; color: var(--t3); margin-top: 3px; }
   .f-group { margin-bottom: 13px; }
   .f-label { display: block; font-size: 11px; font-weight: 800; color: var(--t2); margin-bottom: 6px; }
-  .f-input { width: 100%; padding: 13px 14px; background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--r); font-size: 14px; font-family: var(--font); outline: none; color: var(--t1); transition: border-color .2s; }
-  .f-input:focus { border-color: var(--t1); }
-  .f-input::placeholder { color: var(--t4); }
-  .f-select { width: 100%; padding: 13px 14px; background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--r); font-size: 14px; font-family: var(--font); outline: none; color: var(--t1); cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239CA3AF' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; }
-  .f-select:focus { border-color: var(--t1); }
+  .f-input, .f-select, .f-ta { width: 100%; padding: 13px 14px; background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--r); font-size: 14px; font-family: var(--font); outline: none; color: var(--t1); }
+  .f-input:focus, .f-select:focus, .f-ta:focus { border-color: var(--t1); }
   .f-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  .f-ta { width: 100%; padding: 13px 14px; background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--r); font-size: 14px; font-family: var(--font); outline: none; color: var(--t1); resize: none; height: 96px; line-height: 1.5; }
-  .f-ta:focus { border-color: var(--t1); }
+  .f-ta { resize: none; height: 96px; line-height: 1.5; }
 
-  .btn { width: 100%; padding: 14px; border: none; border-radius: var(--r); font-size: 14px; font-weight: 700; font-family: var(--font); cursor: pointer; transition: opacity .15s, transform .1s; margin-top: 6px; }
-  .btn:active { transform: scale(0.98); opacity: .9; }
+  .btn { width: 100%; padding: 14px; border: none; border-radius: var(--r); font-size: 14px; font-weight: 700; cursor: pointer; margin-top: 6px; font-family: var(--font); }
   .btn-ac { background: var(--accent); color: #fff; }
   .btn-gh { background: var(--surface2); color: var(--t2); }
   .btn-dk { background: var(--t1); color: #fff; }
   .btn-red{ background: var(--red); color: #fff; }
 
+  /* ── MY PAGE ── */
+  .my-hdr { padding: 30px 20px 20px; background: var(--surface); border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 16px; }
+  .my-av { width: 64px; height: 64px; border-radius: 50%; background: var(--accent); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 800; overflow: hidden; }
+  .my-av img { width: 100%; height: 100%; object-fit: cover; }
+  .my-info { flex: 1; }
+  .my-name { font-size: 20px; font-weight: 900; margin-bottom: 4px; }
+  .my-email { font-size: 13px; color: var(--t3); }
+  .my-edit-btn { background: var(--surface2); color: var(--t2); border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 700; cursor: pointer; margin-top: 8px; }
+  
+  .my-menu { margin-top: 10px; background: var(--surface); }
+  .my-menu-item { display: flex; align-items: center; justify-content: space-between; padding: 18px 20px; border-bottom: 1px solid var(--border); cursor: pointer; font-size: 15px; font-weight: 600; color: var(--t1); }
+  .my-menu-item:active { background: var(--surface2); }
+  .my-menu-item span { color: var(--t3); }
+
   /* ── CHAT SYSTEM ── */
   .chat-tabs { flex-shrink: 0; display: flex; border-bottom: 1px solid var(--border); background: var(--surface); }
-  .ctab { flex: 1; padding: 13px 8px; font-size: 13px; font-weight: 700; font-family: var(--font); border: none; background: none; color: var(--t3); cursor: pointer; border-bottom: 2px solid transparent; transition: color .2s; }
+  .ctab { flex: 1; padding: 13px 8px; font-size: 13px; font-weight: 700; border: none; background: none; color: var(--t3); cursor: pointer; border-bottom: 2px solid transparent; }
   .ctab.active { color: var(--t1); border-bottom-color: var(--t1); }
 
   #dm-area, #bot-area { flex: 1; display: flex; flex-direction: column; overflow: hidden; position: relative; }
   #room-list { flex: 1; overflow-y: auto; background: var(--surface); }
-  .room-item { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-bottom: 1px solid var(--border); cursor: pointer; transition: background .1s; }
-  .room-item:hover { background: var(--surface2); }
+  .room-item { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-bottom: 1px solid var(--border); cursor: pointer; }
   .room-item.unread { background: #fdf2f2; }
   .r-av { width: 44px; height: 44px; border-radius: 50%; background: var(--accent); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; overflow: hidden; }
   .r-av img { width: 100%; height: 100%; object-fit: cover; }
   .r-info { flex: 1; min-width: 0; }
-  .r-name { font-size: 14px; font-weight: 800; color: var(--t1); margin-bottom: 2px; }
+  .r-name { font-size: 14px; font-weight: 800; margin-bottom: 2px; }
   .r-last { font-size: 12px; color: var(--t3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .r-meta { flex-shrink: 0; display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
-  .r-time { font-size: 10px; color: var(--t3); font-weight: 500; }
+  .r-time { font-size: 10px; color: var(--t3); }
   .r-dot { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; }
 
   .dm-win { display: none; position: absolute; inset: 0; flex-direction: column; background: var(--bg); z-index: 20; }
   .dm-win.open { display: flex; }
   .dm-hdr { flex-shrink: 0; display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-bottom: 1px solid var(--border); background: var(--surface); }
-  .dm-back { width: 34px; height: 34px; border-radius: 50%; background: var(--surface2); border: none; cursor: pointer; color: var(--t2); font-size: 18px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-weight: 700; }
-  .dm-hdr-name { font-size: 15px; font-weight: 800; color: var(--t1); }
+  .dm-back { width: 34px; height: 34px; border-radius: 50%; background: var(--surface2); border: none; cursor: pointer; font-size: 18px; font-weight: 700; }
+  .dm-hdr-name { font-size: 15px; font-weight: 800; }
 
   .chat-wrap { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
   .msgs { flex: 1; overflow-y: auto; padding: 14px; display: flex; flex-direction: column; gap: 10px; }
   .bw { display: flex; flex-direction: column; align-items: flex-start; width: 100%; }
   .bw.me { align-items: flex-end; }
-  .chat-bubble { max-width: 75%; width: fit-content; padding: 10px 14px; border-radius: 18px; font-size: 14px; line-height: 1.5; background: var(--surface); color: var(--t1); box-shadow: 0 1px 3px rgba(0,0,0,0.05); word-break: break-word; overflow-wrap: anywhere; white-space: pre-wrap; border-bottom-left-radius: 4px; }
+  .chat-bubble { max-width: 75%; width: fit-content; padding: 10px 14px; border-radius: 18px; font-size: 14px; line-height: 1.5; background: var(--surface); box-shadow: 0 1px 3px rgba(0,0,0,0.05); word-break: break-word; white-space: pre-wrap; border-bottom-left-radius: 4px; }
   .bw.me .chat-bubble { background: var(--t1); color: #fff; border-bottom-left-radius: 18px; border-bottom-right-radius: 4px; }
   .chat-bubble.bot { background: var(--surface); border: 1px solid var(--border); box-shadow: none; }
-  .chat-time { font-size: 10px; color: var(--t3); margin-top: 4px; font-weight: 500; }
-  .chat-sender { font-size: 11px; color: var(--t3); margin-bottom: 4px; margin-left: 4px; font-weight: 600; }
   
   .input-row { flex-shrink: 0; display: flex; align-items: center; gap: 8px; padding: 10px 12px; background: var(--surface); border-top: 1px solid var(--border); }
-  .chat-in { flex: 1; padding: 12px 16px; background: var(--surface2); border: 1px solid transparent; border-radius: 24px; font-size: 14px; font-family: var(--font); outline: none; color: var(--t1); transition: all .2s; }
+  .chat-in { flex: 1; padding: 12px 16px; background: var(--surface2); border: 1px solid transparent; border-radius: 24px; font-size: 14px; font-family: var(--font); outline: none; }
   .chat-in:focus { border-color: var(--t1); background: var(--surface); }
-  .chat-in::placeholder { color: var(--t3); }
-  .send-btn { width: 44px; height: 44px; flex-shrink: 0; background: var(--t1); color: #fff; border: none; border-radius: 50%; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; font-weight: 800; }
+  .send-btn { width: 44px; height: 44px; flex-shrink: 0; background: var(--t1); color: #fff; border: none; border-radius: 50%; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; }
 
   .quick-row { flex-shrink: 0; display: flex; gap: 6px; padding: 10px 12px; overflow-x: auto; scrollbar-width: none; border-bottom: 1px solid var(--border); background: var(--surface); }
   .quick-row::-webkit-scrollbar { display: none; }
-  .qbtn { flex-shrink: 0; white-space: nowrap; padding: 8px 14px; border-radius: 20px; background: var(--surface); border: 1px solid var(--border2); font-size: 12px; font-weight: 600; color: var(--t2); cursor: pointer; font-family: var(--font); transition: all .15s; }
-  .qbtn:hover { border-color: var(--t1); color: var(--t1); }
+  .qbtn { flex-shrink: 0; padding: 8px 14px; border-radius: 20px; background: var(--surface); border: 1px solid var(--border2); font-size: 12px; font-weight: 600; color: var(--t2); cursor: pointer; white-space: nowrap; }
 
-  /* 🌟 고품질 하단 네비게이션 (UI 업그레이드) */
+  /* ── NAV ── */
   .bnav { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; height: var(--nav); background: var(--surface); border-top: 1px solid var(--border); display: flex; z-index: 50; padding-bottom: env(safe-area-inset-bottom); box-shadow: 0 -2px 10px rgba(0,0,0,0.03); }
   .nbtn { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; border: none; background: none; cursor: pointer; color: #A0AABF; font-family: var(--font); position: relative; transition: color 0.2s; }
   .nbtn svg { width: 24px; height: 24px; stroke-width: 2.2; transition: transform 0.2s, stroke-width 0.2s; }
   .nbtn.active { color: var(--t1); }
   .nbtn.active svg { stroke-width: 2.6; transform: translateY(-2px); }
-  .n-label { font-size: 10px; font-weight: 600; transition: font-weight 0.2s; }
+  .n-label { font-size: 10px; font-weight: 600; }
   .nbtn.active .n-label { font-weight: 800; }
   .n-badge { position: absolute; top: 8px; right: calc(50% - 16px); width: 8px; height: 8px; background: var(--accent); border-radius: 50%; display: none; border: 2px solid var(--surface); }
 
@@ -193,38 +188,39 @@
   @keyframes sup { from{ transform:translateY(100%); } to{ transform:translateY(0); } }
   .sh-hdl { flex-shrink: 0; display: flex; justify-content: center; padding: 12px 0 6px; }
   .sh-hdl::after { content: ''; width: 40px; height: 5px; background: var(--border2); border-radius: 3px; }
-  .sh-x { position: absolute; top: 14px; right: 16px; background: var(--surface2); border: none; width: 32px; height: 32px; border-radius: 50%; font-size: 14px; cursor: pointer; color: var(--t2); display: flex; align-items: center; justify-content: center; z-index: 10; font-weight: 700; }
+  .sh-x { position: absolute; top: 14px; right: 16px; background: var(--surface2); border: none; width: 32px; height: 32px; border-radius: 50%; font-size: 14px; cursor: pointer; color: var(--t2); font-weight: 700; z-index: 10; }
   .sh-scroll { overflow-y: auto; flex: 1; padding: 0 20px 20px; }
   
   .m-gallery { position: relative; margin-bottom: 16px; }
   .m-gallery img { width: 100%; border-radius: var(--r); margin-bottom: 8px; object-fit: contain; background: var(--surface2); display: block; }
-  /* 모달 판매완료 오버레이 */
+  
+  /* 거래 상태 오버레이 */
+  .m-gallery.reserved::after { content: '예약중'; position: absolute; inset: 0; background: rgba(37,99,235,0.6); border-radius: var(--r); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 24px; font-weight: 900; z-index: 5; backdrop-filter: blur(2px); margin-bottom: 8px; }
   .m-gallery.sold::after { content: '판매완료'; position: absolute; inset: 0; background: rgba(0,0,0,0.6); border-radius: var(--r); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 24px; font-weight: 900; z-index: 5; backdrop-filter: blur(2px); margin-bottom: 8px; }
 
   .m-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 800; color: var(--green); padding: 4px 10px; background: var(--green-bg); border-radius: 6px; margin-bottom: 10px; }
   .m-ship-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 700; color: var(--t2); padding: 4px 10px; background: var(--surface2); border-radius: 6px; margin-bottom: 10px; margin-left: 4px; }
   
-  .m-title { font-size: 22px; font-weight: 900; color: var(--t1); margin-bottom: 4px; letter-spacing: -0.5px; }
+  .m-title { font-size: 22px; font-weight: 900; margin-bottom: 4px; letter-spacing: -0.5px; }
   .m-size { font-size: 13px; color: var(--t3); margin-bottom: 16px; font-weight: 500; }
   .m-desc-box { background: var(--surface2); border-radius: var(--r); padding: 16px; margin-bottom: 16px; border: 1px solid var(--border); }
-  .m-desc-box p { font-size: 14px; color: var(--t1); line-height: 1.7; white-space: pre-wrap; }
+  .m-desc-box p { font-size: 14px; line-height: 1.7; white-space: pre-wrap; }
   .m-price-row { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 6px; }
   .m-price-lbl { font-size: 11px; color: var(--t3); font-weight: 700; margin-bottom: 4px; }
-  .m-price { font-size: 28px; font-weight: 900; color: var(--t1); letter-spacing: -0.8px; }
+  .m-price { font-size: 28px; font-weight: 900; letter-spacing: -0.8px; }
   .m-seller { font-size: 13px; color: var(--t2); font-weight: 600; display: flex; align-items: center; gap: 6px; }
   .sh-btns { flex-shrink: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 12px 20px 24px; border-top: 1px solid var(--border); background: var(--surface); }
 
   /* auth */
   .auth-box { background: var(--surface2); border-radius: var(--r2); padding: 18px; margin-bottom: 16px; }
-  .auth-box .f-input { background: var(--surface); margin-bottom: 10px; border-color: transparent; }
+  .auth-box .f-input { margin-bottom: 10px; border-color: transparent; }
   .auth-sw { text-align: center; font-size: 13px; color: var(--t3); margin-bottom: 16px; font-weight: 500; }
   .auth-sw a { color: var(--t1); font-weight: 800; cursor: pointer; text-decoration: underline; }
-  .btn-google { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 14px; background: var(--surface); border: 1.5px solid var(--border2); border-radius: var(--r); font-size: 14px; font-weight: 800; cursor: pointer; color: var(--t1); }
+  .btn-google { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 14px; background: var(--surface); border: 1.5px solid var(--border2); border-radius: var(--r); font-size: 14px; font-weight: 800; cursor: pointer; }
 
   /* toast */
   .toast { position: fixed; top: 16px; left: 50%; transform: translateX(-50%) translateY(-10px); background: rgba(17,24,39,0.9); color: #fff; padding: 12px 22px; border-radius: 24px; font-size: 13px; font-weight: 700; opacity: 0; transition: opacity .25s, transform .25s cubic-bezier(0.2, 0.8, 0.2, 1); z-index: 9999; backdrop-filter: blur(4px); text-align: center; }
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-  .sys-msg { align-self: center; font-size: 11px; color: var(--t3); padding: 4px 14px; background: var(--surface2); border-radius: 20px; font-weight: 600; margin: 4px 0; }
 </style>
 </head>
 <body>
@@ -249,19 +245,17 @@
         <button class="sbtn" onclick="loadItems()">검색</button>
       </div>
     </div>
-
     <div class="cat-tabs">
       <button class="cat-btn active" id="cat-all"   onclick="setCategory(this,'all')">전체</button>
       <button class="cat-btn"        id="cat-tire"  onclick="setCategory(this,'tire')">🛞 중고타이어</button>
       <button class="cat-btn"        id="cat-wheel" onclick="setCategory(this,'wheel')">⭕ 중고휠</button>
     </div>
-
     <div class="sec-hdr">
       <div class="sec-title" id="sec-label">실시간 전체 매물</div>
       <div class="sec-ref" onclick="loadItems()">🔄 새로고침</div>
     </div>
     <div class="tire-grid" id="item-grid">
-      <div class="loading"><div class="spinner"></div><p>불러오는 중...</p></div>
+      <div class="loading"><div class="spinner" style="border-top-color:var(--t1)"></div><p>불러오는 중...</p></div>
     </div>
   </div>
 
@@ -278,7 +272,6 @@
       <button class="ctab active" id="ctab-dm"  onclick="switchChatTab('dm')">💬 1:1 대화</button>
       <button class="ctab"        id="ctab-bot" onclick="switchChatTab('bot')">🤖 고객센터</button>
     </div>
-
     <div id="dm-area">
       <div id="room-list"></div>
       <div class="dm-win" id="dm-win">
@@ -296,14 +289,12 @@
         </div>
       </div>
     </div>
-
     <div id="bot-area" style="display:none">
       <div class="quick-row">
         <button class="qbtn" onclick="qa('사이즈 고르는 법')">🔍 사이즈</button>
         <button class="qbtn" onclick="qa('배송 안내')">🚚 배송</button>
         <button class="qbtn" onclick="qa('장착 방법')">🔧 장착</button>
         <button class="qbtn" onclick="qa('환불 정책')">💰 환불</button>
-        <button class="qbtn" onclick="qa('세이프페이란')">🔒 세이프페이</button>
         <button class="qbtn" onclick="qa('1:1 고객상담')">👨‍💼 1:1 상담</button>
       </div>
       <div class="chat-wrap">
@@ -317,19 +308,33 @@
     </div>
   </div>
 
+  <div class="page" id="pg-my">
+    <div id="my-content">
+      <div class="empty" style="padding-top:80px;">
+        <div class="empty-icon">👤</div>
+        <p style="margin-bottom:20px;">로그인 후 내 정보를 관리하세요.</p>
+        <button class="btn btn-dk" style="max-width:200px; margin:0 auto;" onclick="showLogin()">로그인 하기</button>
+      </div>
+    </div>
+  </div>
+
   <nav class="bnav">
     <button class="nbtn active" id="nav-home" onclick="switchPage('home')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
       <span class="n-label">홈</span>
     </button>
-    <button class="nbtn" id="nav-sell" onclick="switchPage('sell')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-      <span class="n-label">등록</span>
-    </button>
     <button class="nbtn" id="nav-chat" onclick="switchPage('chat')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
       <span class="n-label">채팅</span>
       <div class="n-badge" id="chat-badge"></div>
+    </button>
+    <button class="nbtn" id="nav-sell" onclick="switchPage('sell')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+      <span class="n-label">등록</span>
+    </button>
+    <button class="nbtn" id="nav-my" onclick="switchPage('my')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+      <span class="n-label">내 정보</span>
     </button>
   </nav>
 </div>
@@ -352,8 +357,19 @@
       </div>
       <div class="m-seller" id="m-seller"></div>
     </div>
-    <div class="sh-btns" id="m-action-btns">
-      </div>
+    <div class="sh-btns" id="m-action-btns"></div>
+  </div>
+</div>
+
+<div class="ov" id="status-ov" onclick="if(event.target===this)document.getElementById('status-ov').classList.remove('open')">
+  <div class="sheet" style="height:auto;">
+    <div class="sh-hdl"></div>
+    <div style="padding: 20px 20px 30px;">
+      <h3 style="margin-bottom:16px;">거래 상태 변경</h3>
+      <button class="btn btn-gh" style="margin-bottom:8px;" onclick="changeStatus(0)">🟢 판매중</button>
+      <button class="btn btn-dk" style="background:#2563EB; margin-bottom:8px;" onclick="changeStatus(1)">⏳ 예약중</button>
+      <button class="btn btn-dk" onclick="changeStatus(2)">🤝 판매완료</button>
+    </div>
   </div>
 </div>
 
@@ -364,13 +380,11 @@
     <div style="padding:4px 20px 32px;">
       <div class="sell-title" style="margin-bottom:3px; font-size:20px;">게시글 수정</div>
       <div class="sell-sub" style="margin-bottom:16px;">내용을 수정하고 저장하세요</div>
-      
       <div class="photo-up" onclick="document.getElementById('e-file').click()" style="margin-bottom:16px; height:120px;">
         <div id="e-ph"><div class="pup-icon">📸</div><div class="pup-txt">새 사진 (기존 사진 덮어쓰기)</div></div>
         <div id="e-prev" style="position:absolute;inset:0;display:none;gap:8px;padding:12px;overflow-x:auto;align-items:center;"></div>
       </div>
       <input type="file" id="e-file" accept="image/*" multiple style="display:none" onchange="handleEPh(this)">
-      
       <div class="f-row">
         <div class="f-group"><label class="f-label">카테고리</label>
           <select id="e-cat" class="f-select"><option value="tire">중고타이어</option><option value="wheel">중고휠</option></select>
@@ -459,14 +473,78 @@ async function doLogin(){
 }
 function googleLogin(){const p=new firebase.auth.GoogleAuthProvider();p.setCustomParameters({prompt:'select_account'});auth.signInWithPopup(p).then(()=>{hideLogin();runPend();}).catch(()=>auth.signInWithRedirect(p));}
 function logout(){if(confirm('로그아웃 하시겠습니까?'))auth.signOut();}
+
+/* 🌟 회원 탈퇴 로직 추가 */
+async function deleteAccount() {
+  if(!confirm("정말 회원 탈퇴를 하시겠습니까?\n내 정보가 삭제되며 되돌릴 수 없습니다.")) return;
+  try {
+    await CU.delete();
+    toast("회원 탈퇴가 완료되었습니다.");
+    // 로그아웃 상태로 전환됨 (onAuthStateChanged가 처리)
+  } catch(e) {
+    if(e.code === 'auth/requires-recent-login') {
+      toast("⚠️ 보안을 위해 로그아웃 후 다시 로그인한 뒤 시도해주세요.");
+      auth.signOut();
+    } else {
+      toast("❌ 오류: " + e.message);
+    }
+  }
+}
+
+/* 🌟 프로필 닉네임 수정 로직 추가 */
+async function editProfileName() {
+  const newName = prompt("새로운 닉네임을 입력하세요", CU.displayName);
+  if(!newName || newName.trim() === "") return;
+  try {
+    await CU.updateProfile({displayName: newName.trim()});
+    toast("✅ 닉네임이 변경되었습니다.");
+    updateAuthUI(CU); // UI 갱신
+  } catch(e) { toast("❌ 오류: " + e.message); }
+}
+
 auth.getRedirectResult().then(r=>{if(r&&r.user){toast('✅ 로그인 성공!');hideLogin();runPend();}}).catch(()=>{});
 auth.onAuthStateChanged(u=>{CU=u;updateAuthUI(u);loadItems();if(u){hideLogin();initRooms();runPend();}else{if(unsubRooms)unsubRooms();document.getElementById('chat-badge').style.display='none';}});
+
 function updateAuthUI(u){
   const a=document.getElementById('auth-area');
-  if(u){const n=u.displayName||'유저';a.innerHTML=`<div class="avatar" onclick="logout()" title="${esc(n)}">${u.photoURL?`<img src="${u.photoURL}" alt="">`:n[0]}</div>`;renderSell();}
-  else{a.innerHTML=`<button class="login-btn" onclick="showLogin()">로그인</button>`;document.getElementById('sell-content').innerHTML=`<div class="need-login"><div class="ni-icon">🔒</div><h3>로그인이 필요해요</h3><p>판매 등록은 로그인 후 이용 가능합니다</p><button class="btn btn-dk" style="max-width:240px;margin:0 auto;" onclick="showLogin()">로그인 / 회원가입</button></div>`;}
+  const myContent=document.getElementById('my-content');
+  if(u){
+    const n=u.displayName||'유저';
+    a.innerHTML=`<div class="avatar" onclick="switchPage('my')" title="${esc(n)}">${u.photoURL?`<img src="${u.photoURL}" alt="">`:n[0]}</div>`;
+    renderSell();
+    
+    // 🌟 마이페이지 내용 렌더링
+    myContent.innerHTML = `
+      <div class="my-hdr">
+        <div class="my-av">${u.photoURL?`<img src="${u.photoURL}" alt="">`:n[0]}</div>
+        <div class="my-info">
+          <div class="my-name">${esc(n)}</div>
+          <div class="my-email">${esc(u.email||'')}</div>
+          <button class="my-edit-btn" onclick="editProfileName()">닉네임 변경</button>
+        </div>
+      </div>
+      <div class="my-menu">
+        <div class="my-menu-item" onclick="setCategory(document.getElementById('cat-all'),'my')">내가 올린 매물 보기 <span>›</span></div>
+        <div class="my-menu-item" onclick="logout()">로그아웃 <span>›</span></div>
+        <div class="my-menu-item" style="color:var(--red);" onclick="deleteAccount()">회원 탈퇴 <span>›</span></div>
+      </div>
+    `;
+  }
+  else{
+    a.innerHTML=`<button class="login-btn" onclick="showLogin()">로그인</button>`;
+    document.getElementById('sell-content').innerHTML=`<div class="need-login"><div class="ni-icon">🔒</div><h3>로그인이 필요해요</h3><p>판매 등록은 로그인 후 이용 가능합니다</p><button class="btn btn-dk" style="max-width:240px;margin:0 auto;" onclick="showLogin()">로그인 / 회원가입</button></div>`;
+    
+    // 로그아웃 시 마이페이지 처리
+    myContent.innerHTML = `
+      <div class="empty" style="padding-top:80px;">
+        <div class="empty-icon">👤</div>
+        <p style="margin-bottom:20px;">로그인 후 내 정보를 관리하세요.</p>
+        <button class="btn btn-dk" style="max-width:200px; margin:0 auto;" onclick="showLogin()">로그인 하기</button>
+      </div>
+    `;
+  }
 }
-function runPend(){if(pendChat&&CU){const{uid,name}=pendChat;pendChat=null;setTimeout(()=>openRoom(uid,name,''),400);}}
+function runPend(){if(pendChat&&CU){const{uid,name,msg}=pendChat;pendChat=null;setTimeout(()=>openRoom(uid,name,'',msg),400);}}
 
 function switchPage(n){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
@@ -474,7 +552,14 @@ function switchPage(n){
   document.querySelectorAll('.nbtn').forEach(b=>b.classList.remove('active'));
   document.getElementById('nav-'+n).classList.add('active');
   if(n==='chat'){ document.getElementById('pg-chat').classList.add('active'); switchChatTab('dm'); } 
-  else { document.getElementById('pg-'+n).classList.add('active'); closeDm(); if(n==='home')loadItems(); }
+  else { 
+    document.getElementById('pg-'+n).classList.add('active'); closeDm(); 
+    if(n==='home') {
+      // 마이페이지에서 홈으로 올 때, 내 매물 보기 상태면 전체로 리셋
+      if(curCat==='my') { setCategory(document.getElementById('cat-all'), 'all'); }
+      else { loadItems(); }
+    }
+  }
 }
 function switchChatTab(t){
   closeDm();
@@ -484,32 +569,48 @@ function switchChatTab(t){
   document.getElementById('bot-area').style.display = t==='bot' ? 'flex' : 'none';
 }
 
-const CAT_LABEL={all:'실시간 전체 매물',tire:'중고타이어 매물',wheel:'중고휠 매물'};
+const CAT_LABEL={all:'실시간 전체 매물',tire:'중고타이어 매물',wheel:'중고휠 매물',my:'내가 올린 매물'};
 function setCategory(el,cat){
-  document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
-  el.classList.add('active'); curCat=cat; document.getElementById('sec-label').textContent=CAT_LABEL[cat]; loadItems();
+  if(el) {
+    document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
+    el.classList.add('active');
+  }
+  curCat=cat; 
+  document.getElementById('sec-label').textContent=CAT_LABEL[cat]; 
+  if(cat === 'my') switchPage('home'); // 내 매물 보기는 홈 탭 리스트 재활용
+  else loadItems();
 }
 
 async function loadItems(){
   const grid=document.getElementById('item-grid');
-  grid.innerHTML='<div class="loading"><div class="spinner"></div><p>불러오는 중...</p></div>';
+  grid.innerHTML='<div class="loading"><div class="spinner" style="border-top-color:var(--t1)"></div><p>불러오는 중...</p></div>';
   const q=(document.getElementById('s-input')?.value||'').trim().toLowerCase().replace(/\s/g,'');
   try{
     const snap=await db.collection('tires').orderBy('createdAt','desc').get();
     const docs=snap.docs.filter(d=>{
       const t=d.data();
-      if(curCat!=='all'){if((t.category||'tire')!==curCat)return false;}
+      // 내 매물 필터
+      if(curCat==='my'){ if(!CU || t.sellerId !== CU.uid) return false; }
+      else if(curCat!=='all'){ if((t.category||'tire')!==curCat) return false; }
+      
       if(!q)return true;
       return(t.title||'').toLowerCase().includes(q)||(t.size||'').toLowerCase().replace(/\s/g,'').includes(q);
     });
-    if(!docs.length){grid.innerHTML=`<div class="empty"><div class="empty-icon">${curCat==='wheel'?'⭕':'🔍'}</div><p>${q?`"${q}" 검색 결과가 없어요.`:CAT_LABEL[curCat]+'이 없어요.'}<br>첫 번째로 등록해보세요!</p></div>`;return;}
+    if(!docs.length){grid.innerHTML=`<div class="empty"><div class="empty-icon">${curCat==='wheel'?'⭕':curCat==='my'?'👤':'🔍'}</div><p>${q?`"${q}" 검색 결과가 없어요.`:CAT_LABEL[curCat]+'이 없어요.'}<br>첫 번째로 등록해보세요!</p></div>`;return;}
     grid.innerHTML=docs.map(doc=>{
       const t={id:doc.id,...doc.data()};
       const cat=t.category||'tire';
-      const isSold = !!t.isSold; // 판매완료 여부
-      const sd=JSON.stringify({id:t.id,title:t.title,size:t.size,price:t.price,description:t.description,imageUrl:t.imageUrl,imageUrls:t.imageUrls,sellerName:t.sellerName,sellerId:t.sellerId,isVerified:!!t.isVerified,category:cat,isSold:isSold,shipping:t.shipping||'배송협의'}).replace(/'/g,'&#39;');
+      const status = t.status || 0; // 0:판매중, 1:예약중, 2:판매완료
+      const isSold = (status === 2 || t.isSold === true);
+      const isResv = (status === 1);
       
-      return`<div class="card fi ${isSold ? 'sold' : ''}" onclick='openModal(${JSON.stringify(sd)})'>
+      const sd=JSON.stringify({id:t.id,title:t.title,size:t.size,price:t.price,description:t.description,imageUrl:t.imageUrl,imageUrls:t.imageUrls,sellerName:t.sellerName,sellerId:t.sellerId,isVerified:!!t.isVerified,category:cat,status:status,shipping:t.shipping||'배송협의'}).replace(/'/g,'&#39;');
+      
+      let stateClass = '';
+      if(isSold) stateClass = 'sold';
+      else if(isResv) stateClass = 'reserved';
+
+      return`<div class="card fi ${stateClass}" onclick='openModal(${JSON.stringify(sd)})'>
         <div class="card-img-wrap">
           ${t.imageUrl?`<img class="card-img" src="${t.imageUrl}" loading="lazy" alt="${esc(t.title)}">`:`<div class="card-ph">${cat==='wheel'?'⭕':'🛞'}</div>`}
           ${t.isVerified?'<div class="card-v">✅ 인증</div>':''}
@@ -520,7 +621,10 @@ async function loadItems(){
           <div class="card-size">${esc(t.size||'사이즈 미기재')}</div>
           <div class="card-btm">
             <div class="card-price">${Number(t.price).toLocaleString()}원</div>
-            <div class="card-seller">👤 ${esc(t.sellerName||'판매자')}</div>
+            <div class="card-seller" style="display:flex;align-items:center;gap:4px;">
+              <div style="width:14px;height:14px;background:var(--t4);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:8px;">${t.sellerName?t.sellerName[0]:'👤'}</div>
+              ${esc(t.sellerName||'판매자')}
+            </div>
           </div>
         </div>
       </div>`;
@@ -531,7 +635,7 @@ async function loadItems(){
 function renderSell(){
   document.getElementById('sell-content').innerHTML=`
     <div class="photo-up" onclick="document.getElementById('f-file').click()">
-      <div id="f-ph"><div class="pup-icon">📸</div><div class="pup-txt">사진 선택 (최대 9장)</div><div class="pup-hint">측면·트레드·전체 사진 권장</div></div>
+      <div id="f-ph" style="text-align:center;"><div class="pup-icon">📸</div><div class="pup-txt">사진 선택 (최대 9장)</div><div class="pup-hint">측면·트레드·전체 사진 권장</div></div>
       <div id="f-prev" style="position:absolute;inset:0;display:none;gap:8px;padding:12px;overflow-x:auto;align-items:center;"></div>
     </div>
     <input type="file" id="f-file" accept="image/*" multiple style="display:none" onchange="handlePh(this)">
@@ -577,7 +681,7 @@ async function submitItem(){
   const btn=document.getElementById('submit-btn');btn.disabled=true;btn.textContent='등록 중...';
   try{
     let imgs=[];if(files&&files.length)for(const f of files)imgs.push(await compress(f));
-    await db.collection('tires').add({title,size,price:parseInt(price),description:desc,category:cat,shipping:ship,imageUrls:imgs,imageUrl:imgs[0]||null,sellerName:CU.displayName||'판매자',sellerId:CU.uid,isVerified:false,isSold:false,createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+    await db.collection('tires').add({title,size,price:parseInt(price),description:desc,category:cat,shipping:ship,imageUrls:imgs,imageUrl:imgs[0]||null,sellerName:CU.displayName||'판매자',sellerId:CU.uid,isVerified:false,status:0,createdAt:firebase.firestore.FieldValue.serverTimestamp()});
     toast('✅ 매물이 등록되었습니다!');setTimeout(()=>switchPage('home'),900);
   }catch(e){toast('❌ '+e.message);}finally{btn.disabled=false;btn.textContent='매물 등록하기 →';}
 }
@@ -586,8 +690,13 @@ function openModal(t){
   if(typeof t==='string')t=JSON.parse(t);curItem=t;
   const g=document.getElementById('m-gallery');g.innerHTML='';
   
-  // 판매완료 오버레이 처리
-  if(t.isSold) g.classList.add('sold'); else g.classList.remove('sold');
+  // 상태 처리 (0:판매중, 1:예약중, 2:판매완료)
+  const isSold = (t.status === 2 || t.isSold === true);
+  const isResv = (t.status === 1);
+  
+  g.className = 'm-gallery';
+  if(isSold) g.classList.add('sold');
+  else if(isResv) g.classList.add('reserved');
   
   const urls=(t.imageUrls&&t.imageUrls.length)?t.imageUrls:(t.imageUrl?[t.imageUrl]:[]);
   if(urls.length){g.style.display='block';urls.forEach(u=>g.innerHTML+=`<img src="${u}" alt="${esc(t.title)}" loading="lazy">`);}else g.style.display='none';
@@ -599,35 +708,34 @@ function openModal(t){
   document.getElementById('m-size').textContent=(t.category==='wheel'?'⭕ 중고휠':'🛞 중고타이어')+(t.size?' · '+t.size:'');
   document.getElementById('m-desc').textContent=t.description||'상태 설명이 없습니다.';
   document.getElementById('m-price').textContent=Number(t.price).toLocaleString()+'원';
-  document.getElementById('m-seller').innerHTML=`<div class="avatar" style="width:24px;height:24px;font-size:10px;">${t.sellerName[0]||'판매자'}</div> ${esc(t.sellerName||'판매자')}`;
+  document.getElementById('m-seller').innerHTML=`<div class="avatar" style="width:24px;height:24px;font-size:10px;">${t.sellerName[0]||'👤'}</div> ${esc(t.sellerName||'판매자')}`;
   
   // 권한별 하단 버튼 동적 렌더링
   const own=CU&&CU.uid===t.sellerId, adm=CU&&CU.uid===ADMIN;
   let btnHTML = '';
   
-  if(t.isSold) {
-    // 판매 완료 상태일 때 버튼
+  if(isSold) {
     btnHTML += `<button class="btn" style="grid-column:1/-1; background:var(--surface2); color:var(--t2); cursor:not-allowed;" disabled>판매가 완료된 상품입니다</button>`;
     if(own || adm) {
-      btnHTML += `<button class="btn btn-gh" style="grid-column:1/-1;" onclick="toggleSold()">↺ 판매중으로 다시 변경</button>`;
+      btnHTML += `<button class="btn btn-gh" style="grid-column:1/-1;" onclick="document.getElementById('status-ov').classList.add('open')">상태 변경하기</button>`;
       btnHTML += `<button class="btn btn-gh" onclick="openEdit()">✏️ 수정</button> <button class="btn btn-red" onclick="delItem()">🗑️ 삭제</button>`;
     }
   } else {
-    // 판매 중 상태일 때 버튼
+    // 판매 중 & 예약 중
     if(own) {
-      btnHTML += `<button class="btn btn-dk" style="grid-column:1/-1;" onclick="toggleSold()">🤝 판매완료 처리하기</button>`;
+      btnHTML += `<button class="btn btn-dk" style="grid-column:1/-1;" onclick="document.getElementById('status-ov').classList.add('open')">상태 변경하기</button>`;
       btnHTML += `<button class="btn btn-gh" onclick="openEdit()">✏️ 수정</button> <button class="btn btn-red" onclick="delItem()">🗑️ 삭제</button>`;
     } else {
-      btnHTML += `<button class="btn btn-gh" onclick="chatSeller()">💬 판매자 채팅</button> <button class="btn btn-ac" style="background:var(--t1);" onclick="toast('결제 준비 중 🔒')">🔒 세이프페이</button>`;
+      btnHTML += `<button class="btn btn-gh" onclick="chatSeller()">💬 판매자 채팅</button> <button class="btn btn-dk" onclick="toast('결제 준비 중 🔒')">🔒 세이프페이</button>`;
     }
   }
 
-  // 관리자 전용 기능 (인증, 차단, 강제 판매완료)
+  // 관리자 전용
   if(adm) {
     btnHTML += `<button class="btn" style="grid-column:1/-1; background:${t.isVerified?'var(--t3)':'var(--green)'}; color:#fff;" onclick="toggleVerify()">${t.isVerified?'❌ 인증 빼기':'✅ 인증 달기'}</button>`;
     if(!own) {
-      btnHTML += `<button class="btn btn-dk" style="grid-column:1/-1;" onclick="toggleSold()">${t.isSold?'↺ 판매중으로 강제변경':'🤝 관리자 권한 판매완료'}</button>`;
-      btnHTML += `<button class="btn btn-gh" onclick="openEdit()">✏️ 수정 (관리자)</button> <button class="btn btn-red" onclick="delItem()">🗑️ 삭제 (관리자)</button>`;
+      btnHTML += `<button class="btn btn-gh" style="grid-column:1/-1;" onclick="document.getElementById('status-ov').classList.add('open')">상태 변경 (관리자)</button>`;
+      btnHTML += `<button class="btn btn-gh" onclick="openEdit()">✏️ 수정 (관리자)</button> <button class="btn btn-red" onclick="delItem()">🗑️ 삭제</button>`;
       btnHTML += `<button class="btn btn-red" style="grid-column:1/-1;" onclick="blockUser()">🚫 영구 차단</button>`;
     }
   }
@@ -670,14 +778,13 @@ async function delItem(){
   catch(e){toast('❌ '+e.message);}
 }
 
-// 🌟 판매완료 상태 변경 기능
-async function toggleSold(){
+// 🌟 상태 변경 로직 (0:판매중, 1:예약중, 2:판매완료)
+async function changeStatus(statusCode){
   if(!curItem?.id)return;
-  const nSold = !curItem.isSold;
-  if(!confirm(nSold ? '이 상품을 판매완료 처리할까요?' : '다시 판매중 상태로 변경할까요?')) return;
   try{
-    await db.collection('tires').doc(curItem.id).update({isSold:nSold});
-    toast(nSold ? '🎉 판매완료 처리되었습니다.' : '🔄 판매중으로 변경되었습니다.');
+    await db.collection('tires').doc(curItem.id).update({status: statusCode, isSold: statusCode===2});
+    document.getElementById('status-ov').classList.remove('open');
+    toast('상태가 변경되었습니다.');
     closeModal(); loadItems();
   }catch(e){toast('❌ '+e.message);}
 }
@@ -693,18 +800,34 @@ async function blockUser(){
   catch(e){toast('❌ '+e.message);}
 }
 
-/* ═══════════ DM ═══════════ */
+/* ═══════════ DM & SMART CHAT ═══════════ */
 function mkRid(a,b){return[a,b].sort().join('_');}
-async function openRoom(tUid,tName,tPhoto){
-  if(!CU){pendChat={uid:tUid,name:tName};showLogin();return;}
+
+// 🌟 스마트 채팅 시작 로직: 파라미터로 보낼 첫 메시지를 전달받음
+async function openRoom(tUid,tName,tPhoto, initMsg){
+  if(!CU){pendChat={uid:tUid,name:tName,msg:initMsg};showLogin();return;}
   if(CU.uid===tUid)return toast('본인에게는 채팅을 보낼 수 없어요.');
   if(await isBanned(CU.uid))return toast('🚫 차단된 계정은 채팅을 이용할 수 없습니다.');
+  
   const rid=mkRid(CU.uid,tUid);
   await db.collection('dmRooms').doc(rid).set({users:[CU.uid,tUid],userNames:{[CU.uid]:CU.displayName||'나',[tUid]:tName},userPhotos:{[CU.uid]:CU.photoURL||'',[tUid]:tPhoto||''},updatedAt:firebase.firestore.FieldValue.serverTimestamp()},{merge:true});
-  closeModal();switchPage('chat');
-  setTimeout(()=>openDm(rid,tName),200);
+  closeModal(); switchPage('chat');
+  
+  setTimeout(()=>{
+    openDm(rid,tName);
+    // 🌟 스마트 채팅: 방에 들어가자마자 입력창에 문의 문구 자동 채워주기
+    if(initMsg) { document.getElementById('dm-in').value = initMsg; }
+  },200);
 }
-async function chatSeller(){if(!curItem)return;if(!curItem.sellerId)return toast('판매자 정보가 없습니다.');await openRoom(curItem.sellerId,curItem.sellerName||'판매자','');}
+
+// 매물에서 채팅 버튼을 눌렀을 때
+async function chatSeller(){
+  if(!curItem)return;
+  if(!curItem.sellerId)return toast('판매자 정보가 없습니다.');
+  // 🌟 자동 완성 메시지 생성
+  const initMsg = `안녕하세요, [${curItem.title}] 매물 보고 연락드립니다!`;
+  await openRoom(curItem.sellerId, curItem.sellerName||'판매자', '', initMsg);
+}
 
 function initRooms(){
   if(unsubRooms)unsubRooms();
@@ -716,12 +839,12 @@ function initRooms(){
     document.getElementById('chat-badge').style.display=unread?'block':'none';
     if(!firstLoad){snap.docChanges().forEach(ch=>{if(ch.type==='modified'){const d=ch.doc.data();if(d.lastSenderId!==CU.uid&&!d.isRead&&dmRoom!==ch.doc.id)toast('💬 새 메시지가 도착했습니다!');}});}
     firstLoad=false;
-    if(!rooms.length){list.innerHTML='<div class="empty" style="padding:50px 20px;"><div class="empty-icon">💬</div><p>아직 대화가 없어요.<br>매물을 눌러 판매자에게 문의해보세요!</p></div>';return;}
+    if(!rooms.length){list.innerHTML='<div class="empty" style="padding:50px 20px;"><div class="empty-icon">💬</div><p>아직 대화가 없어요.<br>매물을 눌러 문의해보세요!</p></div>';return;}
     list.innerHTML=rooms.map(r=>{
       const oid=r.users.find(u=>u!==CU.uid),oName=r.userNames?.[oid]||'상대방',oPhoto=r.userPhotos?.[oid]||'';
       const last=r.lastMsg||'채팅을 시작해보세요',time=r.updatedAt?new Date(r.updatedAt.toDate()).toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit'}):'';
       const u=r.lastSenderId&&r.lastSenderId!==CU.uid&&!r.isRead;
-      return`<div class="room-item" onclick="openDm('${r.id}','${oName.replace(/'/g,"\\'")}')">
+      return`<div class="room-item ${u?'unread':''}" onclick="openDm('${r.id}','${oName.replace(/'/g,"\\'")}')">
         <div class="r-av">${oPhoto?`<img src="${oPhoto}" alt="">`:oName[0]}</div>
         <div class="r-info"><div class="r-name">${esc(oName)}</div><div class="r-last" style="${u?'font-weight:700;color:var(--t1);':''}">${esc(last)}</div></div>
         <div class="r-meta"><div class="r-time">${time}</div>${u?'<div class="r-dot"></div>':''}</div>
@@ -740,9 +863,9 @@ function openDm(rid,title){
       const m=d.data(); if(m.isSystem)return`<div class="sys-msg">${esc(m.text)}</div>`;
       const me=CU&&m.uid===CU.uid;
       return`<div class="bw ${me?'me':''}">
-        ${!me?`<div class="bsender">${esc(m.name||'상대방')}</div>`:''}
-        <div class="bubble">${esc(m.text)}</div>
-        <div class="btime">${m.createdAt?new Date(m.createdAt.toDate()).toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit'}):''}</div>
+        ${!me?`<div class="chat-sender">${esc(m.name||'상대방')}</div>`:''}
+        <div class="chat-bubble">${esc(m.text)}</div>
+        <div class="chat-time">${m.createdAt?new Date(m.createdAt.toDate()).toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit'}):''}</div>
       </div>`;
     }).join('');
     box.scrollTop=box.scrollHeight;
@@ -760,7 +883,7 @@ async function sendDm(){
 }
 
 /* ═══════════ BOT ═══════════ */
-function botMsg(text,isUser=false){const box=document.getElementById('bot-msgs');const d=document.createElement('div');d.className='bw fi'+(isUser?' me':'');d.innerHTML=`<div class="bubble${isUser?'':' bot'}">${text}</div>`;box.appendChild(d);box.scrollTop=box.scrollHeight;}
+function botMsg(text,isUser=false){const box=document.getElementById('bot-msgs');const d=document.createElement('div');d.className='bw fi'+(isUser?' me':'');d.innerHTML=`<div class="chat-bubble${isUser?'':' bot'}">${text}</div>`;box.appendChild(d);box.scrollTop=box.scrollHeight;}
 const BOT=[
   {k:['사이즈','규격','고르는','선택'],a:'타이어 사이즈는 운전석 문 안쪽 스티커나 현재 타이어 측면에서 확인하세요!\n\n예: 205/55R16 → 폭 205mm / 편평비 55% / 림 16인치\n\n⚠️ 다른 사이즈는 안전에 영향을 줄 수 있으니 꼭 동일 사이즈로 구매하세요 🙏'},
   {k:['배송','택배','언제','도착'],a:'배송은 판매자와 1:1 채팅으로 직접 협의하세요! 🚚\n착불 또는 선불로 진행하며 택배사·일정도 판매자에게 문의해주세요.'},
