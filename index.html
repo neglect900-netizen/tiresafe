@@ -40,9 +40,10 @@
 
   /* ── HEADER ── */
   .hdr { flex-shrink: 0; height: var(--head); display: flex; align-items: center; justify-content: space-between; padding: 0 18px; background: var(--surface); border-bottom: 1px solid var(--border); z-index: 40; }
-  .logo { font-size: 21px; font-weight: 900; letter-spacing: -0.5px; color: var(--t1); }
+  .logo { font-size: 21px; font-weight: 900; letter-spacing: -0.5px; color: var(--t1); cursor: pointer; }
   .logo em { color: var(--accent); font-style: normal; }
   .avatar { width: 34px; height: 34px; border-radius: 50%; background: var(--accent); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; cursor: pointer; overflow: hidden; }
+  .avatar img { width: 100%; height: 100%; object-fit: cover; }
   .login-btn { font-size: 13px; font-weight: 700; padding: 8px 16px; border-radius: 20px; background: var(--t1); color: #fff; border: none; cursor: pointer; font-family: inherit; }
 
   /* ── PAGES ── */
@@ -64,7 +65,7 @@
   .sbtn { background: var(--t1); color: #fff; border: none; border-radius: var(--r); padding: 12px 16px; font-weight: 700; font-size: 13px; cursor: pointer; white-space: nowrap; }
 
   .cat-tabs { display: flex; border-bottom: 1px solid var(--border); background: var(--surface); }
-  .cat-btn { flex: 1; padding: 12px 8px; font-size: 13px; font-weight: 700; font-family: var(--font); border: none; background: none; color: var(--t3); cursor: pointer; border-bottom: 2px solid transparent; }
+  .cat-btn { flex: 1; padding: 12px 8px; font-size: 13px; font-weight: 700; font-family: var(--font); border: none; background: none; color: var(--t3); cursor: pointer; border-bottom: 2px solid transparent; transition: color .2s; }
   .cat-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
 
   .sec-hdr { display: flex; align-items: center; justify-content: space-between; padding: 16px 16px 10px; }
@@ -84,7 +85,6 @@
   .card-size { font-size: 11px; color: var(--t3); margin-bottom: 7px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .card-price { font-size: 15px; font-weight: 900; color: var(--t1); letter-spacing: -0.3px; }
   
-  /* 거래 상태 클래스 (0:판매중, 1:예약중, 2:판매완료) */
   .card.reserved .card-img-wrap::after { content: '예약중'; position: absolute; inset: 0; background: rgba(37, 99, 235, 0.6); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 800; z-index: 5; backdrop-filter: blur(1px); }
   .card.sold .card-img-wrap::after { content: '판매완료'; position: absolute; inset: 0; background: rgba(0,0,0,0.6); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 800; z-index: 5; backdrop-filter: blur(1px); }
   .card.sold .card-body { opacity: 0.5; }
@@ -114,6 +114,7 @@
   .btn-ac { background: var(--accent); color: #fff; }
   .btn-gh { background: var(--surface2); color: var(--t2); }
   .btn-dk { background: var(--t1); color: #fff; }
+  .btn-grn { background: var(--green); color: #fff; }
   .btn-red{ background: var(--red); color: #fff; }
 
   /* ── MY PAGE ── */
@@ -151,8 +152,8 @@
   .dm-win { display: none; position: absolute; inset: 0; flex-direction: column; background: var(--bg); z-index: 20; }
   .dm-win.open { display: flex; }
   .dm-hdr { flex-shrink: 0; display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-bottom: 1px solid var(--border); background: var(--surface); }
-  .dm-back { width: 34px; height: 34px; border-radius: 50%; background: var(--surface2); border: none; cursor: pointer; font-size: 18px; font-weight: 700; }
-  .dm-hdr-name { font-size: 15px; font-weight: 800; }
+  .dm-back { background: none; border: none; cursor: pointer; font-size: 22px; font-weight: 400; padding: 0 8px; }
+  .dm-hdr-name { font-size: 16px; font-weight: 800; }
 
   .chat-wrap { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
   .msgs { flex: 1; overflow-y: auto; padding: 14px; display: flex; flex-direction: column; gap: 10px; }
@@ -179,7 +180,7 @@
   .nbtn.active svg { stroke-width: 2.6; transform: translateY(-2px); }
   .n-label { font-size: 10px; font-weight: 600; }
   .nbtn.active .n-label { font-weight: 800; }
-  .n-badge { position: absolute; top: 8px; right: calc(50% - 16px); width: 8px; height: 8px; background: var(--accent); border-radius: 50%; display: none; border: 2px solid var(--surface); }
+  .n-badge { position: absolute; top: 8px; right: calc(50% - 16px); width: 8px; height: 8px; background: var(--red); border-radius: 50%; display: none; border: 2px solid var(--surface); }
 
   /* ── OVERLAYS ── */
   .ov { display: none; position: fixed; inset: 0; background: rgba(17,24,39,0.6); z-index: 100; align-items: flex-end; justify-content: center; backdrop-filter: blur(3px); }
@@ -188,13 +189,12 @@
   @keyframes sup { from{ transform:translateY(100%); } to{ transform:translateY(0); } }
   .sh-hdl { flex-shrink: 0; display: flex; justify-content: center; padding: 12px 0 6px; }
   .sh-hdl::after { content: ''; width: 40px; height: 5px; background: var(--border2); border-radius: 3px; }
-  .sh-x { position: absolute; top: 14px; right: 16px; background: var(--surface2); border: none; width: 32px; height: 32px; border-radius: 50%; font-size: 14px; cursor: pointer; color: var(--t2); font-weight: 700; z-index: 10; }
+  .sh-x { position: absolute; top: 14px; right: 16px; background: var(--surface2); border: none; width: 32px; height: 32px; border-radius: 50%; font-size: 14px; cursor: pointer; color: var(--t2); display: flex; align-items: center; justify-content: center; z-index: 10; font-weight: 700; }
   .sh-scroll { overflow-y: auto; flex: 1; padding: 0 20px 20px; }
   
   .m-gallery { position: relative; margin-bottom: 16px; }
   .m-gallery img { width: 100%; border-radius: var(--r); margin-bottom: 8px; object-fit: contain; background: var(--surface2); display: block; }
   
-  /* 거래 상태 오버레이 */
   .m-gallery.reserved::after { content: '예약중'; position: absolute; inset: 0; background: rgba(37,99,235,0.6); border-radius: var(--r); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 24px; font-weight: 900; z-index: 5; backdrop-filter: blur(2px); margin-bottom: 8px; }
   .m-gallery.sold::after { content: '판매완료'; position: absolute; inset: 0; background: rgba(0,0,0,0.6); border-radius: var(--r); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 24px; font-weight: 900; z-index: 5; backdrop-filter: blur(2px); margin-bottom: 8px; }
 
@@ -211,12 +211,17 @@
   .m-seller { font-size: 13px; color: var(--t2); font-weight: 600; display: flex; align-items: center; gap: 6px; }
   .sh-btns { flex-shrink: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 12px 20px 24px; border-top: 1px solid var(--border); background: var(--surface); }
 
-  /* auth */
-  .auth-box { background: var(--surface2); border-radius: var(--r2); padding: 18px; margin-bottom: 16px; }
-  .auth-box .f-input { margin-bottom: 10px; border-color: transparent; }
-  .auth-sw { text-align: center; font-size: 13px; color: var(--t3); margin-bottom: 16px; font-weight: 500; }
-  .auth-sw a { color: var(--t1); font-weight: 800; cursor: pointer; text-decoration: underline; }
-  .btn-google { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 14px; background: var(--surface); border: 1.5px solid var(--border2); border-radius: var(--r); font-size: 14px; font-weight: 800; cursor: pointer; }
+  /* 모던 로그인 UI */
+  .auth-sheet { background: var(--surface); border-radius: 24px 24px 0 0; width: 100%; max-width: 480px; position: relative; animation: sup .3s cubic-bezier(0.2, 0.8, 0.2, 1); padding: 16px 24px 40px; }
+  .auth-tabs { display: flex; border-bottom: 2px solid var(--border); margin-bottom: 24px; margin-top: 10px; }
+  .auth-tab { flex: 1; text-align: center; padding: 12px 0; font-size: 15px; font-weight: 800; color: var(--t3); cursor: pointer; transition: color 0.2s; position: relative; }
+  .auth-tab.active { color: var(--t1); }
+  .auth-tab.active::after { content: ''; position: absolute; bottom: -2px; left: 0; right: 0; height: 2px; background: var(--t1); border-radius: 2px; }
+  
+  .auth-box { margin-bottom: 16px; }
+  .auth-box .f-input { background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin-bottom: 12px; font-size: 15px; }
+  .auth-box .f-input:focus { border-color: var(--t1); background: var(--surface); }
+  .btn-google { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 16px; background: var(--surface); border: 1px solid var(--border2); border-radius: var(--r); font-size: 15px; font-weight: 800; cursor: pointer; color: var(--t1); }
 
   /* toast */
   .toast { position: fixed; top: 16px; left: 50%; transform: translateX(-50%) translateY(-10px); background: rgba(17,24,39,0.9); color: #fff; padding: 12px 22px; border-radius: 24px; font-size: 13px; font-weight: 700; opacity: 0; transition: opacity .25s, transform .25s cubic-bezier(0.2, 0.8, 0.2, 1); z-index: 9999; backdrop-filter: blur(4px); text-align: center; }
@@ -227,8 +232,8 @@
 <div class="app">
 
   <header class="hdr">
-    <div class="logo">Tire<em>Safe</em><span class="logo-dot"></span></div>
-    <div id="auth-area"><button class="login-btn" onclick="showLogin()">로그인</button></div>
+    <div class="logo" onclick="switchPage('home', true)">Tire<em>Safe</em><span class="logo-dot"></span></div>
+    <div id="auth-area"><button class="login-btn" onclick="showLoginModal()">로그인</button></div>
   </header>
 
   <div class="page active" id="pg-home">
@@ -236,9 +241,9 @@
       <div class="hero-tag">🛞 중고타이어·휠 직거래</div>
       <h2>안전하게 사고<br><b>안심하고 팔자</b></h2>
       <p class="hero-sub">
-        <span>🔒 세이프페이</span>
+        <span>🤝 직거래</span>
         <span>✅ 인증 매물</span>
-        <span>🚚 전국 거래</span>
+        <span>🚚 배송 협의</span>
       </p>
       <div class="sbox">
         <input id="s-input" type="text" placeholder="모델명, 사이즈 검색" onkeydown="if(event.key==='Enter')loadItems()">
@@ -309,17 +314,11 @@
   </div>
 
   <div class="page" id="pg-my">
-    <div id="my-content">
-      <div class="empty" style="padding-top:80px;">
-        <div class="empty-icon">👤</div>
-        <p style="margin-bottom:20px;">로그인 후 내 정보를 관리하세요.</p>
-        <button class="btn btn-dk" style="max-width:200px; margin:0 auto;" onclick="showLogin()">로그인 하기</button>
-      </div>
-    </div>
+    <div id="my-content"></div>
   </div>
 
   <nav class="bnav">
-    <button class="nbtn active" id="nav-home" onclick="switchPage('home')">
+    <button class="nbtn active" id="nav-home" onclick="switchPage('home', true)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
       <span class="n-label">홈</span>
     </button>
@@ -380,11 +379,13 @@
     <div style="padding:4px 20px 32px;">
       <div class="sell-title" style="margin-bottom:3px; font-size:20px;">게시글 수정</div>
       <div class="sell-sub" style="margin-bottom:16px;">내용을 수정하고 저장하세요</div>
+      
       <div class="photo-up" onclick="document.getElementById('e-file').click()" style="margin-bottom:16px; height:120px;">
         <div id="e-ph"><div class="pup-icon">📸</div><div class="pup-txt">새 사진 (기존 사진 덮어쓰기)</div></div>
         <div id="e-prev" style="position:absolute;inset:0;display:none;gap:8px;padding:12px;overflow-x:auto;align-items:center;"></div>
       </div>
       <input type="file" id="e-file" accept="image/*" multiple style="display:none" onchange="handleEPh(this)">
+      
       <div class="f-row">
         <div class="f-group"><label class="f-label">카테고리</label>
           <select id="e-cat" class="f-select"><option value="tire">중고타이어</option><option value="wheel">중고휠</option></select>
@@ -404,34 +405,33 @@
   </div>
 </div>
 
-<div class="ov" id="login-ov" onclick="if(event.target===this)hideLogin()">
+<div class="ov" id="login-ov" onclick="if(event.target===this)hideLoginModal()">
   <div class="auth-sheet">
-    <div class="sh-hdl" style="padding:11px 0 0;"></div>
-    <button class="sh-x" onclick="hideLogin()">✕</button>
-    <div class="auth-inner" style="padding-top:20px;">
-      <div id="lv-login">
-        <div class="auth-title">로그인</div>
-        <div class="auth-sub">계정에 로그인해주세요.</div>
-        <div class="auth-box">
-          <input id="l-email" class="f-input" type="email" placeholder="이메일" onkeydown="if(event.key==='Enter')document.getElementById('l-pw').focus()">
-          <input id="l-pw" class="f-input" type="password" placeholder="비밀번호" onkeydown="if(event.key==='Enter')doLogin()">
-          <button class="btn btn-dk" onclick="doLogin()">이메일로 로그인</button>
-        </div>
-        <div class="auth-sw">계정이 없으신가요? <a onclick="toggleAuth('signup')">회원가입</a></div>
-        <button class="btn-google" onclick="googleLogin()"><img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18" alt=""> 구글로 시작하기</button>
+    <button class="sh-x" onclick="hideLoginModal()">✕</button>
+    <div class="auth-tabs">
+      <div class="auth-tab active" id="tab-login" onclick="toggleAuthView('login')">로그인</div>
+      <div class="auth-tab" id="tab-signup" onclick="toggleAuthView('signup')">회원가입</div>
+    </div>
+
+    <div id="login-view">
+      <div class="auth-box">
+        <input id="l-email" class="f-input" type="email" placeholder="이메일 주소" onkeydown="if(event.key==='Enter')document.getElementById('l-pw').focus()">
+        <input id="l-pw" class="f-input" type="password" placeholder="비밀번호" onkeydown="if(event.key==='Enter')emailLogin()">
+        <button class="btn btn-dk" style="margin-top:4px;" onclick="emailLogin()">이메일로 로그인</button>
       </div>
-      <div id="lv-signup" style="display:none;">
-        <div class="auth-title">회원가입</div>
-        <div class="auth-sub">1초만에 가입하세요.</div>
-        <div class="auth-box">
-          <input id="s-email" class="f-input" type="email" placeholder="이메일" onkeydown="if(event.key==='Enter')document.getElementById('s-pw').focus()">
-          <input id="s-pw" class="f-input" type="password" placeholder="비밀번호 (6자 이상)" onkeydown="if(event.key==='Enter')document.getElementById('s-name').focus()">
-          <input id="s-name" class="f-input" type="text" placeholder="닉네임" onkeydown="if(event.key==='Enter')doSignup()">
-          <button class="btn btn-dk" onclick="doSignup()">가입 완료</button>
-        </div>
-        <div class="auth-sw">이미 계정이 있으신가요? <a onclick="toggleAuth('login')">로그인</a></div>
-        <button class="btn-google" onclick="googleLogin()"><img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18" alt=""> 구글로 시작하기</button>
+      <div style="text-align: center; color: var(--t3); font-size: 12px; margin-bottom: 12px; font-weight:600;">또는 간편 로그인</div>
+      <button class="btn-google" onclick="googleLogin()"><img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18" alt=""> 구글로 계속하기</button>
+    </div>
+
+    <div id="signup-view" style="display:none;">
+      <div class="auth-box">
+        <input id="s-email" class="f-input" type="email" placeholder="이메일 주소" onkeydown="if(event.key==='Enter')document.getElementById('s-pw').focus()">
+        <input id="s-pw" class="f-input" type="password" placeholder="비밀번호 (6자 이상)" onkeydown="if(event.key==='Enter')document.getElementById('s-name').focus()">
+        <input id="s-name" class="f-input" type="text" placeholder="사용할 닉네임" onkeydown="if(event.key==='Enter')emailSignUp()">
+        <button class="btn btn-dk" style="margin-top:4px;" onclick="emailSignUp()">가입 완료하기</button>
       </div>
+      <div style="text-align: center; color: var(--t3); font-size: 12px; margin-bottom: 12px; font-weight:600;">또는 간편 가입</div>
+      <button class="btn-google" onclick="googleLogin()"><img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18" alt=""> 구글로 계속하기</button>
     </div>
   </div>
 </div>
@@ -445,65 +445,96 @@ const auth=firebase.auth(),db=firebase.firestore();
 
 let CU=null,dmRoom=null,unsubDm=null,unsubRooms=null,curItem=null,pendChat=null,firstLoad=true,toastTmr=null,curCat='all';
 
-window.addEventListener('DOMContentLoaded',()=>{botMsg('안녕하세요! TireSafe 고객센터입니다 😊\n아래 버튼을 눌러보세요!');});
+window.addEventListener('DOMContentLoaded',()=>{});
 
 function toast(m){const el=document.getElementById('toast');el.textContent=m;el.classList.add('show');if(toastTmr)clearTimeout(toastTmr);toastTmr=setTimeout(()=>el.classList.remove('show'),2800);}
 function esc(s){if(!s)return'';return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
 function compress(file){return new Promise(r=>{const fr=new FileReader();fr.onload=e=>{const i=new Image();i.onload=()=>{const c=document.createElement('canvas');const M=700;let w=i.width,h=i.height;if(w>h&&w>M){h=h*M/w;w=M;}else if(h>M){w=w*M/h;h=M;}c.width=w;c.height=h;c.getContext('2d').drawImage(i,0,0,w,h);r(c.toDataURL('image/jpeg',.7));};i.src=e.target.result;};fr.readAsDataURL(file);});}
 
 async function isBanned(uid){try{return(await db.collection('bannedUsers').doc(uid).get()).exists;}catch{return false;}}
-function toggleAuth(v){document.getElementById('lv-login').style.display=v==='login'?'block':'none';document.getElementById('lv-signup').style.display=v==='signup'?'block':'none';}
-function showLogin(){['l-email','l-pw','s-email','s-pw','s-name'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});toggleAuth('login');document.getElementById('login-ov').classList.add('open');}
-function hideLogin(){document.getElementById('login-ov').classList.remove('open');}
-async function doSignup(){
-  const email=document.getElementById('s-email').value.trim(),pw=document.getElementById('s-pw').value.trim(),name=document.getElementById('s-name').value.trim();
-  if(!email||!pw)return toast('⚠️ 이메일과 비밀번호를 입력해주세요.');
-  if(pw.length<6)return toast('⚠️ 비밀번호는 6자 이상이어야 합니다.');
-  if(!name)return toast('⚠️ 닉네임을 입력해주세요.');
+
+// 모던 로그인/회원가입 탭 뷰
+function toggleAuthView(view) {
+  document.getElementById('login-view').style.display = view === 'login' ? 'block' : 'none';
+  document.getElementById('signup-view').style.display = view === 'signup' ? 'block' : 'none';
+  document.getElementById('tab-login').classList.toggle('active', view === 'login');
+  document.getElementById('tab-signup').classList.toggle('active', view === 'signup');
+}
+
+function showLoginModal() { 
+  document.getElementById('l-email').value = ''; document.getElementById('l-pw').value = '';
+  document.getElementById('s-email').value = ''; document.getElementById('s-pw').value = ''; document.getElementById('s-name').value = '';
+  toggleAuthView('login'); 
+  document.getElementById('login-ov').classList.add('open'); 
+}
+function hideLoginModal() { document.getElementById('login-ov').classList.remove('open'); }
+
+async function emailSignUp() {
+  const email=document.getElementById('s-email').value.trim(), pw=document.getElementById('s-pw').value.trim(), name=document.getElementById('s-name').value.trim();
+  if(!email||!pw) return toast('⚠️ 이메일과 비밀번호를 입력해주세요.');
+  if(pw.length<6) return toast('⚠️ 비밀번호는 6자 이상이어야 합니다.');
+  if(!name) return toast('⚠️ 닉네임을 입력해주세요.');
   toast('⏳ 가입 처리 중...');
-  try{const c=await auth.createUserWithEmailAndPassword(email,pw);await c.user.updateProfile({displayName:name});toast('🎉 가입 완료!');hideLogin();runPend();}
-  catch(e){toast(e.code==='auth/email-already-in-use'?'❌ 이미 가입된 이메일입니다.':'❌ '+e.message);}
+  try{
+    const c = await auth.createUserWithEmailAndPassword(email,pw);
+    await c.user.updateProfile({displayName:name});
+    toast('🎉 회원가입 완료! 환영합니다.'); hideLoginModal(); runPend();
+  } catch(e) { toast(e.code==='auth/email-already-in-use'?'❌ 이미 가입된 이메일입니다.':'❌ '+e.message); }
 }
-async function doLogin(){
-  const email=document.getElementById('l-email').value.trim(),pw=document.getElementById('l-pw').value.trim();
-  if(!email||!pw)return toast('⚠️ 이메일과 비밀번호를 입력해주세요.');
+
+async function emailLogin() {
+  const email=document.getElementById('l-email').value.trim(), pw=document.getElementById('l-pw').value.trim();
+  if(!email||!pw) return toast('⚠️ 이메일과 비밀번호를 입력해주세요.');
   toast('⏳ 로그인 중...');
-  try{await auth.signInWithEmailAndPassword(email,pw);toast('✅ 로그인 성공!');hideLogin();runPend();}
-  catch(e){toast(['auth/invalid-credential','auth/user-not-found','auth/wrong-password'].includes(e.code)?'❌ 이메일 또는 비밀번호가 틀립니다.':e.code==='auth/too-many-requests'?'❌ 잠시 후 다시 시도해주세요.':'❌ '+e.message);}
+  try{
+    await auth.signInWithEmailAndPassword(email,pw);
+    toast('✅ 로그인 성공!'); hideLoginModal(); runPend();
+  } catch(e) { toast('❌ 계정 정보가 틀립니다.'); }
 }
-function googleLogin(){const p=new firebase.auth.GoogleAuthProvider();p.setCustomParameters({prompt:'select_account'});auth.signInWithPopup(p).then(()=>{hideLogin();runPend();}).catch(()=>auth.signInWithRedirect(p));}
+
+function googleLogin(){const p=new firebase.auth.GoogleAuthProvider();p.setCustomParameters({prompt:'select_account'});auth.signInWithPopup(p).then(()=>{hideLoginModal();runPend();}).catch(()=>auth.signInWithRedirect(p));}
 function logout(){if(confirm('로그아웃 하시겠습니까?'))auth.signOut();}
 
-/* 🌟 회원 탈퇴 로직 추가 */
+/* 🌟 회원 탈퇴 로직 */
 async function deleteAccount() {
   if(!confirm("정말 회원 탈퇴를 하시겠습니까?\n내 정보가 삭제되며 되돌릴 수 없습니다.")) return;
   try {
-    await CU.delete();
-    toast("회원 탈퇴가 완료되었습니다.");
-    // 로그아웃 상태로 전환됨 (onAuthStateChanged가 처리)
+    await CU.delete(); toast("회원 탈퇴가 완료되었습니다.");
   } catch(e) {
-    if(e.code === 'auth/requires-recent-login') {
-      toast("⚠️ 보안을 위해 로그아웃 후 다시 로그인한 뒤 시도해주세요.");
-      auth.signOut();
-    } else {
-      toast("❌ 오류: " + e.message);
-    }
+    if(e.code === 'auth/requires-recent-login') { toast("⚠️ 보안을 위해 재로그인 후 탈퇴해주세요."); auth.signOut(); } 
+    else { toast("❌ 오류: " + e.message); }
   }
 }
 
-/* 🌟 프로필 닉네임 수정 로직 추가 */
+/* 🌟 닉네임 수정 (30일 제한 로직 추가) */
 async function editProfileName() {
-  const newName = prompt("새로운 닉네임을 입력하세요", CU.displayName);
-  if(!newName || newName.trim() === "") return;
+  if(!CU) return;
   try {
+    const userRef = db.collection('users').doc(CU.uid);
+    const userDoc = await userRef.get();
+    const now = Date.now();
+    
+    if(userDoc.exists) {
+      const lastChange = userDoc.data().lastNameChange || 0;
+      const thirtyDays = 30 * 24 * 60 * 60 * 1000;
+      if(now - lastChange < thirtyDays) {
+        const daysLeft = Math.ceil((thirtyDays - (now - lastChange)) / (1000 * 60 * 60 * 24));
+        return toast(`⚠️ 닉네임은 30일에 한 번만 변경할 수 있습니다. (${daysLeft}일 후 가능)`);
+      }
+    }
+    
+    const newName = prompt("새로운 닉네임을 입력하세요\n(※ 30일에 1번만 변경 가능합니다)", CU.displayName);
+    if(!newName || newName.trim() === "" || newName === CU.displayName) return;
+    
     await CU.updateProfile({displayName: newName.trim()});
+    await userRef.set({ lastNameChange: now }, { merge: true });
     toast("✅ 닉네임이 변경되었습니다.");
-    updateAuthUI(CU); // UI 갱신
+    updateAuthUI(CU);
   } catch(e) { toast("❌ 오류: " + e.message); }
 }
 
-auth.getRedirectResult().then(r=>{if(r&&r.user){toast('✅ 로그인 성공!');hideLogin();runPend();}}).catch(()=>{});
-auth.onAuthStateChanged(u=>{CU=u;updateAuthUI(u);loadItems();if(u){hideLogin();initRooms();runPend();}else{if(unsubRooms)unsubRooms();document.getElementById('chat-badge').style.display='none';}});
+auth.getRedirectResult().then(r=>{if(r&&r.user){toast('✅ 로그인 성공!');hideLoginModal();runPend();}}).catch(()=>{});
+auth.onAuthStateChanged(u=>{CU=u;updateAuthUI(u);loadItems();if(u){hideLoginModal();initRooms();runPend();}else{if(unsubRooms)unsubRooms();document.getElementById('chat-badge').style.display='none';}});
 
 function updateAuthUI(u){
   const a=document.getElementById('auth-area');
@@ -512,8 +543,6 @@ function updateAuthUI(u){
     const n=u.displayName||'유저';
     a.innerHTML=`<div class="avatar" onclick="switchPage('my')" title="${esc(n)}">${u.photoURL?`<img src="${u.photoURL}" alt="">`:n[0]}</div>`;
     renderSell();
-    
-    // 🌟 마이페이지 내용 렌더링
     myContent.innerHTML = `
       <div class="my-hdr">
         <div class="my-av">${u.photoURL?`<img src="${u.photoURL}" alt="">`:n[0]}</div>
@@ -524,40 +553,37 @@ function updateAuthUI(u){
         </div>
       </div>
       <div class="my-menu">
-        <div class="my-menu-item" onclick="setCategory(document.getElementById('cat-all'),'my')">내가 올린 매물 보기 <span>›</span></div>
+        <div class="my-menu-item" onclick="setCategory(null,'my')">내가 올린 매물 보기 <span>›</span></div>
         <div class="my-menu-item" onclick="logout()">로그아웃 <span>›</span></div>
         <div class="my-menu-item" style="color:var(--red);" onclick="deleteAccount()">회원 탈퇴 <span>›</span></div>
-      </div>
-    `;
-  }
-  else{
-    a.innerHTML=`<button class="login-btn" onclick="showLogin()">로그인</button>`;
-    document.getElementById('sell-content').innerHTML=`<div class="need-login"><div class="ni-icon">🔒</div><h3>로그인이 필요해요</h3><p>판매 등록은 로그인 후 이용 가능합니다</p><button class="btn btn-dk" style="max-width:240px;margin:0 auto;" onclick="showLogin()">로그인 / 회원가입</button></div>`;
-    
-    // 로그아웃 시 마이페이지 처리
-    myContent.innerHTML = `
-      <div class="empty" style="padding-top:80px;">
-        <div class="empty-icon">👤</div>
-        <p style="margin-bottom:20px;">로그인 후 내 정보를 관리하세요.</p>
-        <button class="btn btn-dk" style="max-width:200px; margin:0 auto;" onclick="showLogin()">로그인 하기</button>
-      </div>
-    `;
+      </div>`;
+  } else {
+    a.innerHTML=`<button class="login-btn" onclick="showLoginModal()">로그인</button>`;
+    document.getElementById('sell-content').innerHTML=`<div class="empty" style="padding-top:60px;"><div class="empty-icon">🔒</div><p style="margin-bottom:20px;">판매 등록은 로그인 후 이용 가능합니다.</p><button class="btn btn-dk" style="max-width:200px; margin:0 auto;" onclick="showLoginModal()">로그인 / 회원가입</button></div>`;
+    myContent.innerHTML = `<div class="empty" style="padding-top:80px;"><div class="empty-icon">👤</div><p style="margin-bottom:20px;">로그인 후 내 정보를 관리하세요.</p><button class="btn btn-dk" style="max-width:200px; margin:0 auto;" onclick="showLoginModal()">로그인 하기</button></div>`;
   }
 }
 function runPend(){if(pendChat&&CU){const{uid,name,msg}=pendChat;pendChat=null;setTimeout(()=>openRoom(uid,name,'',msg),400);}}
 
-function switchPage(n){
+// 🌟 네비게이션 및 마이페이지 연동 완벽 수정
+function switchPage(n, fromNav = false){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById('pg-chat').classList.remove('active');
   document.querySelectorAll('.nbtn').forEach(b=>b.classList.remove('active'));
   document.getElementById('nav-'+n).classList.add('active');
+  
+  closeDm();
   if(n==='chat'){ document.getElementById('pg-chat').classList.add('active'); switchChatTab('dm'); } 
   else { 
-    document.getElementById('pg-'+n).classList.add('active'); closeDm(); 
+    document.getElementById('pg-'+n).classList.add('active');
     if(n==='home') {
-      // 마이페이지에서 홈으로 올 때, 내 매물 보기 상태면 전체로 리셋
-      if(curCat==='my') { setCategory(document.getElementById('cat-all'), 'all'); }
-      else { loadItems(); }
+      // 🌟 홈버튼(Nav)을 눌렀을 때만 카테고리를 '전체'로 초기화. 
+      // 마이페이지의 '내가 올린 매물' 버튼을 눌렀을 때는 curCat을 그대로 유지함.
+      if (fromNav && curCat === 'my') {
+        setCategory(document.getElementById('cat-all'), 'all');
+      } else {
+        loadItems();
+      }
     }
   }
 }
@@ -574,10 +600,12 @@ function setCategory(el,cat){
   if(el) {
     document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
     el.classList.add('active');
+  } else {
+    document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
   }
   curCat=cat; 
   document.getElementById('sec-label').textContent=CAT_LABEL[cat]; 
-  if(cat === 'my') switchPage('home'); // 내 매물 보기는 홈 탭 리스트 재활용
+  if(cat === 'my') switchPage('home', false); // 내 매물 보기는 홈으로 가되 카테고리 유지
   else loadItems();
 }
 
@@ -596,11 +624,11 @@ async function loadItems(){
       if(!q)return true;
       return(t.title||'').toLowerCase().includes(q)||(t.size||'').toLowerCase().replace(/\s/g,'').includes(q);
     });
-    if(!docs.length){grid.innerHTML=`<div class="empty"><div class="empty-icon">${curCat==='wheel'?'⭕':curCat==='my'?'👤':'🔍'}</div><p>${q?`"${q}" 검색 결과가 없어요.`:CAT_LABEL[curCat]+'이 없어요.'}<br>첫 번째로 등록해보세요!</p></div>`;return;}
+    if(!docs.length){grid.innerHTML=`<div class="empty"><div class="empty-icon">${curCat==='wheel'?'⭕':curCat==='my'?'👤':'🔍'}</div><p>${q?`"${q}" 검색 결과가 없어요.`:CAT_LABEL[curCat]+'이 없어요.'}<br>매물을 등록해보세요!</p></div>`;return;}
     grid.innerHTML=docs.map(doc=>{
       const t={id:doc.id,...doc.data()};
       const cat=t.category||'tire';
-      const status = t.status || 0; // 0:판매중, 1:예약중, 2:판매완료
+      const status = t.status || 0;
       const isSold = (status === 2 || t.isSold === true);
       const isResv = (status === 1);
       
@@ -639,14 +667,9 @@ function renderSell(){
       <div id="f-prev" style="position:absolute;inset:0;display:none;gap:8px;padding:12px;overflow-x:auto;align-items:center;"></div>
     </div>
     <input type="file" id="f-file" accept="image/*" multiple style="display:none" onchange="handlePh(this)">
-    
     <div class="f-row">
-      <div class="f-group"><label class="f-label">카테고리 *</label>
-        <select id="f-cat" class="f-select"><option value="tire">🛞 중고타이어</option><option value="wheel">⭕ 중고휠</option></select>
-      </div>
-      <div class="f-group"><label class="f-label">배송 방법 *</label>
-        <select id="f-ship" class="f-select"><option value="착불">착불 (택배)</option><option value="선불">선불 (택배)</option><option value="직거래">직거래</option></select>
-      </div>
+      <div class="f-group"><label class="f-label">카테고리 *</label><select id="f-cat" class="f-select"><option value="tire">🛞 중고타이어</option><option value="wheel">⭕ 중고휠</option></select></div>
+      <div class="f-group"><label class="f-label">배송 방법 *</label><select id="f-ship" class="f-select"><option value="직거래">🤝 직거래</option><option value="착불">착불 (택배)</option><option value="선불">선불 (택배)</option></select></div>
     </div>
     <div class="f-group"><label class="f-label">모델명 *</label><input class="f-input" id="f-title" placeholder="예: 금호 마제스티9 / BBS CH-R 17인치"></div>
     <div class="f-row">
@@ -674,10 +697,8 @@ function handleEPh(input){
 async function submitItem(){
   if(!CU)return toast('로그인이 필요합니다.');
   if(await isBanned(CU.uid))return toast('🚫 이용이 정지된 계정입니다.');
-  
   const title=document.getElementById('f-title').value.trim(),size=document.getElementById('f-size').value.trim(),price=document.getElementById('f-price').value.trim(),desc=document.getElementById('f-desc').value.trim(),cat=document.getElementById('f-cat').value,ship=document.getElementById('f-ship').value,files=document.getElementById('f-file').files;
   if(!title||!price)return toast('모델명과 가격을 입력해주세요.');
-  
   const btn=document.getElementById('submit-btn');btn.disabled=true;btn.textContent='등록 중...';
   try{
     let imgs=[];if(files&&files.length)for(const f of files)imgs.push(await compress(f));
@@ -689,31 +710,23 @@ async function submitItem(){
 function openModal(t){
   if(typeof t==='string')t=JSON.parse(t);curItem=t;
   const g=document.getElementById('m-gallery');g.innerHTML='';
-  
-  // 상태 처리 (0:판매중, 1:예약중, 2:판매완료)
   const isSold = (t.status === 2 || t.isSold === true);
   const isResv = (t.status === 1);
-  
   g.className = 'm-gallery';
   if(isSold) g.classList.add('sold');
   else if(isResv) g.classList.add('reserved');
-  
   const urls=(t.imageUrls&&t.imageUrls.length)?t.imageUrls:(t.imageUrl?[t.imageUrl]:[]);
   if(urls.length){g.style.display='block';urls.forEach(u=>g.innerHTML+=`<img src="${u}" alt="${esc(t.title)}" loading="lazy">`);}else g.style.display='none';
-  
   document.getElementById('m-badge').style.display=t.isVerified?'inline-flex':'none';
-  document.getElementById('m-ship').textContent='🚚 배송: ' + (t.shipping||'협의');
-  
+  document.getElementById('m-ship').textContent='🚚 배송/거래: ' + (t.shipping||'협의');
   document.getElementById('m-title').textContent=t.title;
   document.getElementById('m-size').textContent=(t.category==='wheel'?'⭕ 중고휠':'🛞 중고타이어')+(t.size?' · '+t.size:'');
   document.getElementById('m-desc').textContent=t.description||'상태 설명이 없습니다.';
   document.getElementById('m-price').textContent=Number(t.price).toLocaleString()+'원';
   document.getElementById('m-seller').innerHTML=`<div class="avatar" style="width:24px;height:24px;font-size:10px;">${t.sellerName[0]||'👤'}</div> ${esc(t.sellerName||'판매자')}`;
   
-  // 권한별 하단 버튼 동적 렌더링
   const own=CU&&CU.uid===t.sellerId, adm=CU&&CU.uid===ADMIN;
   let btnHTML = '';
-  
   if(isSold) {
     btnHTML += `<button class="btn" style="grid-column:1/-1; background:var(--surface2); color:var(--t2); cursor:not-allowed;" disabled>판매가 완료된 상품입니다</button>`;
     if(own || adm) {
@@ -721,25 +734,22 @@ function openModal(t){
       btnHTML += `<button class="btn btn-gh" onclick="openEdit()">✏️ 수정</button> <button class="btn btn-red" onclick="delItem()">🗑️ 삭제</button>`;
     }
   } else {
-    // 판매 중 & 예약 중
     if(own) {
       btnHTML += `<button class="btn btn-dk" style="grid-column:1/-1;" onclick="document.getElementById('status-ov').classList.add('open')">상태 변경하기</button>`;
       btnHTML += `<button class="btn btn-gh" onclick="openEdit()">✏️ 수정</button> <button class="btn btn-red" onclick="delItem()">🗑️ 삭제</button>`;
     } else {
-      btnHTML += `<button class="btn btn-gh" onclick="chatSeller()">💬 판매자 채팅</button> <button class="btn btn-dk" onclick="toast('결제 준비 중 🔒')">🔒 세이프페이</button>`;
+      // 🌟 세이프페이 대신 '직거래 제안하기' 버튼 적용
+      btnHTML += `<button class="btn btn-gh" onclick="chatSeller()">💬 판매자 채팅</button> <button class="btn btn-dk" style="background:var(--green);" onclick="proposeDirectTrade()">🤝 직거래 제안하기</button>`;
     }
   }
-
-  // 관리자 전용
   if(adm) {
     btnHTML += `<button class="btn" style="grid-column:1/-1; background:${t.isVerified?'var(--t3)':'var(--green)'}; color:#fff;" onclick="toggleVerify()">${t.isVerified?'❌ 인증 빼기':'✅ 인증 달기'}</button>`;
     if(!own) {
       btnHTML += `<button class="btn btn-gh" style="grid-column:1/-1;" onclick="document.getElementById('status-ov').classList.add('open')">상태 변경 (관리자)</button>`;
-      btnHTML += `<button class="btn btn-gh" onclick="openEdit()">✏️ 수정 (관리자)</button> <button class="btn btn-red" onclick="delItem()">🗑️ 삭제</button>`;
+      btnHTML += `<button class="btn btn-gh" onclick="openEdit()">✏️ 수정 (관리자)</button> <button class="btn btn-red" onclick="delItem()">🗑️ 삭제 (관리자)</button>`;
       btnHTML += `<button class="btn btn-red" style="grid-column:1/-1;" onclick="blockUser()">🚫 영구 차단</button>`;
     }
   }
-
   document.getElementById('m-action-btns').innerHTML = btnHTML;
   document.getElementById('prod-ov').classList.add('open');
 }
@@ -753,9 +763,7 @@ function openEdit(){
   document.getElementById('e-size').value=curItem.size||'';
   document.getElementById('e-price').value=curItem.price||'';
   document.getElementById('e-desc').value=curItem.description||'';
-  document.getElementById('e-file').value='';
-  document.getElementById('e-prev').innerHTML='';document.getElementById('e-prev').style.display='none';
-  document.getElementById('e-ph').style.display='block';
+  document.getElementById('e-file').value=''; document.getElementById('e-prev').innerHTML='';document.getElementById('e-prev').style.display='none'; document.getElementById('e-ph').style.display='block';
   document.getElementById('edit-ov').classList.add('open');
 }
 function closeEdit(){document.getElementById('edit-ov').classList.remove('open');}
@@ -778,13 +786,12 @@ async function delItem(){
   catch(e){toast('❌ '+e.message);}
 }
 
-// 🌟 상태 변경 로직 (0:판매중, 1:예약중, 2:판매완료)
 async function changeStatus(statusCode){
   if(!curItem?.id)return;
   try{
     await db.collection('tires').doc(curItem.id).update({status: statusCode, isSold: statusCode===2});
     document.getElementById('status-ov').classList.remove('open');
-    toast('상태가 변경되었습니다.');
+    toast(statusCode===2?'🎉 판매완료 처리되었습니다.':statusCode===1?'⏳ 예약중으로 변경되었습니다.':'🟢 판매중으로 변경되었습니다.');
     closeModal(); loadItems();
   }catch(e){toast('❌ '+e.message);}
 }
@@ -803,29 +810,27 @@ async function blockUser(){
 /* ═══════════ DM & SMART CHAT ═══════════ */
 function mkRid(a,b){return[a,b].sort().join('_');}
 
-// 🌟 스마트 채팅 시작 로직: 파라미터로 보낼 첫 메시지를 전달받음
 async function openRoom(tUid,tName,tPhoto, initMsg){
-  if(!CU){pendChat={uid:tUid,name:tName,msg:initMsg};showLogin();return;}
+  if(!CU){pendChat={uid:tUid,name:tName,msg:initMsg};showLoginModal();return;}
   if(CU.uid===tUid)return toast('본인에게는 채팅을 보낼 수 없어요.');
   if(await isBanned(CU.uid))return toast('🚫 차단된 계정은 채팅을 이용할 수 없습니다.');
-  
   const rid=mkRid(CU.uid,tUid);
   await db.collection('dmRooms').doc(rid).set({users:[CU.uid,tUid],userNames:{[CU.uid]:CU.displayName||'나',[tUid]:tName},userPhotos:{[CU.uid]:CU.photoURL||'',[tUid]:tPhoto||''},updatedAt:firebase.firestore.FieldValue.serverTimestamp()},{merge:true});
   closeModal(); switchPage('chat');
-  
-  setTimeout(()=>{
-    openDm(rid,tName);
-    // 🌟 스마트 채팅: 방에 들어가자마자 입력창에 문의 문구 자동 채워주기
-    if(initMsg) { document.getElementById('dm-in').value = initMsg; }
-  },200);
+  setTimeout(()=>{openDm(rid,tName);if(initMsg)document.getElementById('dm-in').value = initMsg;},200);
 }
 
-// 매물에서 채팅 버튼을 눌렀을 때
+// 🌟 일반 채팅 시작 시 문구 자동완성
 async function chatSeller(){
-  if(!curItem)return;
-  if(!curItem.sellerId)return toast('판매자 정보가 없습니다.');
-  // 🌟 자동 완성 메시지 생성
-  const initMsg = `안녕하세요, [${curItem.title}] 매물 보고 연락드립니다!`;
+  if(!curItem)return; if(!curItem.sellerId)return toast('판매자 정보가 없습니다.');
+  const initMsg = `[${curItem.title}] 매물 보고 연락드립니다!`;
+  await openRoom(curItem.sellerId, curItem.sellerName||'판매자', '', initMsg);
+}
+
+// 🌟 직거래 제안 시 구체적인 템플릿 문구 자동완성
+async function proposeDirectTrade(){
+  if(!curItem)return; if(!curItem.sellerId)return toast('판매자 정보가 없습니다.');
+  const initMsg = `[직거래 제안]\n안녕하세요, [${curItem.title}] 매물 직거래하고 싶습니다.\n\n- 희망 거래 일시: \n- 희망 거래 장소: \n\n시간과 장소 편하게 말씀해주세요!`;
   await openRoom(curItem.sellerId, curItem.sellerName||'판매자', '', initMsg);
 }
 
@@ -882,33 +887,66 @@ async function sendDm(){
   await batch.commit();
 }
 
-/* ═══════════ BOT ═══════════ */
 function botMsg(text,isUser=false){const box=document.getElementById('bot-msgs');const d=document.createElement('div');d.className='bw fi'+(isUser?' me':'');d.innerHTML=`<div class="chat-bubble${isUser?'':' bot'}">${text}</div>`;box.appendChild(d);box.scrollTop=box.scrollHeight;}
 const BOT=[
   {k:['사이즈','규격','고르는','선택'],a:'타이어 사이즈는 운전석 문 안쪽 스티커나 현재 타이어 측면에서 확인하세요!\n\n예: 205/55R16 → 폭 205mm / 편평비 55% / 림 16인치\n\n⚠️ 다른 사이즈는 안전에 영향을 줄 수 있으니 꼭 동일 사이즈로 구매하세요 🙏'},
   {k:['배송','택배','언제','도착'],a:'배송은 판매자와 1:1 채팅으로 직접 협의하세요! 🚚\n착불 또는 선불로 진행하며 택배사·일정도 판매자에게 문의해주세요.'},
   {k:['장착','설치','공임','어디서'],a:'구매 후 가까운 타이어 전문점이나 카센터에서 장착하시면 돼요 🔧\n보통 1개당 5,000~15,000원 수준입니다.'},
   {k:['환불','반품','교환','취소'],a:'수령 후 7일 이내 환불/교환 가능합니다 💰\n단, 장착 후에는 환불이 어렵습니다. 받으면 바로 상태를 확인해주세요!'},
-  {k:['세이프페이','안전결제','에스크로'],a:'세이프페이는 TireSafe의 안전 결제 시스템이에요 🔒\n장착 완료 확인 후에만 판매자에게 대금이 지급돼, 사기 걱정 없이 거래하세요!'},
   {k:['가격','얼마','비용'],a:'중고타이어·휠은 새 제품 대비 30~60% 수준이에요 💡\n홈 탭에서 현재 매물을 확인해보세요!'},
   {k:['상담','고객상담','1:1','연결','문의'],a:null}
 ];
 function getAns(msg){const m=msg.toLowerCase();for(const q of BOT)if(q.k.some(k=>m.includes(k)))return q.a;return undefined;}
 function qa(q){document.getElementById('bot-in').value=q;sendBot();}
+
+// 🌟 고객센터 연결 시 자동 인사말 기능
+async function connectAdmin() {
+  if(!CU) { botMsg('로그인 후 이용하실 수 있어요!'); return showLoginModal(); }
+  if(CU.uid===ADMIN) return botMsg('현재 사장님 관리자 계정으로 접속 중입니다. 일반 계정으로 1:1 대화를 테스트해주세요 😅');
+  if(await isBanned(CU.uid)) return botMsg('🚫 차단된 계정은 1:1 상담을 이용할 수 없습니다.');
+
+  botMsg('1:1 고객상담 센터로 연결해 드릴게요! 잠시만요 👨‍💼');
+  
+  setTimeout(async () => {
+    const rid = mkRid(CU.uid, ADMIN);
+    const roomRef = db.collection('dmRooms').doc(rid);
+    const doc = await roomRef.get();
+    
+    // 처음 1:1 고객센터 방이 열릴 때 자동 안내문 발송
+    if (!doc.exists) {
+      await roomRef.set({
+        users: [CU.uid, ADMIN],
+        userNames: { [CU.uid]: CU.displayName||'고객', [ADMIN]: '타이어세이프 고객센터' },
+        userPhotos: { [CU.uid]: CU.photoURL||'', [ADMIN]: '' },
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+        lastMsg: '안녕하세요! 타이어세이프입니다. 무엇을 도와드릴까요?',
+        lastSenderId: ADMIN, isRead: false
+      }, { merge: true });
+      
+      await db.collection('dmRooms').doc(rid).collection('messages').add({
+        text: '안녕하세요! 타이어세이프입니다.\n어떤 점이 궁금하신가요?',
+        uid: ADMIN, name: '타이어세이프 고객센터', createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+    }
+    
+    switchPage('chat');
+    setTimeout(() => openDm(rid, '고객상담센터'), 200);
+  }, 1000);
+}
+
 async function sendBot(){
   const input=document.getElementById('bot-in');const msg=input.value.trim();if(!msg)return;
   input.value='';botMsg(msg,true);
+  
   setTimeout(async()=>{
     const ans=getAns(msg);
-    if(ans===null){
-      if(!CU)return botMsg('로그인 후 이용하실 수 있어요!');
-      if(CU.uid===ADMIN)return botMsg('현재 관리자 계정입니다. 일반 계정으로 테스트해주세요 😅');
-      if(await isBanned(CU.uid))return botMsg('🚫 차단된 계정은 이용할 수 없습니다.');
-      botMsg('1:1 고객상담으로 연결할게요! 잠시만요 👨‍💼'); setTimeout(()=>openRoom(ADMIN,'고객상담센터',''),900);
-    }else if(ans===undefined){
-      botMsg('정확한 답변을 찾지 못했어요 😅'); setTimeout(()=>{const box=document.getElementById('bot-msgs');const d=document.createElement('div');d.className='bw fi';d.innerHTML=`<button class="qbtn" onclick="qa('1:1 고객상담')" style="margin-top:4px;">👨‍💼 1:1 고객상담 연결</button>`;box.appendChild(d);box.scrollTop=box.scrollHeight;},80);
-    }else botMsg(ans);
-  },380);
+    if(ans===null) { connectAdmin(); } 
+    else if(ans===undefined){
+      botMsg('정확한 답변을 찾지 못했어요 😅\n도움이 필요하시면 아래 [1:1 고객상담] 버튼을 눌러주세요!');
+      botMsg('<button class="qbtn" style="border-color:var(--t1); color:var(--t1); margin-top:4px;" onclick="connectAdmin()">👨‍💼 1:1 고객상담 바로 연결하기</button>');
+    } 
+    else { botMsg(ans); }
+  }, 500);
 }
 </script>
 </body>
