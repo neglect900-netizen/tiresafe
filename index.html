@@ -720,14 +720,11 @@ function esc(s){if(!s)return'';return String(s).replace(/&/g,'&amp;').replace(/<
 function fmtN(n){return Number(n||0).toLocaleString()+'원'}
 /* 가격 한글 변환 */
 function numToKor(n){
-  n=parseInt(n)||0;if(!n)return'';
-  const units=['','만','억','조'];let parts=[];let idx=0;
-  while(n>0){const r=n%10000;if(r||idx===0)parts.unshift(r+(units[idx]||''));idx++;n=Math.floor(n/10000);}
-  // 간단 버전
-  if(n===0)return'';
-  const val=parseInt(arguments[0])||0;
-  if(val>=100000000){const ok=Math.floor(val/100000000);const rem=val%100000000;return ok+'억'+(rem>=10000?' '+(Math.floor(rem/10000))+'만':'')+'원';}
+  const val=parseInt(n)||0;
+  if(!val)return'';
+  if(val>=100000000){const ok=Math.floor(val/100000000);const rem=val%100000000;return ok+'억'+(rem>=10000?' '+Math.floor(rem/10000)+'만':'')+'원';}
   if(val>=10000){const ok=Math.floor(val/10000);const rem=val%10000;return ok+'만'+(rem>=1000?' '+Math.floor(rem/1000)+'천':(rem>0?' '+rem:''))+'원';}
+  if(val>=1000)return Math.floor(val/1000)+'천'+(val%1000>0?' '+val%1000:'')+'원';
   return val.toLocaleString()+'원';
 }
 function prevPrice(inputId,previewId){
@@ -937,13 +934,26 @@ async function loadItems(){
   grid.innerHTML='<div class="loading"><div class="spinner"></div><p>불러오는 중...</p></div>';
   const q=(document.getElementById('s-input')?.value||'').trim().toLowerCase().replace(/\s/g,'');
   try{
-    const snap=await db.collection('tires').orderBy('createdAt','desc').get();
-    const docs=snap.docs.filter(d=>{
+    // orderBy 없이 가져온 후 클라이언트에서 정렬 (인덱스 불필요)
+    let snap;
+    try{
+      snap=await db.collection('tires').orderBy('createdAt','desc').get();
+    }catch(idxErr){
+      // 인덱스 없을 경우 fallback
+      snap=await db.collection('tires').get();
+    }
+    let docs=snap.docs.filter(d=>{
       const t=d.data();
       if(curCat==='my'){if(!CU||t.sellerId!==CU.uid)return false}
       else if(curCat!=='all'){if((t.category||'tire')!==curCat)return false}
       if(!q)return true;
       return(t.title||'').toLowerCase().includes(q)||(t.size||'').toLowerCase().replace(/\s/g,'').includes(q);
+    });
+    // 클라이언트 정렬 보장
+    docs.sort((a,b)=>{
+      const at=a.data().createdAt?.toMillis?.()||0;
+      const bt=b.data().createdAt?.toMillis?.()||0;
+      return bt-at;
     });
     if(!docs.length){grid.innerHTML=`<div class="empty"><div class="empty-icon">${curCat==='wheel'?'⭕':curCat==='my'?'👤':'🔍'}</div><p>${q?'"'+q+'" 검색 결과 없음':CAT_LABEL[curCat]+'이 없어요'}<br>매물을 등록해보세요!</p></div>`;return}
     grid.innerHTML=docs.map(doc=>{
@@ -965,7 +975,10 @@ async function loadItems(){
         </div>
       </div>`;
     }).join('');
-  }catch(e){grid.innerHTML=`<div style="grid-column:1/-1;padding:30px;color:var(--red);text-align:center;font-size:13px">⚠️ ${esc(e.message)}</div>`}
+  }catch(e){
+    console.error('loadItems error:',e);
+    grid.innerHTML=`<div style="grid-column:1/-1;padding:30px;color:var(--red);text-align:center;font-size:13px">⚠️ 매물을 불러오지 못했습니다.<br><small style="color:var(--t3)">${esc(e.message)}</small><br><br><button onclick="loadItems()" style="background:var(--acc);color:#fff;border:none;padding:10px 20px;border-radius:8px;cursor:pointer;font-weight:700;font-family:var(--font)">다시 시도</button></div>`;
+  }
 }
 
 /* ── SELL ── */
@@ -1284,7 +1297,6 @@ function doCheatSearch(){
 }
 
 /* ── 사기 신고 ── */
-let curRtype='';
 function openReportModal(){if(!CU)return showLoginModal();if(!dmRoom)return toast('채팅방에서 이용해주세요');curRtype='';document.querySelectorAll('.rtype-btn').forEach(b=>b.classList.remove('sel'));document.getElementById('report-desc').value='';document.getElementById('report-modal').classList.add('open')}
 function closeReportModal(){document.getElementById('report-modal').classList.remove('open')}
 function selRtype(btn,type){curRtype=type;document.querySelectorAll('.rtype-btn').forEach(b=>b.classList.remove('sel'));btn.classList.add('sel')}
