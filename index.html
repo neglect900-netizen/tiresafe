@@ -3,7 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
 <title>TireSafe · 중고타이어·휠 직거래</title>
+<meta name="description" content="TireSafe - 안전하고 투명한 중고타이어 및 휠 직거래 플랫폼. 딜러 마진 없이 반값에 안전하게 타이어를 거래하고 가까운 카센터에서 교체하세요.">
+<meta name="keywords" content="중고타이어, 중고휠, 타이어직거래, 타이어교체, 타이어가격, 카센터, 경주 타이어, TireSafe, 타이어중고">
+<meta name="robots" content="index,follow">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="TireSafe · 중고타이어·휠 직거래">
+<meta property="og:description" content="검증된 매물, 채팅으로 직접 안전하게 거래하세요.">
+<meta property="og:site_name" content="TireSafe">
+<link rel="canonical" href="https://tire-f9ebb.web.app">
+<meta property="og:url" content="https://tire-f9ebb.web.app">
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
@@ -547,7 +558,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-tap-hi
         </div>
       </div>
       <div class="unit-calc-box" id="dl-calc">📊 개당 0원 × 4개 = 총 0원</div>
-      <div class="f-group"><label class="f-label">거래 장소 / 배송지</label><input class="f-input" id="dl-place" type="text" placeholder="예: 경주시 이마트 주차장 / 택배"></div>
+      <div class="f-group"><label class="f-label">거래 장소 / 배송지</label><input class="f-input" id="dl-place" type="text" placeholder="예: 이마트 주차장 / 택배"></div>
       <div class="f-group"><label class="f-label">메모 (선택)</label><textarea class="f-ta" id="dl-memo" style="height:60px" placeholder="추가 조건, 협의 사항"></textarea></div>
       <div style="background:var(--ind-bg);border:1px solid #c7d2fe;border-radius:10px;padding:10px 12px;margin-bottom:14px;font-size:11px;color:var(--ind);line-height:1.6">📋 상대방이 <b>수락</b>하면 거래내역서가 자동 생성됩니다.</div>
       <button class="btn btn-ind" onclick="sendDealProposal()">🤝 거래 제안 보내기</button>
@@ -966,7 +977,7 @@ async function changeStatus(s){
 async function toggleVerify(){if(!curItem?.id)return;const v=!curItem.isVerified;try{await db.collection('tires').doc(curItem.id).update({isVerified:v});toast(v?'✅ 인증 추가':'❌ 인증 해제');closeModal();loadItems()}catch(e){toast('❌ '+e.message)}}
 async function blockUser(){if(!curItem?.sellerId)return;if(!confirm('영구 차단?'))return;try{await db.collection('bannedUsers').doc(curItem.sellerId).set({blockedAt:firebase.firestore.FieldValue.serverTimestamp(),reason:'관리자 차단'});toast('🚫 차단 완료');closeModal()}catch(e){toast('❌ '+e.message)}}
 
-/* ── 거래 제안 시스템 (매물 ID 연동 완벽 수정) ── */
+/* ── 거래 제안 시스템 (에러 완벽 차단 버전) ── */
 function openDealModal(){
   if(!CU)return showLoginModal();if(!dmRoom)return toast('채팅방에서 이용해주세요');
   const banner=document.getElementById('dm-item-banner');
@@ -981,24 +992,32 @@ function closeDealModal(){document.getElementById('deal-modal').classList.remove
 
 async function sendDealProposal(){
   if(!CU||!dmRoom)return;
-  const title=document.getElementById('dl-title').value.trim();
-  const price=parseInt(document.getElementById('dl-price').value)||0;
-  const unit=document.getElementById('dl-unit').value;
-  const qty=document.getElementById('dl-qty').value;
-  const method=document.getElementById('dl-method').value;
-  const place=document.getElementById('dl-place').value.trim();
-  const memo=document.getElementById('dl-memo').value.trim();
-  if(!title)return toast('상품명을 입력해주세요');if(price<1)return toast('거래 금액을 입력해주세요');
   
-  const totalPrice=(unit==='개당'&&qty!=='기타')?price*parseInt(qty):price;
-  const dealId='DL_'+Date.now()+'_'+Math.random().toString(36).substr(2,5).toUpperCase();
+  const titleEl = document.getElementById('dl-title');
+  const priceEl = document.getElementById('dl-price');
+  if(!titleEl || !priceEl) return toast('오류: 입력창을 찾을 수 없습니다.');
   
-  // 핵심 포인트: curChatRoomItem에서 안전하게 id 추출 (오류 방지)
-  const targetItemId = (curChatRoomItem && curChatRoomItem.id) ? curChatRoomItem.id : null;
+  const title = titleEl.value.trim();
+  const price = parseInt(priceEl.value) || 0;
+  const unit = document.getElementById('dl-unit')?.value || '전체';
+  const qty = document.getElementById('dl-qty')?.value || '1';
+  const method = document.getElementById('dl-method')?.value || '직거래';
+  const place = document.getElementById('dl-place')?.value.trim() || '';
+  const memo = document.getElementById('dl-memo')?.value.trim() || '';
+  
+  if(!title) return toast('상품명을 입력해주세요');
+  if(price<1) return toast('거래 금액을 입력해주세요');
+  
+  const totalPrice = (unit==='개당'&&qty!=='기타') ? price*parseInt(qty) : price;
+  const dealId = 'DL_'+Date.now()+'_'+Math.random().toString(36).substr(2,5).toUpperCase();
+  
+  // 과거 채팅방 등 매물 ID가 없는 경우를 대비한 방어 코드 (null 치환)
+  const targetItemId = curChatRoomItem?.id || null;
+  const safeProposerName = CU.displayName || '판매자';
   
   const dealData={
     dealId: dealId,
-    itemId: targetItemId,
+    itemId: targetItemId, // null 은 파이어베이스에 안전하게 들어감
     title: title,
     price: price,
     unit: unit,
@@ -1008,12 +1027,17 @@ async function sendDealProposal(){
     place: place,
     memo: memo,
     proposerId: CU.uid,
-    proposerName: CU.displayName||'판매자',
+    proposerName: safeProposerName,
     roomId: dmRoom,
     status: 'pending',
     signedBy: {},
     createdAt: firebase.firestore.FieldValue.serverTimestamp()
   };
+  
+  // 혹시라도 undefined가 있다면 파이어베이스가 튕기므로 안전하게 null로 한 번 더 청소
+  Object.keys(dealData).forEach(key => {
+    if (dealData[key] === undefined) dealData[key] = null;
+  });
   
   try{
     await db.collection('tradeDeals').doc(dealId).set(dealData);
@@ -1024,7 +1048,10 @@ async function sendDealProposal(){
     await batch.commit();
     closeDealModal();
     toast('🤝 거래 제안을 보냈습니다!');
-  }catch(e){toast('❌ 제안 오류: '+e.message)}
+  }catch(e){
+    console.error(e);
+    toast('❌ 제안 전송 오류가 발생했습니다.');
+  }
 }
 
 async function acceptDeal(dealId){
