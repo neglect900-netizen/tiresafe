@@ -30,16 +30,9 @@ html,body{height:100%;overflow:hidden}
 body{font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-tap-highlight-color:transparent;-webkit-font-smoothing:antialiased}
 .app{max-width:480px;margin:0 auto;height:100%;display:flex;flex-direction:column;position:relative;overflow:hidden;background:var(--bg)}
 
-/* ══ 로고 ══ */
 .hdr{flex-shrink:0;height:var(--head);display:flex;align-items:center;justify-content:space-between;padding:0 16px;background:var(--sur);border-bottom:1px solid var(--bd);z-index:40;box-shadow:var(--sh)}
 .logo{display:flex;align-items:center;gap:9px;cursor:pointer;user-select:none}
-.logo-mark{
-  width:36px;height:36px;border-radius:11px;
-  background:linear-gradient(145deg,#FF5A1F 0%,#FF8040 100%);
-  display:flex;align-items:center;justify-content:center;
-  box-shadow:0 3px 10px rgba(255,90,31,.38);
-  flex-shrink:0;position:relative;overflow:hidden
-}
+.logo-mark{width:36px;height:36px;border-radius:11px;background:linear-gradient(145deg,#FF5A1F 0%,#FF8040 100%);display:flex;align-items:center;justify-content:center;box-shadow:0 3px 10px rgba(255,90,31,.38);flex-shrink:0;position:relative;overflow:hidden}
 .logo-mark::before{content:'';position:absolute;top:-10px;right:-10px;width:22px;height:22px;background:rgba(255,255,255,.15);border-radius:50%}
 .logo-mark svg{width:20px;height:20px}
 .logo-text .ln{font-size:19px;font-weight:900;letter-spacing:-.8px;color:var(--t1);line-height:1}
@@ -49,13 +42,11 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-tap-hi
 .avatar img{width:100%;height:100%;object-fit:cover}
 .login-btn{font-size:13px;font-weight:700;padding:8px 16px;border-radius:20px;background:var(--t1);color:#fff;border:none;cursor:pointer;font-family:inherit}
 
-/* ══ PAGES ══ */
 .page{display:none;flex:1;overflow-y:auto;padding-bottom:var(--nav)}
 .page.active{display:block}
 #pg-chat{display:none;position:absolute;top:var(--head);bottom:var(--nav);left:0;right:0;flex-direction:column;overflow:hidden;background:var(--bg)}
 #pg-chat.active{display:flex}
 
-/* ══ HERO ══ */
 .hero{padding:22px 18px 20px;background:var(--sur);border-bottom:1px solid var(--bd);position:relative;overflow:hidden}
 .hero::before{content:'';position:absolute;top:-60px;right:-40px;width:220px;height:220px;background:radial-gradient(circle,rgba(255,90,31,.07),transparent 70%);pointer-events:none}
 .hero-tag{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;color:var(--acc);background:var(--acc-bg);border:1px solid var(--acc-bd);border-radius:20px;padding:4px 11px;margin-bottom:12px}
@@ -74,7 +65,6 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-tap-hi
 .sw-ico{position:absolute;left:13px;top:50%;transform:translateY(-50%);font-size:15px;pointer-events:none}
 .sbtn{background:var(--acc);color:#fff;border:none;border-radius:var(--r);padding:0 18px;font-weight:800;font-size:13px;cursor:pointer;font-family:inherit;height:48px}
 
-/* 거래가이드 배너 */
 .g-banner{margin:10px 12px 0;background:linear-gradient(135deg,var(--ind-bg),#fff);border:1px solid #c7d2fe;border-radius:14px;padding:12px 14px;display:flex;align-items:center;gap:10px;cursor:pointer;position:relative;overflow:hidden}
 .g-banner::before{content:'';position:absolute;top:0;left:0;bottom:0;width:4px;background:linear-gradient(180deg,var(--ind),var(--blu));border-radius:4px 0 0 4px}
 .gb-ico{font-size:22px;flex-shrink:0}
@@ -89,7 +79,6 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-tap-hi
 .sec-title{font-size:14px;font-weight:800}
 .sec-ref{font-size:12px;font-weight:600;color:var(--t3);cursor:pointer;padding:5px 10px;background:var(--sur2);border-radius:20px;border:1px solid var(--bd)}
 
-/* ══ CARDS ══ */
 .tire-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 12px 20px}
 .card{background:var(--sur);border:1px solid var(--bd);border-radius:var(--r2);overflow:hidden;cursor:pointer;box-shadow:var(--sh);transition:transform .15s}
 .card:active{transform:scale(.98)}
@@ -112,7 +101,6 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-tap-hi
 .spinner{width:28px;height:28px;border:2.5px solid var(--bd);border-top-color:var(--acc);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 10px}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* ══ SELL FORM ══ */
 .sell-wrap{padding:20px 16px 10px}
 .sell-title{font-size:22px;font-weight:900;margin-bottom:3px;letter-spacing:-.5px}
 .sell-sub{font-size:13px;color:var(--t3);margin-bottom:22px}
@@ -138,7 +126,6 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-tap-hi
 .btn-ind{background:linear-gradient(135deg,var(--ind),var(--blu));color:#fff}
 .btn-grn{background:var(--grn);color:#fff}
 
-/* ══ MY PAGE ══ */
 .my-hdr{padding:28px 20px 20px;background:var(--sur);border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:16px}
 .my-av{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;overflow:hidden;box-shadow:0 4px 12px rgba(255,90,31,.25)}
 .my-av img{width:100%;height:100%;object-fit:cover}
@@ -153,7 +140,6 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-tap-hi
 .mmi-txt{flex:1}
 .mmi-arr{color:var(--t4);font-size:18px}
 
-/* ══ CHAT ══ */
 .chat-tabs{flex-shrink:0;display:flex;background:var(--sur);border-bottom:1px solid var(--bd)}
 .ctab{flex:1;padding:14px 8px;font-size:13px;font-weight:700;border:none;background:none;color:var(--t3);cursor:pointer;border-bottom:2px solid transparent;font-family:var(--font)}
 .ctab.active{color:var(--t1);border-bottom-color:var(--acc)}
@@ -215,7 +201,6 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-tap-hi
 .qbtn{flex-shrink:0;padding:7px 13px;border-radius:20px;background:var(--sur2);border:1.5px solid var(--bd);font-size:12px;font-weight:700;color:var(--t2);cursor:pointer;white-space:nowrap;font-family:var(--font)}
 .qbtn:active{background:var(--acc-bg);border-color:var(--acc-bd);color:var(--acc)}
 
-/* ══ 거래 제안 카드 (채팅 내) ══ */
 .dc{max-width:90%;background:var(--sur);border:1.5px solid #c7d2fe;border-radius:16px;overflow:hidden;box-shadow:var(--sh2);margin:4px 0}
 .dc-h{background:linear-gradient(135deg,var(--ind-bg),#e0e7ff);padding:10px 14px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #c7d2fe}
 .dc-h-ico{font-size:16px}
@@ -244,7 +229,6 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-tap-hi
 .dc-btn-f{grid-column:1/-1}
 .dc-btn-done{background:var(--grn);color:#fff}
 
-/* ══ 거래내역서 목록 ══ */
 .tl-item{background:var(--sur);border:1px solid var(--bd);border-radius:14px;padding:14px;margin-bottom:8px;cursor:pointer;display:flex;align-items:center;gap:12px;box-shadow:var(--sh)}
 .tl-item:active{background:var(--sur2)}
 .tl-thumb{width:44px;height:44px;border-radius:10px;background:var(--ind-bg);border:1px solid #c7d2fe;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:20px}
@@ -258,7 +242,6 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-tap-hi
 .tls-wait{background:var(--yel-bg);color:#92400e}
 .tls-no{background:var(--red-bg);color:#991b1b}
 
-/* ══ 모달들 ══ */
 .doc-modal,.terms-modal,.fl-modal,.ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;align-items:flex-end;justify-content:center;backdrop-filter:blur(4px)}
 .doc-modal.open,.terms-modal.open,.fl-modal.open,.ov.open{display:flex}
 .doc-sheet,.terms-sheet,.fl-sheet,.sheet,.auth-sheet{background:var(--sur);border-radius:24px 24px 0 0;width:100%;max-width:480px;animation:sup .3s cubic-bezier(.2,.8,.2,1);position:relative}
@@ -331,7 +314,6 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-tap-hi
 .m-trust{font-size:12px;font-weight:800;color:var(--blu);background:var(--blu-bg);padding:4px 10px;border-radius:20px;border:1px solid #bfdbfe}
 .sh-btns{flex-shrink:0;display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:12px 20px 24px;border-top:1px solid var(--bd);background:var(--sur)}
 
-/* auth */
 .auth-tabs{display:flex;border-bottom:2px solid var(--bd);margin-bottom:24px;margin-top:10px}
 .auth-tab{flex:1;text-align:center;padding:12px 0;font-size:15px;font-weight:800;color:var(--t3);cursor:pointer;position:relative}
 .auth-tab.active{color:var(--t1)}
@@ -339,7 +321,6 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-tap-hi
 .auth-box .f-input{background:var(--bg);border-radius:12px;padding:16px;margin-bottom:12px;font-size:15px;width:100%;outline:none;border:1px solid var(--bd)}
 .btn-google{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:16px;background:var(--sur);border:1.5px solid var(--bd2);border-radius:var(--r);font-size:15px;font-weight:800;cursor:pointer;color:var(--t1);margin-top:16px}
 
-/* NAV */
 .bnav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;height:var(--nav);background:var(--sur);border-top:1px solid var(--bd);display:flex;z-index:50;padding-bottom:env(safe-area-inset-bottom);box-shadow:0 -4px 20px rgba(0,0,0,.05)}
 .nbtn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;border:none;background:none;cursor:pointer;color:#B0BAD0;font-family:var(--font);position:relative;transition:color .2s}
 .nbtn svg{width:24px;height:24px;stroke-width:2.2;transition:transform .2s}
@@ -426,7 +407,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-tap-hi
       <div class="dm-item-banner" id="dm-item-banner" style="display:none">
         <img id="dm-item-img" src="" alt="">
         <div style="flex:1;overflow:hidden"><div class="i-title" id="dm-item-title"></div><div class="i-price" id="dm-item-price"></div></div>
-        <button class="i-btn">보기</button>
+        <button class="i-btn" onclick="openChatRoomItem()">보기</button>
       </div>
       <div class="chat-wrap">
         <div class="msgs" id="dm-msgs"></div>
@@ -781,86 +762,28 @@ function updateAuthUI(u){
 }
 function runPend(){if(pendChat&&CU){const{uid,name,msg,item}=pendChat;pendChat=null;setTimeout(()=>openRoom(uid,name,'',msg,item),400)}}
 
-/* ── 법적 고지 ── */
+/* ── 법적 고지 / 가이드 ── */
 const TERMS={
-  terms:{title:'📜 이용약관',sub:'TireSafe 서비스 이용 조건',body:`
-    <div class="terms-sec"><div class="terms-sec-title">제1조 목적</div><div class="terms-sec-body">본 약관은 TireSafe(이하 "서비스")의 이용 조건 및 절차에 관한 사항을 규정합니다. 서비스를 이용함으로써 본 약관에 동의한 것으로 간주됩니다.</div></div>
-    <div class="terms-sec"><div class="terms-sec-title">제2조 서비스의 성격</div><div class="terms-sec-body">TireSafe는 <b>중고 타이어·휠 거래를 위한 정보 제공 플랫폼</b>입니다. 실제 거래는 이용자 간에 직접 이루어지며, TireSafe는 거래 당사자가 아닙니다. TireSafe는 전자상거래 등에서의 소비자보호에 관한 법률에 따른 <b>통신판매중개업자</b>로서, 판매자와 구매자 간의 거래를 위한 중개 서비스만을 제공합니다.</div></div>
-    <div class="terms-sec"><div class="terms-sec-title">제3조 이용자 의무</div><div class="terms-sec-body">• 허위 정보 게시 금지<br>• 타인의 개인정보 침해 금지<br>• 사기·기만 행위 금지<br>• 관련 법령 준수<br>• 타인에게 피해를 주는 모든 행위 금지</div></div>
-    <div class="terms-sec"><div class="terms-sec-title">제4조 서비스 이용 제한</div><div class="terms-sec-body">외부 결제 유도, 선입금 요구, 허위 매물 등록, 욕설·비방 등 타인에게 피해를 주는 행위는 사전 통보 없이 즉시 이용 제한 조치됩니다.</div></div>
-    <div class="terms-sec"><div class="terms-sec-title">제5조 약관 변경</div><div class="terms-sec-body">TireSafe는 필요 시 약관을 변경할 수 있으며, 변경된 약관은 서비스 내 공지를 통해 고지합니다.</div></div>
-  `},
-  privacy:{title:'🔒 개인정보 처리방침',sub:'개인정보 수집 및 이용 안내',body:`
-    <div class="terms-sec"><div class="terms-sec-title">수집 항목</div><div class="terms-sec-body">• <b>필수:</b> 이메일 주소, 닉네임 (회원가입 시)<br>• <b>소셜 로그인:</b> 구글 계정 프로필 정보<br>• <b>서비스 이용:</b> 채팅 내용, 매물 정보, 접속 로그</div></div>
-    <div class="terms-sec"><div class="terms-sec-title">수집 목적</div><div class="terms-sec-body">서비스 제공 및 본인 확인, 분쟁 해결, 서비스 개선 및 통계 분석, 불법·사기 행위 방지</div></div>
-    <div class="terms-sec"><div class="terms-sec-title">보관 기간</div><div class="terms-sec-body">회원 탈퇴 시까지 보관하며, 탈퇴 후 즉시 파기합니다. 단, 관계 법령에 의해 보존이 필요한 경우 해당 기간 동안 보관합니다.<br><br>• 계약 또는 청약철회 기록: 5년<br>• 소비자 불만 또는 분쟁처리 기록: 3년</div></div>
-    <div class="terms-sec"><div class="terms-sec-title">제3자 제공</div><div class="terms-sec-body">이용자의 동의 없이 개인정보를 제3자에게 제공하지 않습니다. 단, 법령에 의한 요청 또는 수사기관의 적법한 요청 시 예외입니다.</div></div>
-    <div class="terms-sec"><div class="terms-sec-title">Firebase 이용 고지</div><div class="terms-sec-body">본 서비스는 Google Firebase를 통해 데이터를 저장·처리합니다. Firebase의 개인정보 처리방침(firebase.google.com)이 함께 적용됩니다.</div></div>
-    <div class="terms-sec"><div class="terms-sec-title">개인정보 보호책임자</div><div class="terms-sec-body">TireSafe 서비스 운영팀<br>문의: 앱 내 1:1 고객상담 이용</div></div>
-  `},
-  disclaimer:{title:'⚖️ 면책 조항',sub:'서비스 이용 관련 법적 고지',body:`
-    <div class="terms-sec"><div class="terms-sec-title">통신판매중개업자 고지</div><div class="terms-sec-body">TireSafe는 <b>통신판매중개업자</b>로서 이용자 간 거래를 위한 플랫폼만을 제공합니다. <b>TireSafe는 거래의 당사자가 아니며, 판매자와 구매자 간에 이루어지는 거래에 대해 직접적인 책임을 지지 않습니다.</b></div></div>
-    <div class="terms-sec"><div class="terms-sec-title">거래 책임</div><div class="terms-sec-body">실제 거래에서 발생하는 제품 하자, 허위 정보, 사기, 분쟁 등에 대한 책임은 거래 당사자인 판매자와 구매자에게 있습니다. TireSafe는 이에 대한 법적 책임을 지지 않습니다.</div></div>
-    <div class="terms-sec"><div class="terms-sec-title">사기 피해 고지</div><div class="terms-sec-body">TireSafe는 사기 방지를 위한 다양한 기능(사기조회, 거래내역서, 신고 시스템 등)을 제공하나, <b>실제 금전적 피해에 대한 직접적인 보상 의무를 지지 않습니다.</b><br><br>피해 발생 시:<br>• 경찰청 사이버범죄신고시스템: ecrm.police.go.kr<br>• 경찰청 신고전화: ☎ 182<br>• 더치트 사기이력 조회: thecheat.co.kr</div></div>
-    <div class="terms-sec"><div class="terms-sec-title">서비스 중단</div><div class="terms-sec-body">서버 점검, 천재지변, 불가항력 등의 사유로 서비스가 일시 중단될 수 있으며, 이로 인한 손해에 대해 책임을 지지 않습니다.</div></div>
-    <div class="terms-sec"><div class="terms-sec-title">콘텐츠 책임</div><div class="terms-sec-body">이용자가 게시한 매물 사진, 설명 등 모든 콘텐츠의 정확성·신뢰성에 대한 책임은 해당 게시자에게 있습니다.</div></div>
-    <div class="terms-sec"><div class="terms-sec-title">준거법 및 관할법원</div><div class="terms-sec-body">본 면책 조항은 <b>대한민국 법률</b>에 따라 해석되며, 서비스 이용과 관련된 분쟁 발생 시 대한민국 법원을 관할 법원으로 합니다.</div></div>
-  `}
+  terms:{title:'📜 이용약관',sub:'TireSafe 서비스 이용 조건',body:`<div class="terms-sec"><div class="terms-sec-title">제1조 목적</div><div class="terms-sec-body">본 약관은 TireSafe의 이용 조건 및 절차에 관한 사항을 규정합니다. 실제 거래는 이용자 간에 직접 이루어지며, TireSafe는 거래 당사자가 아닙니다.</div></div>`},
+  privacy:{title:'🔒 개인정보 처리방침',sub:'개인정보 수집 및 이용 안내',body:`<div class="terms-sec"><div class="terms-sec-title">수집 항목</div><div class="terms-sec-body">• <b>필수:</b> 이메일 주소, 닉네임 (회원가입 시)<br>• <b>소셜 로그인:</b> 구글 계정 프로필 정보</div></div>`},
+  disclaimer:{title:'⚖️ 면책 조항',sub:'서비스 이용 관련 법적 고지',body:`<div class="terms-sec"><div class="terms-sec-title">통신판매중개업자 고지</div><div class="terms-sec-body">TireSafe는 거래의 당사자가 아니며 책임을 지지 않습니다.</div></div>`}
 };
-function openTerms(type){
-  const d=TERMS[type];if(!d)return;
-  document.getElementById('terms-title').textContent=d.title;
-  document.getElementById('terms-sub').textContent=d.sub;
-  document.getElementById('terms-body').innerHTML=d.body;
-  document.getElementById('terms-modal').classList.add('open');
-}
+function openTerms(type){const d=TERMS[type];if(!d)return;document.getElementById('terms-title').textContent=d.title;document.getElementById('terms-sub').textContent=d.sub;document.getElementById('terms-body').innerHTML=d.body;document.getElementById('terms-modal').classList.add('open');}
 function closeTerms(){document.getElementById('terms-modal').classList.remove('open')}
-
-/* ── 거래 가이드 ── */
 function openGuide(){
-  const steps=[
-    ['💬','채팅 시작','매물 상세에서 [채팅하기]를 눌러 판매자에게 문의하세요.','#EEF2FF','#6366F1'],
-    ['🔍','사기 조회','채팅 상단 [🔍 조회] 버튼으로 상대방 번호·계좌를 더치트에서 확인하세요.','#FFF7ED','#F59E0B'],
-    ['🤝','거래 제안','[🤝 거래제안] 버튼으로 금액·방식·장소를 정리해서 제안을 보내세요.','#ECFDF5','#10B981'],
-    ['📋','거래내역서','제안 수락 시 자동으로 거래내역서가 생성됩니다.','#EFF6FF','#3B82F6'],
-    ['✅','거래 완료','물건 수령 후 [거래완료] 버튼을 누르면 내역서에 기록됩니다.','#F0FDF4','#10B981'],
-  ];
   document.getElementById('guide-title').textContent='📋 TireSafe 거래 가이드';
   document.getElementById('guide-sub').textContent='이 순서대로 하면 안전한 거래 완성!';
-  document.getElementById('guide-body').innerHTML=`<div style="display:flex;flex-direction:column;gap:10px;margin-top:8px">`+
-    steps.map(([ico,title,desc,bg,color],i)=>
-      `<div style="display:flex;gap:12px;align-items:flex-start;background:${bg};border-radius:14px;padding:14px;border:1px solid ${color}33">
-        <div style="width:36px;height:36px;border-radius:50%;background:${color};color:#fff;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0">${ico}</div>
-        <div><div style="font-size:14px;font-weight:900;margin-bottom:3px;color:${color}">STEP ${i+1} · ${title}</div><div style="font-size:12px;color:#4B5563;line-height:1.6">${desc}</div></div>
-      </div>`).join('')+
-    `</div>
-    <div style="margin-top:16px;background:var(--yel-bg);border:1px solid #fde68a;border-radius:12px;padding:14px;font-size:12px;color:#92400e;line-height:1.7">
-      ⚠️ <b>사기 주의:</b> 카카오톡 유도, 외부 링크 결제, 선입금 요구는 모두 사기 신호입니다. 반드시 TireSafe 채팅 안에서만 거래하세요.
-    </div>
-    <div style="margin-top:30px"></div>`;
+  document.getElementById('guide-body').innerHTML=`<div style="padding-top:10px;line-height:1.8;font-size:14px;">1️⃣ <b>채팅 시작:</b> 매물 상세에서 [채팅하기]를 누르세요.<br>2️⃣ <b>사기 조회:</b> 채팅방 상단의 [조회] 버튼으로 더치트 검색!<br>3️⃣ <b>거래 제안:</b> [🤝 거래제안] 버튼으로 조건을 기록하세요.<br>4️⃣ <b>거래내역서:</b> 제안 수락 시 증거자료가 자동 생성됩니다.<br>5️⃣ <b>거래 완료:</b> 거래 후 [완료]를 누르면 상태가 [판매완료]로 바뀝니다.</div>`;
   document.getElementById('guide-ov').classList.add('open');
 }
 function openFraudGuide(){
   document.getElementById('guide-title').textContent='🚨 사기 피해 예방 가이드';
   document.getElementById('guide-sub').textContent='이것만 알아도 사기를 막을 수 있어요';
-  document.getElementById('guide-body').innerHTML=`
-    <div style="margin-top:8px;display:flex;flex-direction:column;gap:8px">
-      <div style="background:var(--red-bg);border:1px solid #fecaca;border-radius:12px;padding:14px">
-        <div style="font-size:13px;font-weight:800;color:var(--red);margin-bottom:8px">🚫 이러면 사기!</div>
-        ${['💬 카카오톡·문자로 대화 유도','🔗 외부 링크 결제 요구','🏧 택배비·보증금 선입금 요구','⚡ "지금 아니면 다른 사람" 압박'].map(t=>`<div style="font-size:12px;color:#991b1b;margin-bottom:5px;line-height:1.5">${t}</div>`).join('')}
-      </div>
-      <div style="background:var(--grn-bg);border:1px solid #a7f3d0;border-radius:12px;padding:14px">
-        <div style="font-size:13px;font-weight:800;color:#065f46;margin-bottom:8px">✅ 안전한 거래법</div>
-        ${['📱 TireSafe 채팅 안에서만 대화','🔍 거래 전 더치트로 사기 이력 조회','📋 거래제안 기능으로 조건 문서화','🤝 직거래 시 낮에 공공장소에서'].map(t=>`<div style="font-size:12px;color:#065f46;margin-bottom:5px;line-height:1.5">${t}</div>`).join('')}
-      </div>
-      <button class="btn btn-dk" onclick="window.open('https://thecheat.co.kr','_blank')" style="margin-top:4px">🔍 더치트 사기 이력 조회</button>
-      <button class="btn" style="background:var(--blu);color:#fff;margin-top:0" onclick="window.open('https://ecrm.police.go.kr','_blank')">🚔 경찰청 사이버수사국 신고</button>
-    </div>
-    <div style="margin-top:30px"></div>`;
+  document.getElementById('guide-body').innerHTML=`<div style="padding-top:10px;line-height:1.8;font-size:14px;color:#991b1b;">🚫 카카오톡이나 문자로 대화를 유도한다면 100% 사기입니다.<br>🚫 먼저 입금을 요구하거나, 외부 링크 결제를 요구하면 즉시 거래를 중단하세요.</div>`;
   document.getElementById('guide-ov').classList.add('open');
 }
 
-/* ── 페이지 ── */
+/* ── 페이지 이동 ── */
 function switchPage(n,fromNav=false){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById('pg-chat').classList.remove('active');
@@ -878,7 +801,7 @@ function switchChatTab(t){
   if(t==='bot'&&document.getElementById('bot-msgs').children.length===0)initBot();
 }
 
-/* ── 카테고리 & 매물 ── */
+/* ── 카테고리 & 매물 로드 ── */
 const CAT_LABEL={all:'실시간 전체 매물',tire:'중고타이어 매물',wheel:'중고휠 매물',my:'내가 올린 매물'};
 function setCategory(el,cat){
   if(el){document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active')}
@@ -930,12 +853,11 @@ async function loadItems(){
       </div>`;
     }).join('');
   }catch(e){
-    console.error('loadItems error:',e);
     grid.innerHTML=`<div style="grid-column:1/-1;padding:30px;color:var(--red);text-align:center;font-size:13px">⚠️ 매물을 불러오지 못했습니다.<br><small style="color:var(--t3)">${esc(e.message)}</small><br><br><button onclick="loadItems()" style="background:var(--acc);color:#fff;border:none;padding:10px 20px;border-radius:8px;cursor:pointer;font-weight:700;font-family:var(--font)">다시 시도</button></div>`;
   }
 }
 
-/* ── SELL ── */
+/* ── SELL 등록 ── */
 function renderSell(){
   document.getElementById('sell-content').innerHTML=`
     <div class="photo-up" onclick="document.getElementById('f-file').click()">
@@ -981,7 +903,7 @@ async function submitItem(){
   }catch(e){toast('❌ '+e.message)}finally{btn.disabled=false;btn.textContent='매물 등록하기 →'}
 }
 
-/* ── 매물 상세 ── */
+/* ── 매물 상세 모달 ── */
 function openModal(t){
   if(typeof t==='string')t=JSON.parse(t);curItem=t;
   const g=document.getElementById('m-gallery');g.innerHTML='';
@@ -1044,7 +966,7 @@ async function changeStatus(s){
 async function toggleVerify(){if(!curItem?.id)return;const v=!curItem.isVerified;try{await db.collection('tires').doc(curItem.id).update({isVerified:v});toast(v?'✅ 인증 추가':'❌ 인증 해제');closeModal();loadItems()}catch(e){toast('❌ '+e.message)}}
 async function blockUser(){if(!curItem?.sellerId)return;if(!confirm('영구 차단?'))return;try{await db.collection('bannedUsers').doc(curItem.sellerId).set({blockedAt:firebase.firestore.FieldValue.serverTimestamp(),reason:'관리자 차단'});toast('🚫 차단 완료');closeModal()}catch(e){toast('❌ '+e.message)}}
 
-/* ── 거래 제안 시스템 ── */
+/* ── 거래 제안 시스템 (매물 ID 연동 완벽 수정) ── */
 function openDealModal(){
   if(!CU)return showLoginModal();if(!dmRoom)return toast('채팅방에서 이용해주세요');
   const banner=document.getElementById('dm-item-banner');
@@ -1056,6 +978,7 @@ function openDealModal(){
   document.getElementById('deal-modal').classList.add('open');
 }
 function closeDealModal(){document.getElementById('deal-modal').classList.remove('open')}
+
 async function sendDealProposal(){
   if(!CU||!dmRoom)return;
   const title=document.getElementById('dl-title').value.trim();
@@ -1066,23 +989,44 @@ async function sendDealProposal(){
   const place=document.getElementById('dl-place').value.trim();
   const memo=document.getElementById('dl-memo').value.trim();
   if(!title)return toast('상품명을 입력해주세요');if(price<1)return toast('거래 금액을 입력해주세요');
+  
   const totalPrice=(unit==='개당'&&qty!=='기타')?price*parseInt(qty):price;
   const dealId='DL_'+Date.now()+'_'+Math.random().toString(36).substr(2,5).toUpperCase();
   
-  // itemId 연동 추가
-  const itemId = curChatRoomItem ? curChatRoomItem.id : null;
+  // 핵심 포인트: curChatRoomItem에서 안전하게 id 추출 (오류 방지)
+  const targetItemId = (curChatRoomItem && curChatRoomItem.id) ? curChatRoomItem.id : null;
   
-  const dealData={dealId, itemId, title, price, unit, qty, totalPrice, method, place, memo, proposerId:CU.uid, proposerName:CU.displayName||'판매자', roomId:dmRoom, status:'pending', signedBy:{}, createdAt:firebase.firestore.FieldValue.serverTimestamp()};
+  const dealData={
+    dealId: dealId,
+    itemId: targetItemId,
+    title: title,
+    price: price,
+    unit: unit,
+    qty: qty,
+    totalPrice: totalPrice,
+    method: method,
+    place: place,
+    memo: memo,
+    proposerId: CU.uid,
+    proposerName: CU.displayName||'판매자',
+    roomId: dmRoom,
+    status: 'pending',
+    signedBy: {},
+    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+  };
   
   try{
     await db.collection('tradeDeals').doc(dealId).set(dealData);
     const batch=db.batch();
     const msgRef=db.collection('dmRooms').doc(dmRoom).collection('messages').doc();
-    batch.set(msgRef,{type:'deal', dealId, text:`[🤝 거래 제안]\n상품: ${title}\n금액: ${fmtN(totalPrice)}${unit==='개당'?' (개당 '+fmtN(price)+' × '+qty+'개)':''}`, uid:CU.uid, name:CU.displayName||'제안자', createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+    batch.set(msgRef,{type:'deal', dealId: dealId, text:`[🤝 거래 제안]\n상품: ${title}\n금액: ${fmtN(totalPrice)}${unit==='개당'?' (개당 '+fmtN(price)+' × '+qty+'개)':''}`, uid:CU.uid, name:CU.displayName||'제안자', createdAt:firebase.firestore.FieldValue.serverTimestamp()});
     batch.update(db.collection('dmRooms').doc(dmRoom),{lastMsg:'🤝 거래제안: '+title+' '+fmtN(totalPrice), updatedAt:firebase.firestore.FieldValue.serverTimestamp(), lastSenderId:CU.uid, isRead:false});
-    await batch.commit();closeDealModal();toast('🤝 거래 제안을 보냈습니다!');
-  }catch(e){toast('❌ '+e.message)}
+    await batch.commit();
+    closeDealModal();
+    toast('🤝 거래 제안을 보냈습니다!');
+  }catch(e){toast('❌ 제안 오류: '+e.message)}
 }
+
 async function acceptDeal(dealId){
   if(!CU)return showLoginModal();
   try{
@@ -1100,6 +1044,7 @@ async function acceptDeal(dealId){
     } else {toast('✅ 수락했습니다. 상대방 수락을 기다리는 중...')}
   }catch(e){toast('❌ '+e.message)}
 }
+
 async function rejectDeal(dealId){
   if(!CU||!confirm('거래 제안을 거절하시겠습니까?'))return;
   try{
@@ -1111,7 +1056,7 @@ async function rejectDeal(dealId){
   }catch(e){toast('❌ '+e.message)}
 }
 
-// 판매 완료 자동화 연동
+// 거래 완료 시 실제 매물 상태도 '판매완료(2)'로 자동 업데이트
 async function completeDeal(dealId){
   if(!CU||!confirm('거래를 완료 처리하시겠습니까?\n거래내역서에 완료 기록이 남고, 매물이 [판매완료]로 변경됩니다.'))return;
   try{
@@ -1127,7 +1072,7 @@ async function completeDeal(dealId){
     batch.set(msgRef,{type:'system',text:'🎉 거래가 최종 완료되었습니다!\n거래내역서에 완료 기록이 저장됩니다. 이용해주셔서 감사합니다 😊',uid:'system',name:'TireSafe',createdAt:firebase.firestore.FieldValue.serverTimestamp()});
     batch.update(db.collection('dmRooms').doc(dmRoom),{lastMsg:'🎉 거래 완료!',updatedAt:firebase.firestore.FieldValue.serverTimestamp(),lastSenderId:CU.uid,isRead:false});
     
-    // 타이어 매물 상태를 '판매완료(2)'로 자동 업데이트
+    // 매물 원본 상태 변경
     if(dealData.itemId) {
       const tireRef = db.collection('tires').doc(dealData.itemId);
       batch.update(tireRef, { status: 2, isSold: true });
@@ -1135,33 +1080,38 @@ async function completeDeal(dealId){
 
     await batch.commit();
     toast('🎉 거래 완료 및 매물 상태가 변경되었습니다!');
-    loadItems(); // 상태 변경 후 목록 갱신
+    loadItems(); // 메인 화면 재로딩
   }catch(e){toast('❌ '+e.message)}
 }
 
-/* ── 거래 제안 카드 렌더 ── */
+/* ── 거래 제안 카드 렌더 (채팅창 내부 UI) ── */
 async function renderDealCard(msg,isMe){
   const did=msg.dealId;if(!did)return'';
   let deal=null;
   try{const d=await db.collection('tradeDeals').doc(did).get();if(d.exists)deal=d.data()}catch(e){}
   if(!deal)return'<div class="dc"><div class="dc-b" style="color:var(--t3);font-size:12px;padding:14px">거래 제안 정보를 불러오는 중...</div></div>';
-  const isProposer=CU&&msg.uid===CU.uid;
-  const mySigned=deal.signedBy&&deal.signedBy[CU?.uid];
-  const propSigned=deal.signedBy&&deal.signedBy[deal.proposerId];
-  const otherKeys=Object.keys(deal.signedBy||{}).filter(k=>k!==deal.proposerId);
-  const otherSigned=otherKeys.length>0&&deal.signedBy[otherKeys[0]];
+  
+  const isProposer = CU && msg.uid === CU.uid;
+  const mySigned = deal.signedBy && deal.signedBy[CU?.uid];
+  const propSigned = deal.signedBy && deal.signedBy[deal.proposerId];
+  const otherKeys = Object.keys(deal.signedBy||{}).filter(k=>k!==deal.proposerId);
+  const otherSigned = otherKeys.length>0 && deal.signedBy[otherKeys[0]];
+  
   const stMap={pending:{l:'🕐 수락 대기',c:'dcb-wait'},accepted:{l:'✅ 거래 성사',c:'dcb-ok'},done:{l:'🎉 거래 완료',c:'dcb-done'},rejected:{l:'❌ 거절됨',c:'dcb-no'}};
   const st=stMap[deal.status]||stMap.pending;
+  
   let btns='';
-  if(deal.status==='pending'&&!isProposer&&!mySigned){
+  if(deal.status==='pending' && !isProposer && !mySigned){
     btns=`<div class="dc-btns"><button class="dc-btn dc-btn-ok" onclick="acceptDeal('${did}')">✅ 수락하기</button><button class="dc-btn dc-btn-no" onclick="rejectDeal('${did}')">거절</button></div>`;
-  } else if(deal.status==='pending'&&isProposer){
+  } else if(deal.status==='pending' && isProposer){
     btns=`<div style="font-size:11px;color:var(--t3);text-align:center;padding:4px 0">상대방 수락을 기다리는 중...</div>`;
   } else if(deal.status==='accepted'){
     btns=`<button class="dc-btn dc-btn-done dc-btn-f" onclick="completeDeal('${did}')">🎉 거래 완료 처리</button>`;
   }
+  
   const docBtn=(deal.status==='accepted'||deal.status==='done')?`<button class="dc-btn dc-btn-no dc-btn-f" style="margin-top:6px" onclick="openDocDetail('${did}')">📋 거래내역서 보기</button>`:'';
-  return`<div class="dc">
+  
+  return `<div class="dc">
     <div class="dc-h"><div class="dc-h-ico">🤝</div><div class="dc-h-t">거래 제안서</div><div class="dc-badge ${st.c}">${st.l}</div></div>
     <div class="dc-b">
       <div class="dc-r"><span class="dc-l">상품</span><span class="dc-v">${esc(deal.title)}</span></div>
@@ -1190,6 +1140,7 @@ async function openDocDetail(dealId){
     const stColor={pending:'#F59E0B',accepted:'#6366F1',done:'#10B981',rejected:'#EF4444'};
     const createdStr=d.createdAt?d.createdAt.toDate().toLocaleString('ko-KR'):'';
     const completedStr=d.completedAt?d.completedAt.toDate().toLocaleString('ko-KR'):'';
+    
     document.getElementById('doc-content').innerHTML=`
       <div class="doc-top">
         <div class="doc-top-title">📋 거래내역서</div>
@@ -1227,7 +1178,7 @@ async function openDocDetail(dealId){
 }
 function closeDocModal(){document.getElementById('doc-modal').classList.remove('open')}
 
-/* ── 거래내역 목록 ── */
+/* ── 거래내역 목록 불러오기 ── */
 async function openTradeHistory(){
   if(!CU)return showLoginModal();
   const mc=document.getElementById('my-content');
@@ -1256,8 +1207,7 @@ async function openTradeHistory(){
   }
 }
 
-/* ── 더치트 조회 ── */
-let cheatTabType='phone';
+/* ── 더치트 사기 조회 ── */
 function openCheatModal(){document.getElementById('cheat-modal').classList.add('open');document.getElementById('cheat-input').value='';switchCheatTab('phone')}
 function closeCheatModal(){document.getElementById('cheat-modal').classList.remove('open')}
 function switchCheatTab(t){
@@ -1273,7 +1223,7 @@ function doCheatSearch(){
   setTimeout(()=>window.open('https://thecheat.co.kr/rb/?mode=search_data&category='+typeMap[cheatTabType]+'&search_text='+encodeURIComponent(val),'_blank'),500);
 }
 
-/* ── 사기 신고 ── */
+/* ── 사기 신고 기능 ── */
 function openReportModal(){if(!CU)return showLoginModal();if(!dmRoom)return toast('채팅방에서 이용해주세요');curRtype='';document.querySelectorAll('.rtype-btn').forEach(b=>b.classList.remove('sel'));document.getElementById('report-desc').value='';document.getElementById('report-modal').classList.add('open')}
 function closeReportModal(){document.getElementById('report-modal').classList.remove('open')}
 function selRtype(btn,type){curRtype=type;document.querySelectorAll('.rtype-btn').forEach(b=>b.classList.remove('sel'));btn.classList.add('sel')}
@@ -1291,7 +1241,7 @@ async function submitReport(){
   }catch(e){toast('❌ '+e.message)}
 }
 
-/* ── DM ── */
+/* ── 1:1 채팅방 및 메시지 시스템 ── */
 function mkRid(a,b){return[a,b].sort().join('_')}
 async function openRoom(tUid,tName,tPhoto,initMsg,itemObj){
   if(!CU){pendChat={uid:tUid,name:tName,msg:initMsg,item:itemObj};showLoginModal();return}
@@ -1300,14 +1250,14 @@ async function openRoom(tUid,tName,tPhoto,initMsg,itemObj){
   const rid=mkRid(CU.uid,tUid);
   let rd={users:[CU.uid,tUid],userNames:{[CU.uid]:CU.displayName||'나',[tUid]:tName},userPhotos:{[CU.uid]:CU.photoURL||'',[tUid]:tPhoto||''},updatedAt:firebase.firestore.FieldValue.serverTimestamp()};
   
-  // 매물 ID(id)를 명시적으로 저장
+  // 매물 ID 명시적 기록
   if(itemObj)rd.itemInfo={id:itemObj.id, title:itemObj.title, price:itemObj.price, imageUrl:itemObj.imageUrl||''};
   
   await db.collection('dmRooms').doc(rid).set(rd,{merge:true});
   closeModal();switchPage('chat');setTimeout(()=>{openDm(rid,tName);if(initMsg)document.getElementById('dm-in').value=initMsg},200);
 }
 
-// 상세보기 실행 함수
+// 매물 상세보기 버튼
 async function openChatRoomItem() {
   if(!curChatRoomItem?.id) return toast('매물 정보를 찾을 수 없습니다.');
   const doc = await db.collection('tires').doc(curChatRoomItem.id).get();
@@ -1351,16 +1301,10 @@ function openDm(rid,title){
     const data=d.data();if(data.lastSenderId!==CU?.uid)d.ref.update({isRead:true});
     const banner=document.getElementById('dm-item-banner');
     if(data.itemInfo){
-      curChatRoomItem = data.itemInfo; // 전역 변수 저장
+      curChatRoomItem = data.itemInfo; 
       document.getElementById('dm-item-img').src=data.itemInfo.imageUrl||'';
       document.getElementById('dm-item-title').textContent=data.itemInfo.title;
       document.getElementById('dm-item-price').textContent=Number(data.itemInfo.price).toLocaleString()+'원';
-      
-      // 보기 버튼 기능 활성화
-      const viewBtn = banner.querySelector('.i-btn');
-      viewBtn.setAttribute('onclick', 'openChatRoomItem()');
-      viewBtn.textContent = '상세보기';
-      
       banner.style.display='flex';
     } else {
       curChatRoomItem = null;
@@ -1406,7 +1350,7 @@ async function sendDm(){
   await batch.commit();
 }
 
-/* ── AI 도우미 ── */
+/* ── AI 챗봇 ── */
 function initBot(){
   const box=document.getElementById('bot-msgs');const d=document.createElement('div');d.className='bw';
   d.innerHTML=`<div class="cs">🤖 TireSafe AI 도우미</div><div class="chat-bubble">안녕하세요! TireSafe AI 도우미입니다 👋<br><br>타이어·휠 거래 관련 무엇이든 물어보세요!</div>`;
