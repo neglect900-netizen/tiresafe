@@ -5,14 +5,52 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>TireSafe · 중고타이어·휠 직거래</title>
 <meta name="description" content="TireSafe - 안전하고 투명한 중고타이어 및 휠 직거래 플랫폼. 딜러 마진 없이 반값에 안전하게 타이어를 거래하고 가까운 카센터에서 교체하세요.">
-<meta name="keywords" content="중고타이어, 중고휠, 타이어직거래, 타이어교체, 타이어가격, 카센터, TireSafe, 타이어중고">
-<meta name="robots" content="index,follow">
+<meta name="keywords" content="중고타이어, 중고휠, 타이어직거래, 타이어교체, 타이어가격, 카센터, TireSafe, 타이어중고, 중고타이어직거래, 휠직거래, 타이어반값, 중고타이어거래, 타이어장터, 타이어싸게, 휠싸게, 타이어사기예방">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+<meta name="author" content="TireSafe">
+<meta name="copyright" content="TireSafe">
+<meta name="language" content="ko">
+<meta name="revisit-after" content="3 days">
+<meta name="rating" content="general">
+
+<!-- 네이버 -->
+<meta name="naver-site-verification" content="">
+
+<!-- 카카오 -->
 <meta property="og:type" content="website">
-<meta property="og:title" content="TireSafe · 중고타이어·휠 직거래">
-<meta property="og:description" content="검증된 매물, 채팅으로 직접 안전하게 거래하세요.">
+<meta property="og:title" content="TireSafe · 중고타이어·휠 직거래 | 반값에 안전하게">
+<meta property="og:description" content="딜러 마진 없이 반값! 검증된 중고타이어·휠 직거래 플랫폼. 채팅으로 안전하게 거래하고 가까운 카센터에서 교체하세요.">
+<meta property="og:image" content="https://tire-f9ebb.web.app/og-image.png">
 <meta property="og:site_name" content="TireSafe">
-<link rel="canonical" href="https://tire-f9ebb.web.app">
-<meta property="og:url" content="https://tire-f9ebb.web.app">
+<meta property="og:locale" content="ko_KR">
+<link rel="canonical" href="https://tiresafe.kro.kr">
+<meta property="og:url" content="https://tiresafe.kro.kr">
+
+<!-- 트위터/X 카드 -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="TireSafe · 중고타이어·휠 직거래">
+<meta name="twitter:description" content="딜러 마진 없이 반값! 검증된 중고타이어·휠 직거래 플랫폼.">
+
+<!-- 구조화 데이터 (구글 리치 결과) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "TireSafe",
+  "url": "https://tiresafe.kro.kr",
+  "description": "안전하고 투명한 중고타이어 및 휠 직거래 플랫폼. 딜러 마진 없이 반값에 안전하게 거래하세요.",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://tiresafe.kro.kr/?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "TireSafe",
+    "url": "https://tiresafe.kro.kr"
+  }
+}
+</script>
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
@@ -768,6 +806,17 @@ async function emailLogin(){
   try{await auth.signInWithEmailAndPassword(em,pw);toast('✅ 로그인 성공!');hideLoginModal();runPend()}catch(e){toast('❌ 계정 정보가 틀립니다')}
 }
 function googleLogin(){
+  // 카카오톡 인앱 브라우저 감지
+  const ua = navigator.userAgent || '';
+  const isKakao = ua.includes('KAKAOTALK') || ua.includes('kakao') || ua.includes('KAKAO');
+  if(isKakao){
+    toast('⚠️ 카카오톡 브라우저에서는 구글 로그인이 지원되지 않아요.\n우측 하단 ··· → 기본 브라우저로 열기를 눌러주세요.');
+    // 추가로 팝업으로도 안내
+    setTimeout(()=>{
+      alert('📌 구글 로그인 안내\n\n카카오톡 인앱 브라우저에서는 구글 로그인이 불가합니다.\n\n해결 방법:\n① 우측 하단 [···] 버튼 클릭\n② [기본 브라우저로 열기] 선택\n③ 다시 구글 로그인 시도\n\n또는 이메일로 직접 로그인하세요.');
+    }, 300);
+    return;
+  }
   const p=new firebase.auth.GoogleAuthProvider();
   p.setCustomParameters({prompt:'select_account'});
   auth.signInWithPopup(p)
@@ -799,6 +848,20 @@ async function editProfileName(){
 }
 auth.getRedirectResult().then(r=>{if(r&&r.user){toast('✅ 로그인 성공!');hideLoginModal();runPend()}}).catch(()=>{});
 auth.onAuthStateChanged(u=>{CU=u;updateAuthUI(u);loadItems();if(u){hideLoginModal();initRooms();runPend()}else{if(unsubRooms)unsubRooms();document.getElementById('chat-badge').style.display='none'}});
+
+// 카카오톡 인앱 브라우저일 때 구글 로그인 버튼에 경고 표시
+(function(){
+  const ua=navigator.userAgent||'';
+  const isKakao=ua.includes('KAKAOTALK')||ua.includes('kakao')||ua.includes('KAKAO');
+  if(isKakao){
+    // 구글 로그인 버튼들에 경고 스타일 추가
+    document.querySelectorAll('.btn-google').forEach(btn=>{
+      btn.style.opacity='0.5';
+      btn.style.position='relative';
+      btn.insertAdjacentHTML('afterend','<div style="background:#FEF3C7;border:1px solid #FDE68A;border-radius:8px;padding:8px 12px;font-size:11px;color:#92400e;font-weight:600;margin-top:6px;line-height:1.5">⚠️ 카카오톡에서는 구글 로그인 불가<br>우측 하단 [···] → <b>기본 브라우저로 열기</b></div>');
+    });
+  }
+})();
 
 /* ── MY PAGE ── */
 function updateAuthUI(u){
