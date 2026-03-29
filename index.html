@@ -3,12 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
 <title>TireSafe · 중고타이어·휠 직거래</title>
 <meta name="description" content="TireSafe - 안전하고 투명한 중고타이어 및 휠 직거래 플랫폼. 딜러 마진 없이 반값에 안전하게 타이어를 거래하고 가까운 카센터에서 교체하세요.">
-<meta name="keywords" content="중고타이어, 중고휠, 타이어직거래, 타이어교체, 타이어가격, 카센터, 경주 타이어, TireSafe, 타이어중고">
+<meta name="keywords" content="중고타이어, 중고휠, 타이어직거래, 타이어교체, 타이어가격, 카센터, TireSafe, 타이어중고">
 <meta name="robots" content="index,follow">
-
 <meta property="og:type" content="website">
 <meta property="og:title" content="TireSafe · 중고타이어·휠 직거래">
 <meta property="og:description" content="검증된 매물, 채팅으로 직접 안전하게 거래하세요.">
@@ -41,6 +39,7 @@ html,body{height:100%;overflow:hidden}
 body{font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-tap-highlight-color:transparent;-webkit-font-smoothing:antialiased}
 .app{max-width:480px;margin:0 auto;height:100%;display:flex;flex-direction:column;position:relative;overflow:hidden;background:var(--bg)}
 
+/* ── 헤더 ── */
 .hdr{flex-shrink:0;height:var(--head);display:flex;align-items:center;justify-content:space-between;padding:0 16px;background:var(--sur);border-bottom:1px solid var(--bd);z-index:40;box-shadow:var(--sh)}
 .logo{display:flex;align-items:center;gap:9px;cursor:pointer;user-select:none}
 .logo-mark{width:36px;height:36px;border-radius:11px;background:linear-gradient(145deg,#FF5A1F 0%,#FF8040 100%);display:flex;align-items:center;justify-content:center;box-shadow:0 3px 10px rgba(255,90,31,.38);flex-shrink:0;position:relative;overflow:hidden}
@@ -53,11 +52,13 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-tap-hi
 .avatar img{width:100%;height:100%;object-fit:cover}
 .login-btn{font-size:13px;font-weight:700;padding:8px 16px;border-radius:20px;background:var(--t1);color:#fff;border:none;cursor:pointer;font-family:inherit}
 
+/* ── 페이지 ── */
 .page{display:none;flex:1;overflow-y:auto;padding-bottom:var(--nav)}
 .page.active{display:block}
 #pg-chat{display:none;position:absolute;top:var(--head);bottom:var(--nav);left:0;right:0;flex-direction:column;overflow:hidden;background:var(--bg)}
 #pg-chat.active{display:flex}
 
+/* ── 홈 히어로 ── */
 .hero{padding:22px 18px 20px;background:var(--sur);border-bottom:1px solid var(--bd);position:relative;overflow:hidden}
 .hero::before{content:'';position:absolute;top:-60px;right:-40px;width:220px;height:220px;background:radial-gradient(circle,rgba(255,90,31,.07),transparent 70%);pointer-events:none}
 .hero-tag{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;color:var(--acc);background:var(--acc-bg);border:1px solid var(--acc-bd);border-radius:20px;padding:4px 11px;margin-bottom:12px}
@@ -90,6 +91,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-tap-hi
 .sec-title{font-size:14px;font-weight:800}
 .sec-ref{font-size:12px;font-weight:600;color:var(--t3);cursor:pointer;padding:5px 10px;background:var(--sur2);border-radius:20px;border:1px solid var(--bd)}
 
+/* ── 매물 카드 ── */
 .tire-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 12px 20px}
 .card{background:var(--sur);border:1px solid var(--bd);border-radius:var(--r2);overflow:hidden;cursor:pointer;box-shadow:var(--sh);transition:transform .15s}
 .card:active{transform:scale(.98)}
@@ -112,6 +114,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-tap-hi
 .spinner{width:28px;height:28px;border:2.5px solid var(--bd);border-top-color:var(--acc);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 10px}
 @keyframes spin{to{transform:rotate(360deg)}}
 
+/* ── 매물 등록 ── */
 .sell-wrap{padding:20px 16px 10px}
 .sell-title{font-size:22px;font-weight:900;margin-bottom:3px;letter-spacing:-.5px}
 .sell-sub{font-size:13px;color:var(--t3);margin-bottom:22px}
@@ -137,20 +140,25 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-tap-hi
 .btn-ind{background:linear-gradient(135deg,var(--ind),var(--blu));color:#fff}
 .btn-grn{background:var(--grn);color:#fff}
 
+/* ── 마이 페이지 ── */
 .my-hdr{padding:28px 20px 20px;background:var(--sur);border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:16px}
 .my-av{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;overflow:hidden;box-shadow:0 4px 12px rgba(255,90,31,.25)}
 .my-av img{width:100%;height:100%;object-fit:cover}
 .my-name{font-size:20px;font-weight:900;margin-bottom:4px}
 .my-email{font-size:13px;color:var(--t3)}
 .my-edit-btn{background:var(--sur2);color:var(--t2);border:1px solid var(--bd);padding:6px 12px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;margin-top:8px}
-.my-sec-lbl{padding:16px 20px 8px;font-size:11px;font-weight:800;color:var(--t3);letter-spacing:.5px;background:var(--bg)}
+.my-sec-lbl{padding:16px 20px 8px;font-size:10px;font-weight:800;color:var(--t3);letter-spacing:.8px;background:var(--bg);text-transform:uppercase}
 .my-menu{background:var(--sur)}
-.mmi{display:flex;align-items:center;gap:12px;padding:16px 20px;border-bottom:1px solid var(--bd);cursor:pointer;font-size:15px;font-weight:600;transition:background .1s}
+.mmi{display:flex;align-items:center;gap:14px;padding:15px 20px;border-bottom:1px solid var(--bd);cursor:pointer;transition:background .1s}
+.mmi:last-child{border-bottom:none}
 .mmi:active{background:var(--sur2)}
-.mmi-ico{width:32px;height:32px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
-.mmi-txt{flex:1}
-.mmi-arr{color:var(--t4);font-size:18px}
+.mmi-ico{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.mmi-content{flex:1}
+.mmi-title{font-size:14px;font-weight:700;color:var(--t1);margin-bottom:1px}
+.mmi-desc{font-size:11px;color:var(--t3)}
+.mmi-arr{color:var(--t4);font-size:18px;font-weight:300}
 
+/* ── 채팅 ── */
 .chat-tabs{flex-shrink:0;display:flex;background:var(--sur);border-bottom:1px solid var(--bd)}
 .ctab{flex:1;padding:14px 8px;font-size:13px;font-weight:700;border:none;background:none;color:var(--t3);cursor:pointer;border-bottom:2px solid transparent;font-family:var(--font)}
 .ctab.active{color:var(--t1);border-bottom-color:var(--acc)}
@@ -195,9 +203,9 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-tap-hi
 .ct{font-size:10px;color:var(--t3);flex-shrink:0;margin-bottom:2px}
 .cs{font-size:12px;color:var(--t2);margin-bottom:5px;font-weight:600}
 .sys-w{display:flex;justify-content:center;width:100%;margin:8px 0}
-.sys-m{font-size:11px;color:var(--t2);padding:6px 14px;background:var(--sur2);border:1px solid var(--bd);border-radius:20px;text-align:center;line-height:1.4}
+.sys-m{font-size:11px;color:var(--t2);padding:6px 14px;background:var(--sur2);border:1px solid var(--bd);border-radius:20px;text-align:center;line-height:1.4;max-width:88%}
 .sys-m.warn{color:#92400e;background:var(--yel-bg);border-color:#fde68a;font-weight:700}
-.dd{display:flex;align-items:center;gap:10px;width:100%;margin:10px 0}
+.dd{display:flex;align-items:center;gap:10px;width:100%;margin:8px 0}
 .dd::before,.dd::after{content:'';flex:1;height:1px;background:var(--bd)}
 .dd span{font-size:11px;color:var(--t3);white-space:nowrap}
 .ia{flex-shrink:0;background:var(--sur);border-top:1px solid var(--bd);padding:10px 12px}
@@ -212,6 +220,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-tap-hi
 .qbtn{flex-shrink:0;padding:7px 13px;border-radius:20px;background:var(--sur2);border:1.5px solid var(--bd);font-size:12px;font-weight:700;color:var(--t2);cursor:pointer;white-space:nowrap;font-family:var(--font)}
 .qbtn:active{background:var(--acc-bg);border-color:var(--acc-bd);color:var(--acc)}
 
+/* ── 거래 제안 카드 ── */
 .dc{max-width:90%;background:var(--sur);border:1.5px solid #c7d2fe;border-radius:16px;overflow:hidden;box-shadow:var(--sh2);margin:4px 0}
 .dc-h{background:linear-gradient(135deg,var(--ind-bg),#e0e7ff);padding:10px 14px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #c7d2fe}
 .dc-h-ico{font-size:16px}
@@ -240,6 +249,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-tap-hi
 .dc-btn-f{grid-column:1/-1}
 .dc-btn-done{background:var(--grn);color:#fff}
 
+/* ── 거래내역 목록 ── */
 .tl-item{background:var(--sur);border:1px solid var(--bd);border-radius:14px;padding:14px;margin-bottom:8px;cursor:pointer;display:flex;align-items:center;gap:12px;box-shadow:var(--sh)}
 .tl-item:active{background:var(--sur2)}
 .tl-thumb{width:44px;height:44px;border-radius:10px;background:var(--ind-bg);border:1px solid #c7d2fe;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:20px}
@@ -250,9 +260,12 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-tap-hi
 .tl-price{font-size:14px;font-weight:900;color:var(--t1)}
 .tl-st{font-size:10px;font-weight:800;padding:2px 7px;border-radius:10px;display:inline-block;margin-top:4px}
 .tls-ok{background:var(--grn-bg);color:#065f46}
+.tls-done{background:var(--ind-bg);color:var(--ind)}
 .tls-wait{background:var(--yel-bg);color:#92400e}
 .tls-no{background:var(--red-bg);color:#991b1b}
+.tl-role{font-size:9px;font-weight:700;padding:2px 6px;border-radius:4px;background:var(--sur2);color:var(--t3);border:1px solid var(--bd);margin-bottom:4px;display:inline-block}
 
+/* ── 모달 공통 ── */
 .doc-modal,.terms-modal,.fl-modal,.ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;align-items:flex-end;justify-content:center;backdrop-filter:blur(4px)}
 .doc-modal.open,.terms-modal.open,.fl-modal.open,.ov.open{display:flex}
 .doc-sheet,.terms-sheet,.fl-sheet,.sheet,.auth-sheet{background:var(--sur);border-radius:24px 24px 0 0;width:100%;max-width:480px;animation:sup .3s cubic-bezier(.2,.8,.2,1);position:relative}
@@ -261,6 +274,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-tap-hi
 .sheet{max-height:92vh;overflow:hidden;display:flex;flex-direction:column}
 .auth-sheet{padding:16px 24px 40px}
 @keyframes sup{from{transform:translateY(100%)}to{transform:translateY(0)}}
+
+/* ── 거래내역서 모달 ── */
 .doc-top{background:linear-gradient(135deg,#4F46E5,#3B82F6);padding:28px 22px 22px;color:#fff;position:relative;border-radius:24px 24px 0 0}
 .doc-top-title{font-size:21px;font-weight:900;margin-bottom:3px}
 .doc-top-id{font-size:11px;opacity:.7;font-weight:600}
@@ -281,16 +296,30 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-tap-hi
 .doc-sg-name{font-size:13px;font-weight:800;color:var(--t1);margin-bottom:6px}
 .doc-sg-st{font-size:11px;font-weight:800;padding:3px 10px;border-radius:20px;display:inline-block}
 .dsg-ok{background:var(--grn-bg);color:#065f46}
+.dsg-done{background:var(--ind-bg);color:var(--ind)}
 .dsg-wait{background:var(--yel-bg);color:#92400e}
 .doc-legal{background:#F8F9FD;border:1px solid var(--bd);border-radius:10px;padding:12px;margin-top:14px;font-size:10px;color:var(--t3);line-height:1.8}
+.doc-timeline{background:var(--sur2);border-radius:12px;padding:14px;border:1px solid var(--bd);margin-top:14px}
+.doc-tl-title{font-size:12px;font-weight:800;color:var(--t2);margin-bottom:10px}
+.doc-tl-item{display:flex;align-items:flex-start;gap:10px;margin-bottom:8px}
+.doc-tl-item:last-child{margin-bottom:0}
+.doc-tl-dot{width:8px;height:8px;border-radius:50%;background:var(--grn);flex-shrink:0;margin-top:4px}
+.doc-tl-dot.pending{background:var(--yel)}
+.doc-tl-info{flex:1}
+.doc-tl-label{font-size:12px;font-weight:700;color:var(--t1)}
+.doc-tl-time{font-size:10px;color:var(--t3);margin-top:1px}
 
-.terms-hdr{padding:20px 20px 16px;border-bottom:1px solid var(--bd);flex-shrink:0}
+/* ── 이용약관 ── */
+.terms-hdr{padding:20px 20px 16px;border-bottom:1px solid var(--bd);flex-shrink:0;background:var(--sur)}
 .terms-hdr-title{font-size:20px;font-weight:900;margin-bottom:3px}
 .terms-hdr-sub{font-size:12px;color:var(--t3)}
 .terms-body{overflow-y:auto;flex:1;padding:16px 20px 30px}
-.terms-sec{margin-bottom:20px}
-.terms-sec-title{font-size:14px;font-weight:900;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.terms-sec{margin-bottom:24px}
+.terms-sec-title{font-size:14px;font-weight:900;margin-bottom:10px;display:flex;align-items:center;gap:6px;color:var(--t1)}
 .terms-sec-body{font-size:12px;color:var(--t2);line-height:1.9;background:var(--sur2);border-radius:10px;padding:14px;border:1px solid var(--bd)}
+.terms-sec-body strong{font-weight:800;color:var(--t1)}
+.terms-article{font-size:13px;font-weight:800;color:var(--ind);margin-bottom:6px;margin-top:14px;display:block}
+.terms-article:first-child{margin-top:0}
 
 .fl-hdl,.sh-hdl{display:flex;justify-content:center;padding:12px 0 4px;flex-shrink:0}
 .fl-hdl::after,.sh-hdl::after{content:'';width:40px;height:5px;background:var(--bd2);border-radius:3px}
@@ -306,7 +335,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-tap-hi
 .rtype-btn .ico{font-size:20px;display:block;margin-bottom:4px}
 .rtype-btn.sel{border-color:var(--red);background:var(--red-bg);color:var(--red)}
 
-.sh-x{position:absolute;top:14px;right:16px;background:var(--sur2);border:1px solid var(--bd);width:32px;height:32px;border-radius:50%;font-size:14px;cursor:pointer;color:var(--t2);font-weight:700;z-index:10}
+.sh-x{position:absolute;top:14px;right:16px;background:var(--sur2);border:1px solid var(--bd);width:32px;height:32px;border-radius:50%;font-size:14px;cursor:pointer;color:var(--t2);font-weight:700;z-index:10;display:flex;align-items:center;justify-content:center}
 .sh-scroll{overflow-y:auto;flex:1;padding:0 20px 20px}
 .m-gallery{position:relative;margin-bottom:16px}
 .m-gallery img{width:100%;border-radius:var(--r);margin-bottom:8px;object-fit:contain;background:var(--sur2);display:block}
@@ -325,6 +354,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-tap-hi
 .m-trust{font-size:12px;font-weight:800;color:var(--blu);background:var(--blu-bg);padding:4px 10px;border-radius:20px;border:1px solid #bfdbfe}
 .sh-btns{flex-shrink:0;display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:12px 20px 24px;border-top:1px solid var(--bd);background:var(--sur)}
 
+/* ── 로그인 모달 ── */
 .auth-tabs{display:flex;border-bottom:2px solid var(--bd);margin-bottom:24px;margin-top:10px}
 .auth-tab{flex:1;text-align:center;padding:12px 0;font-size:15px;font-weight:800;color:var(--t3);cursor:pointer;position:relative}
 .auth-tab.active{color:var(--t1)}
@@ -332,6 +362,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-tap-hi
 .auth-box .f-input{background:var(--bg);border-radius:12px;padding:16px;margin-bottom:12px;font-size:15px;width:100%;outline:none;border:1px solid var(--bd)}
 .btn-google{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:16px;background:var(--sur);border:1.5px solid var(--bd2);border-radius:var(--r);font-size:15px;font-weight:800;cursor:pointer;color:var(--t1);margin-top:16px}
 
+/* ── 하단 내비 ── */
 .bnav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;height:var(--nav);background:var(--sur);border-top:1px solid var(--bd);display:flex;z-index:50;padding-bottom:env(safe-area-inset-bottom);box-shadow:0 -4px 20px rgba(0,0,0,.05)}
 .nbtn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;border:none;background:none;cursor:pointer;color:#B0BAD0;font-family:var(--font);position:relative;transition:color .2s}
 .nbtn svg{width:24px;height:24px;stroke-width:2.2;transition:transform .2s}
@@ -341,8 +372,14 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-tap-hi
 .nbtn.active .n-lbl{font-weight:800}
 .n-badge{position:absolute;top:8px;right:calc(50% - 16px);width:8px;height:8px;background:var(--red);border-radius:50%;display:none;border:2px solid var(--sur)}
 
+/* ── 토스트 ── */
 .toast{position:fixed;top:16px;left:50%;transform:translateX(-50%) translateY(-10px);background:rgba(17,24,39,.93);color:#fff;padding:12px 22px;border-radius:24px;font-size:13px;font-weight:700;opacity:0;transition:opacity .25s,transform .25s cubic-bezier(.2,.8,.2,1);z-index:9999;backdrop-filter:blur(4px);text-align:center;max-width:88%}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ── 서브 페이지 헤더 ── */
+.sub-hdr{padding:14px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--bd);background:var(--sur);position:sticky;top:0;z-index:10}
+.sub-back{background:var(--sur2);border:1px solid var(--bd);border-radius:8px;width:34px;height:34px;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:var(--font)}
+.sub-hdr-title{font-size:18px;font-weight:900}
 </style>
 </head>
 <body>
@@ -365,6 +402,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-tap-hi
   <div id="auth-area"><button class="login-btn" onclick="showLoginModal()">로그인</button></div>
 </header>
 
+<!-- 홈 -->
 <div class="page active" id="pg-home">
   <div class="hero">
     <div class="hero-tag">🛞 No.1 중고타이어·휠 직거래</div>
@@ -380,7 +418,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-tap-hi
   </div>
   <div class="g-banner" onclick="openGuide()">
     <div class="gb-ico">📋</div>
-    <div class="gb-t"><strong>TireSafe 거래 가이드 — 안전한 직거래 5단계</strong><span>채팅 → 사기조회 → 거래제안 → 내역서 → 완료 →</span></div>
+    <div class="gb-t"><strong>TireSafe 거래 가이드 — 안전한 직거래 5단계</strong><span>채팅 → 사기조회 → 거래제안 → 내역서 → 완료</span></div>
     <div class="gb-bdg">GUIDE</div>
   </div>
   <div class="cat-tabs">
@@ -392,10 +430,12 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-tap-hi
   <div class="tire-grid" id="item-grid"><div class="loading"><div class="spinner"></div><p>불러오는 중...</p></div></div>
 </div>
 
+<!-- 매물 등록 -->
 <div class="page" id="pg-sell">
   <div class="sell-wrap"><div class="sell-title">매물 등록하기</div><div class="sell-sub">빠르고 쉽게 타이어와 휠을 판매하세요.</div><div id="sell-content"></div></div>
 </div>
 
+<!-- 채팅 -->
 <div id="pg-chat">
   <div class="chat-tabs">
     <button class="ctab active" id="ctab-dm" onclick="switchChatTab('dm')">💬 채팅</button>
@@ -431,9 +471,13 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-tap-hi
   </div>
   <div id="bot-area" style="display:none">
     <div class="quick-row">
-      <button class="qbtn" onclick="qa('사이즈 고르는 법')">🔍 사이즈</button><button class="qbtn" onclick="qa('거래 방법')">🤝 거래방법</button>
-      <button class="qbtn" onclick="qa('배송 안내')">🚚 배송</button><button class="qbtn" onclick="qa('장착 방법')">🔧 장착</button>
-      <button class="qbtn" onclick="qa('사기 예방')">🚨 사기예방</button><button class="qbtn" onclick="qa('DOT 보는법')">📅 DOT</button><button class="qbtn" onclick="qa('1:1 고객상담')">👨‍💼 상담</button>
+      <button class="qbtn" onclick="qa('사이즈 고르는 법')">🔍 사이즈</button>
+      <button class="qbtn" onclick="qa('거래 방법')">🤝 거래방법</button>
+      <button class="qbtn" onclick="qa('배송 안내')">🚚 배송</button>
+      <button class="qbtn" onclick="qa('장착 방법')">🔧 장착</button>
+      <button class="qbtn" onclick="qa('사기 예방')">🚨 사기예방</button>
+      <button class="qbtn" onclick="qa('DOT 보는법')">📅 DOT</button>
+      <button class="qbtn" onclick="qa('1:1 고객상담')">👨‍💼 상담</button>
     </div>
     <div class="chat-wrap">
       <div class="msgs" id="bot-msgs"></div>
@@ -445,8 +489,10 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-tap-hi
   </div>
 </div>
 
+<!-- 마이 -->
 <div class="page" id="pg-my"><div id="my-content"></div></div>
 
+<!-- 하단 네비 -->
 <nav class="bnav">
   <button class="nbtn active" id="nav-home" onclick="switchPage('home',true)">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
@@ -468,6 +514,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-tap-hi
 </nav>
 </div>
 
+<!-- 매물 상세 -->
 <div class="ov" id="prod-ov" onclick="if(event.target===this)closeModal()">
   <div class="sheet">
     <div class="sh-hdl"></div><button class="sh-x" onclick="closeModal()">✕</button>
@@ -483,6 +530,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-tap-hi
   </div>
 </div>
 
+<!-- 상태 변경 -->
 <div class="ov" id="status-ov" onclick="if(event.target===this)document.getElementById('status-ov').classList.remove('open')">
   <div class="sheet" style="height:auto">
     <div class="sh-hdl"></div>
@@ -495,6 +543,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-tap-hi
   </div>
 </div>
 
+<!-- 수정 -->
 <div class="ov" id="edit-ov" onclick="if(event.target===this)closeEdit()">
   <div class="sheet" style="height:auto;max-height:92vh;overflow-y:auto">
     <div class="sh-hdl"></div><button class="sh-x" onclick="closeEdit()">✕</button>
@@ -524,6 +573,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-tap-hi
   </div>
 </div>
 
+<!-- 가이드 -->
 <div class="ov" id="guide-ov" onclick="if(event.target===this)document.getElementById('guide-ov').classList.remove('open')">
   <div class="sheet">
     <div class="sh-hdl"></div>
@@ -533,6 +583,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-tap-hi
   </div>
 </div>
 
+<!-- 거래 제안 -->
 <div class="fl-modal" id="deal-modal" onclick="if(event.target===this)closeDealModal()">
   <div class="fl-sheet">
     <div class="fl-hdl"></div>
@@ -567,6 +618,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-tap-hi
   </div>
 </div>
 
+<!-- 거래내역서 상세 -->
 <div class="doc-modal" id="doc-modal" onclick="if(event.target===this)closeDocModal()">
   <div class="doc-sheet">
     <div class="fl-hdl" style="padding-top:12px"></div>
@@ -575,6 +627,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-tap-hi
   </div>
 </div>
 
+<!-- 사기 조회 -->
 <div class="fl-modal" id="cheat-modal" onclick="if(event.target===this)closeCheatModal()">
   <div class="fl-sheet">
     <div class="fl-hdl"></div>
@@ -597,6 +650,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-tap-hi
   </div>
 </div>
 
+<!-- 신고 -->
 <div class="fl-modal" id="report-modal" onclick="if(event.target===this)closeReportModal()">
   <div class="fl-sheet">
     <div class="fl-hdl"></div>
@@ -619,6 +673,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-tap-hi
   </div>
 </div>
 
+<!-- 이용약관 -->
 <div class="terms-modal" id="terms-modal" onclick="if(event.target===this)closeTerms()">
   <div class="terms-sheet">
     <div class="terms-hdr">
@@ -629,6 +684,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-tap-hi
   </div>
 </div>
 
+<!-- 로그인 -->
 <div class="ov" id="login-ov" onclick="if(event.target===this)hideLoginModal()">
   <div class="auth-sheet">
     <button class="sh-x" onclick="hideLoginModal()">✕</button>
@@ -662,15 +718,14 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);-webkit-tap-hi
 const ADMIN='SMB8eJMGJ4VPpKbZqbEjlXw2eG32';
 firebase.initializeApp({apiKey:"AIzaSyDP414CWLGAJj06_bhBbGD9rkOcZHb2--I",authDomain:"tire-f9ebb.firebaseapp.com",projectId:"tire-f9ebb",storageBucket:"tire-f9ebb.firebasestorage.app",messagingSenderId:"394141245307",appId:"1:394141245307:web:66b79b11761f120565e7de"});
 const auth=firebase.auth(),db=firebase.firestore();
-let CU=null,dmRoom=null,unsubDm=null,unsubRooms=null,curItem=null,pendChat=null,firstLoad=true,toastTmr=null,curCat='all',curRtype='',cheatTab='phone',curChatRoomItem=null;
+let CU=null,dmRoom=null,unsubDm=null,unsubRooms=null,curItem=null,pendChat=null,firstLoad=true,toastTmr=null,curCat='all',curRtype='',cheatTabType='phone',curChatRoomItem=null;
 
 /* ── 유틸 ── */
 function toast(m){const el=document.getElementById('toast');el.textContent=m;el.classList.add('show');if(toastTmr)clearTimeout(toastTmr);toastTmr=setTimeout(()=>el.classList.remove('show'),2800)}
 function esc(s){if(!s)return'';return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;')}
 function fmtN(n){return Number(n||0).toLocaleString()+'원'}
 function numToKor(n){
-  const val=parseInt(n)||0;
-  if(!val)return'';
+  const val=parseInt(n)||0;if(!val)return'';
   if(val>=100000000){const ok=Math.floor(val/100000000);const rem=val%100000000;return ok+'억'+(rem>=10000?' '+Math.floor(rem/10000)+'만':'')+'원';}
   if(val>=10000){const ok=Math.floor(val/10000);const rem=val%10000;return ok+'만'+(rem>=1000?' '+Math.floor(rem/1000)+'천':(rem>0?' '+rem:''))+'원';}
   if(val>=1000)return Math.floor(val/1000)+'천'+(val%1000>0?' '+val%1000:'')+'원';
@@ -715,17 +770,17 @@ async function emailLogin(){
 function googleLogin(){const p=new firebase.auth.GoogleAuthProvider();p.setCustomParameters({prompt:'select_account'});auth.signInWithPopup(p).then(()=>{hideLoginModal();runPend()}).catch(()=>auth.signInWithRedirect(p))}
 function logout(){if(confirm('로그아웃 하시겠습니까?'))auth.signOut()}
 async function deleteAccount(){
-  if(!confirm('정말 회원 탈퇴하시겠습니까?'))return;
+  if(!confirm('정말 회원 탈퇴하시겠습니까?\n탈퇴 시 거래 내역은 보존됩니다.'))return;
   try{await CU.delete();toast('회원 탈퇴 완료')}
-  catch(e){if(e.code==='auth/requires-recent-login'){toast('⚠️ 재로그인 후 탈퇴해주세요');auth.signOut()}else toast('❌ '+e.message)}
+  catch(e){if(e.code==='auth/requires-recent-login'){toast('⚠️ 보안을 위해 재로그인 후 탈퇴해주세요');auth.signOut()}else toast('❌ '+e.message)}
 }
 async function editProfileName(){
   if(!CU)return;
   try{
     const ref=db.collection('users').doc(CU.uid),doc=await ref.get(),now=Date.now();
-    if(doc.exists){const last=doc.data().lastNameChange||0,d30=30*24*60*60*1000;if(now-last<d30){const left=Math.ceil((d30-(now-last))/(1000*60*60*24));return toast('⚠️ '+left+'일 후 변경 가능')}}
-    const n=prompt('새 닉네임 (30일 1회)',CU.displayName);if(!n||n.trim()===''||n===CU.displayName)return;
-    await CU.updateProfile({displayName:n.trim()});await ref.set({lastNameChange:now},{merge:true});toast('✅ 닉네임 변경 완료');updateAuthUI(CU);
+    if(doc.exists){const last=doc.data().lastNameChange||0,d30=30*24*60*60*1000;if(now-last<d30){const left=Math.ceil((d30-(now-last))/(1000*60*60*24));return toast('⚠️ '+left+'일 후 변경 가능합니다 (30일 1회 제한)')}}
+    const n=prompt('새 닉네임을 입력해주세요 (30일 1회 변경 가능)',CU.displayName);if(!n||n.trim()===''||n===CU.displayName)return;
+    await CU.updateProfile({displayName:n.trim()});await ref.set({lastNameChange:now},{merge:true});toast('✅ 닉네임이 변경되었습니다');updateAuthUI(CU);
   }catch(e){toast('❌ '+e.message)}
 }
 auth.getRedirectResult().then(r=>{if(r&&r.user){toast('✅ 로그인 성공!');hideLoginModal();runPend()}}).catch(()=>{});
@@ -741,30 +796,123 @@ function updateAuthUI(u){
     mc.innerHTML=`
       <div class="my-hdr">
         <div class="my-av">${u.photoURL?`<img src="${u.photoURL}" alt="">`:n[0]}</div>
-        <div style="flex:1"><div class="my-name">${esc(n)}</div><div class="my-email">${esc(u.email||'')}</div><button class="my-edit-btn" onclick="editProfileName()">닉네임 변경</button></div>
+        <div style="flex:1">
+          <div class="my-name">${esc(n)}</div>
+          <div class="my-email">${esc(u.email||'')}</div>
+          <button class="my-edit-btn" onclick="editProfileName()">✏️ 닉네임 변경</button>
+        </div>
       </div>
-      <div class="my-sec-lbl">거래</div>
+
+      <div class="my-sec-lbl">거래 관리</div>
       <div class="my-menu">
-        <div class="mmi" onclick="setCategory(null,'my')"><div class="mmi-ico" style="background:var(--acc-bg)">🛞</div><div class="mmi-txt">내가 올린 매물</div><div class="mmi-arr">›</div></div>
-        <div class="mmi" onclick="openTradeHistory()"><div class="mmi-ico" style="background:var(--ind-bg)">📋</div><div class="mmi-txt">거래내역서</div><div class="mmi-arr">›</div></div>
-        <div class="mmi" onclick="openGuide()"><div class="mmi-ico" style="background:var(--grn-bg)">📖</div><div class="mmi-txt">거래 가이드</div><div class="mmi-arr">›</div></div>
+        <div class="mmi" onclick="setCategory(null,'my');switchPage('home')">
+          <div class="mmi-ico" style="background:var(--acc-bg)">🛞</div>
+          <div class="mmi-content">
+            <div class="mmi-title">내가 올린 매물</div>
+            <div class="mmi-desc">등록한 타이어·휠 매물 관리</div>
+          </div>
+          <div class="mmi-arr">›</div>
+        </div>
+        <div class="mmi" onclick="openTradeHistory()">
+          <div class="mmi-ico" style="background:var(--ind-bg)">📋</div>
+          <div class="mmi-content">
+            <div class="mmi-title">거래내역서</div>
+            <div class="mmi-desc">내가 보내고 받은 거래 기록</div>
+          </div>
+          <div class="mmi-arr">›</div>
+        </div>
+        <div class="mmi" onclick="openGuide()">
+          <div class="mmi-ico" style="background:var(--grn-bg)">📖</div>
+          <div class="mmi-content">
+            <div class="mmi-title">거래 가이드</div>
+            <div class="mmi-desc">안전한 직거래 5단계 안내</div>
+          </div>
+          <div class="mmi-arr">›</div>
+        </div>
       </div>
-      <div class="my-sec-lbl">안전</div>
+
+      <div class="my-sec-lbl">안전 센터</div>
       <div class="my-menu">
-        <div class="mmi" onclick="window.open('https://thecheat.co.kr','_blank')"><div class="mmi-ico" style="background:var(--yel-bg)">🔍</div><div class="mmi-txt">사기이력 조회 (더치트)</div><div class="mmi-arr">›</div></div>
-        <div class="mmi" onclick="openFraudGuide()"><div class="mmi-ico" style="background:var(--red-bg)">🚨</div><div class="mmi-txt">사기 피해 예방 가이드</div><div class="mmi-arr">›</div></div>
+        <div class="mmi" onclick="window.open('https://thecheat.co.kr','_blank')">
+          <div class="mmi-ico" style="background:var(--yel-bg)">🔍</div>
+          <div class="mmi-content">
+            <div class="mmi-title">사기이력 조회 (더치트)</div>
+            <div class="mmi-desc">전화번호·계좌번호 사기 신고 조회</div>
+          </div>
+          <div class="mmi-arr">›</div>
+        </div>
+        <div class="mmi" onclick="openFraudGuide()">
+          <div class="mmi-ico" style="background:var(--red-bg)">🚨</div>
+          <div class="mmi-content">
+            <div class="mmi-title">사기 피해 예방 가이드</div>
+            <div class="mmi-desc">알아두면 막을 수 있는 사기 패턴</div>
+          </div>
+          <div class="mmi-arr">›</div>
+        </div>
+        <div class="mmi" onclick="window.open('https://ecrm.police.go.kr','_blank')">
+          <div class="mmi-ico" style="background:#F3F4F6">🚔</div>
+          <div class="mmi-content">
+            <div class="mmi-title">경찰청 사이버수사국</div>
+            <div class="mmi-desc">피해 발생 시 온라인 신고</div>
+          </div>
+          <div class="mmi-arr">›</div>
+        </div>
       </div>
+
+      <div class="my-sec-lbl">고객 지원</div>
+      <div class="my-menu">
+        <div class="mmi" onclick="connectAdmin()">
+          <div class="mmi-ico" style="background:var(--blu-bg)">💬</div>
+          <div class="mmi-content">
+            <div class="mmi-title">1:1 고객센터</div>
+            <div class="mmi-desc">문의·신고·불편사항 접수</div>
+          </div>
+          <div class="mmi-arr">›</div>
+        </div>
+      </div>
+
       <div class="my-sec-lbl">법적 고지</div>
       <div class="my-menu">
-        <div class="mmi" onclick="openTerms('terms')"><div class="mmi-ico" style="background:var(--sur2)">📜</div><div class="mmi-txt">이용약관</div><div class="mmi-arr">›</div></div>
-        <div class="mmi" onclick="openTerms('privacy')"><div class="mmi-ico" style="background:var(--sur2)">🔒</div><div class="mmi-txt">개인정보 처리방침</div><div class="mmi-arr">›</div></div>
-        <div class="mmi" onclick="openTerms('disclaimer')"><div class="mmi-ico" style="background:var(--sur2)">⚖️</div><div class="mmi-txt">면책 조항</div><div class="mmi-arr">›</div></div>
+        <div class="mmi" onclick="openTerms('terms')">
+          <div class="mmi-ico" style="background:#F9F9FB">📜</div>
+          <div class="mmi-content">
+            <div class="mmi-title">이용약관</div>
+            <div class="mmi-desc">서비스 이용 조건 및 절차</div>
+          </div>
+          <div class="mmi-arr">›</div>
+        </div>
+        <div class="mmi" onclick="openTerms('privacy')">
+          <div class="mmi-ico" style="background:#F9F9FB">🔒</div>
+          <div class="mmi-content">
+            <div class="mmi-title">개인정보 처리방침</div>
+            <div class="mmi-desc">개인정보 수집·이용·보관 안내</div>
+          </div>
+          <div class="mmi-arr">›</div>
+        </div>
+        <div class="mmi" onclick="openTerms('disclaimer')">
+          <div class="mmi-ico" style="background:#F9F9FB">⚖️</div>
+          <div class="mmi-content">
+            <div class="mmi-title">면책 조항</div>
+            <div class="mmi-desc">통신판매중개업자 법적 고지</div>
+          </div>
+          <div class="mmi-arr">›</div>
+        </div>
       </div>
+
       <div class="my-sec-lbl">계정</div>
       <div class="my-menu">
-        <div class="mmi" onclick="logout()"><div class="mmi-ico" style="background:var(--sur2)">🚪</div><div class="mmi-txt">로그아웃</div><div class="mmi-arr">›</div></div>
-        <div class="mmi" onclick="deleteAccount()"><div class="mmi-ico" style="background:var(--red-bg)">🗑️</div><div class="mmi-txt" style="color:var(--red)">회원 탈퇴</div><div class="mmi-arr">›</div></div>
-      </div>`;
+        <div class="mmi" onclick="logout()">
+          <div class="mmi-ico" style="background:#F9F9FB">🚪</div>
+          <div class="mmi-content"><div class="mmi-title">로그아웃</div></div>
+          <div class="mmi-arr">›</div>
+        </div>
+        <div class="mmi" onclick="deleteAccount()">
+          <div class="mmi-ico" style="background:var(--red-bg)">🗑️</div>
+          <div class="mmi-content"><div class="mmi-title" style="color:var(--red)">회원 탈퇴</div></div>
+          <div class="mmi-arr">›</div>
+        </div>
+      </div>
+      <div style="height:20px"></div>`;
   } else {
     a.innerHTML=`<button class="login-btn" onclick="showLoginModal()">로그인</button>`;
     document.getElementById('sell-content').innerHTML=`<div class="empty" style="padding-top:60px"><div class="empty-icon">🔒</div><p style="margin-bottom:20px">판매 등록은 로그인 후 이용 가능합니다.</p><button class="btn btn-dk" style="max-width:200px;margin:0 auto" onclick="showLoginModal()">로그인 / 회원가입</button></div>`;
@@ -773,24 +921,206 @@ function updateAuthUI(u){
 }
 function runPend(){if(pendChat&&CU){const{uid,name,msg,item}=pendChat;pendChat=null;setTimeout(()=>openRoom(uid,name,'',msg,item),400)}}
 
-/* ── 법적 고지 / 가이드 ── */
+/* ── 법적 고지 ── */
 const TERMS={
-  terms:{title:'📜 이용약관',sub:'TireSafe 서비스 이용 조건',body:`<div class="terms-sec"><div class="terms-sec-title">제1조 목적</div><div class="terms-sec-body">본 약관은 TireSafe의 이용 조건 및 절차에 관한 사항을 규정합니다. 실제 거래는 이용자 간에 직접 이루어지며, TireSafe는 거래 당사자가 아닙니다.</div></div>`},
-  privacy:{title:'🔒 개인정보 처리방침',sub:'개인정보 수집 및 이용 안내',body:`<div class="terms-sec"><div class="terms-sec-title">수집 항목</div><div class="terms-sec-body">• <b>필수:</b> 이메일 주소, 닉네임 (회원가입 시)<br>• <b>소셜 로그인:</b> 구글 계정 프로필 정보</div></div>`},
-  disclaimer:{title:'⚖️ 면책 조항',sub:'서비스 이용 관련 법적 고지',body:`<div class="terms-sec"><div class="terms-sec-title">통신판매중개업자 고지</div><div class="terms-sec-body">TireSafe는 거래의 당사자가 아니며 책임을 지지 않습니다.</div></div>`}
+  terms:{
+    title:'📜 이용약관',
+    sub:'최종 수정일: 2025년 1월 1일',
+    body:`
+    <div class="terms-sec">
+      <div class="terms-sec-title">제1장 총칙</div>
+      <div class="terms-sec-body">
+        <span class="terms-article">제1조 (목적)</span>
+        이 약관은 TireSafe(이하 "서비스")가 제공하는 중고 타이어·휠 직거래 중개 플랫폼의 이용 조건 및 절차, 이용자와 서비스 간의 권리·의무 등을 규정함을 목적으로 합니다.
+        <span class="terms-article">제2조 (정의)</span>
+        ① "서비스"란 TireSafe가 운영하는 중고 타이어·휠 거래 중개 플랫폼을 의미합니다.<br>
+        ② "이용자"란 서비스에 접속하여 이 약관에 따라 서비스를 이용하는 자를 의미합니다.<br>
+        ③ "거래내역서"란 이용자 간 합의된 거래 조건을 기록한 전자문서를 의미합니다.
+        <span class="terms-article">제3조 (약관의 효력 및 변경)</span>
+        ① 이 약관은 서비스 화면에 게시하거나 기타 방법으로 이용자에게 공지함으로써 효력이 발생합니다.<br>
+        ② 서비스는 필요한 경우 약관을 변경할 수 있으며, 변경된 약관은 공지 후 7일 이후 효력이 발생합니다.
+      </div>
+    </div>
+    <div class="terms-sec">
+      <div class="terms-sec-title">제2장 서비스 이용</div>
+      <div class="terms-sec-body">
+        <span class="terms-article">제4조 (서비스 제공)</span>
+        서비스는 중고 타이어·휠 매물 등록 및 조회, 1:1 채팅을 통한 직거래 연결, 거래 제안 및 내역서 생성, AI 도우미 서비스를 제공합니다.
+        <span class="terms-article">제5조 (이용자의 의무)</span>
+        이용자는 다음 행위를 하여서는 안 됩니다:<br>
+        ① 허위 매물 등록 및 사기 거래<br>
+        ② 타인의 개인정보 무단 수집 또는 도용<br>
+        ③ 서비스의 정상적인 운영을 방해하는 행위<br>
+        ④ 카카오톡 등 외부 채널로의 유도 및 외부 결제 요구<br>
+        ⑤ 욕설, 비방, 혐오 표현 등 타 이용자에게 불쾌감을 주는 행위
+        <span class="terms-article">제6조 (서비스 중단)</span>
+        서비스는 시스템 점검, 장애, 천재지변 등 불가피한 사유로 서비스 제공을 일시 중단할 수 있습니다.
+      </div>
+    </div>
+    <div class="terms-sec">
+      <div class="terms-sec-title">제3장 거래 관련</div>
+      <div class="terms-sec-body">
+        <span class="terms-article">제7조 (직거래 중개)</span>
+        ① TireSafe는 통신판매중개업자로서 이용자 간의 거래를 연결하는 플랫폼을 제공합니다.<br>
+        ② TireSafe는 실제 거래의 당사자가 아니므로 상품의 품질, 안전성, 적법성에 대한 책임을 지지 않습니다.<br>
+        ③ 거래 분쟁은 거래 당사자 간에 해결해야 하며, 서비스는 조정 및 중재 역할을 할 수 있으나 법적 책임을 부담하지 않습니다.
+        <span class="terms-article">제8조 (거래내역서)</span>
+        ① 이용자 쌍방이 거래 제안을 수락하면 거래내역서가 자동 생성됩니다.<br>
+        ② 거래내역서는 이용자 간 합의의 증거로 활용될 수 있습니다.<br>
+        ③ 거래내역서는 분쟁 발생 시 법적 증거 자료로 제출될 수 있습니다.
+      </div>
+    </div>`
+  },
+  privacy:{
+    title:'🔒 개인정보 처리방침',
+    sub:'최종 수정일: 2025년 1월 1일',
+    body:`
+    <div class="terms-sec">
+      <div class="terms-sec-title">수집하는 개인정보</div>
+      <div class="terms-sec-body">
+        <strong>필수 수집 항목</strong><br>
+        • 이메일 주소 (회원 식별, 로그인)<br>
+        • 닉네임 (서비스 내 표시 이름)<br>
+        • 소셜 로그인 프로필 사진 (구글 계정 연동 시)<br><br>
+        <strong>자동 수집 항목</strong><br>
+        • 서비스 이용 기록 (매물 등록, 채팅, 거래 내역)<br>
+        • 접속 로그 (IP 주소, 접속 시간)<br>
+        • 기기 정보 (OS, 브라우저 종류)
+      </div>
+    </div>
+    <div class="terms-sec">
+      <div class="terms-sec-title">개인정보의 이용 목적</div>
+      <div class="terms-sec-body">
+        • 회원 식별 및 서비스 제공<br>
+        • 1:1 채팅 및 거래 연결<br>
+        • 거래내역서 생성 및 보관<br>
+        • 사기·분쟁 신고 처리<br>
+        • 서비스 개선 및 통계 분석
+      </div>
+    </div>
+    <div class="terms-sec">
+      <div class="terms-sec-title">개인정보 보관 기간</div>
+      <div class="terms-sec-body">
+        • <strong>회원정보:</strong> 회원 탈퇴 후 30일까지 보관 후 파기<br>
+        • <strong>거래내역서:</strong> 거래 완료 후 5년 (전자상거래법)<br>
+        • <strong>채팅 내역:</strong> 신고·분쟁 발생 시 해결 시까지 보관<br>
+        • <strong>접속 로그:</strong> 3개월
+      </div>
+    </div>
+    <div class="terms-sec">
+      <div class="terms-sec-title">개인정보 제3자 제공</div>
+      <div class="terms-sec-body">
+        TireSafe는 이용자의 개인정보를 원칙적으로 제3자에게 제공하지 않습니다. 단, 다음의 경우 예외로 합니다:<br><br>
+        • 이용자가 사전에 동의한 경우<br>
+        • 법령에 의해 제출이 요구되는 경우<br>
+        • 수사기관의 적법한 요청이 있는 경우
+      </div>
+    </div>
+    <div class="terms-sec">
+      <div class="terms-sec-title">이용자의 권리</div>
+      <div class="terms-sec-body">
+        이용자는 언제든지 다음의 권리를 행사할 수 있습니다:<br><br>
+        • 개인정보 열람 요청<br>
+        • 개인정보 수정 및 삭제 요청<br>
+        • 개인정보 처리 정지 요청<br>
+        • 회원 탈퇴 (앱 내 [내 정보 → 회원 탈퇴])
+      </div>
+    </div>`
+  },
+  disclaimer:{
+    title:'⚖️ 면책 조항',
+    sub:'통신판매중개업자 법적 고지',
+    body:`
+    <div class="terms-sec">
+      <div class="terms-sec-title">통신판매중개업자 고지</div>
+      <div class="terms-sec-body">
+        TireSafe는 <strong>전자상거래 등에서의 소비자보호에 관한 법률</strong> 제20조에 따라 통신판매중개업자로 등록된 플랫폼입니다.<br><br>
+        TireSafe는 거래 당사자가 아닌 중개자로서 이용자 간 거래의 당사자가 되지 않으며, 판매자와 구매자 사이에서 발생하는 거래에 대해 <strong>직접적인 법적 책임을 부담하지 않습니다.</strong>
+      </div>
+    </div>
+    <div class="terms-sec">
+      <div class="terms-sec-title">서비스 책임의 한계</div>
+      <div class="terms-sec-body">
+        다음 사항에 대하여 TireSafe는 책임을 지지 않습니다:<br><br>
+        ① 판매자가 등록한 매물의 품질, 안전성, 적법성<br>
+        ② 이용자 간 직거래 과정에서 발생하는 사고, 분쟁, 손해<br>
+        ③ 이용자가 제공한 허위 정보로 인한 피해<br>
+        ④ 서비스 장애, 데이터 손실 등 불가항력적 사유<br>
+        ⑤ 이용자의 부주의 또는 법규 위반으로 인한 피해
+      </div>
+    </div>
+    <div class="terms-sec">
+      <div class="terms-sec-title">분쟁 해결</div>
+      <div class="terms-sec-body">
+        이용자 간 분쟁 발생 시:<br><br>
+        • 1차: 서비스 내 신고 기능을 통해 TireSafe에 조정 요청<br>
+        • 2차: 한국소비자원 또는 공정거래위원회 조정 신청<br>
+        • 3차: 관할 법원 소송 제기<br><br>
+        거래내역서는 분쟁 발생 시 법적 증거 자료로 활용될 수 있습니다. TireSafe는 관련 기록을 5년간 보관합니다.
+      </div>
+    </div>
+    <div class="terms-sec">
+      <div class="terms-sec-title">준거법 및 관할 법원</div>
+      <div class="terms-sec-body">
+        이 약관 및 서비스 이용과 관련한 분쟁에 대해서는 <strong>대한민국 법률</strong>을 적용하며, 서울중앙지방법원을 관할 법원으로 합니다.
+      </div>
+    </div>`
+  }
 };
-function openTerms(type){const d=TERMS[type];if(!d)return;document.getElementById('terms-title').textContent=d.title;document.getElementById('terms-sub').textContent=d.sub;document.getElementById('terms-body').innerHTML=d.body;document.getElementById('terms-modal').classList.add('open');}
+function openTerms(type){const d=TERMS[type];if(!d)return;document.getElementById('terms-title').textContent=d.title;document.getElementById('terms-sub').textContent=d.sub;document.getElementById('terms-body').innerHTML=d.body;document.getElementById('terms-modal').classList.add('open')}
 function closeTerms(){document.getElementById('terms-modal').classList.remove('open')}
+
 function openGuide(){
   document.getElementById('guide-title').textContent='📋 TireSafe 거래 가이드';
   document.getElementById('guide-sub').textContent='이 순서대로 하면 안전한 거래 완성!';
-  document.getElementById('guide-body').innerHTML=`<div style="padding-top:10px;line-height:1.8;font-size:14px;">1️⃣ <b>채팅 시작:</b> 매물 상세에서 [채팅하기]를 누르세요.<br>2️⃣ <b>사기 조회:</b> 채팅방 상단의 [조회] 버튼으로 더치트 검색!<br>3️⃣ <b>거래 제안:</b> [🤝 거래제안] 버튼으로 조건을 기록하세요.<br>4️⃣ <b>거래내역서:</b> 제안 수락 시 증거자료가 자동 생성됩니다.<br>5️⃣ <b>거래 완료:</b> 거래 후 [완료]를 누르면 상태가 [판매완료]로 바뀝니다.</div>`;
+  document.getElementById('guide-body').innerHTML=`
+    <div style="padding:16px 0">
+      ${[
+        ['1️⃣','채팅 시작','매물 상세에서 [채팅하기]를 누르세요. 판매자와 직접 대화가 시작됩니다.','var(--acc-bg)','var(--acc)'],
+        ['2️⃣','사기 조회','채팅방 상단 [🔍 조회] 버튼으로 상대방 전화번호를 더치트에서 확인하세요.','var(--yel-bg)','#92400e'],
+        ['3️⃣','거래 제안','[🤝 거래제안] 버튼으로 상품명·금액·거래방식을 기록하고 제안을 보내세요.','var(--ind-bg)','var(--ind)'],
+        ['4️⃣','거래내역서 확인','상대방이 수락하면 거래내역서가 자동 생성됩니다. 증거 자료로 보관됩니다.','var(--grn-bg)','#065f46'],
+        ['5️⃣','거래 완료','실제 거래 후 [🎉 거래완료] 버튼을 누르면 매물이 판매완료로 변경됩니다.','var(--sur2)','var(--t2)']
+      ].map(([num,title,desc,bg,color])=>`
+        <div style="display:flex;gap:14px;padding:14px 20px;border-bottom:1px solid var(--bd)">
+          <div style="font-size:22px;flex-shrink:0;margin-top:2px">${num}</div>
+          <div>
+            <div style="font-size:15px;font-weight:800;margin-bottom:5px">${title}</div>
+            <div style="font-size:13px;color:var(--t2);line-height:1.6">${desc}</div>
+          </div>
+        </div>`).join('')}
+      <div style="margin:14px 20px;background:var(--red-bg);border:1px solid #fecaca;border-radius:12px;padding:14px">
+        <div style="font-size:13px;font-weight:800;color:#991b1b;margin-bottom:8px">🚫 이건 무조건 사기!</div>
+        <div style="font-size:12px;color:#991b1b;line-height:1.8">
+          카카오톡으로 대화 유도<br>
+          외부 링크 결제 요구<br>
+          선입금 후 잠수<br>
+          지나치게 저렴한 가격 제시
+        </div>
+      </div>
+    </div>`;
   document.getElementById('guide-ov').classList.add('open');
 }
 function openFraudGuide(){
   document.getElementById('guide-title').textContent='🚨 사기 피해 예방 가이드';
-  document.getElementById('guide-sub').textContent='이것만 알아도 사기를 막을 수 있어요';
-  document.getElementById('guide-body').innerHTML=`<div style="padding-top:10px;line-height:1.8;font-size:14px;color:#991b1b;">🚫 카카오톡이나 문자로 대화를 유도한다면 100% 사기입니다.<br>🚫 먼저 입금을 요구하거나, 외부 링크 결제를 요구하면 즉시 거래를 중단하세요.</div>`;
+  document.getElementById('guide-sub').textContent='알아두면 막을 수 있어요';
+  document.getElementById('guide-body').innerHTML=`
+    <div style="padding:16px 20px">
+      ${[
+        ['🚫','카카오톡·문자 유도','채팅을 카카오톡이나 문자로 유도하면 100% 사기입니다. TireSafe 채팅 안에서만 진행하세요.'],
+        ['🔗','외부 링크 결제','"안전거래 링크"라며 외부 결제를 요구하면 즉시 거래를 중단하세요. 공식 결제 시스템은 없습니다.'],
+        ['🏧','선입금 요구','"먼저 입금하면 보내드릴게요"는 사기의 전형입니다. 절대 선입금하지 마세요.'],
+        ['🖼️','허위 사진 매물','인터넷 도용 사진을 쓰는 경우가 많아요. 실물 사진과 DOT 코드를 요청하세요.'],
+        ['✅','안전하게 거래하기','거래 전 더치트 조회 → TireSafe 채팅 거래 → 거래내역서 수락 → 직거래 또는 착불 배송']
+      ].map(([ico,title,desc])=>`
+        <div style="display:flex;gap:12px;margin-bottom:16px;background:var(--sur);border:1px solid var(--bd);border-radius:12px;padding:14px">
+          <div style="font-size:20px;flex-shrink:0">${ico}</div>
+          <div>
+            <div style="font-size:14px;font-weight:800;margin-bottom:4px">${title}</div>
+            <div style="font-size:12px;color:var(--t2);line-height:1.6">${desc}</div>
+          </div>
+        </div>`).join('')}
+    </div>`;
   document.getElementById('guide-ov').classList.add('open');
 }
 
@@ -801,7 +1131,7 @@ function switchPage(n,fromNav=false){
   document.querySelectorAll('.nbtn').forEach(b=>b.classList.remove('active'));
   document.getElementById('nav-'+n).classList.add('active');closeDm();
   if(n==='chat'){document.getElementById('pg-chat').classList.add('active');switchChatTab('dm')}
-  else{document.getElementById('pg-'+n).classList.add('active');if(n==='home'){if(fromNav&&curCat==='my')setCategory(document.getElementById('cat-all'),'all');else loadItems()}}
+  else{document.getElementById('pg-'+n).classList.add('active');if(n==='home'){if(fromNav&&curCat==='my'){setCategory(document.getElementById('cat-all'),'all')}else loadItems()}}
 }
 function switchChatTab(t){
   closeDm();
@@ -812,13 +1142,13 @@ function switchChatTab(t){
   if(t==='bot'&&document.getElementById('bot-msgs').children.length===0)initBot();
 }
 
-/* ── 카테고리 & 매물 로드 ── */
+/* ── 카테고리 & 매물 ── */
 const CAT_LABEL={all:'실시간 전체 매물',tire:'중고타이어 매물',wheel:'중고휠 매물',my:'내가 올린 매물'};
 function setCategory(el,cat){
   if(el){document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active')}
   else document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
   curCat=cat;document.getElementById('sec-label').textContent=CAT_LABEL[cat];
-  if(cat==='my')switchPage('home',false);else loadItems();
+  loadItems();
 }
 async function loadItems(){
   const grid=document.getElementById('item-grid');
@@ -826,9 +1156,8 @@ async function loadItems(){
   const q=(document.getElementById('s-input')?.value||'').trim().toLowerCase().replace(/\s/g,'');
   try{
     let snap;
-    try{ snap=await db.collection('tires').orderBy('createdAt','desc').get(); }
-    catch(idxErr){ snap=await db.collection('tires').get(); }
-    
+    try{snap=await db.collection('tires').orderBy('createdAt','desc').get()}
+    catch(e){snap=await db.collection('tires').get()}
     let docs=snap.docs.filter(d=>{
       const t=d.data();
       if(curCat==='my'){if(!CU||t.sellerId!==CU.uid)return false}
@@ -836,13 +1165,7 @@ async function loadItems(){
       if(!q)return true;
       return(t.title||'').toLowerCase().includes(q)||(t.size||'').toLowerCase().replace(/\s/g,'').includes(q);
     });
-    
-    docs.sort((a,b)=>{
-      const at=a.data().createdAt?.toMillis?.()||0;
-      const bt=b.data().createdAt?.toMillis?.()||0;
-      return bt-at;
-    });
-    
+    docs.sort((a,b)=>(b.data().createdAt?.toMillis()||0)-(a.data().createdAt?.toMillis()||0));
     if(!docs.length){grid.innerHTML=`<div class="empty"><div class="empty-icon">${curCat==='wheel'?'⭕':curCat==='my'?'👤':'🔍'}</div><p>${q?'"'+q+'" 검색 결과 없음':CAT_LABEL[curCat]+'이 없어요'}<br>매물을 등록해보세요!</p></div>`;return}
     grid.innerHTML=docs.map(doc=>{
       const t={id:doc.id,...doc.data()};const cat=t.category||'tire';const status=t.status||0;
@@ -868,7 +1191,7 @@ async function loadItems(){
   }
 }
 
-/* ── SELL 등록 ── */
+/* ── 매물 등록 ── */
 function renderSell(){
   document.getElementById('sell-content').innerHTML=`
     <div class="photo-up" onclick="document.getElementById('f-file').click()">
@@ -977,7 +1300,7 @@ async function changeStatus(s){
 async function toggleVerify(){if(!curItem?.id)return;const v=!curItem.isVerified;try{await db.collection('tires').doc(curItem.id).update({isVerified:v});toast(v?'✅ 인증 추가':'❌ 인증 해제');closeModal();loadItems()}catch(e){toast('❌ '+e.message)}}
 async function blockUser(){if(!curItem?.sellerId)return;if(!confirm('영구 차단?'))return;try{await db.collection('bannedUsers').doc(curItem.sellerId).set({blockedAt:firebase.firestore.FieldValue.serverTimestamp(),reason:'관리자 차단'});toast('🚫 차단 완료');closeModal()}catch(e){toast('❌ '+e.message)}}
 
-/* ── 거래 제안 시스템 (에러 완벽 차단 버전) ── */
+/* ── 거래 제안 ── */
 function openDealModal(){
   if(!CU)return showLoginModal();if(!dmRoom)return toast('채팅방에서 이용해주세요');
   const banner=document.getElementById('dm-item-banner');
@@ -992,66 +1315,43 @@ function closeDealModal(){document.getElementById('deal-modal').classList.remove
 
 async function sendDealProposal(){
   if(!CU||!dmRoom)return;
-  
-  const titleEl = document.getElementById('dl-title');
-  const priceEl = document.getElementById('dl-price');
-  if(!titleEl || !priceEl) return toast('오류: 입력창을 찾을 수 없습니다.');
-  
-  const title = titleEl.value.trim();
-  const price = parseInt(priceEl.value) || 0;
-  const unit = document.getElementById('dl-unit')?.value || '전체';
-  const qty = document.getElementById('dl-qty')?.value || '1';
-  const method = document.getElementById('dl-method')?.value || '직거래';
-  const place = document.getElementById('dl-place')?.value.trim() || '';
-  const memo = document.getElementById('dl-memo')?.value.trim() || '';
-  
-  if(!title) return toast('상품명을 입력해주세요');
-  if(price<1) return toast('거래 금액을 입력해주세요');
-  
-  const totalPrice = (unit==='개당'&&qty!=='기타') ? price*parseInt(qty) : price;
-  const dealId = 'DL_'+Date.now()+'_'+Math.random().toString(36).substr(2,5).toUpperCase();
-  
-  // 과거 채팅방 등 매물 ID가 없는 경우를 대비한 방어 코드 (null 치환)
-  const targetItemId = curChatRoomItem?.id || null;
-  const safeProposerName = CU.displayName || '판매자';
-  
+  const titleEl=document.getElementById('dl-title'),priceEl=document.getElementById('dl-price');
+  if(!titleEl||!priceEl)return toast('오류: 입력창을 찾을 수 없습니다.');
+  const title=titleEl.value.trim(),price=parseInt(priceEl.value)||0;
+  const unit=document.getElementById('dl-unit')?.value||'전체';
+  const qty=document.getElementById('dl-qty')?.value||'1';
+  const method=document.getElementById('dl-method')?.value||'직거래';
+  const place=document.getElementById('dl-place')?.value.trim()||'';
+  const memo=document.getElementById('dl-memo')?.value.trim()||'';
+  if(!title)return toast('상품명을 입력해주세요');
+  if(price<1)return toast('거래 금액을 입력해주세요');
+  const totalPrice=(unit==='개당'&&qty!=='기타')?price*parseInt(qty):price;
+  const dealId='DL_'+Date.now()+'_'+Math.random().toString(36).substr(2,5).toUpperCase();
+
+  // 채팅방에서 상대방 uid 찾기
+  let otherUid=null;
+  try{
+    const roomDoc=await db.collection('dmRooms').doc(dmRoom).get();
+    if(roomDoc.exists){const d=roomDoc.data();otherUid=(d.users||[]).find(u=>u!==CU.uid)||null;}
+  }catch(e){}
+
   const dealData={
-    dealId: dealId,
-    itemId: targetItemId, // null 은 파이어베이스에 안전하게 들어감
-    title: title,
-    price: price,
-    unit: unit,
-    qty: qty,
-    totalPrice: totalPrice,
-    method: method,
-    place: place,
-    memo: memo,
-    proposerId: CU.uid,
-    proposerName: safeProposerName,
-    roomId: dmRoom,
-    status: 'pending',
-    signedBy: {},
-    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    dealId,itemId:curChatRoomItem?.id||null,title,price,unit,qty,totalPrice,method,place,memo,
+    proposerId:CU.uid,proposerName:CU.displayName||'제안자',
+    receiverId:otherUid,
+    roomId:dmRoom,status:'pending',signedBy:{},
+    createdAt:firebase.firestore.FieldValue.serverTimestamp()
   };
-  
-  // 혹시라도 undefined가 있다면 파이어베이스가 튕기므로 안전하게 null로 한 번 더 청소
-  Object.keys(dealData).forEach(key => {
-    if (dealData[key] === undefined) dealData[key] = null;
-  });
-  
+  Object.keys(dealData).forEach(k=>{if(dealData[k]===undefined)dealData[k]=null});
   try{
     await db.collection('tradeDeals').doc(dealId).set(dealData);
     const batch=db.batch();
     const msgRef=db.collection('dmRooms').doc(dmRoom).collection('messages').doc();
-    batch.set(msgRef,{type:'deal', dealId: dealId, text:`[🤝 거래 제안]\n상품: ${title}\n금액: ${fmtN(totalPrice)}${unit==='개당'?' (개당 '+fmtN(price)+' × '+qty+'개)':''}`, uid:CU.uid, name:CU.displayName||'제안자', createdAt:firebase.firestore.FieldValue.serverTimestamp()});
-    batch.update(db.collection('dmRooms').doc(dmRoom),{lastMsg:'🤝 거래제안: '+title+' '+fmtN(totalPrice), updatedAt:firebase.firestore.FieldValue.serverTimestamp(), lastSenderId:CU.uid, isRead:false});
+    batch.set(msgRef,{type:'deal',dealId,text:`[🤝 거래 제안]\n상품: ${title}\n금액: ${fmtN(totalPrice)}`,uid:CU.uid,name:CU.displayName||'제안자',createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+    batch.update(db.collection('dmRooms').doc(dmRoom),{lastMsg:'🤝 거래제안: '+title+' '+fmtN(totalPrice),updatedAt:firebase.firestore.FieldValue.serverTimestamp(),lastSenderId:CU.uid,isRead:false});
     await batch.commit();
-    closeDealModal();
-    toast('🤝 거래 제안을 보냈습니다!');
-  }catch(e){
-    console.error(e);
-    toast('❌ 제안 전송 오류가 발생했습니다.');
-  }
+    closeDealModal();toast('🤝 거래 제안을 보냈습니다!');
+  }catch(e){console.error(e);toast('❌ 제안 전송 오류: '+e.message)}
 }
 
 async function acceptDeal(dealId){
@@ -1059,14 +1359,16 @@ async function acceptDeal(dealId){
   try{
     const ref=db.collection('tradeDeals').doc(dealId);const doc=await ref.get();if(!doc.exists)return toast('거래 제안을 찾을 수 없습니다');
     const data=doc.data();if(data.status!=='pending')return toast('이미 처리된 제안입니다');
-    const newSigned={...data.signedBy,[CU.uid]:{name:CU.displayName,at:new Date().toISOString()}};
+    const newSigned={...data.signedBy,[CU.uid]:{name:CU.displayName||'참여자',at:new Date().toISOString(),role:CU.uid===data.proposerId?'proposer':'receiver'}};
     const allSigned=Object.keys(newSigned).length>=2;
-    await ref.update({signedBy:newSigned,status:allSigned?'accepted':'pending',acceptedAt:allSigned?firebase.firestore.FieldValue.serverTimestamp():null});
+    const updateData={signedBy:newSigned,status:allSigned?'accepted':'pending'};
+    if(allSigned)updateData.acceptedAt=firebase.firestore.FieldValue.serverTimestamp();
+    await ref.update(updateData);
     if(allSigned){
       const batch=db.batch();
       const msgRef=db.collection('dmRooms').doc(dmRoom).collection('messages').doc();
-      batch.set(msgRef,{type:'system',text:'✅ 거래가 성사되었습니다!\n상품: '+data.title+'\n금액: '+fmtN(data.totalPrice)+'\n방식: '+data.method+'\n📋 거래내역서 번호: '+dealId,uid:'system',name:'TireSafe',createdAt:firebase.firestore.FieldValue.serverTimestamp()});
-      batch.update(db.collection('dmRooms').doc(dmRoom),{lastMsg:'✅ 거래 성사!',updatedAt:firebase.firestore.FieldValue.serverTimestamp(),lastSenderId:CU.uid,isRead:false});
+      batch.set(msgRef,{type:'system',text:'✅ 거래가 성사되었습니다!\n상품: '+data.title+'\n금액: '+fmtN(data.totalPrice)+'\n방식: '+data.method+'\n\n📋 거래내역서 번호: '+dealId,uid:'system',name:'TireSafe',createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+      batch.update(db.collection('dmRooms').doc(dmRoom),{lastMsg:'✅ 거래 성사!',updatedAt:firebase.firestore.FieldValue.serverTimestamp(),lastSenderId:'system',isRead:false});
       await batch.commit();toast('🎉 거래가 성사되었습니다! 거래내역서가 생성됩니다.');
     } else {toast('✅ 수락했습니다. 상대방 수락을 기다리는 중...')}
   }catch(e){toast('❌ '+e.message)}
@@ -1078,67 +1380,59 @@ async function rejectDeal(dealId){
     await db.collection('tradeDeals').doc(dealId).update({status:'rejected',rejectedAt:firebase.firestore.FieldValue.serverTimestamp()});
     const batch=db.batch();const msgRef=db.collection('dmRooms').doc(dmRoom).collection('messages').doc();
     batch.set(msgRef,{type:'system',text:'❌ 거래 제안이 거절되었습니다.',uid:'system',name:'TireSafe',createdAt:firebase.firestore.FieldValue.serverTimestamp()});
-    batch.update(db.collection('dmRooms').doc(dmRoom),{lastMsg:'❌ 거래 제안 거절',updatedAt:firebase.firestore.FieldValue.serverTimestamp(),lastSenderId:CU.uid,isRead:false});
+    batch.update(db.collection('dmRooms').doc(dmRoom),{lastMsg:'❌ 거래 제안 거절',updatedAt:firebase.firestore.FieldValue.serverTimestamp(),lastSenderId:'system',isRead:false});
     await batch.commit();toast('거래 제안을 거절했습니다.');
   }catch(e){toast('❌ '+e.message)}
 }
 
-// 거래 완료 시 실제 매물 상태도 '판매완료(2)'로 자동 업데이트
 async function completeDeal(dealId){
-  if(!CU||!confirm('거래를 완료 처리하시겠습니까?\n거래내역서에 완료 기록이 남고, 매물이 [판매완료]로 변경됩니다.'))return;
+  if(!CU||!confirm('거래를 완료 처리하시겠습니까?\n✅ 거래내역서에 완료 기록이 영구 저장됩니다.\n✅ 매물이 [판매완료] 상태로 변경됩니다.'))return;
   try{
-    const dealRef = db.collection('tradeDeals').doc(dealId);
-    const dealDoc = await dealRef.get();
-    if(!dealDoc.exists) return;
-    const dealData = dealDoc.data();
-
-    const batch = db.batch();
-    batch.update(dealRef, {status:'done', completedAt:firebase.firestore.FieldValue.serverTimestamp()});
-    
+    const dealRef=db.collection('tradeDeals').doc(dealId);
+    const dealDoc=await dealRef.get();if(!dealDoc.exists)return;
+    const dealData=dealDoc.data();
+    const batch=db.batch();
+    batch.update(dealRef,{status:'done',completedAt:firebase.firestore.FieldValue.serverTimestamp(),completedBy:CU.uid,completedByName:CU.displayName||'참여자'});
     const msgRef=db.collection('dmRooms').doc(dmRoom).collection('messages').doc();
-    batch.set(msgRef,{type:'system',text:'🎉 거래가 최종 완료되었습니다!\n거래내역서에 완료 기록이 저장됩니다. 이용해주셔서 감사합니다 😊',uid:'system',name:'TireSafe',createdAt:firebase.firestore.FieldValue.serverTimestamp()});
-    batch.update(db.collection('dmRooms').doc(dmRoom),{lastMsg:'🎉 거래 완료!',updatedAt:firebase.firestore.FieldValue.serverTimestamp(),lastSenderId:CU.uid,isRead:false});
-    
-    // 매물 원본 상태 변경
-    if(dealData.itemId) {
-      const tireRef = db.collection('tires').doc(dealData.itemId);
-      batch.update(tireRef, { status: 2, isSold: true });
+    batch.set(msgRef,{type:'system',text:'🎉 거래가 최종 완료되었습니다!\n거래내역서에 완료 기록이 영구 저장됩니다.\n이용해주셔서 감사합니다 😊',uid:'system',name:'TireSafe',createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+    batch.update(db.collection('dmRooms').doc(dmRoom),{lastMsg:'🎉 거래 완료!',updatedAt:firebase.firestore.FieldValue.serverTimestamp(),lastSenderId:'system',isRead:false});
+    if(dealData.itemId){
+      const tireRef=db.collection('tires').doc(dealData.itemId);
+      batch.update(tireRef,{status:2,isSold:true});
     }
-
     await batch.commit();
-    toast('🎉 거래 완료 및 매물 상태가 변경되었습니다!');
-    loadItems(); // 메인 화면 재로딩
+    toast('🎉 거래 완료! 기록이 저장되었습니다.');
+    loadItems();
   }catch(e){toast('❌ '+e.message)}
 }
 
-/* ── 거래 제안 카드 렌더 (채팅창 내부 UI) ── */
+/* ── 거래 제안 카드 렌더 ── */
 async function renderDealCard(msg,isMe){
   const did=msg.dealId;if(!did)return'';
   let deal=null;
   try{const d=await db.collection('tradeDeals').doc(did).get();if(d.exists)deal=d.data()}catch(e){}
   if(!deal)return'<div class="dc"><div class="dc-b" style="color:var(--t3);font-size:12px;padding:14px">거래 제안 정보를 불러오는 중...</div></div>';
-  
-  const isProposer = CU && msg.uid === CU.uid;
-  const mySigned = deal.signedBy && deal.signedBy[CU?.uid];
-  const propSigned = deal.signedBy && deal.signedBy[deal.proposerId];
-  const otherKeys = Object.keys(deal.signedBy||{}).filter(k=>k!==deal.proposerId);
-  const otherSigned = otherKeys.length>0 && deal.signedBy[otherKeys[0]];
-  
+  const isProposer=CU&&msg.uid===CU.uid;
+  const mySigned=deal.signedBy&&deal.signedBy[CU?.uid];
+  const propSigned=deal.signedBy&&deal.signedBy[deal.proposerId];
+  const otherKeys=Object.keys(deal.signedBy||{}).filter(k=>k!==deal.proposerId);
+  const otherSigned=otherKeys.length>0&&deal.signedBy[otherKeys[0]];
   const stMap={pending:{l:'🕐 수락 대기',c:'dcb-wait'},accepted:{l:'✅ 거래 성사',c:'dcb-ok'},done:{l:'🎉 거래 완료',c:'dcb-done'},rejected:{l:'❌ 거절됨',c:'dcb-no'}};
   const st=stMap[deal.status]||stMap.pending;
-  
   let btns='';
-  if(deal.status==='pending' && !isProposer && !mySigned){
+  if(deal.status==='pending'&&!isProposer&&!mySigned){
     btns=`<div class="dc-btns"><button class="dc-btn dc-btn-ok" onclick="acceptDeal('${did}')">✅ 수락하기</button><button class="dc-btn dc-btn-no" onclick="rejectDeal('${did}')">거절</button></div>`;
-  } else if(deal.status==='pending' && isProposer){
-    btns=`<div style="font-size:11px;color:var(--t3);text-align:center;padding:4px 0">상대방 수락을 기다리는 중...</div>`;
+  } else if(deal.status==='pending'&&isProposer&&!mySigned){
+    btns=`<div class="dc-btns"><button class="dc-btn dc-btn-ok" onclick="acceptDeal('${did}')">✅ 나도 수락</button><button class="dc-btn dc-btn-no" onclick="rejectDeal('${did}')">취소</button></div>`;
+  } else if(deal.status==='pending'){
+    btns=`<div style="font-size:11px;color:var(--t3);text-align:center;padding:6px 0;background:var(--sur2);border-radius:8px">⏳ 상대방 수락 대기 중...</div>`;
   } else if(deal.status==='accepted'){
-    btns=`<button class="dc-btn dc-btn-done dc-btn-f" onclick="completeDeal('${did}')">🎉 거래 완료 처리</button>`;
+    btns=`<button class="dc-btn dc-btn-done dc-btn-f" onclick="completeDeal('${did}')">🎉 거래 완료 처리하기</button>`;
+  } else if(deal.status==='done'){
+    btns=`<div style="font-size:11px;color:#065f46;text-align:center;padding:6px 0;background:var(--grn-bg);border-radius:8px;font-weight:700">✅ 거래가 완료되었습니다</div>`;
   }
-  
   const docBtn=(deal.status==='accepted'||deal.status==='done')?`<button class="dc-btn dc-btn-no dc-btn-f" style="margin-top:6px" onclick="openDocDetail('${did}')">📋 거래내역서 보기</button>`:'';
-  
-  return `<div class="dc">
+  return`<div class="dc">
     <div class="dc-h"><div class="dc-h-ico">🤝</div><div class="dc-h-t">거래 제안서</div><div class="dc-badge ${st.c}">${st.l}</div></div>
     <div class="dc-b">
       <div class="dc-r"><span class="dc-l">상품</span><span class="dc-v">${esc(deal.title)}</span></div>
@@ -1165,9 +1459,10 @@ async function openDocDetail(dealId){
     const d=doc.data();
     const stMap={pending:'수락 대기',accepted:'거래 성사',done:'거래 완료',rejected:'거절됨'};
     const stColor={pending:'#F59E0B',accepted:'#6366F1',done:'#10B981',rejected:'#EF4444'};
-    const createdStr=d.createdAt?d.createdAt.toDate().toLocaleString('ko-KR'):'';
-    const completedStr=d.completedAt?d.completedAt.toDate().toLocaleString('ko-KR'):'';
-    
+    const createdStr=d.createdAt?d.createdAt.toDate().toLocaleString('ko-KR'):'—';
+    const acceptedStr=d.acceptedAt?d.acceptedAt.toDate().toLocaleString('ko-KR'):'—';
+    const completedStr=d.completedAt?d.completedAt.toDate().toLocaleString('ko-KR'):'—';
+    const signedEntries=Object.entries(d.signedBy||{});
     document.getElementById('doc-content').innerHTML=`
       <div class="doc-top">
         <div class="doc-top-title">📋 거래내역서</div>
@@ -1181,51 +1476,102 @@ async function openDocDetail(dealId){
           <div class="doc-row"><span class="doc-rl">거래 금액</span><span class="doc-rv ac">${fmtN(d.totalPrice)}</span></div>
           ${d.unit==='개당'?`<div class="doc-row"><span class="doc-rl">단가 정보</span><span class="doc-rv">개당 ${fmtN(d.price)} × ${d.qty}개</span></div>`:''}
           <div class="doc-row"><span class="doc-rl">거래 방식</span><span class="doc-rv">${esc(d.method)}</span></div>
+          ${d.qty&&d.qty!=='기타'?`<div class="doc-row"><span class="doc-rl">수량</span><span class="doc-rv">${esc(d.qty)}개</span></div>`:''}
           ${d.place?`<div class="doc-row"><span class="doc-rl">거래 장소</span><span class="doc-rv">${esc(d.place)}</span></div>`:''}
           ${d.memo?`<div class="doc-row"><span class="doc-rl">메모</span><span class="doc-rv" style="font-size:12px">${esc(d.memo)}</span></div>`:''}
         </div>
         <div class="doc-sec">
           <div class="doc-sec-title">거래 당사자</div>
           <div class="doc-row"><span class="doc-rl">제안자</span><span class="doc-rv">${esc(d.proposerName)}</span></div>
-          <div class="doc-row"><span class="doc-rl">제안일시</span><span class="doc-rv" style="font-size:12px">${createdStr}</span></div>
-          ${completedStr?`<div class="doc-row"><span class="doc-rl">완료일시</span><span class="doc-rv" style="font-size:12px">${completedStr}</span></div>`:''}
+        </div>
+        <div class="doc-timeline">
+          <div class="doc-tl-title">📅 거래 진행 기록</div>
+          <div class="doc-tl-item">
+            <div class="doc-tl-dot"></div>
+            <div class="doc-tl-info"><div class="doc-tl-label">거래 제안 생성</div><div class="doc-tl-time">${createdStr}</div></div>
+          </div>
+          ${d.status!=='pending'&&d.status!=='rejected'?`
+          <div class="doc-tl-item">
+            <div class="doc-tl-dot"></div>
+            <div class="doc-tl-info"><div class="doc-tl-label">쌍방 수락 완료 — 거래 성사</div><div class="doc-tl-time">${acceptedStr}</div></div>
+          </div>`:''}
+          ${d.status==='done'?`
+          <div class="doc-tl-item">
+            <div class="doc-tl-dot"></div>
+            <div class="doc-tl-info"><div class="doc-tl-label">거래 완료 처리 (${esc(d.completedByName||'—')})</div><div class="doc-tl-time">${completedStr}</div></div>
+          </div>`:''}
+          ${d.status==='rejected'?`
+          <div class="doc-tl-item">
+            <div class="doc-tl-dot pending"></div>
+            <div class="doc-tl-info"><div class="doc-tl-label">거래 거절</div></div>
+          </div>`:''}
         </div>
         <div class="doc-signs">
           <div class="doc-signs-t">✍️ 수락 현황</div>
           <div class="doc-sg-grid">
-            ${Object.entries(d.signedBy||{}).map(([uid,info])=>`
-              <div class="doc-sg"><div class="doc-sg-role">참여자</div><div class="doc-sg-name">${esc(info.name||'알 수 없음')}</div><div class="doc-sg-st dsg-ok">✅ 수락 완료</div></div>`).join('')}
-            ${Object.keys(d.signedBy||{}).length<2?`<div class="doc-sg"><div class="doc-sg-role">상대방</div><div class="doc-sg-name">—</div><div class="doc-sg-st dsg-wait">⏳ 대기 중</div></div>`:''}
+            ${signedEntries.length>0?signedEntries.map(([uid,info])=>`
+              <div class="doc-sg"><div class="doc-sg-role">${uid===d.proposerId?'제안자':'상대방'}</div><div class="doc-sg-name">${esc(info.name||'—')}</div><div class="doc-sg-st dsg-ok">✅ 수락 완료</div></div>`).join(''):''}
+            ${signedEntries.length<2?`<div class="doc-sg"><div class="doc-sg-role">${signedEntries.length===0?'제안자':'상대방'}</div><div class="doc-sg-name">—</div><div class="doc-sg-st dsg-wait">⏳ 대기 중</div></div>`:''}
           </div>
         </div>
-        <div class="doc-legal">본 거래내역서는 TireSafe 플랫폼에서 이용자 간 합의에 의해 작성된 기록입니다. TireSafe는 통신판매중개업자로서 거래 당사자가 아니며, 거래에 대한 직접적인 책임을 지지 않습니다. 분쟁 발생 시 본 내역서를 증거 자료로 활용하실 수 있습니다.</div>
+        <div class="doc-legal">본 거래내역서는 TireSafe 플랫폼에서 이용자 간 합의에 의해 작성된 전자 기록입니다. TireSafe는 통신판매중개업자로서 거래 당사자가 아니며, 거래에 대한 직접적인 법적 책임을 지지 않습니다. 분쟁 발생 시 본 내역서(거래번호 ${esc(d.dealId)})를 증거 자료로 활용하실 수 있습니다. 관련 기록은 5년간 보관됩니다.</div>
       </div>`;
     document.getElementById('doc-modal').classList.add('open');
   }catch(e){toast('❌ 거래내역서 조회 오류: '+e.message)}
 }
 function closeDocModal(){document.getElementById('doc-modal').classList.remove('open')}
 
-/* ── 거래내역 목록 불러오기 ── */
+/* ── 거래내역 목록 — 보낸것+받은것 모두 조회 ── */
 async function openTradeHistory(){
   if(!CU)return showLoginModal();
   const mc=document.getElementById('my-content');
-  mc.innerHTML=`<div style="padding:14px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--bd);background:var(--sur);position:sticky;top:0;z-index:10">
-    <button onclick="updateAuthUI(CU)" style="background:var(--sur2);border:1px solid var(--bd);border-radius:8px;width:32px;height:32px;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center">←</button>
-    <div style="font-size:18px;font-weight:900">📋 거래내역서</div>
-  </div>
-  <div id="trade-hist-list" style="padding:12px"></div>`;
+  mc.innerHTML=`
+    <div class="sub-hdr">
+      <button class="sub-back" onclick="updateAuthUI(CU)">←</button>
+      <div class="sub-hdr-title">📋 거래내역서</div>
+    </div>
+    <div style="display:flex;background:var(--sur2);border-radius:10px;padding:3px;margin:12px 16px">
+      <button id="th-tab-sent" onclick="loadTradeTab('sent')" style="flex:1;padding:9px;text-align:center;font-size:13px;font-weight:700;border-radius:8px;cursor:pointer;background:var(--sur);color:var(--t1);box-shadow:var(--sh);border:none;font-family:var(--font)">내가 제안한</button>
+      <button id="th-tab-recv" onclick="loadTradeTab('recv')" style="flex:1;padding:9px;text-align:center;font-size:13px;font-weight:700;border-radius:8px;cursor:pointer;background:none;color:var(--t3);border:none;font-family:var(--font)">받은 제안</button>
+    </div>
+    <div id="trade-hist-list" style="padding:0 12px 20px"></div>`;
+  loadTradeTab('sent');
+}
+
+async function loadTradeTab(tab){
+  document.getElementById('th-tab-sent').style.background=tab==='sent'?'var(--sur)':'none';
+  document.getElementById('th-tab-sent').style.color=tab==='sent'?'var(--t1)':'var(--t3)';
+  document.getElementById('th-tab-recv').style.background=tab==='recv'?'var(--sur)':'none';
+  document.getElementById('th-tab-recv').style.color=tab==='recv'?'var(--t1)':'var(--t3)';
   const listEl=document.getElementById('trade-hist-list');
   listEl.innerHTML='<div class="loading"><div class="spinner"></div><p>불러오는 중...</p></div>';
   try{
-    const snap=await db.collection('tradeDeals').where('proposerId','==',CU.uid).orderBy('createdAt','desc').get();
-    if(snap.empty){listEl.innerHTML=`<div class="empty"><div class="empty-icon">📋</div><p>거래내역서가 없어요.<br>채팅에서 거래 제안을 해보세요!</p></div>`;return}
-    const stMap={pending:{l:'⏳ 수락 대기',c:'tls-wait'},accepted:{l:'✅ 거래 성사',c:'tls-ok'},done:{l:'🎉 완료',c:'tls-ok'},rejected:{l:'❌ 거절',c:'tls-no'}};
+    const field=tab==='sent'?'proposerId':'receiverId';
+    let snap;
+    try{snap=await db.collection('tradeDeals').where(field,'==',CU.uid).orderBy('createdAt','desc').get()}
+    catch(e){
+      // 인덱스 없을 경우 전체 로드 후 필터
+      const all=await db.collection('tradeDeals').get();
+      snap={docs:all.docs.filter(d=>d.data()[field]===CU.uid).sort((a,b)=>(b.data().createdAt?.toMillis()||0)-(a.data().createdAt?.toMillis()||0))};
+    }
+    if(!snap.docs.length){listEl.innerHTML=`<div class="empty"><div class="empty-icon">📋</div><p>${tab==='sent'?'보낸 거래 제안이 없어요.':'받은 거래 제안이 없어요.'}<br>채팅에서 거래 제안을 해보세요!</p></div>`;return}
+    const stMap={
+      pending:{l:'⏳ 수락 대기',c:'tls-wait'},
+      accepted:{l:'✅ 거래 성사',c:'tls-ok'},
+      done:{l:'🎉 완료',c:'tls-done'},
+      rejected:{l:'❌ 거절',c:'tls-no'}
+    };
     listEl.innerHTML=snap.docs.map(d=>{
       const ag=d.data();const st=stMap[ag.status]||stMap.pending;
       const dateStr=ag.createdAt?ag.createdAt.toDate().toLocaleDateString('ko-KR'):'';
+      const role=tab==='sent'?'제안자':'받은 제안';
       return`<div class="tl-item" onclick="openDocDetail('${ag.dealId}')">
         <div class="tl-thumb">🤝</div>
-        <div class="tl-info"><div class="tl-title">${esc(ag.title)}</div><div class="tl-meta">${esc(ag.method)} · ${dateStr}</div></div>
+        <div class="tl-info">
+          <div class="tl-role">${role}</div>
+          <div class="tl-title">${esc(ag.title)}</div>
+          <div class="tl-meta">${esc(ag.method||'—')} · ${dateStr}${ag.proposerName?' · '+esc(ag.proposerName):''}</div>
+        </div>
         <div class="tl-right"><div class="tl-price">${fmtN(ag.totalPrice)}</div><div class="tl-st ${st.c}">${st.l}</div></div>
       </div>`;
     }).join('');
@@ -1234,14 +1580,18 @@ async function openTradeHistory(){
   }
 }
 
-/* ── 더치트 사기 조회 ── */
+/* ── 더치트 조회 ── */
 function openCheatModal(){document.getElementById('cheat-modal').classList.add('open');document.getElementById('cheat-input').value='';switchCheatTab('phone')}
 function closeCheatModal(){document.getElementById('cheat-modal').classList.remove('open')}
 function switchCheatTab(t){
-  cheatTabType=t;['phone','account','name'].forEach(k=>document.getElementById('ctb-'+k)?.classList.toggle('active',k===t));
+  cheatTabType=t;
+  ['phone','account','name'].forEach(k=>{
+    const el=document.getElementById('ctb-'+k);if(el)el.classList.toggle('active',k===t);
+  });
   const h={phone:'📌 형식: 010-xxxx-xxxx',account:'📌 형식: 계좌번호 (숫자만)',name:'📌 이름 또는 닉네임 입력'};
   const p={phone:'전화번호 입력',account:'계좌번호 입력',name:'이름/닉네임 입력'};
-  document.getElementById('cheat-hint').textContent=h[t];document.getElementById('cheat-input').placeholder=p[t];
+  document.getElementById('cheat-hint').textContent=h[t];
+  document.getElementById('cheat-input').placeholder=p[t];
 }
 function doCheatSearch(){
   const val=document.getElementById('cheat-input').value.trim();if(!val)return toast('조회할 정보를 입력해주세요');
@@ -1250,7 +1600,7 @@ function doCheatSearch(){
   setTimeout(()=>window.open('https://thecheat.co.kr/rb/?mode=search_data&category='+typeMap[cheatTabType]+'&search_text='+encodeURIComponent(val),'_blank'),500);
 }
 
-/* ── 사기 신고 기능 ── */
+/* ── 신고 ── */
 function openReportModal(){if(!CU)return showLoginModal();if(!dmRoom)return toast('채팅방에서 이용해주세요');curRtype='';document.querySelectorAll('.rtype-btn').forEach(b=>b.classList.remove('sel'));document.getElementById('report-desc').value='';document.getElementById('report-modal').classList.add('open')}
 function closeReportModal(){document.getElementById('report-modal').classList.remove('open')}
 function selRtype(btn,type){curRtype=type;document.querySelectorAll('.rtype-btn').forEach(b=>b.classList.remove('sel'));btn.classList.add('sel')}
@@ -1263,12 +1613,12 @@ async function submitReport(){
     const adminRid=mkRid(CU.uid,ADMIN);
     await db.collection('dmRooms').doc(adminRid).set({users:[CU.uid,ADMIN],userNames:{[CU.uid]:CU.displayName||'신고자',[ADMIN]:'TireSafe 관리자'},userPhotos:{[CU.uid]:CU.photoURL||'',[ADMIN]:''},updatedAt:firebase.firestore.FieldValue.serverTimestamp(),lastMsg:'🚨 신고: '+curRtype,lastSenderId:CU.uid,isRead:false},{merge:true});
     await db.collection('dmRooms').doc(adminRid).collection('messages').add({text:'🚨 사기 신고\n유형: '+curRtype+'\n채팅방: '+dmRoom+(desc?'\n내용: '+desc:''),uid:CU.uid,name:CU.displayName||'신고자',createdAt:firebase.firestore.FieldValue.serverTimestamp()});
-    await db.collection('dmRooms').doc(dmRoom).collection('messages').add({type:'system',text:'🚨 신고 접수 ('+curRtype+')\n관리자가 채팅 내역을 검토합니다.',uid:'system',name:'TireSafe',createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+    await db.collection('dmRooms').doc(dmRoom).collection('messages').add({type:'system',text:'🚨 신고 접수 완료 ('+curRtype+')\n관리자가 채팅 내역을 검토합니다. 영업일 기준 1~2일 내 처리됩니다.',uid:'system',name:'TireSafe',createdAt:firebase.firestore.FieldValue.serverTimestamp()});
     closeReportModal();toast('🚨 신고가 접수되었습니다.');
   }catch(e){toast('❌ '+e.message)}
 }
 
-/* ── 1:1 채팅방 및 메시지 시스템 ── */
+/* ── 채팅 시스템 ── */
 function mkRid(a,b){return[a,b].sort().join('_')}
 async function openRoom(tUid,tName,tPhoto,initMsg,itemObj){
   if(!CU){pendChat={uid:tUid,name:tName,msg:initMsg,item:itemObj};showLoginModal();return}
@@ -1276,22 +1626,16 @@ async function openRoom(tUid,tName,tPhoto,initMsg,itemObj){
   if(await isBanned(CU.uid))return toast('🚫 차단된 계정입니다');
   const rid=mkRid(CU.uid,tUid);
   let rd={users:[CU.uid,tUid],userNames:{[CU.uid]:CU.displayName||'나',[tUid]:tName},userPhotos:{[CU.uid]:CU.photoURL||'',[tUid]:tPhoto||''},updatedAt:firebase.firestore.FieldValue.serverTimestamp()};
-  
-  // 매물 ID 명시적 기록
-  if(itemObj)rd.itemInfo={id:itemObj.id, title:itemObj.title, price:itemObj.price, imageUrl:itemObj.imageUrl||''};
-  
+  if(itemObj)rd.itemInfo={id:itemObj.id,title:itemObj.title,price:itemObj.price,imageUrl:itemObj.imageUrl||''};
   await db.collection('dmRooms').doc(rid).set(rd,{merge:true});
   closeModal();switchPage('chat');setTimeout(()=>{openDm(rid,tName);if(initMsg)document.getElementById('dm-in').value=initMsg},200);
 }
-
-// 매물 상세보기 버튼
-async function openChatRoomItem() {
-  if(!curChatRoomItem?.id) return toast('매물 정보를 찾을 수 없습니다.');
-  const doc = await db.collection('tires').doc(curChatRoomItem.id).get();
-  if(doc.exists) openModal({id: doc.id, ...doc.data()});
+async function openChatRoomItem(){
+  if(!curChatRoomItem?.id)return toast('매물 정보를 찾을 수 없습니다.');
+  const doc=await db.collection('tires').doc(curChatRoomItem.id).get();
+  if(doc.exists)openModal({id:doc.id,...doc.data()});
   else toast('이미 삭제된 매물입니다.');
 }
-
 async function chatSeller(){if(!curItem?.sellerId)return toast('판매자 정보 없음');await openRoom(curItem.sellerId,curItem.sellerName||'판매자','','안녕하세요, ['+curItem.title+'] 매물 보고 연락드립니다!',curItem)}
 async function chatSellerDeal(){
   if(!curItem?.sellerId)return toast('판매자 정보 없음');
@@ -1328,21 +1672,18 @@ function openDm(rid,title){
     const data=d.data();if(data.lastSenderId!==CU?.uid)d.ref.update({isRead:true});
     const banner=document.getElementById('dm-item-banner');
     if(data.itemInfo){
-      curChatRoomItem = data.itemInfo; 
+      curChatRoomItem=data.itemInfo;
       document.getElementById('dm-item-img').src=data.itemInfo.imageUrl||'';
       document.getElementById('dm-item-title').textContent=data.itemInfo.title;
       document.getElementById('dm-item-price').textContent=Number(data.itemInfo.price).toLocaleString()+'원';
       banner.style.display='flex';
-    } else {
-      curChatRoomItem = null;
-      banner.style.display='none';
-    }
+    } else {curChatRoomItem=null;banner.style.display='none';}
   });
   if(unsubDm)unsubDm();
   const box=document.getElementById('dm-msgs');
   box.innerHTML=`<div class="sys-w"><div class="sys-m warn">⚠️ 카카오톡 유도·외부 결제 요구는 사기! 채팅 안에서만 거래하세요.</div></div>`;
   unsubDm=db.collection('dmRooms').doc(rid).collection('messages').orderBy('createdAt').onSnapshot(async snap=>{
-    const sysHTML=`<div class="sys-w"><div class="sys-m warn">⚠️ 카카오톡 유도·외부 결제 = 사기! 채팅 안에서만 거래하세요.</div></div>`;
+    const sysHTML=`<div class="sys-w"><div class="sys-m warn">⚠️ 카카오톡 유도·외부 결제 = 사기!</div></div>`;
     let lastDate='';
     const parts=await Promise.all(snap.docs.map(async d=>{
       const m=d.data();
@@ -1395,16 +1736,16 @@ function botBtn(label,action){
   box.appendChild(d);box.scrollTop=box.scrollHeight;
 }
 const BOT=[
-  {k:['사이즈','규격','선택'],a:`타이어 사이즈 확인법 👇\n\n📌 운전석 문 안쪽 스티커\n📌 현재 타이어 측면\n\n예: <b>205/55R16</b> = 폭205 / 편평비55 / 림16인치\n\n⚠️ 사이즈가 다르면 안전 문제가 생겨요!`,html:true},
+  {k:['사이즈','규격','선택'],a:`타이어 사이즈 확인법 👇\n\n📌 운전석 문 안쪽 스티커\n📌 현재 타이어 측면\n\n예: <b>205/55R16</b> = 폭205mm / 편평비55% / 림16인치\n\n⚠️ 사이즈가 다르면 안전 문제가 생겨요!`,html:true},
   {k:['거래','제안','방법','어떻게'],a:`TireSafe 거래 5단계 🤝\n\n1️⃣ 채팅 시작\n2️⃣ 사기 조회 (더치트)\n3️⃣ 거래 제안 보내기\n4️⃣ 거래내역서 확인\n5️⃣ 거래 완료 처리\n\n채팅 상단 [🤝 거래제안] 버튼을 눌러보세요!`},
   {k:['배송','택배'],a:`배송은 채팅에서 판매자와 협의해요 🚚\n\n· 착불 — 받는 분 배송비 부담\n· 선불 — 보내는 분 배송비 부담\n· 직거래 — 직접 만나서 거래\n\n💡 직거래 시 낮에 공공장소에서!`},
   {k:['장착','공임'],a:`가까운 타이어 전문점에서 장착하세요 🔧\n\n평균 공임: 1개당 1~2만 원\n얼라이먼트 추가 시: 3~5만 원`},
   {k:['사기','예방','조회','더치트'],a:`사기 예방 핵심 🛡️\n\n🚫 이건 사기!\n카카오톡 유도 / 외부 링크 결제 / 선입금\n\n✅ 안전하게!\n채팅 안에서만 거래 / 거래 전 더치트 조회`,btn:{label:'🔍 더치트 바로가기',action:"window.open('https://thecheat.co.kr','_blank')"}},
-  {k:['DOT','제조','연식'],a:`DOT 마지막 4자리 확인 📅\n예: <b>2023</b> = 20주차 2023년 제조\n\n5년+ 점검 권장 / 10년+ 교체 필수`,html:true},
-  {k:['가격','시세','얼마'],a:`중고 타이어·휠 시세 💡\n\n🛞 타이어 (4개)\n경차 5~15만 / 중형 15~30만 / SUV 25~50만\n\n⭕ 휠 (4개)\n순정 3~40만 원대\n\n신품 대비 30~60% 수준이에요!`},
-  {k:['환불','반품'],a:`수령 후 7일 이내 환불 요청 가능 💰\n장착 전 상태 확인 필수!\n⚠️ 장착 완료 후 환불 어려움`},
-  {k:['내역서','거래내역'],a:'거래내역서는 [내 정보 → 거래내역서]에서 확인하세요!\n거래 제안 수락 시 자동 생성됩니다 📋'},
-  {k:['1:1','상담','연결'],a:null}
+  {k:['DOT','제조','연식'],a:`DOT 마지막 4자리 확인 📅\n예: <b>2023</b> = 20주차 2023년 제조\n\n5년 이상: 정밀 점검 권장\n10년 이상: 교체 필수`,html:true},
+  {k:['가격','시세','얼마'],a:`중고 타이어·휠 시세 💡\n\n🛞 타이어 (4개 기준)\n경차 5~15만 / 중형 15~30만 / SUV 25~50만\n\n⭕ 휠 (4개 기준)\n순정 10~40만 원대\n\n신품 대비 30~60% 수준이에요!`},
+  {k:['환불','반품'],a:`수령 후 7일 이내 환불 요청 가능 💰\n장착 전 상태 확인 필수!\n⚠️ 장착 완료 후 환불 어려울 수 있어요`},
+  {k:['내역서','거래내역'],a:'거래내역서는 [내 정보 → 거래내역서]에서 확인하세요!\n보낸 제안과 받은 제안을 모두 조회할 수 있습니다 📋'},
+  {k:['1:1','상담','연결','고객'],a:null}
 ];
 function getAns(msg){const m=msg.toLowerCase();for(const q of BOT)if(q.k.some(k=>m.includes(k)))return q;return undefined}
 function qa(q){document.getElementById('bot-in').value=q;sendBot()}
@@ -1415,7 +1756,7 @@ async function connectAdmin(){
     const rid=mkRid(CU.uid,ADMIN);const ref=db.collection('dmRooms').doc(rid);const doc=await ref.get();
     if(!doc.exists){
       await ref.set({users:[CU.uid,ADMIN],userNames:{[CU.uid]:CU.displayName||'고객',[ADMIN]:'TireSafe 고객센터'},userPhotos:{[CU.uid]:CU.photoURL||'',[ADMIN]:''},updatedAt:firebase.firestore.FieldValue.serverTimestamp(),lastMsg:'안녕하세요!',lastSenderId:ADMIN,isRead:false},{merge:true});
-      await db.collection('dmRooms').doc(rid).collection('messages').add({text:'안녕하세요! TireSafe 고객센터입니다. 무엇을 도와드릴까요? 😊',uid:ADMIN,name:'TireSafe 고객센터',createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+      await db.collection('dmRooms').doc(rid).collection('messages').add({text:'안녕하세요! TireSafe 고객센터입니다. 무엇을 도와드릴까요? 😊\n운영시간: 평일 오전 10시 ~ 오후 6시',uid:ADMIN,name:'TireSafe 고객센터',createdAt:firebase.firestore.FieldValue.serverTimestamp()});
     }
     switchPage('chat');setTimeout(()=>openDm(rid,'TireSafe 고객센터'),200);
   },800);
@@ -1425,7 +1766,7 @@ async function sendBot(){
   input.value='';botMsg(msg,true);
   setTimeout(async()=>{
     const res=getAns(msg);
-    if(res===undefined){botMsg('"'+msg+'"에 대한 답변을 찾지 못했어요 😅');botBtn('👨‍💼 1:1 고객상담 연결','connectAdmin()')}
+    if(res===undefined){botMsg('"'+msg+'"에 대한 답변을 찾지 못했어요 😅\n아래 버튼으로 1:1 상담을 요청하실 수 있어요.');botBtn('👨‍💼 1:1 고객상담 연결','connectAdmin()')}
     else if(res.a===null)connectAdmin();
     else{botMsg(res.a,false,res.html||false);if(res.btn)botBtn(res.btn.label,res.btn.action)}
   },450);
